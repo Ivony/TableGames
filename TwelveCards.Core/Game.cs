@@ -32,17 +32,6 @@ namespace TwelveCards.Core
     }
 
 
-    /// <summary>
-    /// 进行一个游戏操作
-    /// </summary>
-    /// <param name="player">发起操作的玩家</param>
-    /// <param name="target">目标舱位</param>
-    /// <param name="card">使用卡牌</param>
-    public void Do( Player player, Cabin target, Card card )
-    {
-
-      card.Action( this, player, target );
-    }
 
 
 

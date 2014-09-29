@@ -6,24 +6,21 @@ using System.Threading.Tasks;
 
 namespace TwelveCards.Core.Cards
 {
-  public class SearchlightCard : SpecialCard, IEffectProvider
+  public class NormalAttackCard : AttackCard, IEffectProvider
   {
     public override string Name
     {
-      get { return "探照灯"; }
+      get { return "普通攻击"; }
     }
 
     public override string Description
     {
-      get { return "显示某个舱位的情况"; }
+      get { return "对指定位置进行一次普通攻击"; }
     }
 
-
-
-    ///
     public EffectBase GetEffect( Player player, Cabin target )
     {
-      return new SearchlightEffect( player, target );
+      return new AttackEffect( player, target, 1 );
     }
   }
 }

@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TwelveCards.Core
+namespace TwelveCards.Core.Cards
 {
-  
+
   /// <summary>
-  /// 代表使用卡牌所带来的效果
+  /// 攻击卡牌
   /// </summary>
-  public class Effect
+  public abstract class AttackCard : Card
   {
+
   }
 }
