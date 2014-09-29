@@ -13,6 +13,26 @@ namespace TwelveCards.Core
   public class Game
   {
 
+
+    public Game( CardDealer cardDealer, int cabins )
+    {
+
+      CardDealer = cardDealer;
+      Cabins = new Cabin[cabins];
+
+    }
+
+
+
+    /// <summary>
+    /// 发牌器
+    /// </summary>
+    public CardDealer CardDealer
+    {
+      get;
+      private set;
+    }
+
     /// <summary>
     /// 舱位列表
     /// </summary>

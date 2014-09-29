@@ -20,7 +20,7 @@ namespace TwelveCards.Core.Cards
 
     public override void ApplyEffect()
     {
-      Target.Health -= AttackPoints;
+      Target.Damage( AttackPoints );
     }
   }
 }

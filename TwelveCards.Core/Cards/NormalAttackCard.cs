@@ -8,6 +8,13 @@ namespace TwelveCards.Core.Cards
 {
   public class NormalAttackCard : AttackCard, IEffectProvider
   {
+
+
+    public NormalAttackCard( int points )
+    {
+      Points = points;
+    }
+
     public override string Name
     {
       get { return "普通攻击"; }
@@ -18,9 +25,15 @@ namespace TwelveCards.Core.Cards
       get { return "对指定位置进行一次普通攻击"; }
     }
 
+    public int Points
+    {
+      get;
+      private set;
+    }
+
     public EffectBase GetEffect( Player player, Cabin target )
     {
-      return new AttackEffect( player, target, 1 );
+      return new AttackEffect( player, target, Points );
     }
   }
 }
