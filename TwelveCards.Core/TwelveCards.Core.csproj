@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="Cabin.cs" />
     <Compile Include="Card.cs" />
+    <Compile Include="CardDealer.cs" />
     <Compile Include="Cards\AttackCard.cs" />
     <Compile Include="Cards\AttackEffect.cs" />
     <Compile Include="Cards\NormalAttackCard.cs" />
@@ -70,9 +71,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Effects\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
