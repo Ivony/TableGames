@@ -14,7 +14,8 @@ namespace Ivony.TableGame.WebHost
       config.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always;
       config.Services.Replace( typeof( IContentNegotiator ), new JsonContentNegotiator() );
 
-      config.ParameterBindingRules.Add( PlayerHost.GetBinding );
+      config.MessageHandlers.Add( new PlayerHostHttpHandler() );
+
 
 
       // Web API 路由

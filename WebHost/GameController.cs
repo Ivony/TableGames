@@ -11,43 +11,36 @@ namespace Ivony.TableGame.WebHost
   public class GameController : ApiController
   {
 
-    [HttpGet]
-    public object SignIn()
-    {
 
-      var host = CreatePlayerHost();
-      return new
-      {
-        ID = host.Guid
-      };
-
-    }
-
-    private PlayerHost CreatePlayerHost()
-    {
-      return PlayerHost.CreatePlayerHost();
-    }
 
 
     [HttpGet]
-    public object CreateGame( PlayerHost playerHost )
+    public object CreateGame()
     {
-
-      if ( playerHost == null )
-        throw new HttpResponseException( new HttpResponseMessage() { Content = new StringContent( "尚未登录" ), StatusCode = HttpStatusCode.Forbidden } );
 
       var game = new GameHost();
       game.Initialize();
 
-      var result = game.TryJoinGame( playerHost );
+      var result = game.TryJoinGame( PlayerHost );
 
       return "OK";
     }
 
     [HttpGet]
-    public object GetMessages( PlayerHost playerHost )
+    public object GetMessages()
     {
-      return playerHost.GetMessages();
+      return PlayerHost.GetMessages();
     }
+
+
+
+    public PlayerHost PlayerHost
+    {
+      get
+      {
+        return (PlayerHost) ControllerContext.RequestContext.RouteData.Values[PlayerHostHttpHandler.playerRouteKey];
+      }
+    }
+
   }
 }

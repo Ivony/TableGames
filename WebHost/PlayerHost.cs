@@ -99,45 +99,9 @@ namespace Ivony.TableGame.WebHost
     }
 
 
-
-    public static HttpParameterBinding GetBinding( HttpParameterDescriptor parameterDescriptor )
-    {
-
-
-      var type = parameterDescriptor.ParameterType;
-
-      if ( type != typeof( PlayerHost ) && type != typeof( IPlayerHost ) )
-        return null;
-
-      return new ModelBinderParameterBinding( parameterDescriptor, new PlayHostBinder(), parameterDescriptor.Configuration.Services.GetValueProviderFactories() );
-    }
-
-    private class PlayHostBinder : IModelBinder
-    {
-
-
-      private static readonly string parameterName = "userId";
-
-      public bool BindModel( HttpActionContext actionContext, ModelBindingContext bindingContext )
-      {
-        var type = bindingContext.ModelType;
-        if ( type != typeof( PlayerHost ) && type != typeof( IPlayerHost ) )
-          return false;
-
-        if ( !bindingContext.ValueProvider.ContainsPrefix( parameterName ) )
-          return false;
-
-        Guid userId;
-
-        if ( !Guid.TryParse( bindingContext.ValueProvider.GetValue( parameterName ).AttemptedValue, out userId ) )
-          return false;
-
-
-        bindingContext.Model = PlayerHost.GetPlayerHost( userId );
-        return true;
-      }
-    }
-
-
   }
+
+
+
+
 }
