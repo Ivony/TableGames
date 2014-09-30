@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Ivony.Data;
+using Ivony.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -30,13 +32,16 @@ namespace TwelveCards.WebHost
     }
 
 
-    public bool TryJoinGame( PlayerHost host )
+    public Player TryJoinGame( PlayerHost host )
     {
-      var player = Game.TryJoinGame( host );
-      return player != null;
+      return Game.TryJoinGame( host );
     }
 
 
+
+
+
+    public static SqlDbExecutor Database = SqlServer.FromConfiguration( "Database" );
 
   }
 }

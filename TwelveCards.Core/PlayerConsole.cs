@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 
 namespace TwelveCards
 {
-  public sealed class PlayerConsole
+  public abstract class PlayerConsoleBase
   {
 
-    public Player Player { get; private set; }
+    public abstract void WriteMessage( string message );
+    public abstract void WriteWarning( string message );
+    public abstract void WriteSystemInfo( string message );
 
 
-    public void WriteLine( string format, params object[] args )
-    {
 
-    }
   }
 }

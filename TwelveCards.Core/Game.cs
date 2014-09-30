@@ -63,7 +63,7 @@ namespace TwelveCards
     public void Announce( string format, params object[] args )
     {
       foreach ( var p in Players )
-        p.WriteLine( format, args );
+        p.WriteMessage( format, args );
     }
 
 

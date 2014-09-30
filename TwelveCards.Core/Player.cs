@@ -45,9 +45,9 @@ namespace TwelveCards
 
 
 
-    public void WriteLine( string format, params object[] args )
+    public void WriteMessage( string format, params object[] args )
     {
-      Host.PlayerConsole.WriteLine( format, args );
+      Host.Console.WriteMessage( string.Format( format, args ) );
     }
 
 
