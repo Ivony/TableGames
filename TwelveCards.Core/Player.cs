@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -45,10 +46,20 @@ namespace TwelveCards
 
 
 
+    public void WriteMessage( GameMessage message )
+    {
+      Host.Console.WriteMessage( message );
+    }
+    public void WriteMessage( string message )
+    {
+      WriteMessage( new GenericMessage( GameMessageType.Info, message ) );
+    }
+
     public void WriteMessage( string format, params object[] args )
     {
-      Host.Console.WriteMessage( string.Format( format, args ) );
+      WriteMessage( string.Format( CultureInfo.InvariantCulture, format, args ) );
     }
+
 
 
   }

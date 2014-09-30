@@ -12,7 +12,7 @@ namespace TwelveCards
   /// </summary>
   public abstract class EffectBase
   {
-    public EffectBase(  Player player, Cabin target )
+    public EffectBase( Player player, Cabin target )
     {
       Player = player;
       Target = target;
@@ -27,12 +27,27 @@ namespace TwelveCards
     /// 卡牌的目标
     /// </summary>
     protected Cabin Target { get; private set; }
+    /// <summary>
+    /// 当前游戏对象
+    /// </summary>
+    protected Game Game { get { return Player.Game; } }
 
 
     /// <summary>
     /// 应用卡牌使用的效果
     /// </summary>
     public abstract void ApplyEffect();
+
+
+    /// <summary>
+    /// 发送游戏通告
+    /// </summary>
+    protected void Announce( string format, params object[] args )
+    {
+
+      Game.AnnounceMessage( string.Format( format, args ) );
+
+    }
 
 
   }

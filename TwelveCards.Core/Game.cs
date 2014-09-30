@@ -10,37 +10,42 @@ namespace TwelveCards
   /// <summary>
   /// 代表一局游戏。
   /// </summary>
-  public class Game
+  public abstract class Game
   {
 
 
-    public Game( CardDealer cardDealer, int cabins )
+
+    static Game()
     {
-
-      CardDealer = cardDealer;
-      Cabins = new Cabin[cabins];
-      MaximumPlayers = cabins / 2;
-
+      Random = new Random( DateTime.Now.Millisecond );
     }
 
+    /// <summary>
+    /// 获取随机数产生器
+    /// </summary>
+    protected static Random Random { get; private set; }
 
 
     /// <summary>
-    /// 发牌器
+    /// 创建游戏对象
     /// </summary>
-    public CardDealer CardDealer
+    protected Game()
+    {
+      SyncRoot = new object();
+      GameState = GameState.NotInstallized;
+    }
+
+    public abstract string Name
     {
       get;
-      private set;
     }
 
     /// <summary>
     /// 舱位列表
     /// </summary>
-    public Cabin[] Cabins
+    public abstract Cabin[] Cabins
     {
       get;
-      private set;
     }
 
     /// <summary>
@@ -51,68 +56,88 @@ namespace TwelveCards
       get { return Cabins.Select( item => item.Player ).Where( item => item != null ).ToArray(); }
     }
 
+    /// <summary>
+    /// 对所有玩家发出消息
+    /// </summary>
+    public void AnnounceMessage( string message )
+    {
 
+      var _message = new GenericMessage( GameMessageType.Info, message );
 
+      lock ( SyncRoot )
+      {
+        foreach ( var p in Players )
+          p.WriteMessage( _message );
+      }
+    }
 
 
     /// <summary>
-    /// 发出游戏公告，所有玩家都能收到这一公告
+    /// 对所有玩家发出系统消息
     /// </summary>
-    /// <param name="format"></param>
-    /// <param name="args"></param>
-    public void Announce( string format, params object[] args )
+    public void AnnounceSystemMessage( string message )
     {
-      foreach ( var p in Players )
-        p.WriteMessage( format, args );
+      var _message = new SystemMessage( message );
+
+      lock ( SyncRoot )
+      {
+        foreach ( var p in Players )
+          p.WriteMessage( _message );
+      }
+    }
+
+
+    /// <summary>
+    /// 用于同步的对象
+    /// </summary>
+    protected object SyncRoot
+    {
+      get;
+      private set;
     }
 
 
 
-    private bool _gameStarted = false;
-    private object _sync = new object();
-
-
-
-    private Random random = new Random( DateTime.Now.Millisecond );
 
 
     /// <summary>
     /// 尝试加入游戏
     /// </summary>
     /// <returns>若加入游戏成功，则返回一个 Player 对象</returns>
-    public Player TryJoinGame( IPlayerHost host )
+    public virtual Player TryJoinGame( IPlayerHost host )
     {
-      lock ( _sync )
+
+      lock ( SyncRoot )
       {
-        if ( _gameStarted )
-          return null;
-
-        if ( Players.Length == MaximumPlayers )
+        if ( GameState != GameState.NotStarted )
           return null;
 
 
-        var candidates = Cabins.Where( item => item.Player == null ).ToArray();
-        var cabin = candidates[random.Next( candidates.Length )];
-        return CreatePlayer( cabin, host );
+        var player = TryJoinGameCore( host );
+        if ( player != null )
+          player.WriteMessage( new SystemMessage( string.Format( "恭喜您已经加入 {0} 游戏", Name ) ) );
+
+
+        return player;
       }
     }
 
-
-
-    private Player CreatePlayer( Cabin cabin, IPlayerHost host )
+    /// <summary>
+    /// 派生类重写此方法尝试将玩家加入游戏
+    /// </summary>
+    /// <param name="host">玩家宿主，游戏环境通过玩家宿主与玩家进行通信</param>
+    /// <returns>若成功加入游戏，则返回游戏中的玩家</returns>
+    protected virtual Player TryJoinGameCore( IPlayerHost host )
     {
-      var codeName = GetCodeName();
-      var player = new Player( codeName, cabin, host );
-      cabin.SetPlayer( player );
-      return player;
-
+      throw new NotImplementedException();
     }
 
-    private string GetCodeName()
-    {
-      return "扯犊子";
-    }
 
+
+    /// <summary>
+    /// 游戏状态
+    /// </summary>
+    public GameState GameState { get; private set; }
 
     /// <summary>
     /// 开始游戏
@@ -121,15 +146,34 @@ namespace TwelveCards
     public GameProgress StartGame()
     {
 
-      lock ( _sync )
+      lock ( SyncRoot )
       {
-        _gameStarted = true;
+        if ( GameState != GameState.NotStarted )
+          throw new InvalidOperationException();
 
+        GameState = GameState.InProgress;
         return new GameProgress( this );
       }
     }
 
+    /// <summary>
+    /// 对游戏进行初始化
+    /// </summary>
+    public void Initialize()
+    {
 
-    public int MaximumPlayers { get; private set; }
+      lock ( SyncRoot )
+      {
+        if ( GameState != GameState.NotInstallized )
+          throw new InvalidOperationException();
+
+        InitializeCore();
+
+        GameState = GameState.NotStarted;
+      }
+    }
+
+    protected virtual void InitializeCore()
+    { }
   }
 }

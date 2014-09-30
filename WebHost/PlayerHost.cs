@@ -84,20 +84,22 @@ namespace TwelveCards.WebHost
       public override void WriteMessage( string message )
       {
         GameHost.Database
-          .T( "INSERT INTO Messages ( Player, Type, Date, Message ) VALUES ( {...} ) ", Guid, "Message", DateTime.Now, message )
+          .T( "INSERT INTO Messages ( Player, Type, Date, Message ) VALUES ( {...} ) ", Guid, "Message", DateTime.UtcNow, message )
           .ExecuteNonQuery();
-
-
       }
 
       public override void WriteWarning( string message )
       {
-        throw new NotImplementedException();
+        GameHost.Database
+          .T( "INSERT INTO Messages ( Player, Type, Date, Message ) VALUES ( {...} ) ", Guid, "System", DateTime.UtcNow, message )
+          .ExecuteNonQuery();
       }
 
       public override void WriteSystemInfo( string message )
       {
-        throw new NotImplementedException();
+        GameHost.Database
+          .T( "INSERT INTO Messages ( Player, Type, Date, Message ) VALUES ( {...} ) ", Guid, "Warning", DateTime.UtcNow, message )
+          .ExecuteNonQuery();
       }
     }
 

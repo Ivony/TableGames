@@ -7,8 +7,8 @@
     <ProjectGuid>{AD2E0903-517B-489B-A001-361022D015F3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TwelveCards</RootNamespace>
-    <AssemblyName>TwelveCards.Core</AssemblyName>
+    <RootNamespace>Ivony.TableGame</RootNamespace>
+    <AssemblyName>Ivony.TableGame.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -63,12 +63,15 @@
     <Compile Include="EffectBase.cs" />
     <Compile Include="Cards\SearchlightEffect.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GameMessage.cs" />
     <Compile Include="GameProgress.cs" />
+    <Compile Include="GameState.cs" />
     <Compile Include="IEffectProvider.cs" />
     <Compile Include="IPlayerHost.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerConsole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TwelveCardsGame.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

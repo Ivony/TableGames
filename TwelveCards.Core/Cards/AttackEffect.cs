@@ -20,7 +20,17 @@ namespace TwelveCards.Cards
 
     public override void ApplyEffect()
     {
+
+      var targetPlayer = Target.Player;
+      if ( targetPlayer != null )
+        targetPlayer.WriteMessage( new GenericMessage( GameMessageType.Warning, string.Format( "您受到攻击，生命值损失 {0} 点", AttackPoints ) ) );
+
+
+      Announce( "{0} 玩家对 {1} 舱发起攻击。", Player.CodeName, Target.Index );
+
+
       Target.Damage( AttackPoints );
     }
+
   }
 }

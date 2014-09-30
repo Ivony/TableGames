@@ -9,11 +9,7 @@ namespace TwelveCards
   public abstract class PlayerConsoleBase
   {
 
-    public abstract void WriteMessage( string message );
-    public abstract void WriteWarning( string message );
-    public abstract void WriteSystemInfo( string message );
-
-
+    public abstract void WriteMessage( GameMessage message );
 
   }
 }
