@@ -35,7 +35,7 @@ namespace Ivony.TableGame.WebHost
       var response = await base.SendAsync( request, cancellationToken );
 
 
-      response.Headers.AddCookies( new[] { new CookieHeaderValue( userTokenKey, player.Guid.ToString() ) } );
+      response.Headers.AddCookies( new[] { new CookieHeaderValue( userTokenKey, player.Guid.ToString() ) { Path = request.GetRequestContext().VirtualPathRoot } } );
       return response;
     }
 

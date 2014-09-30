@@ -9,9 +9,16 @@ namespace Ivony.TableGame
   public class GameState
   {
 
+    private string _state;
+
     private GameState( string state )
     {
 
+    }
+
+    public override string ToString()
+    {
+      return _state;
     }
 
 

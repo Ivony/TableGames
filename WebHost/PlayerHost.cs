@@ -99,6 +99,13 @@ namespace Ivony.TableGame.WebHost
     }
 
 
+
+    public override string ToString()
+    {
+      return Guid.ToString();
+    }
+
+
   }
 
 
