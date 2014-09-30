@@ -29,13 +29,27 @@ namespace Ivony.TableGame.WebHost
       }
     }
 
+
+    private static string messageIndexCookieKey = "messageIndex";
+
     [HttpGet]
-    public object Messages()
+    public object Messages( HttpRequestMessage request )
     {
 
 
+      int index;
+      if ( !int.TryParse( request.Headers.GetCookieValue( messageIndexCookieKey ), out index ) )
+        index = 0;
 
-      return PlayerHost.GetMessages();
+      var messages = PlayerHost.GetMessages( index );
+      index += messages.Length;
+
+      var response = new HttpResponseMessage();
+
+      response.Headers.SetCookieValue( messageIndexCookieKey, index.ToString() );
+      
+
+      return response;
     }
 
 

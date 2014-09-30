@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="CookieExtensions.cs" />
     <Compile Include="GameHostController.cs" />
     <Compile Include="PlayerHostHttpHandler.cs" />
     <Compile Include="GameHost.cs" />

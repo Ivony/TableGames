@@ -93,9 +93,10 @@ namespace Ivony.TableGame.WebHost
 
     private List<GameMessage> _messages = new List<GameMessage>();
 
-    public GameMessage[] GetMessages()
+    public GameMessage[] GetMessages( int startIndex = 0)
     {
-      return _messages.ToArray();
+
+      return _messages.Skip( startIndex ).ToArray();
     }
 
 

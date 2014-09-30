@@ -20,10 +20,10 @@ namespace Ivony.TableGame.WebHost
     {
 
       PlayerHost player;
-      var userToken = request.Headers.GetCookies( userTokenKey ).Select( cookie => cookie.Cookies.FirstOrDefault() ).FirstOrDefault();
+      var userToken = request.Headers.GetCookieValue( userTokenKey );
 
       Guid userId;
-      if ( userToken == null || !Guid.TryParse( userToken.Value, out userId ) )
+      if ( userToken == null || !Guid.TryParse( userToken, out userId ) )
         player = PlayerHost.CreatePlayerHost();
 
       else
