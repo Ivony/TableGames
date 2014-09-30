@@ -9,7 +9,7 @@ namespace Ivony.TableGame
   public class TwelveCardsGame : Game
   {
 
-    public TwelveCardsGame()
+    public TwelveCardsGame( string name ) : base( name )
     {
 
       cabins = new Cabin[10];
@@ -27,10 +27,6 @@ namespace Ivony.TableGame
       get { return cabins; }
     }
 
-    public override string Name
-    {
-      get { return "测试游戏"; }
-    }
 
 
     protected override Player TryJoinGameCore( IPlayerHost host )

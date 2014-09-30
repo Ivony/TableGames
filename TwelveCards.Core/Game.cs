@@ -29,15 +29,18 @@ namespace Ivony.TableGame
     /// <summary>
     /// 创建游戏对象
     /// </summary>
-    protected Game()
+    protected Game( string name )
     {
       SyncRoot = new object();
       GameState = GameState.NotInstallized;
+      
+      Name = name;
     }
 
-    public abstract string Name
+    public virtual string Name
     {
       get;
+      private set;
     }
 
     /// <summary>
@@ -90,7 +93,7 @@ namespace Ivony.TableGame
     /// <summary>
     /// 用于同步的对象
     /// </summary>
-    protected object SyncRoot
+    public object SyncRoot
     {
       get;
       private set;
@@ -165,10 +168,10 @@ namespace Ivony.TableGame
       lock ( SyncRoot )
       {
         if ( GameState != GameState.NotInstallized )
-          throw new InvalidOperationException();
+          return;
+
 
         InitializeCore();
-
         GameState = GameState.NotStarted;
       }
     }

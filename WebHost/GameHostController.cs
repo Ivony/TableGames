@@ -8,27 +8,33 @@ using System.Web.Http;
 
 namespace Ivony.TableGame.WebHost
 {
-  public class GameController : ApiController
+  public class GameHostController : ApiController
   {
 
 
 
 
     [HttpGet]
-    public object CreateGame()
+    public object Game( string name )
     {
 
-      var game = new GameHost();
-      game.Initialize();
+      var game = GameHost.GetOrCreateGame( name );
+      lock ( game.SyncRoot )
+      {
+        if ( game.GameState != GameState.NotStarted )
+          return "游戏已经开始无法加入";
 
-      var result = game.TryJoinGame( PlayerHost );
-
-      return "OK";
+        game.TryJoinGame( PlayerHost );
+        return "OK";
+      }
     }
 
     [HttpGet]
-    public object GetMessages()
+    public object Messages()
     {
+
+
+
       return PlayerHost.GetMessages();
     }
 
