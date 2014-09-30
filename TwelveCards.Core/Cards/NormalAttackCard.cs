@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TwelveCards.Core.Cards
+namespace TwelveCards.Cards
 {
-  public class NormalAttackCard : AttackCard, IEffectProvider
+  public class NormalAttackCard : AttackCard
   {
 
 
@@ -31,7 +31,7 @@ namespace TwelveCards.Core.Cards
       private set;
     }
 
-    public EffectBase GetEffect( Player player, Cabin target )
+    public override EffectBase GetEffect( Player player, Cabin target )
     {
       return new AttackEffect( player, target, Points );
     }

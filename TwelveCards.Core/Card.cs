@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TwelveCards.Core
+namespace TwelveCards
 {
-  public abstract class Card
+  public abstract class Card : IEffectProvider
   {
 
     public abstract string Name { get; }
@@ -15,5 +15,7 @@ namespace TwelveCards.Core
 
 
 
+
+    public abstract EffectBase GetEffect( Player player, Cabin target );
   }
 }

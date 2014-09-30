@@ -7,7 +7,7 @@
     <ProjectGuid>{AD2E0903-517B-489B-A001-361022D015F3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TwelveCards.Core</RootNamespace>
+    <RootNamespace>TwelveCards</RootNamespace>
     <AssemblyName>TwelveCards.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

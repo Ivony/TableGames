@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TwelveCards.Core.Cards
+namespace TwelveCards.Cards
 {
-  public class SearchlightCard : SpecialCard, IEffectProvider
+  public class SearchlightCard : SpecialCard
   {
     public override string Name
     {
@@ -21,7 +21,7 @@ namespace TwelveCards.Core.Cards
 
 
     ///
-    public EffectBase GetEffect( Player player, Cabin target )
+    public override EffectBase GetEffect( Player player, Cabin target )
     {
       return new SearchlightEffect( player, target );
     }
