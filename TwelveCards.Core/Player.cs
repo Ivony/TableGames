@@ -8,6 +8,19 @@ namespace TwelveCards
   public sealed class Player
   {
 
+    internal Player( string codeName, Cabin cabin, IPlayerHost host )
+    {
+
+      CodeName = codeName;
+      Cabin = cabin;
+      Host = host;
+
+    }
+
+
+
+    public Game Game { get { return Cabin.Game; } }
+
     /// <summary>
     /// 玩家所处的舱位
     /// </summary>
@@ -22,7 +35,7 @@ namespace TwelveCards
     /// <summary>
     /// 玩家控制台，用于显示游戏信息
     /// </summary>
-    public PlayerConsole Console { get; private set; }
+    public IPlayerHost Host { get; private set; }
 
 
     /// <summary>
@@ -30,6 +43,12 @@ namespace TwelveCards
     /// </summary>
     public Card[] Cards { get; private set; }
 
+
+
+    public void WriteLine( string format, params object[] args )
+    {
+      Host.PlayerConsole.WriteLine( format, args );
+    }
 
 
   }

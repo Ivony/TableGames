@@ -44,5 +44,13 @@ namespace TwelveCards
       Health += points;
     }
 
+
+    internal void SetPlayer( Player player )
+    {
+      if ( Player == null )
+        throw new InvalidOperationException();
+
+      Player = player;
+    }
   }
 }

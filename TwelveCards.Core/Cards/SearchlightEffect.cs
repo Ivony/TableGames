@@ -19,11 +19,11 @@ namespace TwelveCards.Cards
 
       if ( targetPlayer == null )
       {
-        Player.Console.WriteLine( "探测 {0} 号舱，发现 {1} 玩家。", Target.Index, targetPlayer.CodeName );
-        targetPlayer.Console.WriteLine( "玩家 {0} 探测到了您的位置！", Player.CodeName );
+        Player.WriteLine( "探测 {0} 号舱，发现 {1} 玩家。", Target.Index, targetPlayer.CodeName );
+        targetPlayer.WriteLine( "玩家 {0} 探测到了您的位置！", Player.CodeName );
       }
       else
-        Player.Console.WriteLine( "探测 {0} 号舱，是一个空舱。", Target.Index );
+        Player.WriteLine( "探测 {0} 号舱，是一个空舱。", Target.Index );
     }
   }
 }

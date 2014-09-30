@@ -63,7 +63,9 @@
     <Compile Include="EffectBase.cs" />
     <Compile Include="Cards\SearchlightEffect.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GameProgress.cs" />
     <Compile Include="IEffectProvider.cs" />
+    <Compile Include="IPlayerHost.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerConsole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

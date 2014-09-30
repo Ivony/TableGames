@@ -19,6 +19,7 @@ namespace TwelveCards
 
       CardDealer = cardDealer;
       Cabins = new Cabin[cabins];
+      MaximumPlayers = cabins / 2;
 
     }
 
@@ -47,8 +48,7 @@ namespace TwelveCards
     /// </summary>
     public Player[] Players
     {
-      get;
-      private set;
+      get { return Cabins.Select( item => item.Player ).Where( item => item != null ).ToArray(); }
     }
 
 
@@ -63,7 +63,73 @@ namespace TwelveCards
     public void Announce( string format, params object[] args )
     {
       foreach ( var p in Players )
-        p.Console.WriteLine( format, args );
+        p.WriteLine( format, args );
     }
+
+
+
+    private bool _gameStarted = false;
+    private object _sync = new object();
+
+
+
+    private Random random = new Random( DateTime.Now.Millisecond );
+
+
+    /// <summary>
+    /// 尝试加入游戏
+    /// </summary>
+    /// <returns>若加入游戏成功，则返回一个 Player 对象</returns>
+    public Player TryJoinGame( IPlayerHost host )
+    {
+      lock ( _sync )
+      {
+        if ( _gameStarted )
+          return null;
+
+        if ( Players.Length == MaximumPlayers )
+          return null;
+
+
+        var candidates = Cabins.Where( item => item.Player == null ).ToArray();
+        var cabin = candidates[random.Next( candidates.Length )];
+        return CreatePlayer( cabin, host );
+      }
+    }
+
+
+
+    private Player CreatePlayer( Cabin cabin, IPlayerHost host )
+    {
+      var codeName = GetCodeName();
+      var player = new Player( codeName, cabin, host );
+      cabin.SetPlayer( player );
+      return player;
+
+    }
+
+    private string GetCodeName()
+    {
+      return "扯犊子";
+    }
+
+
+    /// <summary>
+    /// 开始游戏
+    /// </summary>
+    /// <returns></returns>
+    public GameProgress StartGame()
+    {
+
+      lock ( _sync )
+      {
+        _gameStarted = true;
+
+        return new GameProgress( this );
+      }
+    }
+
+
+    public int MaximumPlayers { get; private set; }
   }
 }

@@ -30,9 +30,10 @@ namespace TwelveCards.WebHost
     }
 
 
-    public void AddPlayer( PlayerHost player )
+    public bool TryJoinGame( PlayerHost host )
     {
-
+      var player = Game.TryJoinGame( host );
+      return player != null;
     }
 
 
