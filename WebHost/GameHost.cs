@@ -18,7 +18,7 @@ namespace Ivony.TableGame.WebHost
     }
 
 
-    public void Initialize(  )
+    public void Initialize()
     {
 
       Game = new TwelveCardsGame();

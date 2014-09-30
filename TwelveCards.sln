@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.Core", "Twe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebHost", "WebHost\WebHost.csproj", "{AB3B2046-645A-4736-A79C-71E62A18B9E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.ConsoleClient", "Ivony.TableGame.ConsoleClient\Ivony.TableGame.ConsoleClient.csproj", "{20ABE1F8-1000-49D9-9F02-134E33F6C3D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{AB3B2046-645A-4736-A79C-71E62A18B9E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB3B2046-645A-4736-A79C-71E62A18B9E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB3B2046-645A-4736-A79C-71E62A18B9E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20ABE1F8-1000-49D9-9F02-134E33F6C3D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20ABE1F8-1000-49D9-9F02-134E33F6C3D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20ABE1F8-1000-49D9-9F02-134E33F6C3D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20ABE1F8-1000-49D9-9F02-134E33F6C3D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

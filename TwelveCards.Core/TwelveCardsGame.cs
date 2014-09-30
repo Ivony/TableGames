@@ -12,11 +12,15 @@ namespace Ivony.TableGame
     public TwelveCardsGame()
     {
 
+      cabins = new Cabin[10];
+      for ( int i = 0; i < cabins.Length; i++ )
+        cabins[i] = new Cabin( this, i );
+
     }
 
 
 
-    private Cabin[] cabins = new Cabin[10];
+    private Cabin[] cabins;
 
     public override Cabin[] Cabins
     {

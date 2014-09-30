@@ -5,6 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Ivony.Data;
+using System.Web.Http.ModelBinding;
+using System.Web.Http;
+using System.Web.Http.Controllers;
 
 namespace Ivony.TableGame.WebHost
 {
@@ -25,10 +28,10 @@ namespace Ivony.TableGame.WebHost
 
 
 
-    private PlayerHost( Guid guid )
+    private PlayerHost( Guid id )
     {
-      Guid = guid;
-      _console = new PlayerConsole( Guid );
+      Guid = id;
+      _console = new PlayerConsole( this );
     }
 
 
@@ -49,11 +52,11 @@ namespace Ivony.TableGame.WebHost
     private static Hashtable hosts = new Hashtable();
 
 
-    public static PlayerHost GetPlayerHost( Guid guid )
+    public static PlayerHost GetPlayerHost( Guid userId )
     {
       lock ( _sync )
       {
-        return hosts[guid] as PlayerHost;
+        return hosts[userId] as PlayerHost;
       }
 
     }
@@ -74,18 +77,64 @@ namespace Ivony.TableGame.WebHost
     private class PlayerConsole : PlayerConsoleBase
     {
 
-      public Guid Guid { get; private set; }
+      public PlayerHost PlayerHost { get; private set; }
 
-      public PlayerConsole( Guid guid )
+      public PlayerConsole( PlayerHost host )
       {
-        Guid = guid;
+        PlayerHost = host;
       }
 
       public override void WriteMessage( GameMessage message )
       {
-        GameHost.Database
-          .T( "INSERT INTO Messages ( Player, Type, Date, Message ) VALUES ( {...} ) ", Guid, message.Type, message.Date, message.Message )
-          .ExecuteNonQuery();
+        PlayerHost._messages.Add( message );
+      }
+    }
+
+
+    private List<GameMessage> _messages = new List<GameMessage>();
+
+    public GameMessage[] GetMessages()
+    {
+      return _messages.ToArray();
+    }
+
+
+
+    public static HttpParameterBinding GetBinding( HttpParameterDescriptor parameterDescriptor )
+    {
+
+
+      var type = parameterDescriptor.ParameterType;
+
+      if ( type != typeof( PlayerHost ) && type != typeof( IPlayerHost ) )
+        return null;
+
+      return new ModelBinderParameterBinding( parameterDescriptor, new PlayHostBinder(), parameterDescriptor.Configuration.Services.GetValueProviderFactories() );
+    }
+
+    private class PlayHostBinder : IModelBinder
+    {
+
+
+      private static readonly string parameterName = "userId";
+
+      public bool BindModel( HttpActionContext actionContext, ModelBindingContext bindingContext )
+      {
+        var type = bindingContext.ModelType;
+        if ( type != typeof( PlayerHost ) && type != typeof( IPlayerHost ) )
+          return false;
+
+        if ( !bindingContext.ValueProvider.ContainsPrefix( parameterName ) )
+          return false;
+
+        Guid userId;
+
+        if ( !Guid.TryParse( bindingContext.ValueProvider.GetValue( parameterName ).AttemptedValue, out userId ) )
+          return false;
+
+
+        bindingContext.Model = PlayerHost.GetPlayerHost( userId );
+        return true;
       }
     }
 

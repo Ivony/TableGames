@@ -12,6 +12,12 @@ namespace Ivony.TableGame
   /// </summary>
   public sealed class Cabin
   {
+    public Cabin( Game game, int index, int health = 100 )
+    {
+      Game = game;
+      Index = index;
+      Health = health;
+    }
 
     /// <summary>
     /// 所属的游戏
@@ -47,7 +53,7 @@ namespace Ivony.TableGame
 
     internal void SetPlayer( Player player )
     {
-      if ( Player == null )
+      if ( Player != null )
         throw new InvalidOperationException();
 
       Player = player;
