@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TwelveCards
+namespace Ivony.TableGame
 {
   public abstract class Card : IEffectProvider
   {

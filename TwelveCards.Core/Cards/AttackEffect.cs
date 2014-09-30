@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TwelveCards.Cards
+namespace Ivony.TableGame.Cards
 {
   public class AttackEffect : EffectBase
   {

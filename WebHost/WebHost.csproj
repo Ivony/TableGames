@@ -104,15 +104,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TwelveCards.Core\TwelveCards.Core.csproj">
+    <ProjectReference Include="..\TwelveCards.Core\Ivony.TableGame.Core.csproj">
       <Project>{ad2e0903-517b-489b-a001-361022d015f3}</Project>
-      <Name>TwelveCards.Core</Name>
+      <Name>Ivony.TableGame.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

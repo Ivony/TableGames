@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-namespace TwelveCards
+namespace Ivony.TableGame
 {
   public sealed class Player
   {

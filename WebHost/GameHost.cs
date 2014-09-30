@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using TwelveCards.Cards;
+using Ivony.TableGame.Cards;
 
-namespace TwelveCards.WebHost
+namespace Ivony.TableGame.WebHost
 {
   public class GameHost
   {

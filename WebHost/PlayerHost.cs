@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using Ivony.Data;
 
-namespace TwelveCards.WebHost
+namespace Ivony.TableGame.WebHost
 {
 
 
@@ -64,7 +64,7 @@ namespace TwelveCards.WebHost
     /// <summary>
     /// 获取玩家控制台，用于给玩家显示消息
     /// </summary>
-    public PlayerConsoleBase PlayerConsole
+    public PlayerConsoleBase Console
     {
       get { return _console; }
     }
@@ -81,24 +81,10 @@ namespace TwelveCards.WebHost
         Guid = guid;
       }
 
-      public override void WriteMessage( string message )
+      public override void WriteMessage( GameMessage message )
       {
         GameHost.Database
-          .T( "INSERT INTO Messages ( Player, Type, Date, Message ) VALUES ( {...} ) ", Guid, "Message", DateTime.UtcNow, message )
-          .ExecuteNonQuery();
-      }
-
-      public override void WriteWarning( string message )
-      {
-        GameHost.Database
-          .T( "INSERT INTO Messages ( Player, Type, Date, Message ) VALUES ( {...} ) ", Guid, "System", DateTime.UtcNow, message )
-          .ExecuteNonQuery();
-      }
-
-      public override void WriteSystemInfo( string message )
-      {
-        GameHost.Database
-          .T( "INSERT INTO Messages ( Player, Type, Date, Message ) VALUES ( {...} ) ", Guid, "Warning", DateTime.UtcNow, message )
+          .T( "INSERT INTO Messages ( Player, Type, Date, Message ) VALUES ( {...} ) ", Guid, message.Type, message.Date, message.Message )
           .ExecuteNonQuery();
       }
     }

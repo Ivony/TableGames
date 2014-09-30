@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwelveCards.Core", "TwelveCards.Core\TwelveCards.Core.csproj", "{AD2E0903-517B-489B-A001-361022D015F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.Core", "TwelveCards.Core\Ivony.TableGame.Core.csproj", "{AD2E0903-517B-489B-A001-361022D015F3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebHost", "WebHost\WebHost.csproj", "{AB3B2046-645A-4736-A79C-71E62A18B9E7}"
 EndProject
