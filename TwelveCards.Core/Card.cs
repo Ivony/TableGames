@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Ivony.TableGame
 {
-  public abstract class Card : IEffectProvider
+  public abstract class Card
   {
 
     public abstract string Name { get; }
@@ -15,7 +15,5 @@ namespace Ivony.TableGame
 
 
 
-
-    public abstract EffectBase GetEffect( Player player, Cabin target );
   }
 }

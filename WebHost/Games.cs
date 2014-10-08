@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Ivony.TableGame.Cards;
 using System.Collections;
+using Ivony.TableGame.SimpleGames;
 
 namespace Ivony.TableGame.WebHost
 {
-  public class GameHost
+  public class Games
   {
 
     public static SqlDbExecutor Database = SqlServer.FromConfiguration( "Database" );
@@ -19,15 +19,15 @@ namespace Ivony.TableGame.WebHost
     private static Hashtable _games = new Hashtable();
 
 
-    public static Game GetOrCreateGame( string name )
+    public static IGameHost GetOrCreateGame( string name )
     {
 
-      Game game;
+      IGameHost game;
 
       lock ( _sync )
       {
 
-        game = _games[name] as Game;
+        game = _games[name] as IGameHost;
 
         if ( game == null )
         {
@@ -36,14 +36,14 @@ namespace Ivony.TableGame.WebHost
         }
       }
 
-
-      game.Initialize();
       return game;
     }
 
-    private static Game CreateGame( string name )
+    private static IGameHost CreateGame( string name )
     {
-      return new TwelveCardsGame( name );
+      var game = new SimpleGame( name );
+      game.Initialize();
+      return new WebGameHost<SimpleGame>( game );
     }
   }
 }

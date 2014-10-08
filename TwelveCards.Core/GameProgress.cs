@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame
 {
-  public class GameProgress
+  public abstract class GameProgress
   {
 
 
-    internal GameProgress( Game game )
+    protected GameProgress( Game game )
     {
       Game = game;
     }
@@ -18,11 +18,8 @@ namespace Ivony.TableGame
 
     public Game Game { get; private set; }
 
-    public void NextStep()
-    {
+    public abstract Task<bool> NextStep();
 
-
-    }
 
   }
 }

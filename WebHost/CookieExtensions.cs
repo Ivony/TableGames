@@ -17,7 +17,7 @@ namespace Ivony.TableGame.WebHost
       if ( cookie == null )
         return null;
 
-      return cookie.Cookies.Select( item => item.Value ).FirstOrDefault();
+      return cookie.Cookies.Where( item => item.Name == cookieName ).Select( item => item.Value ).FirstOrDefault();
     }
 
 

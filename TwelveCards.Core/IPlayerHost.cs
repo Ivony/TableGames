@@ -12,5 +12,12 @@ namespace Ivony.TableGame
 
     PlayerConsoleBase Console { get; }
 
+
+    void JoinedGame( GamePlayer player );
+
+    void LeavedGame();
+
+    GamePlayer GetPlayer();
+
   }
 }

@@ -18,15 +18,15 @@ namespace Ivony.TableGame.WebHost
     public object Game( string name )
     {
 
-      var game = GameHost.GetOrCreateGame( name );
-      lock ( game.SyncRoot )
-      {
-        if ( game.GameState != GameState.NotStarted )
-          return "游戏已经开始无法加入";
+      var game = Games.GetOrCreateGame( name );
 
-        game.TryJoinGame( PlayerHost );
+      string reason;
+
+      if ( game.TryJoinGame( PlayerHost, out reason ) )
         return "OK";
-      }
+
+      return "加入游戏失败，" + reason;
+
     }
 
 
@@ -36,20 +36,13 @@ namespace Ivony.TableGame.WebHost
     public object Messages( HttpRequestMessage request )
     {
 
-
-      int index;
-      if ( !int.TryParse( request.Headers.GetCookieValue( messageIndexCookieKey ), out index ) )
-        index = 0;
-
-      var messages = PlayerHost.GetMessages( index );
-      index += messages.Length;
-
-      var response = new HttpResponseMessage();
-
-      response.Headers.SetCookieValue( messageIndexCookieKey, index.ToString() );
-      
-
-      return response;
+      var time = DateTime.UtcNow;
+      var messages = PlayerHost.GetMessages();
+      return new
+      {
+        Messages = messages,
+        TimeStamp = time.Ticks,
+      };
     }
 
 
@@ -58,7 +51,7 @@ namespace Ivony.TableGame.WebHost
     {
       get
       {
-        return (PlayerHost) ControllerContext.RequestContext.RouteData.Values[PlayerHostHttpHandler.playerRouteKey];
+        return (PlayerHost) ControllerContext.Request.Properties[PlayerHostHttpHandler.playerKey];
       }
     }
 

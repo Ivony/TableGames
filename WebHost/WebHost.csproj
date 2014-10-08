@@ -89,13 +89,14 @@
     <Compile Include="CookieExtensions.cs" />
     <Compile Include="GameHostController.cs" />
     <Compile Include="PlayerHostHttpHandler.cs" />
-    <Compile Include="GameHost.cs" />
+    <Compile Include="Games.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="JsonContentNegotiator.cs" />
     <Compile Include="PlayerHost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebGameHost.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -107,6 +108,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Ivony.TableGame.SimpleGame\Ivony.TableGame.SimpleGames.csproj">
+      <Project>{e3c44ea2-517e-46d1-8bfa-d4d40a319e90}</Project>
+      <Name>Ivony.TableGame.SimpleGames</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TwelveCards.Core\Ivony.TableGame.Core.csproj">
       <Project>{ad2e0903-517b-489b-a001-361022d015f3}</Project>
       <Name>Ivony.TableGame.Core</Name>

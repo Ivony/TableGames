@@ -11,5 +11,8 @@ namespace Ivony.TableGame
 
     public abstract void WriteMessage( GameMessage message );
 
+
+    public abstract string ReadLine( string prompt );
+
   }
 }

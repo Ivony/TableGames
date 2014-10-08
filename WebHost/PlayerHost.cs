@@ -74,6 +74,49 @@ namespace Ivony.TableGame.WebHost
 
 
 
+    /// <summary>
+    /// 若已经加入某个游戏，则获取游戏中的玩家对象
+    /// </summary>
+    public GamePlayer Player { get; private set; }
+
+
+    public GamePlayer GetPlayer()
+    {
+      return Player;
+    }
+
+    /// <summary>
+    /// 玩家已经加入游戏
+    /// </summary>
+    /// <param name="player"></param>
+    public void JoinedGame( GamePlayer player )
+    {
+
+      lock ( _sync )
+      {
+        if ( Player != null )
+          throw new InvalidOperationException( "玩家当前已经在另一个游戏，无法加入游戏" );
+
+        Player = player;
+      }
+    }
+
+
+    /// <summary>
+    /// 玩家已经从游戏中释放
+    /// </summary>
+    public void LeavedGame()
+    {
+      lock ( _sync )
+      {
+        Player = null;
+      }
+    }
+
+
+
+
+
     private class PlayerConsole : PlayerConsoleBase
     {
 
@@ -88,12 +131,17 @@ namespace Ivony.TableGame.WebHost
       {
         PlayerHost._messages.Add( message );
       }
+
+      public override string ReadLine( string prompt )
+      {
+        throw new NotImplementedException();
+      }
     }
 
 
     private List<GameMessage> _messages = new List<GameMessage>();
 
-    public GameMessage[] GetMessages( int startIndex = 0)
+    public GameMessage[] GetMessages( int startIndex = 0 )
     {
 
       return _messages.Skip( startIndex ).ToArray();
@@ -105,7 +153,6 @@ namespace Ivony.TableGame.WebHost
     {
       return Guid.ToString();
     }
-
 
   }
 

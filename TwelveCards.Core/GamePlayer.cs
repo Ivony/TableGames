@@ -6,26 +6,17 @@ using System.Text;
 
 namespace Ivony.TableGame
 {
-  public sealed class Player
+  public abstract class GamePlayer
   {
 
-    internal Player( string codeName, Cabin cabin, IPlayerHost host )
+    protected GamePlayer( string codeName, IGameHost gameHost, IPlayerHost playerHost )
     {
 
       CodeName = codeName;
-      Cabin = cabin;
-      Host = host;
-
+      PlayerHost = playerHost;
+      GameHost = gameHost;
     }
 
-
-
-    public Game Game { get { return Cabin.Game; } }
-
-    /// <summary>
-    /// 玩家所处的舱位
-    /// </summary>
-    public Cabin Cabin { get; private set; }
 
 
     /// <summary>
@@ -33,10 +24,17 @@ namespace Ivony.TableGame
     /// </summary>
     public string CodeName { get; private set; }
 
+
     /// <summary>
-    /// 玩家控制台，用于显示游戏信息
+    /// 游戏宿主对象，用于记录游戏的状态和
     /// </summary>
-    public IPlayerHost Host { get; private set; }
+    public IGameHost GameHost { get; private set; }
+
+
+    /// <summary>
+    /// 玩家宿主对象，用于显示游戏信息和接受玩家输入
+    /// </summary>
+    public IPlayerHost PlayerHost { get; private set; }
 
 
     /// <summary>
@@ -48,7 +46,7 @@ namespace Ivony.TableGame
 
     public void WriteMessage( GameMessage message )
     {
-      Host.Console.WriteMessage( message );
+      PlayerHost.Console.WriteMessage( message );
     }
     public void WriteMessage( string message )
     {

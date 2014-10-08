@@ -14,7 +14,7 @@ namespace Ivony.TableGame.WebHost
 
 
     public static readonly string userTokenKey = "user-token";
-    public static readonly string playerRouteKey = "player";
+    public static readonly string playerKey = "player";
 
     protected override async Task<HttpResponseMessage> SendAsync( HttpRequestMessage request, CancellationToken cancellationToken )
     {
@@ -29,13 +29,13 @@ namespace Ivony.TableGame.WebHost
       else
         player = PlayerHost.GetPlayerHost( userId ) ?? PlayerHost.CreatePlayerHost();
 
-      request.GetRequestContext().RouteData.Values.Add( "player", player );
+      request.Properties[playerKey] = player;
 
 
       var response = await base.SendAsync( request, cancellationToken );
 
 
-      response.Headers.AddCookies( new[] { new CookieHeaderValue( userTokenKey, player.Guid.ToString() ) { Path = request.GetRequestContext().VirtualPathRoot } } );
+      response.Headers.SetCookieValue( userTokenKey, player.Guid.ToString(), request.GetRequestContext().VirtualPathRoot );
       return response;
     }
 
