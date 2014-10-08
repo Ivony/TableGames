@@ -141,10 +141,10 @@ namespace Ivony.TableGame.WebHost
 
     private List<GameMessage> _messages = new List<GameMessage>();
 
-    public GameMessage[] GetMessages( int startIndex = 0 )
+    public GameMessage[] GetMessages( long timeStamp = 0 )
     {
 
-      return _messages.Skip( startIndex ).ToArray();
+      return _messages.SkipWhile( item => item.Date.Ticks <= timeStamp ).ToArray();
     }
 
 

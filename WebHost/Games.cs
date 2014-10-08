@@ -19,15 +19,15 @@ namespace Ivony.TableGame.WebHost
     private static Hashtable _games = new Hashtable();
 
 
-    public static IGameHost GetOrCreateGame( string name )
+    public static WebGameHost<SimpleGame> GetOrCreateGame( string name )
     {
 
-      IGameHost game;
+      WebGameHost<SimpleGame> game;
 
       lock ( _sync )
       {
 
-        game = _games[name] as IGameHost;
+        game = _games[name] as WebGameHost<SimpleGame>;
 
         if ( game == null )
         {
@@ -39,7 +39,7 @@ namespace Ivony.TableGame.WebHost
       return game;
     }
 
-    private static IGameHost CreateGame( string name )
+    private static WebGameHost<SimpleGame> CreateGame( string name )
     {
       var game = new SimpleGame( name );
       game.Initialize();

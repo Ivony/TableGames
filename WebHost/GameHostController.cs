@@ -22,22 +22,20 @@ namespace Ivony.TableGame.WebHost
 
       string reason;
 
-      if ( game.TryJoinGame( PlayerHost, out reason ) )
-        return "OK";
 
-      return "加入游戏失败，" + reason;
+      game.JoinGame( PlayerHost );
+      return RedirectToRoute( "Default", new { controller = "GameHost", action = "Messages" } );
 
     }
 
 
-    private static string messageIndexCookieKey = "messageIndex";
 
     [HttpGet]
-    public object Messages( HttpRequestMessage request )
+    public object Messages( HttpRequestMessage request, long timeStamp = 0 )
     {
 
       var time = DateTime.UtcNow;
-      var messages = PlayerHost.GetMessages();
+      var messages = PlayerHost.GetMessages( timeStamp );
       return new
       {
         Messages = messages,

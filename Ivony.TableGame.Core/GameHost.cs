@@ -29,7 +29,7 @@ namespace Ivony.TableGame
       get { return Game.GameState; }
     }
 
-    public bool TryJoinGame( IPlayerHost playerHost, out string reason )
+    public virtual bool TryJoinGame( IPlayerHost playerHost, out string reason )
     {
       var player = playerHost.GetPlayer();
       reason = null;

@@ -12,6 +12,18 @@ namespace Ivony.TableGame.WebHost
 
     public WebGameHost( TGame game ) : base( game ) { }
 
+
+
+    public void JoinGame( IPlayerHost player )
+    {
+      string reason;
+      if ( !TryJoinGame( player, out reason ) )
+        player.Console.WriteMessage( new SystemMessage( string.Format( "加入游戏 \"{0}\" 失败，原因为： {1}", Game.Name, reason ) ) );
+
+    }
+
+
+
     protected override async Task Run( GameProgress progress )
     {
       while ( true )
