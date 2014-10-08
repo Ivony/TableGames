@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.Core", "TwelveCards.Core\Ivony.TableGame.Core.csproj", "{AD2E0903-517B-489B-A001-361022D015F3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebHost", "WebHost\WebHost.csproj", "{AB3B2046-645A-4736-A79C-71E62A18B9E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.ConsoleClient", "Ivony.TableGame.ConsoleClient\Ivony.TableGame.ConsoleClient.csproj", "{20ABE1F8-1000-49D9-9F02-134E33F6C3D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.SimpleGames", "Ivony.TableGame.SimpleGame\Ivony.TableGame.SimpleGames.csproj", "{E3C44EA2-517E-46D1-8BFA-D4D40A319E90}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.Core", "Ivony.TableGame.Core\Ivony.TableGame.Core.csproj", "{AD2E0903-517B-489B-A001-361022D015F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.SimpleGames", "Ivony.TableGame.SimpleGames\Ivony.TableGame.SimpleGames.csproj", "{E3C44EA2-517E-46D1-8BFA-D4D40A319E90}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AD2E0903-517B-489B-A001-361022D015F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AD2E0903-517B-489B-A001-361022D015F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AD2E0903-517B-489B-A001-361022D015F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AD2E0903-517B-489B-A001-361022D015F3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AB3B2046-645A-4736-A79C-71E62A18B9E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AB3B2046-645A-4736-A79C-71E62A18B9E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB3B2046-645A-4736-A79C-71E62A18B9E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -29,6 +25,10 @@ Global
 		{20ABE1F8-1000-49D9-9F02-134E33F6C3D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20ABE1F8-1000-49D9-9F02-134E33F6C3D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20ABE1F8-1000-49D9-9F02-134E33F6C3D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD2E0903-517B-489B-A001-361022D015F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD2E0903-517B-489B-A001-361022D015F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD2E0903-517B-489B-A001-361022D015F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD2E0903-517B-489B-A001-361022D015F3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E3C44EA2-517E-46D1-8BFA-D4D40A319E90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E3C44EA2-517E-46D1-8BFA-D4D40A319E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3C44EA2-517E-46D1-8BFA-D4D40A319E90}.Release|Any CPU.ActiveCfg = Release|Any CPU

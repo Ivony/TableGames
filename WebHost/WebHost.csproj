@@ -108,16 +108,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ivony.TableGame.SimpleGame\Ivony.TableGame.SimpleGames.csproj">
-      <Project>{e3c44ea2-517e-46d1-8bfa-d4d40a319e90}</Project>
-      <Name>Ivony.TableGame.SimpleGames</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\TwelveCards.Core\Ivony.TableGame.Core.csproj">
+    <ProjectReference Include="..\Ivony.TableGame.Core\Ivony.TableGame.Core.csproj">
       <Project>{ad2e0903-517b-489b-a001-361022d015f3}</Project>
       <Name>Ivony.TableGame.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Ivony.TableGame.SimpleGames\Ivony.TableGame.SimpleGames.csproj">
+      <Project>{e3c44ea2-517e-46d1-8bfa-d4d40a319e90}</Project>
+      <Name>Ivony.TableGame.SimpleGames</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

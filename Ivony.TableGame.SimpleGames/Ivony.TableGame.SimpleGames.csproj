@@ -45,7 +45,7 @@
     <Compile Include="SimpleGameProgress.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TwelveCards.Core\Ivony.TableGame.Core.csproj">
+    <ProjectReference Include="..\Ivony.TableGame.Core\Ivony.TableGame.Core.csproj">
       <Project>{ad2e0903-517b-489b-a001-361022d015f3}</Project>
       <Name>Ivony.TableGame.Core</Name>
     </ProjectReference>
