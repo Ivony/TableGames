@@ -20,9 +20,6 @@ namespace Ivony.TableGame.WebHost
 
       var game = Games.GetOrCreateGame( name );
 
-      string reason;
-
-
       game.JoinGame( PlayerHost );
       return RedirectToRoute( "Default", new { controller = "GameHost", action = "Messages" } );
 

@@ -12,6 +12,19 @@ namespace Ivony.TableGame.SimpleGames
       : base( codeName, gameHost, playerHost )
     {
 
+      Health = 100;
+
+    }
+
+
+
+    /// <summary>
+    /// 生命值
+    /// </summary>
+    public int Health
+    {
+      get;
+      internal set;
     }
 
   }

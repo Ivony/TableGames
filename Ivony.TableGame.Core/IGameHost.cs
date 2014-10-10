@@ -19,7 +19,7 @@ namespace Ivony.TableGame
     bool TryJoinGame( IPlayerHost player, out string reason );
 
 
-    void Start();
+    Task Run();
 
 
     object SyncRoot { get; }

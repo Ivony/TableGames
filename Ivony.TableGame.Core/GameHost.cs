@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame
 {
-  public abstract class GameHost<TGame> : IGameHost where TGame : Game
+  public abstract class GameHost : IGameHost
   {
 
 
-    protected GameHost( TGame game )
+    protected GameHost( Game game )
     {
       Game = game;
     }
 
 
 
-    protected TGame Game { get; private set; }
+    protected Game Game { get; private set; }
 
 
 
@@ -71,7 +71,7 @@ namespace Ivony.TableGame
 
     }
 
-    public void Start()
+    public Task Run()
     {
       lock ( SyncRoot )
       {
@@ -79,18 +79,11 @@ namespace Ivony.TableGame
           Game.Initialize();
       }
 
-      Run( Game.StartGame() ).ContinueWith( task => Release() );
+
+      return Game.Run();
     }
 
-    private void Release()
-    {
-      lock ( SyncRoot )
-      {
-        Game.Release();
-      }
-    }
 
-    protected abstract Task Run( GameProgress progress );
 
 
 

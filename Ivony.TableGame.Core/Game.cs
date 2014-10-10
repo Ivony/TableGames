@@ -146,10 +146,10 @@ namespace Ivony.TableGame
     public GameState GameState { get; private set; }
 
     /// <summary>
-    /// 开始游戏
+    /// 运行游戏
     /// </summary>
     /// <returns></returns>
-    public virtual GameProgress StartGame()
+    public virtual Task Run()
     {
 
       lock ( SyncRoot )
@@ -158,11 +158,16 @@ namespace Ivony.TableGame
           throw new InvalidOperationException();
 
         GameState = GameState.Running;
-        return StartGameCore();
+
+        return RunGame();
       }
     }
 
-    protected virtual GameProgress StartGameCore()
+    /// <summary>
+    /// 派生类实现此方法运行游戏
+    /// </summary>
+    /// <returns></returns>
+    protected virtual Task RunGame()
     {
       throw new NotImplementedException();
     }
@@ -187,6 +192,15 @@ namespace Ivony.TableGame
     protected virtual void InitializeCore()
     { }
 
+
+
+
+    protected void EnsureGameRunning()
+    {
+      if ( GameState != GameState.Running )
+        throw new InvalidOperationException( "游戏状态错误，不在运行状态" );
+
+    }
 
 
 

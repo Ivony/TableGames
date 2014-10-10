@@ -39,10 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttackCard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleGame.cs" />
     <Compile Include="SimpleGamePlayer.cs" />
-    <Compile Include="SimpleGameProgress.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ivony.TableGame.Core\Ivony.TableGame.Core.csproj">

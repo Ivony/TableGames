@@ -10,60 +10,41 @@ namespace Ivony.TableGame
   /// <summary>
   /// 定义一个发牌机，按照指定概率随机发牌
   /// </summary>
-  public sealed class CardDealer
+  public abstract class CardDealer
   {
 
 
-
-    private List<RegisteredCard> list = new List<RegisteredCard>();
-
-    private class RegisteredCard
+    protected CardDealer()
     {
-
-      public RegisteredCard( Func<Card> cardCreator, int probability )
-      {
-        CardCreator = cardCreator;
-        Probability = probability;
-      }
-
-      public Func<Card> CardCreator { get; private set; }
-
-      public int Probability { get; private set; }
-    }
-
-
-    /// <summary>
-    /// 注册一种卡牌
-    /// </summary>
-    /// <typeparam name="T">要注册的卡牌类型</typeparam>
-    /// <param name="probability">出现概率</param>
-    public void RegisterCard<T>( Func<T> creator, int probability ) where T : Card
-    {
-
-      list.Add( new RegisteredCard( creator, probability ) );
+      Random = new Random( DateTime.Now.Millisecond );
 
     }
 
-    Random random = new Random( DateTime.Now.Millisecond );
+    protected Random Random { get; private set; }
+
+
 
     /// <summary>
     /// 随机发一张卡牌
     /// </summary>
     /// <returns>发出的卡牌</returns>
-    public Card Deal()
+    public abstract Card DealCard();
+
+
+    public Card[] DealCards( int amount )
     {
-      var n = random.Next( list.Sum( item => item.Probability ) );
 
-      foreach ( var item in list )
-      {
-        n -= item.Probability;
-        if ( n <= 0 )
-          return item.CardCreator();
-      }
+      if ( amount <= 0 )
+        return new Card[0];
 
-      throw new InvalidOperationException();
+
+      var cards = new Card[amount];
+      for ( int i = 0; i < amount; i++ )
+        cards[i] = DealCard();
+
+
+      return cards;
+
     }
-
-
   }
 }

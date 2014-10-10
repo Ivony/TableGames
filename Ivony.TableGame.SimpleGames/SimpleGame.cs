@@ -14,7 +14,17 @@ namespace Ivony.TableGame.SimpleGames
     private string[] names = new[] { "张三", "李四", "王五" };
 
 
-    public SimpleGame( string name ) : base( name ) { }
+    public SimpleGame( string name )
+      : base( name )
+    {
+
+      var dealer = new UnlimitedCardDealer();
+      dealer.RegisterCard( () => new AttackCard(), 10 );
+      dealer.RegisterBlankCard( 10 );
+
+
+      CardDealer = dealer;
+    }
 
 
     protected override GamePlayer TryJoinGameCore( IGameHost gameHost, IPlayerHost playerHost )
@@ -36,10 +46,23 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
-    protected override GameProgress StartGameCore()
+
+
+    protected CardDealer CardDealer { get; private set; }
+
+
+    internal void DealCards()
     {
-      return new SimpleGameProgress( this );
+      EnsureGameRunning();
+
+
+      foreach ( var player in Players )
+      {
+        player.AddCard( CardDealer.DealCards( 5 - player.Cards.Length ) );
+      }
+
     }
+
 
   }
 }
