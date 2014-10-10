@@ -149,7 +149,7 @@ namespace Ivony.TableGame
     /// 运行游戏
     /// </summary>
     /// <returns></returns>
-    public virtual Task Run()
+    public virtual async Task Run()
     {
 
       lock ( SyncRoot )
@@ -158,9 +158,10 @@ namespace Ivony.TableGame
           throw new InvalidOperationException();
 
         GameState = GameState.Running;
-
-        return RunGame();
       }
+
+      await Task.Yield();
+      await RunGame();
     }
 
     /// <summary>

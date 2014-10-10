@@ -38,7 +38,7 @@ namespace Ivony.TableGame.SimpleGames
     {
       lock ( SyncRoot )
       {
-        if ( PlayerCollection.Count == 3 )
+        if ( PlayerCollection.Count == 2 )
           return null;
 
 
@@ -47,6 +47,10 @@ namespace Ivony.TableGame.SimpleGames
         var player = new SimpleGamePlayer( name, gameHost, playerHost );
 
         PlayerCollection.Add( player );
+
+        if ( PlayerCollection.Count == 2 )
+          Run();
+        
         return player;
 
       }
