@@ -9,6 +9,9 @@ using System.Web.Http.ModelBinding;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Runtime.Remoting.Messaging;
 
 namespace Ivony.TableGame.WebHost
 {
@@ -116,6 +119,56 @@ namespace Ivony.TableGame.WebHost
 
 
 
+    /// <summary>
+    /// 获取是否正在游戏
+    /// </summary>
+    public bool Gaming
+    {
+      get { return Player != null; }
+    }
+
+
+    public bool WaitForResponse
+    {
+      get { return _responding != null; }
+    }
+
+
+
+    private Responding _responding;
+
+    private void SetResponding( Responding responding )
+    {
+      lock ( _sync )
+      {
+        if ( _responding != null )
+          throw new InvalidOperationException();
+
+        _responding = responding;
+      }
+    }
+
+
+    public void Response( string message )
+    {
+
+      lock ( _sync )
+      {
+        if ( _responding == null )
+        {
+          Console.WriteMessage( new SystemMessage( "未在响应窗口时间或已经超时，无法再接收消息" ) );
+          return;
+        }
+
+
+        _responding.OnResponse( message );
+        _responding = null;
+
+      }
+
+    }
+
+
 
 
     private class PlayerConsole : PlayerConsoleBase
@@ -133,11 +186,40 @@ namespace Ivony.TableGame.WebHost
         PlayerHost._messages.Add( message );
       }
 
-      public override Task<string> ReadLine( string prompt )
+      public override async Task<string> ReadLine( string prompt )
       {
-        throw new NotImplementedException();
+
+        WriteMessage( new SystemMessage( prompt ) );
+
+        return await WaitResponse();
+      }
+
+      private async Task<string> WaitResponse()
+      {
+
+        var responding = new Responding();
+        PlayerHost.SetResponding( responding );
+
+        return await responding.Task;
+
+
       }
     }
+
+
+
+    private class Responding
+    {
+      private TaskCompletionSource<string> taskSource = new TaskCompletionSource<string>();
+
+      public Task<string> Task { get { return taskSource.Task; } }
+
+      public void OnResponse( string message )
+      {
+        taskSource.SetResult( message );
+      }
+    }
+
 
 
     private List<GameMessage> _messages = new List<GameMessage>();
@@ -169,6 +251,7 @@ namespace Ivony.TableGame.WebHost
     {
       return Guid.ToString();
     }
+
 
   }
 

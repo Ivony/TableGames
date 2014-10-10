@@ -34,16 +34,41 @@ namespace Ivony.TableGame.WebHost
         PlayerHost.SetMessageIndex( 0 );
 
 
-
-      var player = PlayerHost.Player;
-
       return new
       {
-        GameInformation = player == null ? null : player.GetGameInformation(),
+
+        Gaming = PlayerHost.Gaming,
+        WaitForResponse = PlayerHost.WaitForResponse,
+
+        GameInformation = GetGameInformation(),
         Messages = PlayerHost.GetMessages(),
       };
     }
 
+
+    [HttpPost]
+    public object Response( string message = null )
+    {
+
+      PlayerHost.Response( message );
+      return "OK";
+
+    }
+
+    private object GetGameInformation()
+    {
+
+      var player = PlayerHost.Player;
+
+      if ( player == null )
+        return null;
+
+      return new
+      {
+        Name = player.GameHost.Game.Name,
+        Data = player.GetGameInformation(),
+      };
+    }
 
 
     public PlayerHost PlayerHost

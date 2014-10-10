@@ -45,11 +45,6 @@ namespace Ivony.TableGame.ConsoleClient
 
     private static async Task Process( HttpClient client )
     {
-      Console.Write( "请输入要加入的游戏的名称：" );
-      var name = Console.ReadLine();
-
-
-      await client.GetAsync( host + "Game?name=" + name );
 
 
       while ( true )
@@ -63,6 +58,24 @@ namespace Ivony.TableGame.ConsoleClient
           Console.WriteLine( "[{0}] {1}", message.Date, message.Message );
 
         }
+
+
+
+        if ( status.Gaming == false )
+        {
+          Console.Write( "您当前尚未加入游戏，请输入要加入的游戏的名称：" );
+          var name = Console.ReadLine();
+
+          await client.GetAsync( host + "Game?name=" + name );
+          continue;
+        }
+
+        if ( status.WaitForResponse == true )
+        {
+          var message = Console.ReadLine();
+          await SendResponse( client, message );
+          continue;
+        }
       }
     }
 
@@ -72,6 +85,16 @@ namespace Ivony.TableGame.ConsoleClient
 
       return JObject.Parse( await response.Content.ReadAsStringAsync() );
     }
+
+    private static async Task SendResponse( HttpClient client, string message )
+    {
+
+      var data = new FormUrlEncodedContent( new[] { new KeyValuePair<string, string>( "message", message ) } );
+      var response = await client.PostAsync( host + "Response", data );
+      return;
+    }
+
+
 
   }
 }
