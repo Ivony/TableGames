@@ -40,8 +40,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttackCard.cs" />
+    <Compile Include="PlayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimpleGame.cs" />
+    <Compile Include="SimpleGameCard.cs" />
     <Compile Include="SimpleGamePlayer.cs" />
   </ItemGroup>
   <ItemGroup>

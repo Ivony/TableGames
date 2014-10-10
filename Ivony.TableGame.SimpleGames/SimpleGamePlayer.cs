@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames
 {
@@ -27,5 +28,25 @@ namespace Ivony.TableGame.SimpleGames
       internal set;
     }
 
+
+    public async Task Play()
+    {
+
+      var command = ParseCommand( await PlayerHost.Console.ReadLine( "请出牌" ) );
+
+    }
+
+
+
+    public override object GetGameInformation()
+    {
+      return null;
+    }
+
+
+    private PlayCommand ParseCommand( string commandText )
+    {
+      throw new NotImplementedException();
+    }
   }
 }

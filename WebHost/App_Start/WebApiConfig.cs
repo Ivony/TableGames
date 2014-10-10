@@ -19,7 +19,7 @@ namespace Ivony.TableGame.WebHost
 
 
       // Web API 路由
-      config.Routes.MapHttpRoute( name: "Default", routeTemplate: "{action}", defaults: new { controller = "GameHost", action = "Messages" } );
+      config.Routes.MapHttpRoute( name: "Default", routeTemplate: "{action}", defaults: new { controller = "GameHost", action = "Status" } );
     }
   }
 }

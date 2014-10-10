@@ -21,22 +21,26 @@ namespace Ivony.TableGame.WebHost
       var game = Games.GetOrCreateGame( name );
 
       game.JoinGame( PlayerHost );
-      return RedirectToRoute( "Default", new { controller = "GameHost", action = "Messages" } );
+      return "OK";
 
     }
 
 
 
     [HttpGet]
-    public object Messages( HttpRequestMessage request, long timeStamp = 0 )
+    public object Status( HttpRequestMessage request, string messageMode = null )
     {
+      if ( messageMode == "all" )
+        PlayerHost.SetMessageIndex( 0 );
 
-      var time = DateTime.UtcNow;
-      var messages = PlayerHost.GetMessages( timeStamp );
+
+
+      var player = PlayerHost.Player;
+
       return new
       {
-        Messages = messages,
-        TimeStamp = time.Ticks,
+        GameInformation = player == null ? null : player.GetGameInformation(),
+        Messages = PlayerHost.GetMessages(),
       };
     }
 

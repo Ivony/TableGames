@@ -16,6 +16,10 @@ namespace Ivony.TableGame
 
     GameState GameState { get; }
 
+
+    Game Game { get; }
+
+
     bool TryJoinGame( IPlayerHost player, out string reason );
 
 

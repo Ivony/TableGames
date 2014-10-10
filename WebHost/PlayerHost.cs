@@ -8,6 +8,7 @@ using Ivony.Data;
 using System.Web.Http.ModelBinding;
 using System.Web.Http;
 using System.Web.Http.Controllers;
+using System.Threading.Tasks;
 
 namespace Ivony.TableGame.WebHost
 {
@@ -132,7 +133,7 @@ namespace Ivony.TableGame.WebHost
         PlayerHost._messages.Add( message );
       }
 
-      public override string ReadLine( string prompt )
+      public override Task<string> ReadLine( string prompt )
       {
         throw new NotImplementedException();
       }
@@ -141,10 +142,25 @@ namespace Ivony.TableGame.WebHost
 
     private List<GameMessage> _messages = new List<GameMessage>();
 
-    public GameMessage[] GetMessages( long timeStamp = 0 )
-    {
 
-      return _messages.SkipWhile( item => item.Date.Ticks <= timeStamp ).ToArray();
+    private int index = 0;
+
+    internal void SetMessageIndex( int messageIndex )
+    {
+      index = messageIndex;
+    }
+
+
+    internal int LastMesageIndex
+    {
+      get;
+      private set;
+    }
+
+    public GameMessage[] GetMessages()
+    {
+      LastMesageIndex = _messages.Count;
+      return _messages.GetRange( index, LastMesageIndex - index ).ToArray();
     }
 
 

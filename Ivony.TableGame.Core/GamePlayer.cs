@@ -70,6 +70,10 @@ namespace Ivony.TableGame
 
 
 
+    public abstract object GetGameInformation();
+
+
+
     /// <summary>
     /// 新增卡牌
     /// </summary>

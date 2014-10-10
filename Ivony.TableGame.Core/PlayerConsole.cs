@@ -12,7 +12,7 @@ namespace Ivony.TableGame
     public abstract void WriteMessage( GameMessage message );
 
 
-    public abstract string ReadLine( string prompt );
+    public abstract Task<string> ReadLine( string prompt );
 
   }
 }

@@ -27,6 +27,13 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
+
+    protected SimpleGamePlayer[] Players
+    {
+      get { return base.Players.Cast<SimpleGamePlayer>().ToArray(); }
+    }
+
+
     protected override GamePlayer TryJoinGameCore( IGameHost gameHost, IPlayerHost playerHost )
     {
       lock ( SyncRoot )
@@ -64,5 +71,25 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
+
+    protected override async Task RunGame()
+    {
+
+      AnnounceSystemMessage( "游戏开始" );
+
+      while ( true )
+      {
+        DealCards();
+
+
+        foreach ( SimpleGamePlayer player in Players )
+        {
+          await player.Play();
+
+          if ( Players.Any( item => item.Health <= 0 ) )
+            return;
+        }
+      }
+    }
   }
 }

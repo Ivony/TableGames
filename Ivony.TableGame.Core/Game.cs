@@ -70,8 +70,8 @@ namespace Ivony.TableGame
 
       lock ( SyncRoot )
       {
-        foreach ( var p in Players )
-          p.WriteMessage( _message );
+        foreach ( var item in Players )
+          item.WriteMessage( _message );
       }
     }
 

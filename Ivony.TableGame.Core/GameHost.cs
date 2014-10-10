@@ -17,7 +17,7 @@ namespace Ivony.TableGame
 
 
 
-    protected Game Game { get; private set; }
+    public Game Game { get; private set; }
 
 
 
