@@ -47,21 +47,12 @@ namespace Ivony.TableGame.ConsoleClient
     {
 
 
-      DateTime lastRequestTime = DateTime.MinValue;
       while ( true )
       {
+        var lastRequestTime = DateTime.UtcNow;
 
 
-
-        var delay = lastRequestTime.AddSeconds( 1 ) - DateTime.UtcNow;
-
-        if ( delay > TimeSpan.Zero )
-          await Task.Delay( delay );
-
-
-        lastRequestTime = DateTime.UtcNow;
-
-
+        
         var status = await GetStatus( client );
 
         foreach ( var message in status.Messages )
@@ -106,11 +97,19 @@ namespace Ivony.TableGame.ConsoleClient
           continue;
         }
 
-        if ( status.WaitForResponse == true )
+        else if ( status.WaitForResponse == true )
         {
           var message = Console.ReadLine();
           await SendResponse( client, message );
           continue;
+        }
+
+        else
+        {
+          var delay = lastRequestTime.AddSeconds( 1 ) - DateTime.UtcNow;
+
+          if ( delay > TimeSpan.Zero )
+            await Task.Delay( delay );
         }
       }
     }

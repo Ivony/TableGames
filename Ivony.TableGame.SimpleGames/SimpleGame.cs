@@ -34,7 +34,7 @@ namespace Ivony.TableGame.SimpleGames
 
 
 
-    public SimpleGamePlayer[] Players
+    public new SimpleGamePlayer[] Players
     {
       get { return base.Players.Cast<SimpleGamePlayer>().ToArray(); }
     }
@@ -97,7 +97,7 @@ namespace Ivony.TableGame.SimpleGames
         AnnounceSystemMessage( "第 {0} 回合", turn++ );
 
 
-        AnnounceSystemMessage( "开始发牌", turn++ );
+        AnnounceSystemMessage( "开始发牌" );
         DealCards();
 
 
