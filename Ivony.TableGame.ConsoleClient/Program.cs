@@ -14,7 +14,7 @@ namespace Ivony.TableGame.ConsoleClient
   {
 
 
-    private static string host = "http://localhost.fiddler:32800/";
+    private static string host = "http://game.jumony.net/";
 
 
 

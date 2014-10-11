@@ -80,13 +80,11 @@ namespace Ivony.TableGame.SimpleGames
 
       int cardIndex;
 
-      if ( !int.TryParse( commandText, out cardIndex ) || cardIndex > 5 )
+      if ( !int.TryParse( commandText, out cardIndex ) || cardIndex > 5 || cardIndex < 1 )
         throw new FormatException();
 
 
-      return new PlayCommand( this, (SimpleGameCard) Cards[cardIndex], Game.Players.Where( item => item != this ).ToArray().RandomItem() );
-
-
+      return new PlayCommand( this, (SimpleGameCard) Cards[cardIndex - 1], Game.Players.Where( item => item != this ).ToArray().RandomItem() );
     }
 
     internal void RemoveCard( SimpleGameCard card )
