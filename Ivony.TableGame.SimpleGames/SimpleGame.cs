@@ -19,6 +19,7 @@ namespace Ivony.TableGame.SimpleGames
     {
 
       var dealer = new UnlimitedCardDealer();
+      dealer.RegisterCard( () => new CleanCard(), 40 );
       dealer.RegisterCard( () => new AttackCard( 1 ), 100 );
       dealer.RegisterCard( () => new AttackCard( 2 ), 80 );
       dealer.RegisterCard( () => new AttackCard( 3 ), 50 );
@@ -44,7 +45,7 @@ namespace Ivony.TableGame.SimpleGames
     {
       lock ( SyncRoot )
       {
-        if ( PlayerCollection.Count == 2 )
+        if ( PlayerCollection.Count == 3 )
           return null;
 
 
@@ -54,7 +55,7 @@ namespace Ivony.TableGame.SimpleGames
 
         PlayerCollection.Add( player );
 
-        if ( PlayerCollection.Count == 2 )
+        if ( PlayerCollection.Count == 3 )
           gameHost.Run();
 
         return player;

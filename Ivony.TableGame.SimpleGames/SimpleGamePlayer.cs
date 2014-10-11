@@ -93,5 +93,10 @@ namespace Ivony.TableGame.SimpleGames
     {
       CardCollection.Remove( card );
     }
+
+    internal void RemoveAllCard()
+    {
+      CardCollection.RemoveAll( item => true );
+    }
   }
 }
