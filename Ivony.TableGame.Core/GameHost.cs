@@ -71,7 +71,7 @@ namespace Ivony.TableGame
 
     }
 
-    public Task Run()
+    public virtual Task Run()
     {
       lock ( SyncRoot )
       {

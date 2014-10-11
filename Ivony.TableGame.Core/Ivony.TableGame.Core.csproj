@@ -57,6 +57,7 @@
     <Compile Include="GameHost.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameMessage.cs" />
+    <Compile Include="GameMessageExtensions.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="IGameHost.cs" />
     <Compile Include="IPersistableGameHost.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="GamePlayer.cs" />
     <Compile Include="PlayerConsole.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomExtensions.cs" />
     <Compile Include="UnlimitedCardDealer.cs" />
   </ItemGroup>
   <ItemGroup>

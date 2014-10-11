@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Formatting;
@@ -15,6 +17,10 @@ namespace Ivony.TableGame.WebHost
       config.Services.Replace( typeof( IContentNegotiator ), new JsonContentNegotiator() );
 
       config.MessageHandlers.Add( new PlayerHostHttpHandler() );
+
+      JsonSerializerSettings jsonSetting = new JsonSerializerSettings();
+      jsonSetting.Converters.Add( new StringEnumConverter() );
+      config.Formatters.JsonFormatter.SerializerSettings = jsonSetting;
 
 
 

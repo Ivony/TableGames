@@ -28,6 +28,7 @@ namespace Ivony.TableGame.SimpleGames
 
     public Task Execute()
     {
+      Player.RemoveCard( Card );
       return Card.Execute( Player, TargetPlayer );
     }
   }

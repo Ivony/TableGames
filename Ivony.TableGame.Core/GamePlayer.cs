@@ -53,20 +53,6 @@ namespace Ivony.TableGame
 
 
 
-    public void WriteMessage( GameMessage message )
-    {
-      PlayerHost.Console.WriteMessage( message );
-    }
-    public void WriteMessage( string message )
-    {
-      WriteMessage( new GenericMessage( GameMessageType.Info, message ) );
-    }
-
-    public void WriteMessage( string format, params object[] args )
-    {
-      WriteMessage( string.Format( CultureInfo.InvariantCulture, format, args ) );
-    }
-
 
 
 

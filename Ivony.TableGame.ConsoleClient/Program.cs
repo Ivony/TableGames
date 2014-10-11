@@ -14,7 +14,7 @@ namespace Ivony.TableGame.ConsoleClient
   {
 
 
-    private static string host = "http://localhost:32800/";
+    private static string host = "http://localhost.fiddler:32800/";
 
 
 
@@ -47,15 +47,51 @@ namespace Ivony.TableGame.ConsoleClient
     {
 
 
+      DateTime lastRequestTime = DateTime.MinValue;
       while ( true )
       {
+
+
+
+        var delay = lastRequestTime.AddSeconds( 1 ) - DateTime.UtcNow;
+
+        if ( delay > TimeSpan.Zero )
+          await Task.Delay( delay );
+
+
+        lastRequestTime = DateTime.UtcNow;
+
 
         var status = await GetStatus( client );
 
         foreach ( var message in status.Messages )
         {
 
+          switch ( (string) message.Type )
+          {
+            case "System":
+              Console.ForegroundColor = ConsoleColor.Cyan;
+              break;
+
+            case "Warning":
+              Console.ForegroundColor = ConsoleColor.DarkRed;
+              break;
+
+            case "Error":
+              Console.ForegroundColor = ConsoleColor.Red;
+              break;
+
+            case "SystemError":
+              Console.ForegroundColor = ConsoleColor.Magenta;
+              Console.BackgroundColor = ConsoleColor.DarkCyan;
+              break;
+
+
+          }
+
           Console.WriteLine( "[{0}] {1}", message.Date, message.Message );
+
+          Console.ForegroundColor = ConsoleColor.Gray;
 
         }
 
@@ -88,8 +124,7 @@ namespace Ivony.TableGame.ConsoleClient
 
     private static async Task SendResponse( HttpClient client, string message )
     {
-
-      var data = new FormUrlEncodedContent( new[] { new KeyValuePair<string, string>( "message", message ) } );
+      var data = new StringContent( message, Encoding.UTF8 );
       var response = await client.PostAsync( host + "Response", data );
       return;
     }

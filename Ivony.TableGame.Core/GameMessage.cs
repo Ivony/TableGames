@@ -48,11 +48,11 @@ namespace Ivony.TableGame
 
   public enum GameMessageType
   {
-
     Info,
     Warning,
-    System
-
+    Error,
+    System,
+    SystemError
   }
 
 }

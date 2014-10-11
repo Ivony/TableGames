@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -71,9 +72,15 @@ namespace Ivony.TableGame
       lock ( SyncRoot )
       {
         foreach ( var item in Players )
-          item.WriteMessage( _message );
+          item.PlayerHost.WriteMessage( _message );
       }
     }
+
+    public void AnnounceMessage( string format, params object[] args )
+    {
+      AnnounceMessage( string.Format( CultureInfo.InvariantCulture, format, args ) );
+    }
+
 
 
     /// <summary>
@@ -85,9 +92,14 @@ namespace Ivony.TableGame
 
       lock ( SyncRoot )
       {
-        foreach ( var p in Players )
-          p.WriteMessage( _message );
+        foreach ( var item in Players )
+          item.PlayerHost.WriteMessage( _message );
       }
+    }
+
+    public void AnnounceSystemMessage( string format, params object[] args )
+    {
+      AnnounceSystemMessage( string.Format( CultureInfo.InvariantCulture, format, args ) );
     }
 
 
@@ -121,7 +133,10 @@ namespace Ivony.TableGame
 
         var player = TryJoinGameCore( gameHost, playerHost );
         if ( player != null )
-          player.WriteMessage( new SystemMessage( string.Format( "恭喜您已经加入 {0} 游戏", Name ) ) );
+        {
+          player.PlayerHost.WriteSystemMessage( string.Format( "恭喜您已经加入 {0} 游戏，您在游戏中的代号是 {1} ", Name, player.CodeName ) );
+          AnnounceSystemMessage( "玩家 {0} 已经加入游戏", player.CodeName );
+        }
 
         return player;
       }
@@ -160,8 +175,19 @@ namespace Ivony.TableGame
         GameState = GameState.Running;
       }
 
-      await Task.Yield();
-      await RunGame();
+      try
+      {
+        await Task.Yield();
+        await RunGame();
+      }
+      catch ( Exception e )
+      {
+        AnnounceSystemMessage( "游戏出现异常，详细信息为： {0}", e );
+      }
+      finally
+      {
+        Release();
+      }
     }
 
     /// <summary>

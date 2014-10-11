@@ -128,6 +128,9 @@ namespace Ivony.TableGame.WebHost
     }
 
 
+    /// <summary>
+    /// 获取是否正在等待玩家响应
+    /// </summary>
     public bool WaitForResponse
     {
       get { return _responding != null; }
@@ -156,7 +159,7 @@ namespace Ivony.TableGame.WebHost
       {
         if ( _responding == null )
         {
-          Console.WriteMessage( new SystemMessage( "未在响应窗口时间或已经超时，无法再接收消息" ) );
+          this.WriteSystemMessage( "未在响应窗口时间或已经超时，无法再接收消息" );
           return;
         }
 
@@ -191,7 +194,7 @@ namespace Ivony.TableGame.WebHost
 
         WriteMessage( new SystemMessage( prompt ) );
 
-        return await WaitResponse();
+        return await WaitResponse().ConfigureAwait( false );
       }
 
       private async Task<string> WaitResponse()

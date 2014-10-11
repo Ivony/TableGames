@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
@@ -47,8 +48,11 @@ namespace Ivony.TableGame.WebHost
 
 
     [HttpPost]
-    public object Response( string message = null )
+
+    public async Task<object> Response( HttpRequestMessage request )
     {
+
+      var message = await request.Content.ReadAsStringAsync();
 
       PlayerHost.Response( message );
       return "OK";
