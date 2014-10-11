@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ivony.TableGame.ConsoleClient
@@ -52,64 +53,77 @@ namespace Ivony.TableGame.ConsoleClient
         var lastRequestTime = DateTime.UtcNow;
 
 
-        
-        var status = await GetStatus( client );
-
-        foreach ( var message in status.Messages )
+        try
         {
 
-          switch ( (string) message.Type )
+          var status = await GetStatus( client );
+
+          foreach ( var message in status.Messages )
           {
-            case "System":
-              Console.ForegroundColor = ConsoleColor.Cyan;
-              break;
 
-            case "Warning":
-              Console.ForegroundColor = ConsoleColor.DarkRed;
-              break;
+            switch ( (string) message.Type )
+            {
+              case "System":
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                break;
 
-            case "Error":
-              Console.ForegroundColor = ConsoleColor.Red;
-              break;
+              case "Warning":
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                break;
 
-            case "SystemError":
-              Console.ForegroundColor = ConsoleColor.Magenta;
-              Console.BackgroundColor = ConsoleColor.DarkCyan;
-              break;
+              case "Error":
+                Console.ForegroundColor = ConsoleColor.Red;
+                break;
 
+              case "SystemError":
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.BackgroundColor = ConsoleColor.DarkCyan;
+                break;
+
+
+            }
+
+            Console.WriteLine( "[{0}] {1}", message.Date, message.Message );
+
+            Console.ForegroundColor = ConsoleColor.Gray;
 
           }
 
-          Console.WriteLine( "[{0}] {1}", message.Date, message.Message );
 
+
+          if ( status.Gaming == false )
+          {
+            Console.Write( "您当前尚未加入游戏，请输入要加入的游戏的名称：" );
+            var name = Console.ReadLine();
+
+            await client.GetAsync( host + "Game?name=" + name );
+            continue;
+          }
+
+          else if ( status.WaitForResponse == true )
+          {
+            var message = Console.ReadLine();
+            await SendResponse( client, message );
+            continue;
+          }
+
+          else
+          {
+            var delay = lastRequestTime.AddSeconds( 1 ) - DateTime.UtcNow;
+
+            if ( delay > TimeSpan.Zero )
+              await Task.Delay( delay );
+          }
+        }
+        catch ( Exception e )
+        {
+          Console.ForegroundColor = ConsoleColor.Red;
+          Console.WriteLine( "出现异常：" );
+          Console.WriteLine( e );
+          Console.WriteLine( "5秒后尝试重新连接服务器" );
+          Thread.Sleep( new TimeSpan( 0, 0, 5 ) );
+          Console.WriteLine( "尝试重新连接" );
           Console.ForegroundColor = ConsoleColor.Gray;
-
-        }
-
-
-
-        if ( status.Gaming == false )
-        {
-          Console.Write( "您当前尚未加入游戏，请输入要加入的游戏的名称：" );
-          var name = Console.ReadLine();
-
-          await client.GetAsync( host + "Game?name=" + name );
-          continue;
-        }
-
-        else if ( status.WaitForResponse == true )
-        {
-          var message = Console.ReadLine();
-          await SendResponse( client, message );
-          continue;
-        }
-
-        else
-        {
-          var delay = lastRequestTime.AddSeconds( 1 ) - DateTime.UtcNow;
-
-          if ( delay > TimeSpan.Zero )
-            await Task.Delay( delay );
         }
       }
     }
