@@ -41,22 +41,27 @@ namespace Ivony.TableGame.SimpleGames
     public async Task Play()
     {
 
-    begin:
 
-      try
+      do
       {
-        var command = ParseCommand( await PlayerHost.Console.ReadLine( "请出牌" ) );
-
-        if ( command != null )
-          await command.Execute();
+        try
+        {
 
 
-      }
-      catch ( FormatException e )
-      {
-        PlayerHost.WriteMessage( "输入的命令格式错误" );
-        goto begin;
-      }
+          PlayerHost.WriteMessage( "HP:{0} 卡牌:{1}", Health, string.Join( ", ", Cards.Select( item => item.Name ) ) );
+          var command = ParseCommand( await PlayerHost.Console.ReadLine( "请出牌" ) );
+
+          if ( command != null )
+            await command.Execute();
+
+
+        }
+        catch ( FormatException e )
+        {
+          PlayerHost.WriteMessage( "输入的命令格式错误" );
+          continue;
+        }
+      } while ( false );
 
     }
 
@@ -96,5 +101,10 @@ namespace Ivony.TableGame.SimpleGames
     {
       CardCollection.RemoveAll( item => true );
     }
+
+    /// <summary>
+    /// 玩家当前是否有盾防效果
+    /// </summary>
+    public bool Shield { get; set; }
   }
 }

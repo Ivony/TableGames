@@ -25,7 +25,7 @@ namespace Ivony.TableGame.SimpleGames
 
     public override string Name
     {
-      get { return string.Format( "攻击 {0}", Point ); }
+      get { return string.Format( "攻击{0}", Point ); }
     }
 
     public override string Description
@@ -35,6 +35,15 @@ namespace Ivony.TableGame.SimpleGames
 
     public async override Task Execute( SimpleGamePlayer user, SimpleGamePlayer target )
     {
+
+      if ( target.Shield )
+      {
+        target.Shield = false;
+        user.GameHost.Game.AnnounceMessage( "{0} 对 {1} 发起攻击，但被防御，攻击无效", user.CodeName, target.CodeName, Point, target.Health );
+        target.PlayerHost.WriteWarningMessage( "您受到攻击，因为防御的缘故，此次攻击无效，但防御效果已经解除", Point, target.Health );
+        return;
+      }
+
       target.Health -= Point;
       user.GameHost.Game.AnnounceMessage( "{0} 对 {1} 发起攻击，{1} 生命值减少 {2} 点，目前还有 {3} 点", user.CodeName, target.CodeName, Point, target.Health );
       target.PlayerHost.WriteWarningMessage( "您受到攻击，生命值减少 {0} 点，目前生命值 {1}", Point, target.Health );

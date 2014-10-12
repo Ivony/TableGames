@@ -20,14 +20,16 @@ namespace Ivony.TableGame.SimpleGames
 
       var dealer = new UnlimitedCardDealer();
       dealer.RegisterCard( () => new CleanCard(), 40 );
-      dealer.RegisterCard( () => new AttackCard( 1 ), 100 );
+      dealer.RegisterCard( () => new ShieldCard(), 20 );
+      dealer.RegisterCard( () => new AttackCard( 1 ), 50 );
       dealer.RegisterCard( () => new AttackCard( 2 ), 80 );
       dealer.RegisterCard( () => new AttackCard( 3 ), 50 );
       dealer.RegisterCard( () => new AttackCard( 4 ), 20 );
       dealer.RegisterCard( () => new AttackCard( 5 ), 10 );
       dealer.RegisterCard( () => new AttackCard( 6 ), 5 );
       dealer.RegisterCard( () => new AttackCard( 7 ), 3 );
-      dealer.RegisterCard( () => new AttackCard( 8 ), 1 );
+      dealer.RegisterCard( () => new AttackCard( 8 ), 2 );
+      dealer.RegisterCard( () => new AttackCard( 9 ), 1 );
 
 
       CardDealer = dealer;
@@ -77,8 +79,6 @@ namespace Ivony.TableGame.SimpleGames
       foreach ( var player in Players )
       {
         player.AddCard( CardDealer.DealCards( 5 - player.Cards.Length ) );
-
-        player.PlayerHost.WriteMessage( "您目前手上的卡牌有： {0}", string.Join( ", ", player.Cards.Select( item => item.Name ) ) );
       }
 
     }
