@@ -39,13 +39,13 @@ namespace Ivony.TableGame.SimpleGames
       if ( target.Shield )
       {
         target.Shield = false;
-        user.GameHost.Game.AnnounceMessage( "{0} 对 {1} 发起攻击，但被防御，攻击无效", user.CodeName, target.CodeName, Point, target.Health );
-        target.PlayerHost.WriteWarningMessage( "您受到攻击，因为防御的缘故，此次攻击无效，但防御效果已经解除", Point, target.Health );
+        user.GameHost.Game.AnnounceMessage( "{0} 对 {1} 发起攻击，但被防御，攻击无效", user.CodeName, target.CodeName );
+        target.PlayerHost.WriteWarningMessage( "您使用盾牌阻挡了 {0} 点攻击，防御效果已经失效", Point );
         return;
       }
 
       target.Health -= Point;
-      user.GameHost.Game.AnnounceMessage( "{0} 对 {1} 发起攻击，{1} 生命值减少 {2} 点，目前还有 {3} 点", user.CodeName, target.CodeName, Point, target.Health );
+      user.GameHost.Game.AnnounceMessage( "{0} 对 {1} 发起攻击。", user.CodeName, target.CodeName );
       target.PlayerHost.WriteWarningMessage( "您受到攻击，生命值减少 {0} 点，目前生命值 {1}", Point, target.Health );
     }
   }

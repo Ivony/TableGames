@@ -40,6 +40,7 @@ namespace Ivony.TableGame.WebHost
 
         Gaming = PlayerHost.Gaming,
         WaitForResponse = PlayerHost.WaitForResponse,
+        PromptText = PlayerHost.PromptText,
 
         GameInformation = GetGameInformation(),
         Messages = PlayerHost.GetMessages(),

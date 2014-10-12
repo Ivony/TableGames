@@ -20,7 +20,7 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
-    protected SimpleGame Game
+    public SimpleGame Game
     {
       get;
       private set;
@@ -42,12 +42,14 @@ namespace Ivony.TableGame.SimpleGames
     {
 
 
+      DealCards();
+
+      GameHost.Game.AnnounceMessage( "轮到 {0} 出牌", CodeName );
+      PlayerHost.WriteMessage( "HP:{0} 卡牌:{1}", Health, string.Join( ", ", Cards.Select( item => item.Name ) ) );
+
+
       do
       {
-        GameHost.Game.AnnounceMessage( "轮到 {0} 出牌", CodeName );
-        PlayerHost.WriteMessage( "HP:{0} 卡牌:{1}", Health, string.Join( ", ", Cards.Select( item => item.Name ) ) );
-
-
         PlayCommand command = null;
         string commandText = null;
 
@@ -123,5 +125,10 @@ namespace Ivony.TableGame.SimpleGames
     /// 玩家当前是否有盾防效果
     /// </summary>
     public bool Shield { get; set; }
+
+    public void DealCards()
+    {
+      CardCollection.AddRange( Game.CardDealer.DealCards( 5 - Cards.Length ) );
+    }
   }
 }

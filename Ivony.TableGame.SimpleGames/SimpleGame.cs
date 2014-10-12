@@ -69,20 +69,7 @@ namespace Ivony.TableGame.SimpleGames
 
 
 
-    protected CardDealer CardDealer { get; private set; }
-
-
-    internal void DealCards()
-    {
-      EnsureGameRunning();
-
-
-      foreach ( var player in Players )
-      {
-        player.AddCard( CardDealer.DealCards( 5 - player.Cards.Length ) );
-      }
-
-    }
+    protected internal CardDealer CardDealer { get; private set; }
 
 
 
@@ -100,8 +87,7 @@ namespace Ivony.TableGame.SimpleGames
 
 
         AnnounceSystemMessage( "开始发牌" );
-        DealCards();
-
+        
 
         foreach ( SimpleGamePlayer player in Players )
         {

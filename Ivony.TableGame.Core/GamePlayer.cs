@@ -53,20 +53,6 @@ namespace Ivony.TableGame
 
 
 
-
-
-
     public abstract object GetGameInformation();
-
-
-
-    /// <summary>
-    /// 新增卡牌
-    /// </summary>
-    /// <param name="cards">新增的卡牌</param>
-    public void AddCard( params Card[] cards )
-    {
-      CardCollection.AddRange( cards.Where( item => item != null ) );
-    }
   }
 }

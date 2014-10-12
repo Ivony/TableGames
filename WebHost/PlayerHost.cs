@@ -128,19 +128,45 @@ namespace Ivony.TableGame.WebHost
     }
 
 
+
+
+    protected Responding GetResponding()
+    {
+      lock ( _sync )
+      {
+        if ( _responding != null && _responding.Canceled )
+          _responding = null;
+
+
+        return _responding;
+      }
+    }
+
+
     /// <summary>
     /// 获取是否正在等待玩家响应
     /// </summary>
     public bool WaitForResponse
     {
+      get { return GetResponding() != null; }
+    }
+
+
+
+    /// <summary>
+    /// 获取输入提示信息，当等待用户响应时，显示该提示信息给用户。
+    /// </summary>
+    public string PromptText
+    {
       get
       {
-        lock ( _sync )
-        {
-          if ( _responding != null && _responding.Canceled )
-            _responding = null;
-        }
-        return _responding != null;
+        var responding = GetResponding();
+
+        if ( responding == null )
+          return null;
+
+        else
+          return responding.PromptText;
       }
     }
 
@@ -199,18 +225,16 @@ namespace Ivony.TableGame.WebHost
 
       public override async Task<string> ReadLine( string prompt )
       {
-        WriteMessage( new SystemMessage( prompt ) );
-
-        return await WaitResponse().ConfigureAwait( false );
+        return await WaitResponse( prompt ).ConfigureAwait( false );
       }
 
-      private async Task<string> WaitResponse()
+      private async Task<string> WaitResponse( string prompt )
       {
 
-        var responding = new Responding();
+        var responding = new Responding( prompt );
         PlayerHost.SetResponding( responding );
 
-        return await responding.Task;
+        return await responding.RespondingTask;
 
 
       }
@@ -223,13 +247,17 @@ namespace Ivony.TableGame.WebHost
 
       private TaskCompletionSource<string> taskSource = new TaskCompletionSource<string>();
 
-      public Responding()
+      public Responding( string prompt, TimeSpan? timeout = null )
       {
+
+        timeout = timeout ?? TimeSpan.FromMinutes( 1 );
+
+        PromptText = prompt;
 
         System.Threading.Tasks.Task.Run( () =>
         {
 
-          Thread.Sleep( new TimeSpan( 0, 1, 0 ) );
+          Thread.Sleep( timeout.Value );
           taskSource.TrySetCanceled();
           Canceled = true;
         } );
@@ -239,7 +267,11 @@ namespace Ivony.TableGame.WebHost
       public bool Canceled { get; private set; }
 
 
-      public Task<string> Task { get { return taskSource.Task; } }
+      public Task<string> RespondingTask { get { return taskSource.Task; } }
+
+
+      public string PromptText { get; private set; }
+
 
       public void OnResponse( string message )
       {
