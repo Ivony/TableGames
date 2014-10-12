@@ -39,8 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AngelCard.cs" />
     <Compile Include="AttackCard.cs" />
     <Compile Include="CleanCard.cs" />
+    <Compile Include="DevilCard.cs" />
     <Compile Include="PeepCard.cs" />
     <Compile Include="PlayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

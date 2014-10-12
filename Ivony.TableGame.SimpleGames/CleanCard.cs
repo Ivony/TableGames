@@ -11,7 +11,7 @@ namespace Ivony.TableGame.SimpleGames
     public async override Task Execute( SimpleGamePlayer user, SimpleGamePlayer target )
     {
       user.RemoveAllCard();
-      user.GameHost.Game.AnnounceMessage( "{0} 使用了一张特殊卡牌", user.CodeName );
+      user.Game.AnnounceMessage( "{0} 使用了一张特殊卡牌", user.CodeName );
       user.PlayerHost.WriteMessage( "您手上的卡牌已经清空，请等待下次发牌" );
     }
 

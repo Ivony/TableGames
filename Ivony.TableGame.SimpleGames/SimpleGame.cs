@@ -19,18 +19,21 @@ namespace Ivony.TableGame.SimpleGames
     {
 
       var dealer = new UnlimitedCardDealer();
+      dealer.RegisterCard( () => new AngelCard(), 3 );
+      dealer.RegisterCard( () => new DevilCard(), 25 );
       dealer.RegisterCard( () => new CleanCard(), 40 );
       dealer.RegisterCard( () => new ShieldCard(), 20 );
-      dealer.RegisterCard( () => new PeepCard(), 7 );
+      dealer.RegisterCard( () => new PeepCard(), 15 );
       dealer.RegisterCard( () => new AttackCard( 1 ), 50 );
       dealer.RegisterCard( () => new AttackCard( 2 ), 80 );
       dealer.RegisterCard( () => new AttackCard( 3 ), 50 );
       dealer.RegisterCard( () => new AttackCard( 4 ), 20 );
       dealer.RegisterCard( () => new AttackCard( 5 ), 10 );
-      dealer.RegisterCard( () => new AttackCard( 6 ), 5 );
-      dealer.RegisterCard( () => new AttackCard( 7 ), 3 );
-      dealer.RegisterCard( () => new AttackCard( 8 ), 2 );
-      dealer.RegisterCard( () => new AttackCard( 9 ), 1 );
+      dealer.RegisterCard( () => new AttackCard( 6 ), 7 );
+      dealer.RegisterCard( () => new AttackCard( 7 ), 5 );
+      dealer.RegisterCard( () => new AttackCard( 8 ), 3 );
+      dealer.RegisterCard( () => new AttackCard( 9 ), 2 );
+      dealer.RegisterCard( () => new AttackCard( 10 ), 1 );
 
 
       CardDealer = dealer;

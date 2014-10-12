@@ -45,7 +45,14 @@ namespace Ivony.TableGame.SimpleGames
       DealCards();
 
       GameHost.Game.AnnounceMessage( "轮到 {0} 出牌", CodeName );
-      PlayerHost.WriteMessage( "HP:{0} 卡牌:{1}", Health, string.Join( ", ", Cards.Select( item => item.Name ) ) );
+      if ( DevilState )
+      {
+        var point = 10;
+        DevilState = false;
+        Health += point;
+        PlayerHost.WriteMessage( "您赢得了恶魔的契约，增加 HP {0} 点", point );
+      }
+      PlayerHost.WriteMessage( "HP:{0,-3}{1}{2} 卡牌:{3}", Health, ShieldState ? "S" : " ", AngelState ? "A" : DevilState ? "D" : " ", string.Join( ", ", Cards.Select( item => item.Name ) ) );
 
 
       do
@@ -124,8 +131,23 @@ namespace Ivony.TableGame.SimpleGames
     /// <summary>
     /// 玩家当前是否有盾防效果
     /// </summary>
-    public bool Shield { get; set; }
+    public bool ShieldState { get; set; }
 
+
+    /// <summary>
+    /// 玩家当前是否有天使护身
+    /// </summary>
+    public bool AngelState { get; set; }
+
+    /// <summary>
+    /// 玩家当前是否有恶魔赌注
+    /// </summary>
+    public bool DevilState { get; set; }
+
+
+    /// <summary>
+    /// 给玩家发牌
+    /// </summary>
     public void DealCards()
     {
       CardCollection.AddRange( Game.CardDealer.DealCards( 5 - Cards.Length ) );

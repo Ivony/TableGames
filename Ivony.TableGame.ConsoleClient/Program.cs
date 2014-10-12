@@ -103,6 +103,7 @@ namespace Ivony.TableGame.ConsoleClient
 
           else if ( status.WaitForResponse == true )
           {
+            Console.Beep();
             Console.Write( status.PromptText );
             var message = Console.ReadLine();
             await SendResponse( client, message );
