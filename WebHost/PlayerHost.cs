@@ -191,7 +191,6 @@ namespace Ivony.TableGame.WebHost
 
       public override async Task<string> ReadLine( string prompt )
       {
-
         WriteMessage( new SystemMessage( prompt ) );
 
         return await WaitResponse().ConfigureAwait( false );
@@ -213,7 +212,23 @@ namespace Ivony.TableGame.WebHost
 
     private class Responding
     {
+
       private TaskCompletionSource<string> taskSource = new TaskCompletionSource<string>();
+
+      public Responding()
+      {
+
+        System.Threading.Tasks.Task.Run( () =>
+        {
+
+          Thread.Sleep( new TimeSpan( 0, 1, 0 ) );
+          taskSource.TrySetCanceled();
+
+        } );
+
+
+      }
+
 
       public Task<string> Task { get { return taskSource.Task; } }
 

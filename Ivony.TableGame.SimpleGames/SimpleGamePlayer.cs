@@ -48,15 +48,25 @@ namespace Ivony.TableGame.SimpleGames
         {
 
 
+          PlayCommand command = null;
+
           PlayerHost.WriteMessage( "HP:{0} 卡牌:{1}", Health, string.Join( ", ", Cards.Select( item => item.Name ) ) );
-          var command = ParseCommand( await PlayerHost.Console.ReadLine( "请出牌" ) );
+          try
+          {
+            command = ParseCommand( await PlayerHost.Console.ReadLine( "请出牌" ) );
+          }
+          catch ( TaskCanceledException )
+          {
+            PlayerHost.WriteWarningMessage( "操作已超时，该回合不执行任何操作" );
+            return;
+          }
 
           if ( command != null )
             await command.Execute();
 
 
         }
-        catch ( FormatException e )
+        catch ( FormatException )
         {
           PlayerHost.WriteMessage( "输入的命令格式错误" );
           continue;
