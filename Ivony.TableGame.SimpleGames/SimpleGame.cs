@@ -87,14 +87,18 @@ namespace Ivony.TableGame.SimpleGames
 
 
         AnnounceSystemMessage( "开始发牌" );
-        
+
 
         foreach ( SimpleGamePlayer player in Players )
         {
           await player.Play();
 
-          if ( Players.Any( item => item.Health <= 0 ) )
+          var dead = Players.FirstOrDefault( item => item.Health <= 0 );
+          if ( dead != null )
+          {
+            AnnounceSystemMessage( "玩家 {0} 已经阵亡，游戏结束", dead.CodeName );
             return;
+          }
         }
       }
     }

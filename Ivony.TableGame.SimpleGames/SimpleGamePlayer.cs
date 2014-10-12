@@ -55,7 +55,7 @@ namespace Ivony.TableGame.SimpleGames
 
         try
         {
-          commandText = await PlayerHost.Console.ReadLine( "请出牌" );
+          commandText = await PlayerHost.Console.ReadLine( "请出牌： " );
         }
         catch ( TaskCanceledException )
         {

@@ -130,7 +130,7 @@ namespace Ivony.TableGame.WebHost
 
 
 
-    protected Responding GetResponding()
+    private Responding GetResponding()
     {
       lock ( _sync )
       {
