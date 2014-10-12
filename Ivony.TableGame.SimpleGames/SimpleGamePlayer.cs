@@ -57,6 +57,7 @@ namespace Ivony.TableGame.SimpleGames
           }
           catch ( TaskCanceledException )
           {
+            Game.AnnounceSystemMessage( "{0} 操作超时", CodeName );
             PlayerHost.WriteWarningMessage( "操作已超时，该回合不执行任何操作" );
             return;
           }

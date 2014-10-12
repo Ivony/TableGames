@@ -144,7 +144,7 @@ namespace Ivony.TableGame.WebHost
     {
       lock ( _sync )
       {
-        if ( _responding != null )
+        if ( _responding != null && _responding.Canceled == false )
           throw new InvalidOperationException();
 
         _responding = responding;
@@ -223,11 +223,12 @@ namespace Ivony.TableGame.WebHost
 
           Thread.Sleep( new TimeSpan( 0, 1, 0 ) );
           taskSource.TrySetCanceled();
-
+          Canceled = true;
         } );
 
 
       }
+      public bool Canceled { get; private set; }
 
 
       public Task<string> Task { get { return taskSource.Task; } }
@@ -237,6 +238,8 @@ namespace Ivony.TableGame.WebHost
         taskSource.SetResult( message );
       }
     }
+
+
 
 
 

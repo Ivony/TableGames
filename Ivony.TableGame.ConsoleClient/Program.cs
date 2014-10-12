@@ -96,7 +96,8 @@ namespace Ivony.TableGame.ConsoleClient
             Console.Write( "您当前尚未加入游戏，请输入要加入的游戏的名称：" );
             var name = Console.ReadLine();
 
-            await client.GetAsync( host + "Game?name=" + name );
+            var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
+            await client.GetAsync( host + "Game?name=" + name, source.Token );
             continue;
           }
 
@@ -115,6 +116,12 @@ namespace Ivony.TableGame.ConsoleClient
               await Task.Delay( delay );
           }
         }
+        catch ( TaskCanceledException )
+        {
+          Console.ForegroundColor = ConsoleColor.Red;
+          Console.WriteLine( "连接服务器超时，尝试重新连接" );
+          Console.ForegroundColor = ConsoleColor.Gray;
+        }
         catch ( Exception e )
         {
           Console.ForegroundColor = ConsoleColor.Red;
@@ -130,15 +137,18 @@ namespace Ivony.TableGame.ConsoleClient
 
     private async static Task<dynamic> GetStatus( HttpClient client )
     {
-      var response = await client.GetAsync( host );
+      var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
 
+      var response = await client.GetAsync( host, source.Token );
       return JObject.Parse( await response.Content.ReadAsStringAsync() );
     }
 
     private static async Task SendResponse( HttpClient client, string message )
     {
+      var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
+
       var data = new StringContent( message, Encoding.UTF8 );
-      var response = await client.PostAsync( host + "Response", data );
+      var response = await client.PostAsync( host + "Response", data, source.Token );
       return;
     }
 
