@@ -133,7 +133,15 @@ namespace Ivony.TableGame.WebHost
     /// </summary>
     public bool WaitForResponse
     {
-      get { return _responding != null; }
+      get
+      {
+        lock ( _sync )
+        {
+          if ( _responding.Canceled )
+            _responding = null;
+        }
+        return _responding != null;
+      }
     }
 
 
@@ -144,7 +152,7 @@ namespace Ivony.TableGame.WebHost
     {
       lock ( _sync )
       {
-        if ( _responding != null && _responding.Canceled == false )
+        if ( WaitForResponse )
           throw new InvalidOperationException();
 
         _responding = responding;

@@ -137,7 +137,8 @@ namespace Ivony.TableGame.ConsoleClient
 
     private async static Task<dynamic> GetStatus( HttpClient client )
     {
-      var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
+      var source = new CancellationTokenSource();
+      source.CancelAfter( new TimeSpan( 0, 0, 10 ) );
 
       var response = await client.GetAsync( host, source.Token );
       return JObject.Parse( await response.Content.ReadAsStringAsync() );
