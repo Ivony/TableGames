@@ -20,12 +20,12 @@ namespace Ivony.TableGame.SimpleGames
 
     public override string Name
     {
-      get { throw new NotImplementedException(); }
+      get { return "窥视"; }
     }
 
     public override string Description
     {
-      get { throw new NotImplementedException(); }
+      get { return "查看其它玩家手上所有的牌"; }
     }
   }
 }
