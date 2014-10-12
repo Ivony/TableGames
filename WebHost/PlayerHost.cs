@@ -137,7 +137,7 @@ namespace Ivony.TableGame.WebHost
       {
         lock ( _sync )
         {
-          if ( _responding.Canceled )
+          if ( _responding != null && _responding.Canceled )
             _responding = null;
         }
         return _responding != null;
