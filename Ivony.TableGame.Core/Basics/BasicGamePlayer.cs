@@ -32,7 +32,7 @@ namespace Ivony.TableGame.Basics
 
 
 
-    public Task Play();
+    public abstract Task Play();
 
 
 

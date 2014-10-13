@@ -9,7 +9,7 @@ namespace Ivony.TableGame.Basics
   public abstract class BasicCard : Card
   {
 
-    public virtual Task UseCard( BasicGamePlayer user, BasicGamePlayer target );
+    public abstract Task UseCard( BasicGamePlayer user, BasicGamePlayer target );
 
 
     public virtual async Task Attack( int attackPoint, BasicGamePlayer targetPlayer )
