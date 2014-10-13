@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -15,7 +16,7 @@ namespace Ivony.TableGame.ConsoleClient
   {
 
 
-    private static string host = "http://game.jumony.net/";
+    private static string host = ConfigurationManager.AppSettings["server"] ?? "http://game.jumony.net/";
 
 
 

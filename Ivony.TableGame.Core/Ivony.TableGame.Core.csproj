@@ -52,6 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Basics\BasicGame.cs" />
+    <Compile Include="Basics\BasicGamePlayer.cs" />
+    <Compile Include="Basics\Effect.cs" />
+    <Compile Include="Basics\EffectManager.cs" />
+    <Compile Include="Basics\GlobalEffect.cs" />
+    <Compile Include="Basics\PlayerEffect.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="CardDealer.cs" />
     <Compile Include="GameHost.cs" />

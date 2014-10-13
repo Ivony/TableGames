@@ -52,7 +52,10 @@ namespace Ivony.TableGame
     public Card[] Cards { get { return CardCollection.ToArray(); } }
 
 
-
+    /// <summary>
+    /// 获取当前玩家可以看到的游戏信息
+    /// </summary>
+    /// <returns>游戏信息</returns>
     public abstract object GetGameInformation();
   }
 }
