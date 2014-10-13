@@ -27,6 +27,12 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
+    public SimpleGameCard[] Cards
+    {
+      get { return CardCollection.Cast<SimpleGameCard>().ToArray(); }
+    }
+
+
 
     /// <summary>
     /// 生命值
@@ -67,8 +73,8 @@ namespace Ivony.TableGame.SimpleGames
         catch ( TaskCanceledException )
         {
           Game.AnnounceSystemMessage( "{0} 操作超时", CodeName );
-          PlayerHost.WriteWarningMessage( "操作已超时，该回合不执行任何操作" );
-          return;
+          commandText = new[] { "1", "2", "3", "4", "5" }.RandomItem();
+          PlayerHost.WriteWarningMessage( "操作已超时，随机打出第 {0} 张牌", commandText );
         }
 
 
