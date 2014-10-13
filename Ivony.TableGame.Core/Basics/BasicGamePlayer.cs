@@ -21,10 +21,10 @@ namespace Ivony.TableGame.Basics
 
 
 
-    public Effect[] Effects { get { return EffectCollection.ToArray(); } }
+    public PlayerEffect[] Effects { get { return EffectCollection.ToArray(); } }
 
 
-    protected IList<Effect> EffectCollection
+    protected IList<PlayerEffect> EffectCollection
     {
       get;
       private set;
@@ -90,7 +90,24 @@ namespace Ivony.TableGame.Basics
 
     public void ApplyEffect( PlayerEffect effect )
     {
-      effect.Applied( this );
+
+      lock ( SyncRoot )
+      {
+        foreach ( var item in effect.GetMutexInternal( Effects ) )
+          EffectCollection.Remove( item );
+
+
+        effect.Applied( this );
+      }
     }
+
+    protected virtual void EnsureEffectsAvailables()
+    {
+      lock ( SyncRoot )
+      {
+        EffectCollection = new List<PlayerEffect>( EffectCollection.Where( item => item.IsAvailable ) );
+      }
+    }
+
   }
 }

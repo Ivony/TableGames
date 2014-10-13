@@ -24,5 +24,12 @@ namespace Ivony.TableGame.Basics
     {
       Player = player;
     }
+
+
+    internal PlayerEffect[] GetMutexInternal( PlayerEffect[] effects )
+    {
+      return GetMutexEffects( effects ).Cast<PlayerEffect>().ToArray();
+    }
+
   }
 }

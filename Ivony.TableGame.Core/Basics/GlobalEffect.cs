@@ -15,5 +15,12 @@ namespace Ivony.TableGame.Basics
     protected GlobalEffect( string name, string description, string rule ) : base( name, description, rule ) { }
 
 
+
+    internal GlobalEffect[] GetMutexInternal( GlobalEffect[] effects )
+    {
+      return GetMutexEffects( effects ).Cast<GlobalEffect>().ToArray();
+    }
+
+
   }
 }

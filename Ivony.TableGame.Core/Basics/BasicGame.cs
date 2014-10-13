@@ -57,5 +57,7 @@ namespace Ivony.TableGame.Basics
     {
       return Players[targetIndex];
     }
+
+
   }
 }

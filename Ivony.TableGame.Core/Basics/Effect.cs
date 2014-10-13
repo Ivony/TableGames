@@ -32,15 +32,10 @@ namespace Ivony.TableGame.Basics
 
 
 
-    /// <summary>
-    /// 是否允许在目标上叠加多个同类效果？
-    /// </summary>
-    public virtual bool AllowMultipleInstance { get { return false; } }
-
-    /// <summary>
-    /// 获取效果的互斥类型组，即该效果与哪些效果互斥？
-    /// </summary>
-    public virtual Type[] MutexGroup { get { return null; } }
+    protected virtual Effect[] GetMutexEffects( Effect[] effects )
+    {
+      return new Effect[0];
+    }
 
   }
 }
