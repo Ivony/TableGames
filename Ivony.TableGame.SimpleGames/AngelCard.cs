@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ivony.TableGame.Basics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,12 +9,13 @@ namespace Ivony.TableGame.SimpleGames
 {
   public class AngelCard : SimpleGameCard
   {
-    public override async Task Execute( SimpleGamePlayer user, SimpleGamePlayer target )
+
+
+    public override async Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
+      user.SpecialEffect.TrySetEffect( Effects.AngelEffect() );
       user.Game.AnnounceMessage( "{0} 使用了一张特殊卡牌", user.CodeName );
-      user.PlayerHost.WriteMessage( "天使保护你，下一回合的攻击将变成治疗" );
-      user.AngelState = true;
-      user.DevilState = false;
+      user.PlayerHost.WriteMessage( "天使保护你，下一次攻击将变成治疗" );
     }
 
     public override string Name

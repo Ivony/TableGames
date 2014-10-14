@@ -8,12 +8,11 @@ namespace Ivony.TableGame.SimpleGames
 {
   public class ShieldCard : SimpleGameCard
   {
-    public async override Task Execute( SimpleGamePlayer user, SimpleGamePlayer target )
+    public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
-      user.ShieldState = true;
+      user.DefenceEffect.TrySetEffect( Effects.ShieldEffect() );
       user.GameHost.Game.AnnounceMessage( "{0} 使用了一张特殊卡牌", user.CodeName );
       user.PlayerHost.WriteMessage( "下一次攻击将对您无效。" );
-
     }
 
     public override string Name

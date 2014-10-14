@@ -5,16 +5,21 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Ivony.TableGame;
+using Ivony.TableGame.Basics;
 
 namespace Ivony.TableGame.SimpleGames
 {
-  public class SimpleGamePlayer : GamePlayer
+  public class SimpleGamePlayer : BasicGamePlayer
   {
 
     public SimpleGamePlayer( string codeName, IGameHost gameHost, IPlayerHost playerHost )
       : base( codeName, gameHost, playerHost )
     {
       Game = (SimpleGame) gameHost.Game;
+
+      DefenceEffect = new DefenceEffectSlot();
+      SpecialEffect = new SpecialEffectSlot();
+
       Health = 100;
 
     }
@@ -43,22 +48,25 @@ namespace Ivony.TableGame.SimpleGames
       internal set;
     }
 
-
-    public async Task Play()
+    public override async Task Play()
     {
 
 
       DealCards();
 
       GameHost.Game.AnnounceMessage( "轮到 {0} 出牌", CodeName );
-      if ( DevilState )
+
+
+      if ( SpecialEffect.Effect is DevilEffect )
       {
         var point = 10;
-        DevilState = false;
+        SpecialEffect.Clear();
         Health += point;
         PlayerHost.WriteMessage( "您赢得了恶魔的契约，增加 HP {0} 点", point );
       }
-      PlayerHost.WriteMessage( "HP:{0,-3}{1}{2} 卡牌:{3}", Health, ShieldState ? "S" : " ", AngelState ? "A" : DevilState ? "D" : " ", string.Join( ", ", Cards.Select( item => item.Name ) ) );
+
+
+      PlayerHost.WriteMessage( "HP:{0,-3}{1}{2} 卡牌:{3}", Health, DefenceEffect, SpecialEffect, string.Join( ", ", Cards.Select( item => item.Name ) ) );
 
 
       do
@@ -99,6 +107,21 @@ namespace Ivony.TableGame.SimpleGames
 
 
 
+    public SpecialEffectSlot SpecialEffect
+    {
+      get;
+      private set;
+    }
+
+
+    public DefenceEffectSlot DefenceEffect
+    {
+      get;
+      private set;
+    }
+
+
+
     public override object GetGameInformation()
     {
       return new
@@ -133,22 +156,6 @@ namespace Ivony.TableGame.SimpleGames
     {
       CardCollection.RemoveAll( item => true );
     }
-
-    /// <summary>
-    /// 玩家当前是否有盾防效果
-    /// </summary>
-    public bool ShieldState { get; set; }
-
-
-    /// <summary>
-    /// 玩家当前是否有天使护身
-    /// </summary>
-    public bool AngelState { get; set; }
-
-    /// <summary>
-    /// 玩家当前是否有恶魔赌注
-    /// </summary>
-    public bool DevilState { get; set; }
 
 
     /// <summary>

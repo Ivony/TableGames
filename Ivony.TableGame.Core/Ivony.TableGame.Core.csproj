@@ -55,11 +55,8 @@
     <Compile Include="Basics\BasicCard.cs" />
     <Compile Include="Basics\BasicGame.cs" />
     <Compile Include="Basics\BasicGamePlayer.cs" />
-    <Compile Include="Basics\Effect.cs" />
-    <Compile Include="Basics\EffectManager.cs" />
-    <Compile Include="Basics\GameEvent.cs" />
-    <Compile Include="Basics\GlobalEffect.cs" />
-    <Compile Include="Basics\PlayerEffect.cs" />
+    <Compile Include="Basics\EffectBase.cs" />
+    <Compile Include="Basics\EffectSlot.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="CardDealer.cs" />
     <Compile Include="GameHost.cs" />

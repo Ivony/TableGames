@@ -6,21 +6,15 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.Basics
 {
-  public abstract class BasicCard : Card
+  public abstract class BasicCard<TPlayer> : Card where TPlayer : BasicGamePlayer
   {
 
-    public abstract Task UseCard( BasicGamePlayer user, BasicGamePlayer target );
+    public abstract Task UseCard( TPlayer user, TPlayer target );
 
 
-    public virtual async Task Attack( int attackPoint, BasicGamePlayer targetPlayer )
+    public virtual async Task Attack( int attackPoint, TPlayer targetPlayer )
     {
       targetPlayer.HealthPoint -= attackPoint;
-    }
-
-
-    public virtual async Task ApplyEffect( PlayerEffect effect, BasicGamePlayer targetPlayer )
-    {
-      targetPlayer.ApplyEffect( effect );
     }
 
 

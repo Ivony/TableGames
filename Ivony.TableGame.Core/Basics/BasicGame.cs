@@ -6,54 +6,22 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.Basics
 {
-  public class BasicGame : Game
+  public class BasicGame<TPlayer> : Game where TPlayer : BasicGamePlayer
   {
 
     public BasicGame( string name )
       : base( name )
     {
-      GlobalEffectCollection = new List<GlobalEffect>();
     }
 
 
-
-    public GlobalEffect[] GlobalEffects
+    protected TPlayer[] Players
     {
-      get
-      {
-
-        lock ( SyncRoot )
-        {
-          EnsureEffectsAvailables();
-          return GlobalEffectCollection.ToArray();
-        }
-      }
-    }
-
-    protected void EnsureEffectsAvailables()
-    {
-      lock ( SyncRoot )
-      {
-        GlobalEffectCollection = new List<GlobalEffect>( GlobalEffectCollection.Where( item => item.IsAvailable ) );
-      }
-    }
-
-    protected IList<GlobalEffect> GlobalEffectCollection
-    {
-      get;
-      private set;
+      get { return PlayerCollection.Cast<TPlayer>().ToArray(); }
     }
 
 
-
-
-    protected BasicGamePlayer[] Players
-    {
-      get { return PlayerCollection.Cast<BasicGamePlayer>().ToArray(); }
-    }
-
-
-    internal BasicGamePlayer GetPlayer( int targetIndex )
+    internal TPlayer GetPlayer( int targetIndex )
     {
       return Players[targetIndex];
     }

@@ -8,13 +8,19 @@ namespace Ivony.TableGame.Basics
 {
 
   /// <summary>
-  /// 效果管理器
+  /// 代表一个持续的效果
   /// </summary>
-  public class EffectManager
+  public abstract class EffectBase
   {
-    public EffectManager()
-    {
-    }
+
+
+
+    public abstract string Name { get; }
+
+    public abstract string Description { get; }
+
+
+
 
   }
 }

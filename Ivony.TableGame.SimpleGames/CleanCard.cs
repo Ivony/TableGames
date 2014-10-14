@@ -8,7 +8,7 @@ namespace Ivony.TableGame.SimpleGames
 {
   public class CleanCard : SimpleGameCard
   {
-    public async override Task Execute( SimpleGamePlayer user, SimpleGamePlayer target )
+    public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
       user.RemoveAllCard();
       user.Game.AnnounceMessage( "{0} 使用了一张特殊卡牌", user.CodeName );

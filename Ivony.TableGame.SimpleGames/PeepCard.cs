@@ -11,13 +11,13 @@ namespace Ivony.TableGame.SimpleGames
 
 
 
-    public async override Task Execute( SimpleGamePlayer user, SimpleGamePlayer target )
+    public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
       user.GameHost.Game.AnnounceMessage( "{0} 使用了一张特殊卡牌", user.CodeName );
       foreach ( var player in user.Game.Players.Where( item => item != user ) )
       {
         player.DealCards();
-        user.PlayerHost.WriteMessage( "{0} HP:{1,-3}{2}{3} 卡牌：{4}", player.CodeName, player.Health, player.ShieldState ? "S" : " ", player.AngelState ? "A" : player.AngelState ? "D" : " ", string.Join( ", ", player.Cards.Select( item => item.Name ) ) );
+        user.PlayerHost.WriteMessage( "{0} HP:{1,-3}{2}{3} 卡牌：{4}", player.CodeName, player.Health, player.DefenceEffect, player.SpecialEffect, string.Join( ", ", player.Cards.Select( item => item.Name ) ) );
       }
     }
 

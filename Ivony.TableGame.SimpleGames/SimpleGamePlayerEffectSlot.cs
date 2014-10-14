@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames
 {
-  public abstract class SimpleGameCard : BasicCard<SimpleGamePlayer>
+  public class SimpleGamePlayerEffectSlot : EffectSlot<SimpleGameEffect>
   {
   }
 }
