@@ -35,6 +35,7 @@ namespace Ivony.TableGame.WebHost
     private PlayerHost( Guid id )
     {
       Guid = id;
+      SyncRoot = new object();
       _console = new PlayerConsole( this );
     }
 
@@ -130,16 +131,14 @@ namespace Ivony.TableGame.WebHost
 
 
 
+    protected object SyncRoot { get; private set; }
+
+
+
     private Responding GetResponding()
     {
-      lock ( _sync )
-      {
-        if ( _responding != null && _responding.Canceled )
-          _responding = null;
 
-
-        return _responding;
-      }
+      return _responding;
     }
 
 
@@ -148,7 +147,7 @@ namespace Ivony.TableGame.WebHost
     /// </summary>
     public bool WaitForResponse
     {
-      get { return GetResponding() != null; }
+      get { return _responding != null; }
     }
 
 
@@ -160,13 +159,14 @@ namespace Ivony.TableGame.WebHost
     {
       get
       {
-        var responding = GetResponding();
+        lock ( SyncRoot )
+        {
+          if ( _responding == null )
+            return null;
 
-        if ( responding == null )
-          return null;
-
-        else
-          return responding.PromptText;
+          else
+            return _responding.PromptText;
+        }
       }
     }
 
@@ -174,22 +174,10 @@ namespace Ivony.TableGame.WebHost
 
     private Responding _responding;
 
-    private void SetResponding( Responding responding )
-    {
-      lock ( _sync )
-      {
-        if ( WaitForResponse )
-          throw new InvalidOperationException();
-
-        _responding = responding;
-      }
-    }
-
-
     public void Response( string message )
     {
 
-      lock ( _sync )
+      lock ( SyncRoot )
       {
         if ( _responding == null )
         {
@@ -199,7 +187,6 @@ namespace Ivony.TableGame.WebHost
 
 
         _responding.OnResponse( message );
-        _responding = null;
 
       }
 
@@ -223,21 +210,22 @@ namespace Ivony.TableGame.WebHost
         PlayerHost._messages.Add( message );
       }
 
-      public override async Task<string> ReadLine( string prompt, TimeSpan timeout )
+      public override async Task<string> ReadLine( string prompt, CancellationToken token )
       {
-        return await WaitResponse( prompt, timeout ).ConfigureAwait( false );
+        return await WaitResponse( prompt, token ).ConfigureAwait( false );
       }
 
-      private async Task<string> WaitResponse( string prompt, TimeSpan timeout )
+      private Task<string> WaitResponse( string prompt, CancellationToken token )
       {
-
-        var responding = new Responding( prompt, timeout );
-        PlayerHost.SetResponding( responding );
-
-        return await responding.RespondingTask;
-
-
+        return Responding.CreateResponding( PlayerHost, prompt, token ).RespondingTask;
       }
+
+
+      public override Task<IOption> Choose( string prompt, IOption[] options, CancellationToken token )
+      {
+        return ChooseResponding.CreateResponding( PlayerHost, prompt, options, token ).RespondingTask;
+      }
+
     }
 
 
@@ -247,21 +235,44 @@ namespace Ivony.TableGame.WebHost
 
       private TaskCompletionSource<string> taskSource = new TaskCompletionSource<string>();
 
-      public Responding( string prompt, TimeSpan timeout )
+
+
+      public static Responding CreateResponding( PlayerHost host, string prompt, CancellationToken token )
       {
-
-        PromptText = prompt;
-
-        System.Threading.Tasks.Task.Run( () =>
+        lock ( host.SyncRoot )
         {
+          if ( host._responding != null )
+            throw new InvalidOperationException();
 
-          Thread.Sleep( timeout );
-          taskSource.TrySetCanceled();
-          Canceled = true;
-        } );
-
+          return host._responding = new Responding( host, prompt, token );
+        }
 
       }
+
+      protected Responding( PlayerHost host, string prompt, CancellationToken token )
+      {
+        Host = host;
+        PromptText = prompt;
+
+
+        token.Register( () =>
+        {
+          taskSource.TrySetCanceled();
+          lock ( Host.SyncRoot )
+          {
+            Host._responding = null;
+          }
+        } );
+      }
+
+
+      protected PlayerHost Host
+      {
+        get;
+        private set;
+      }
+
+
       public bool Canceled { get; private set; }
 
 
@@ -271,11 +282,82 @@ namespace Ivony.TableGame.WebHost
       public string PromptText { get; private set; }
 
 
-      public void OnResponse( string message )
+      public virtual void OnResponse( string message )
       {
-        taskSource.SetResult( message );
+        lock ( Host.SyncRoot )
+        {
+          taskSource.TrySetResult( message );
+          Host._responding = null;
+        }
       }
     }
+
+
+
+    private class ChooseResponding : Responding
+    {
+
+      private IOption[] _options;
+
+      private ChooseResponding( PlayerHost host, string prompt, IOption[] options, CancellationToken token )
+        : base( host, prompt, token )
+      {
+        _options = options;
+      }
+
+      public static ChooseResponding CreateResponding( PlayerHost host, string prompt, IOption[] options, CancellationToken token )
+      {
+        lock ( host.SyncRoot )
+        {
+          if ( host._responding != null )
+            throw new InvalidOperationException();
+
+          var responding = new ChooseResponding( host, prompt, options, token );
+          host._responding = responding;
+          return responding;
+        }
+
+      }
+
+
+      private TaskCompletionSource<IOption> taskSource = new TaskCompletionSource<IOption>();
+
+
+      public new Task<IOption> RespondingTask { get { return taskSource.Task; } }
+
+
+      public override void OnResponse( string message )
+      {
+
+        IOption option;
+        if ( !TryGetOption( message, out option ) )
+        {
+          Host.WriteWarningMessage( "您输入的格式不正确，应该输入 {0} - {1} 之间的数字", 1, _options.Length );
+          return;
+        }
+
+
+        taskSource.TrySetResult( option );
+        base.OnResponse( message );
+      }
+
+      private bool TryGetOption( string text, out IOption option )
+      {
+        option = null;
+        int index;
+        if ( !int.TryParse( text, out index ) )
+          return false;
+
+        if ( index < 1 || index > _options.Length )
+          return false;
+
+        option = _options[index - 1];
+        return true;
+      }
+
+    }
+
+
 
 
 
@@ -300,8 +382,14 @@ namespace Ivony.TableGame.WebHost
 
     public GameMessage[] GetMessages()
     {
-      LastMesageIndex = _messages.Count;
-      return _messages.GetRange( index, LastMesageIndex - index ).ToArray();
+      lock ( SyncRoot )
+      {
+        LastMesageIndex = _messages.Count;
+        if ( index > LastMesageIndex )
+          return new GameMessage[0];
+
+        return _messages.GetRange( index, LastMesageIndex - index ).ToArray();
+      }
     }
 
 

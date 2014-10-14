@@ -69,7 +69,7 @@ namespace Ivony.TableGame.ConsoleClient
                 break;
 
               case "Warning":
-                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 break;
 
               case "Error":

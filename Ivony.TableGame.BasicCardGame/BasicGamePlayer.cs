@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ivony.TableGame.Basics
@@ -20,7 +21,7 @@ namespace Ivony.TableGame.Basics
 
 
 
-    public TCard[] Cards { get { return CardCollection.Cast<TCard>().ToArray(); } }
+    public new TCard[] Cards { get { return CardCollection.Cast<TCard>().ToArray(); } }
 
 
 
@@ -40,32 +41,7 @@ namespace Ivony.TableGame.Basics
 
     private async Task<TCard> CherryCard()
     {
-      do
-      {
-        string commandText = null;
-
-        commandText = await PlayerHost.Console.ReadLine( "请出牌： ", null );
-
-        if ( commandText == null )
-        {
-          GameHost.Game.AnnounceSystemMessage( "{0} 操作超时", CodeName );
-          commandText = new[] { "1", "2", "3", "4", "5" }.RandomItem();
-          PlayerHost.WriteWarningMessage( "操作超时，随机打出第 {0} 张牌", commandText );
-        }
-
-
-        int index;
-        try
-        {
-          index = ParseCardIndex( commandText );
-          return Cards[index - 1];
-        }
-        catch ( FormatException )
-        {
-          PlayerHost.WriteMessage( "输入的命令格式错误" );
-        }
-
-      } while ( true );
+      return (TCard) await PlayerHost.Console.Choose( "请出牌：", Cards, new CancellationToken() );
     }
 
     private int ParseCardIndex( string text )

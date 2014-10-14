@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ivony.TableGame.Basics
+namespace Ivony.TableGame
 {
-  public abstract class BasicCard : Card, IOption
+  public interface IOption
   {
 
+    string Name { get; }
+
+    string Description { get; }
 
   }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ivony.TableGame
@@ -13,13 +14,21 @@ namespace Ivony.TableGame
 
 
 
+    public abstract Task<string> ReadLine( string prompt, CancellationToken token );
+
+    public Task<string> ReadLine( string prompt, TimeSpan timeout )
+    {
+      if ( timeout < TimeSpan.Zero )
+        throw new ArgumentOutOfRangeException( "timeout" );
+
+      return ReadLine( prompt, new CancellationTokenSource( timeout ).Token );
+    }
+
 
     public Task<string> ReadLine( string prompt )
     {
       return ReadLine( prompt, DefaultTimeout );
     }
-
-    public abstract Task<string> ReadLine( string prompt, TimeSpan timeout );
 
 
     public Task<string> ReadLine( string prompt, string defaultValue )
@@ -37,8 +46,24 @@ namespace Ivony.TableGame
       {
         return defaultValue;
       }
+    }
+    public async Task<string> ReadLine( string prompt, string defaultValue, CancellationToken token )
+    {
+      try
+      {
+        return await ReadLine( prompt, token );
+      }
+      catch ( TaskCanceledException )
+      {
+        return defaultValue;
+      }
 
     }
+
+
+
+    public abstract Task<IOption> Choose( string prompt, IOption[] options, CancellationToken token );
+
 
 
 
