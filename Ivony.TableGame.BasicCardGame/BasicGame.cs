@@ -57,13 +57,7 @@ namespace Ivony.TableGame.Basics
         {
           await player.Play( token );
 
-
-          if ( token.IsCancellationRequested )
-          {
-            AnnounceSystemMessage( "游戏结束" );
-            return;
-          }
-
+          token.ThrowIfCancellationRequested();
 
           var dead = Players.FirstOrDefault( item => item.HealthPoint <= 0 );
           if ( dead != null )
@@ -78,15 +72,16 @@ namespace Ivony.TableGame.Basics
 
 
 
-    public void ReleasePlayer( GamePlayer player )
+    public void PlayerQuitted( GamePlayer player )
     {
 
       lock ( SyncRoot )
       {
-        if ( !PlayerCollection.Contains( player ) )//不存在这个玩家，则忽略。
+        if ( !PlayerCollection.Contains( player ) )                          //不存在这个玩家，则忽略。
           return;
 
-        GameCancellationSource.Cancel();
+        AnnounceSystemMessage( "玩家 {0} 强行退出了游戏", player.CodeName );
+        GameCancellationSource.Cancel();                                     //当有玩家退出时，强行终止游戏
       }
     }
 

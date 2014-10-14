@@ -197,7 +197,7 @@ namespace Ivony.TableGame
       }
       catch ( TaskCanceledException )
       {
-        AnnounceSystemMessage( "游戏结束" );
+        AnnounceSystemMessage( "游戏结束。" );
       }
       catch ( Exception e )
       {

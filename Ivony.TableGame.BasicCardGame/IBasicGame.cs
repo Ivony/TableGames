@@ -12,6 +12,6 @@ namespace Ivony.TableGame.Basics
     CardDealer CardDealer { get; }
 
 
-    void ReleasePlayer( GamePlayer player );
+    void PlayerQuitted( GamePlayer player );
   }
 }

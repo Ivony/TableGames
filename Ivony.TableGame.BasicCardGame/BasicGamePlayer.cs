@@ -109,10 +109,10 @@ namespace Ivony.TableGame.Basics
 
     internal new IBasicGame InternalGame { get { return (IBasicGame) GameHost.Game; } }
 
-    public override void Release()
+    public override void QuitGame()
     {
-      InternalGame.ReleasePlayer( this );
-      base.Release();
+      InternalGame.PlayerQuitted( this );
+      base.QuitGame();
     }
 
 

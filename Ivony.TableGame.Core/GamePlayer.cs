@@ -61,7 +61,7 @@ namespace Ivony.TableGame
     /// <returns>游戏信息</returns>
     public abstract object GetGameInformation();
 
-    public virtual void Release()
+    public virtual void QuitGame()
     {
 
     }

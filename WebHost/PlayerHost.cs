@@ -43,7 +43,7 @@ namespace Ivony.TableGame.WebHost
     public static PlayerHost CreatePlayerHost()
     {
 
-      lock ( _sync )
+      lock ( globalSyncRoot )
       {
 
         var host = new PlayerHost( Guid.NewGuid() );
@@ -53,13 +53,13 @@ namespace Ivony.TableGame.WebHost
       }
     }
 
-    private static object _sync = new object();
+    private static object globalSyncRoot = new object();
     private static Hashtable hosts = new Hashtable();
 
 
     public static PlayerHost GetPlayerHost( Guid userId )
     {
-      lock ( _sync )
+      lock ( globalSyncRoot )
       {
         return hosts[userId] as PlayerHost;
       }
@@ -97,7 +97,7 @@ namespace Ivony.TableGame.WebHost
     public void JoinedGame( GamePlayer player )
     {
 
-      lock ( _sync )
+      lock ( globalSyncRoot )
       {
         if ( Player != null )
           throw new InvalidOperationException( "玩家当前已经在另一个游戏，无法加入游戏" );
@@ -112,9 +112,12 @@ namespace Ivony.TableGame.WebHost
     /// </summary>
     public void QuitGame()
     {
-      lock ( _sync )
+      lock ( SyncRoot )
       {
-        Player.Release();
+        if ( Player == null )
+          throw new InvalidOperationException( "玩家当前未加入任何游戏，无法从游戏中退出" );
+
+        Player.QuitGame();
         Player = null;
       }
     }
@@ -132,7 +135,7 @@ namespace Ivony.TableGame.WebHost
 
 
 
-    protected object SyncRoot { get; private set; }
+    public object SyncRoot { get; private set; }
 
 
     private class PlayerConsole : PlayerConsoleBase
@@ -161,9 +164,9 @@ namespace Ivony.TableGame.WebHost
       }
 
 
-      public override Task<IOption> Choose( string prompt, IOption[] options, CancellationToken token )
+      public override async Task<IOption> Choose( string prompt, IOption[] options, CancellationToken token )
       {
-        return ChooseResponding.CreateResponding( PlayerHost, prompt, options, token ).RespondingTask;
+        return await ChooseResponding.CreateResponding( PlayerHost, prompt, options, token ).RespondingTask.ConfigureAwait( false );
       }
 
     }

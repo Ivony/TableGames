@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Ivony.TableGame;
 using Ivony.TableGame.Basics;
 using Ivony.TableGame.SimpleGames.Rules;
+using System.Threading;
 
 namespace Ivony.TableGame.SimpleGames
 {
@@ -29,7 +30,7 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
-    protected override async Task OnBeforePlay()
+    protected override async Task OnBeforePlay( CancellationToken token )
     {
       DealCards();
 
@@ -42,7 +43,7 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
-    protected override async Task PlayCard( SimpleGameCard card )
+    protected override async Task PlayCard( SimpleGameCard card, CancellationToken token )
     {
       await card.UseCard( this, Game.Players.Where( item => item != this ).ToArray().RandomItem() );
       CardCollection.Remove( card );

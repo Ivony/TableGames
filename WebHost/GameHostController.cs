@@ -27,6 +27,20 @@ namespace Ivony.TableGame.WebHost
     }
 
 
+    [HttpGet]
+    public object QuitGame()
+    {
+      lock ( PlayerHost.SyncRoot )
+      {
+        if ( !PlayerHost.Gaming )
+          return "玩家未加入任何游戏";
+
+        PlayerHost.QuitGame();
+        return "OK";
+      }
+    }
+
+
 
     [HttpGet]
     public object Status( HttpRequestMessage request, string messageMode = null )
