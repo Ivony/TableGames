@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ivony.TableGame.Basics
 {
-  public abstract class BasicGame<TPlayer, TCard> : Game, IBasicGame
+  public abstract class BasicGame<TPlayer, TCard> : GameBase, IBasicGame
     where TPlayer : BasicGamePlayer<TCard>
     where TCard : BasicCard
   {
@@ -38,8 +39,7 @@ namespace Ivony.TableGame.Basics
 
 
 
-
-    public async override Task Run()
+    protected async override Task RunGame( CancellationToken token )
     {
       CardDealer = CreateCardDealer();
 
@@ -55,7 +55,14 @@ namespace Ivony.TableGame.Basics
 
         foreach ( TPlayer player in Players )
         {
-          await player.Play();
+          await player.Play( token );
+
+
+          if ( token.IsCancellationRequested )
+          {
+            AnnounceSystemMessage( "游戏结束" );
+            return;
+          }
 
 
           var dead = Players.FirstOrDefault( item => item.HealthPoint <= 0 );
@@ -71,9 +78,25 @@ namespace Ivony.TableGame.Basics
 
 
 
+    public void ReleasePlayer( GamePlayer player )
+    {
+
+      lock ( SyncRoot )
+      {
+        if ( !PlayerCollection.Contains( player ) )//不存在这个玩家，则忽略。
+          return;
+
+        GameCancellationSource.Cancel();
+      }
+    }
+
+
+
     CardDealer IBasicGame.CardDealer
     {
       get { return CardDealer; }
     }
+
+
   }
 }

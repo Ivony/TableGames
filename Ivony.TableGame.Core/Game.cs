@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ivony.TableGame
@@ -11,12 +12,12 @@ namespace Ivony.TableGame
   /// <summary>
   /// 游戏桌面
   /// </summary>
-  public abstract class Game
+  public abstract class GameBase
   {
 
 
 
-    static Game()
+    static GameBase()
     {
       Random = new Random( DateTime.Now.Millisecond );
     }
@@ -24,17 +25,18 @@ namespace Ivony.TableGame
     /// <summary>
     /// 获取随机数产生器
     /// </summary>
-    protected static Random Random { get; private set; }
+    protected internal static Random Random { get; private set; }
 
 
     /// <summary>
     /// 创建游戏对象
     /// </summary>
-    protected Game( IGameHost gameHost )
+    protected GameBase( IGameHost gameHost )
     {
       SyncRoot = new object();
       GameState = GameState.NotInitialized;
       PlayerCollection = new List<GamePlayer>();
+      GameCancellationSource = new CancellationTokenSource();
 
       GameHost = gameHost;
     }
@@ -167,6 +169,12 @@ namespace Ivony.TableGame
     /// </summary>
     public GameState GameState { get; private set; }
 
+
+    /// <summary>
+    /// 用于通知取消游戏进程的通知器
+    /// </summary>
+    protected CancellationTokenSource GameCancellationSource { get; private set; }
+
     /// <summary>
     /// 运行游戏
     /// </summary>
@@ -185,7 +193,11 @@ namespace Ivony.TableGame
       try
       {
         await Task.Yield();
-        await RunGame();
+        await RunGame( GameCancellationSource.Token );
+      }
+      catch ( TaskCanceledException )
+      {
+        AnnounceSystemMessage( "游戏结束" );
       }
       catch ( Exception e )
       {
@@ -201,7 +213,7 @@ namespace Ivony.TableGame
     /// 派生类实现此方法运行游戏
     /// </summary>
     /// <returns></returns>
-    protected virtual Task RunGame()
+    protected virtual Task RunGame( CancellationToken token )
     {
       throw new NotImplementedException();
     }
@@ -245,7 +257,7 @@ namespace Ivony.TableGame
     {
       foreach ( var player in Players )
       {
-        player.PlayerHost.LeavedGame();
+        player.PlayerHost.QuitGame();
       }
     }
 

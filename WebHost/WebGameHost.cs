@@ -36,7 +36,7 @@ namespace Ivony.TableGame.WebHost
 
 
     private SimpleGame _game;
-    public override Game Game
+    public override GameBase Game
     {
       get { return _game; }
     }

@@ -27,48 +27,54 @@ namespace Ivony.TableGame.Basics
 
 
 
-    public async virtual Task Play()
+    public async virtual Task Play( CancellationToken token )
     {
 
       GameHost.Game.AnnounceMessage( "轮到 {0} 出牌", CodeName );
 
-      await OnBeforePlay();
-      await PlayCard( await CherryCard() );
+      await OnBeforePlay( token );
+      await PlayCard( await CherryCard( token ), token );
 
-      await OnAfterPlay();
+      await OnAfterPlay( token );
 
     }
 
-    private async Task<TCard> CherryCard()
-    {
-      return (TCard) await PlayerHost.Console.Choose( "请出牌：", Cards, new CancellationToken() );
-    }
-
-    private int ParseCardIndex( string text )
+    private async Task<TCard> CherryCard( CancellationToken token )
     {
 
-      int cardIndex;
+      var timeoutToken = new CancellationTokenSource( TimeSpan.FromMinutes( 1 ) ).Token;
+      try
+      {
+        return (TCard) await PlayerHost.Console.Choose( "请出牌：", Cards,
+          CancellationTokenSource.CreateLinkedTokenSource( token, timeoutToken ).Token );
+      }
+      catch ( TaskCanceledException )
+      {
+        if ( token.IsCancellationRequested )
+          throw;
 
-      if ( !int.TryParse( text, out cardIndex ) || cardIndex > 5 || cardIndex < 1 )
-        throw new FormatException();
-
-      return cardIndex;
+        lock ( SyncRoot )
+        {
+          var index = Random.Next( Cards.Length );
+          PlayerHost.WriteWarningMessage( "操作超时，随机打出第 {0} 张牌", index );
+          return Cards[index];
+        }
+      }
     }
 
 
-
-    protected async virtual Task OnBeforePlay()
+    protected async virtual Task OnBeforePlay( CancellationToken token )
     {
 
     }
 
 
-    protected async virtual Task PlayCard( TCard card )
+    protected async virtual Task PlayCard( TCard card, CancellationToken token )
     {
     }
 
 
-    protected async virtual Task OnAfterPlay()
+    protected async virtual Task OnAfterPlay( CancellationToken token )
     {
     }
 
@@ -84,7 +90,7 @@ namespace Ivony.TableGame.Basics
 
       lock ( SyncRoot )
       {
-        CardCollection.AddRange( ((IBasicGame) GameHost.Game).CardDealer.DealCards( amount ) );
+        CardCollection.AddRange( InternalGame.CardDealer.DealCards( amount ) );
 
         ArrangeCards();
       }
@@ -100,6 +106,14 @@ namespace Ivony.TableGame.Basics
     public int HealthPoint { get; set; }
 
 
+
+    internal new IBasicGame InternalGame { get { return (IBasicGame) GameHost.Game; } }
+
+    public override void Release()
+    {
+      InternalGame.ReleasePlayer( this );
+      base.Release();
+    }
 
 
   }

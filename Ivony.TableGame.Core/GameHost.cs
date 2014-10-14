@@ -20,7 +20,7 @@ namespace Ivony.TableGame
 
 
 
-    public abstract Game Game { get; }
+    public abstract GameBase Game { get; }
 
 
 

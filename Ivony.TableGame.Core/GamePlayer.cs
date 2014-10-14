@@ -20,6 +20,9 @@ namespace Ivony.TableGame
     }
 
 
+    protected static Random Random { get { return GameBase.Random; } }
+
+
 
     /// <summary>
     /// 玩家代号
@@ -57,5 +60,10 @@ namespace Ivony.TableGame
     /// </summary>
     /// <returns>游戏信息</returns>
     public abstract object GetGameInformation();
+
+    public virtual void Release()
+    {
+
+    }
   }
 }

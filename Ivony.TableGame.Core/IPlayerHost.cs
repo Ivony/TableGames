@@ -15,7 +15,7 @@ namespace Ivony.TableGame
 
     void JoinedGame( GamePlayer player );
 
-    void LeavedGame();
+    void QuitGame();
 
     GamePlayer GetPlayer();
 
