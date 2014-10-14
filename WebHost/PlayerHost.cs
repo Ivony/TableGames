@@ -273,9 +273,6 @@ namespace Ivony.TableGame.WebHost
       }
 
 
-      public bool Canceled { get; private set; }
-
-
       public Task<string> RespondingTask { get { return taskSource.Task; } }
 
 
@@ -297,12 +294,11 @@ namespace Ivony.TableGame.WebHost
     private class ChooseResponding : Responding
     {
 
-      private IOption[] _options;
 
       private ChooseResponding( PlayerHost host, string prompt, IOption[] options, CancellationToken token )
         : base( host, prompt, token )
       {
-        _options = options;
+        Options = options;
       }
 
       public static ChooseResponding CreateResponding( PlayerHost host, string prompt, IOption[] options, CancellationToken token )
@@ -326,13 +322,16 @@ namespace Ivony.TableGame.WebHost
       public new Task<IOption> RespondingTask { get { return taskSource.Task; } }
 
 
+      public IOption[] Options { get; private set; }
+
+
       public override void OnResponse( string message )
       {
 
         IOption option;
         if ( !TryGetOption( message, out option ) )
         {
-          Host.WriteWarningMessage( "您输入的格式不正确，应该输入 {0} - {1} 之间的数字", 1, _options.Length );
+          Host.WriteWarningMessage( "您输入的格式不正确，应该输入 {0} - {1} 之间的数字", 1, Options.Length );
           return;
         }
 
@@ -348,10 +347,10 @@ namespace Ivony.TableGame.WebHost
         if ( !int.TryParse( text, out index ) )
           return false;
 
-        if ( index < 1 || index > _options.Length )
+        if ( index < 1 || index > Options.Length )
           return false;
 
-        option = _options[index - 1];
+        option = Options[index - 1];
         return true;
       }
 
@@ -400,8 +399,20 @@ namespace Ivony.TableGame.WebHost
     }
 
 
-  }
 
+    public OptionEntity[] GetOptions()
+    {
+      lock ( SyncRoot )
+      {
+        var responding = _responding as ChooseResponding;
+
+        if ( responding == null )
+          return null;
+
+        return responding.Options.Select( item => new OptionEntity( item ) ).ToArray();
+      }
+    }
+  }
 
 
 
