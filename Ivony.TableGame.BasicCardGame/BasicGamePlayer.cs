@@ -58,7 +58,7 @@ namespace Ivony.TableGame.Basics
         try
         {
           index = ParseCardIndex( commandText );
-          return Cards[index];
+          return Cards[index - 1];
         }
         catch ( FormatException )
         {

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E3C44EA2-517E-46D1-8BFA-D4D40A319E90}</ProjectGuid>
+    <ProjectGuid>{74742E84-6F8B-467E-8FCA-59FBA784AED9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ivony.TableGame.SimpleGames</RootNamespace>
-    <AssemblyName>Ivony.TableGame.SimpleGames</AssemblyName>
+    <RootNamespace>Ivony.TableGame.BasicCardGame</RootNamespace>
+    <AssemblyName>Ivony.TableGame.BasicCardGame</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,27 +39,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Rules\AngelCard.cs" />
-    <Compile Include="Rules\AngelEffect.cs" />
-    <Compile Include="Rules\AttackCard.cs" />
-    <Compile Include="Rules\CleanCard.cs" />
-    <Compile Include="Rules\DevilCard.cs" />
-    <Compile Include="Rules\DevilEffect.cs" />
-    <Compile Include="Effects.cs" />
-    <Compile Include="ISimpleGameEffect.cs" />
-    <Compile Include="Rules\PeepCard.cs" />
+    <Compile Include="BasicCard.cs" />
+    <Compile Include="BasicGame.cs" />
+    <Compile Include="BasicGamePlayer.cs" />
+    <Compile Include="IBasicGame.cs" />
+    <Compile Include="IEffect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rules\ShieldCard.cs" />
-    <Compile Include="Rules\ShieldEffect.cs" />
-    <Compile Include="SimpleGame.cs" />
-    <Compile Include="SimpleGameCard.cs" />
-    <Compile Include="SimpleGamePlayer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ivony.TableGame.BasicCardGame\Ivony.TableGame.BasicCardGame.csproj">
-      <Project>{74742e84-6f8b-467e-8fca-59fba784aed9}</Project>
-      <Name>Ivony.TableGame.BasicCardGame</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Ivony.TableGame.Core\Ivony.TableGame.Core.csproj">
       <Project>{ad2e0903-517b-489b-a001-361022d015f3}</Project>
       <Name>Ivony.TableGame.Core</Name>

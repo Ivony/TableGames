@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ivony.TableGame.SimpleGames
+namespace Ivony.TableGame.SimpleGames.Rules
 {
   public class AngelCard : SimpleGameCard
   {
