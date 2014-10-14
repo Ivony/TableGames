@@ -223,15 +223,15 @@ namespace Ivony.TableGame.WebHost
         PlayerHost._messages.Add( message );
       }
 
-      public override async Task<string> ReadLine( string prompt )
+      public override async Task<string> ReadLine( string prompt, TimeSpan timeout )
       {
-        return await WaitResponse( prompt ).ConfigureAwait( false );
+        return await WaitResponse( prompt, timeout ).ConfigureAwait( false );
       }
 
-      private async Task<string> WaitResponse( string prompt )
+      private async Task<string> WaitResponse( string prompt, TimeSpan timeout )
       {
 
-        var responding = new Responding( prompt );
+        var responding = new Responding( prompt, timeout );
         PlayerHost.SetResponding( responding );
 
         return await responding.RespondingTask;
@@ -247,17 +247,15 @@ namespace Ivony.TableGame.WebHost
 
       private TaskCompletionSource<string> taskSource = new TaskCompletionSource<string>();
 
-      public Responding( string prompt, TimeSpan? timeout = null )
+      public Responding( string prompt, TimeSpan timeout )
       {
-
-        timeout = timeout ?? TimeSpan.FromMinutes( 1 );
 
         PromptText = prompt;
 
         System.Threading.Tasks.Task.Run( () =>
         {
 
-          Thread.Sleep( timeout.Value );
+          Thread.Sleep( timeout );
           taskSource.TrySetCanceled();
           Canceled = true;
         } );

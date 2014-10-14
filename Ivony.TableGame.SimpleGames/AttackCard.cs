@@ -37,7 +37,7 @@ namespace Ivony.TableGame.SimpleGames
     {
 
 
-      SimpleGameEffect effect = target.SpecialEffect.Effect ?? target.DefenceEffect.Effect;
+      ISimpleGameEffect effect = (ISimpleGameEffect) target.SpecialEffect ?? target.DefenceEffect;
       if ( effect != null )
       {
         if ( await effect.OnAttack( user, target, Point ) )
@@ -50,9 +50,9 @@ namespace Ivony.TableGame.SimpleGames
       }
       else
       {
-        target.Health -= Point;
+        target.HealthPoint -= Point;
         user.GameHost.Game.AnnounceMessage( "{0} 对 {1} 发起攻击。", user.CodeName, target.CodeName );
-        target.PlayerHost.WriteWarningMessage( "您受到攻击，生命值减少 {0} 点，目前生命值 {1}", Point, target.Health );
+        target.PlayerHost.WriteWarningMessage( "您受到攻击，生命值减少 {0} 点，目前生命值 {1}", Point, target.HealthPoint );
       }
     }
   }

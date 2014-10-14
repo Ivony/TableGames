@@ -9,18 +9,14 @@ using Ivony.TableGame.Basics;
 
 namespace Ivony.TableGame.SimpleGames
 {
-  public class SimpleGamePlayer : BasicGamePlayer
+  public class SimpleGamePlayer : BasicGamePlayer<SimpleGameCard>
   {
 
     public SimpleGamePlayer( string codeName, IGameHost gameHost, IPlayerHost playerHost )
       : base( codeName, gameHost, playerHost )
     {
       Game = (SimpleGame) gameHost.Game;
-
-      DefenceEffect = new DefenceEffectSlot();
-      SpecialEffect = new SpecialEffectSlot();
-
-      Health = 100;
+      HealthPoint = 100;
 
     }
 
@@ -32,92 +28,36 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
-    public SimpleGameCard[] Cards
+    protected override async Task OnBeforePlay()
     {
-      get { return CardCollection.Cast<SimpleGameCard>().ToArray(); }
-    }
-
-
-
-    /// <summary>
-    /// 生命值
-    /// </summary>
-    public int Health
-    {
-      get;
-      internal set;
-    }
-
-    public override async Task Play()
-    {
-
-
       DealCards();
 
-      GameHost.Game.AnnounceMessage( "轮到 {0} 出牌", CodeName );
+      var devil = SpecialEffect as DevilEffect;
+      if ( devil != null )
+        devil.Win( this );
 
 
-      if ( SpecialEffect.Effect is DevilEffect )
-      {
-        var point = 10;
-        SpecialEffect.Clear();
-        Health += point;
-        PlayerHost.WriteMessage( "您赢得了恶魔的契约，增加 HP {0} 点", point );
-      }
-
-
-      PlayerHost.WriteMessage( "HP:{0,-3}{1}{2} 卡牌:{3}", Health, DefenceEffect, SpecialEffect, string.Join( ", ", Cards.Select( item => item.Name ) ) );
-
-
-      do
-      {
-        PlayCommand command = null;
-        string commandText = null;
-
-        try
-        {
-          commandText = await PlayerHost.Console.ReadLine( "请出牌： " );
-        }
-        catch ( TaskCanceledException )
-        {
-          Game.AnnounceSystemMessage( "{0} 操作超时", CodeName );
-          commandText = new[] { "1", "2", "3", "4", "5" }.RandomItem();
-          PlayerHost.WriteWarningMessage( "操作已超时，随机打出第 {0} 张牌", commandText );
-        }
-
-
-        try
-        {
-          command = ParseCommand( commandText );
-        }
-        catch ( FormatException )
-        {
-          PlayerHost.WriteMessage( "输入的命令格式错误" );
-          continue;
-        }
-
-
-        if ( command != null )
-          await command.Execute();
-
-
-      } while ( false );
-
+      PlayerHost.WriteMessage( "HP:{0,-3}{1}{2} 卡牌:{3}", HealthPoint, DefenceEffect, SpecialEffect, string.Join( ", ", Cards.Select( item => item.Name ) ) );
     }
 
 
-
-    public SpecialEffectSlot SpecialEffect
+    protected override async Task PlayCard( SimpleGameCard card )
     {
-      get;
-      private set;
+      await card.UseCard( this, Game.Players.RandomItem() );
     }
 
 
-    public DefenceEffectSlot DefenceEffect
+    public ISpecialEffect SpecialEffect
     {
       get;
-      private set;
+      set;
+    }
+
+
+    public IDefenceEffect DefenceEffect
+    {
+      get;
+      set;
     }
 
 
@@ -126,7 +66,7 @@ namespace Ivony.TableGame.SimpleGames
     {
       return new
       {
-        Players = Game.Players.ToDictionary( item => item.CodeName, item => item.Health ),
+        Players = Game.Players.ToDictionary( item => item.CodeName, item => item.HealthPoint ),
         Cards = Cards,
       };
     }
@@ -135,17 +75,6 @@ namespace Ivony.TableGame.SimpleGames
 
 
 
-    private PlayCommand ParseCommand( string commandText )
-    {
-
-      int cardIndex;
-
-      if ( !int.TryParse( commandText, out cardIndex ) || cardIndex > 5 || cardIndex < 1 )
-        throw new FormatException();
-
-
-      return new PlayCommand( this, (SimpleGameCard) Cards[cardIndex - 1], Game.Players.Where( item => item != this ).ToArray().RandomItem() );
-    }
 
     internal void RemoveCard( SimpleGameCard card )
     {
@@ -163,7 +92,7 @@ namespace Ivony.TableGame.SimpleGames
     /// </summary>
     public void DealCards()
     {
-      CardCollection.AddRange( Game.CardDealer.DealCards( 5 - Cards.Length ) );
+      DealCards( 5 - Cards.Length );
     }
   }
 }

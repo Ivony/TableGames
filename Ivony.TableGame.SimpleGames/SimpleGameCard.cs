@@ -7,7 +7,17 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames
 {
-  public abstract class SimpleGameCard : BasicCard<SimpleGamePlayer>
+  public abstract class SimpleGameCard : BasicCard
   {
+
+    public abstract Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target );
+
+
+
+    protected void AnnounceSpecialCardUsed( SimpleGamePlayer user )
+    {
+      user.Game.AnnounceMessage( "{0} 使用了一张特殊卡牌", user.CodeName );
+    }
+
   }
 }

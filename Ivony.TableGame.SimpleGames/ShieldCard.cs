@@ -10,8 +10,8 @@ namespace Ivony.TableGame.SimpleGames
   {
     public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
-      user.DefenceEffect.TrySetEffect( Effects.ShieldEffect() );
-      user.GameHost.Game.AnnounceMessage( "{0} 使用了一张特殊卡牌", user.CodeName );
+      user.DefenceEffect = Effects.ShieldEffect();
+      AnnounceSpecialCardUsed( user );
       user.PlayerHost.WriteMessage( "下一次攻击将对您无效。" );
     }
 

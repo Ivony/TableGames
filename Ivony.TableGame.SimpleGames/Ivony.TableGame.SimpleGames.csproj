@@ -42,22 +42,23 @@
     <Compile Include="AngelCard.cs" />
     <Compile Include="AngelEffect.cs" />
     <Compile Include="AttackCard.cs" />
+    <Compile Include="BasicCard.cs" />
+    <Compile Include="BasicGame.cs" />
+    <Compile Include="BasicGamePlayer.cs" />
     <Compile Include="CleanCard.cs" />
-    <Compile Include="DefenceEffectSlot.cs" />
     <Compile Include="DevilCard.cs" />
     <Compile Include="DevilEffect.cs" />
     <Compile Include="Effects.cs" />
+    <Compile Include="IBasicGame.cs" />
+    <Compile Include="IEffect.cs" />
+    <Compile Include="ISimpleGameEffect.cs" />
     <Compile Include="PeepCard.cs" />
-    <Compile Include="PlayCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShieldCard.cs" />
     <Compile Include="ShieldEffect.cs" />
     <Compile Include="SimpleGame.cs" />
     <Compile Include="SimpleGameCard.cs" />
-    <Compile Include="SimpleGameEffect.cs" />
     <Compile Include="SimpleGamePlayer.cs" />
-    <Compile Include="SimpleGamePlayerEffectSlot.cs" />
-    <Compile Include="SpecialEffectSlot.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ivony.TableGame.Core\Ivony.TableGame.Core.csproj">
