@@ -46,9 +46,7 @@ namespace Ivony.TableGame.WebHost
 
     private static WebGameHost CreateGame( string name )
     {
-      var game = new SimpleGame( name );
-      game.Initialize();
-      return new WebGameHost( game );
+      return new WebGameHost( name );
     }
   }
 }

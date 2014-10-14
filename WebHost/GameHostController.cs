@@ -70,7 +70,7 @@ namespace Ivony.TableGame.WebHost
 
       return new
       {
-        Name = player.GameHost.Game.Name,
+        GameRoomName = player.GameHost.RoomName,
         Data = player.GetGameInformation(),
       };
     }

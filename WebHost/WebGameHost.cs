@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ivony.TableGame.SimpleGames;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +11,12 @@ namespace Ivony.TableGame.WebHost
   {
 
 
-    public WebGameHost( Game game ) : base( game ) { }
+    public WebGameHost( string roomName )
+      : base( roomName )
+    {
+      _game = new SimpleGame( this );
+      _game.Initialize();
+    }
 
 
 
@@ -18,7 +24,7 @@ namespace Ivony.TableGame.WebHost
     {
       string reason;
       if ( !TryJoinGame( player, out reason ) )
-        player.WriteWarningMessage( "加入游戏 \"{0}\" 失败，原因为： {1}", Game.Name, reason );
+        player.WriteWarningMessage( "加入游戏 \"{0}\" 失败，原因为： {1}", Game.RoomName, reason );
 
     }
 
@@ -28,5 +34,11 @@ namespace Ivony.TableGame.WebHost
       return Task.Run( () => base.Run() );
     }
 
+
+    private SimpleGame _game;
+    public override Game Game
+    {
+      get { return _game; }
+    }
   }
 }

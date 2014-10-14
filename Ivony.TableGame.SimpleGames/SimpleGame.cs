@@ -15,7 +15,7 @@ namespace Ivony.TableGame.SimpleGames
     private string[] names = new[] { "张三", "李四", "王五" };
 
 
-    public SimpleGame( string name ) : base( name ) { }
+    public SimpleGame( IGameHost gameHost ) : base( gameHost ) { }
 
 
     protected override CardDealer CreateCardDealer()

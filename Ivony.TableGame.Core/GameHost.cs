@@ -10,14 +10,17 @@ namespace Ivony.TableGame
   {
 
 
-    protected GameHost( Game game )
+    protected GameHost( string roomName )
     {
-      Game = game;
+      RoomName = roomName;
     }
 
 
+    public string RoomName { get; private set; }
 
-    public Game Game { get; private set; }
+
+
+    public abstract Game Game { get; }
 
 
 
@@ -48,7 +51,7 @@ namespace Ivony.TableGame
       else
       {
 
-        if ( Game.GameState != TableGame.GameState.NotStarted )
+        if ( Game.GameState != GameState.NotStarted )
         {
           reason = "游戏已经开始或结束";
           return false;

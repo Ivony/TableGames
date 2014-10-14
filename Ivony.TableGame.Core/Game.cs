@@ -30,19 +30,26 @@ namespace Ivony.TableGame
     /// <summary>
     /// 创建游戏对象
     /// </summary>
-    protected Game( string name )
+    protected Game( IGameHost gameHost )
     {
       SyncRoot = new object();
       GameState = GameState.NotInitialized;
       PlayerCollection = new List<GamePlayer>();
 
-      Name = name;
+      GameHost = gameHost;
     }
 
-    public virtual string Name
+
+
+    protected IGameHost GameHost
     {
       get;
       private set;
+    }
+
+    public string RoomName
+    {
+      get { return GameHost.RoomName; }
     }
 
     /// <summary>
@@ -134,7 +141,7 @@ namespace Ivony.TableGame
         var player = TryJoinGameCore( gameHost, playerHost );
         if ( player != null )
         {
-          player.PlayerHost.WriteSystemMessage( string.Format( "恭喜您已经加入 {0} 游戏，您在游戏中的代号是 {1} ", Name, player.CodeName ) );
+          player.PlayerHost.WriteSystemMessage( string.Format( "恭喜您已经加入 {0} 游戏，您在游戏中的代号是 {1} ", RoomName, player.CodeName ) );
           AnnounceSystemMessage( "玩家 {0} 已经加入游戏", player.CodeName );
         }
 

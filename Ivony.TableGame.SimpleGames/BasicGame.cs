@@ -11,8 +11,8 @@ namespace Ivony.TableGame.Basics
     where TCard : BasicCard
   {
 
-    public BasicGame( string name )
-      : base( name )
+    public BasicGame( IGameHost gameHost )
+      : base( gameHost )
     {
     }
 

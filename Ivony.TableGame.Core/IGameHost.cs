@@ -14,6 +14,9 @@ namespace Ivony.TableGame
   public interface IGameHost
   {
 
+
+    string RoomName { get; }
+
     GameState GameState { get; }
 
 
