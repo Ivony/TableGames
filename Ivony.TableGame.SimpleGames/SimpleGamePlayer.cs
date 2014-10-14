@@ -45,6 +45,7 @@ namespace Ivony.TableGame.SimpleGames
     protected override async Task PlayCard( SimpleGameCard card )
     {
       await card.UseCard( this, Game.Players.Where( item => item != this ).ToArray().RandomItem() );
+      CardCollection.Remove( card );
     }
 
 
