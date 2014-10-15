@@ -34,10 +34,17 @@ namespace Ivony.TableGame.SimpleGames
     {
       DealCards();
 
-      var devil = SpecialEffect as DevilEffect;
-      if ( devil != null )
-        devil.Win( this );
+      {
+        var effect = SpecialEffect as IAroundEffect;
+        if ( effect != null )
+          effect.OnTurnedAround( this );
+      }
 
+      {
+        var effect = DefenceEffect as IAroundEffect;
+        if ( effect != null )
+          effect.OnTurnedAround( this );
+      }
 
       PlayerHost.WriteMessage( "HP:{0,-3}{1}{2} 卡牌:{3}", HealthPoint, DefenceEffect, SpecialEffect, string.Join( ", ", Cards.Select( item => item.Name ) ) );
     }

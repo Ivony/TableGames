@@ -10,7 +10,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
   {
     public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
-      user.DefenceEffect = Effects.ShieldEffect();
+      user.DefenceEffect = new CardEffect();
       AnnounceSpecialCardUsed( user );
       user.PlayerHost.WriteMessage( "下一次攻击将对您无效。" );
     }
@@ -24,5 +24,34 @@ namespace Ivony.TableGame.SimpleGames.Rules
     {
       get { return "使用此卡牌后可以抵挡一次攻击"; }
     }
+
+
+    private class CardEffect : IDefenceEffect
+    {
+      public string Name
+      {
+        get { return "盾牌"; }
+      }
+
+      public string Description
+      {
+        get { return "盾牌效果可以抵御一次攻击"; }
+      }
+
+
+      public async Task<bool> OnAttack( SimpleGamePlayer user, SimpleGamePlayer target, int point )
+      {
+        target.DefenceEffect = null;
+        target.PlayerHost.WriteMessage( "您使用盾牌阻挡了 {0} 点攻击，防御效果已经失效", point );
+        return false;
+      }
+
+      public override string ToString()
+      {
+        return "S";
+      }
+
+    }
+
   }
 }

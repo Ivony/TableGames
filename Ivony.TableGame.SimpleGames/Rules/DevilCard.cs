@@ -10,7 +10,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
   {
     public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
-      user.SpecialEffect = Effects.DevilEffect();
+      user.SpecialEffect = new CardEffect();
       AnnounceSpecialCardUsed( user );
       user.PlayerHost.WriteMessage( "您与恶魔签订了契约，若到您下次发牌之前您没有受到攻击，将获得 HP ，否则攻击将变成双倍" );
     }
@@ -28,6 +28,42 @@ namespace Ivony.TableGame.SimpleGames.Rules
     public override string ToString()
     {
       return "D";
+    }
+
+
+    private class CardEffect : ISpecialEffect, IAroundEffect
+    {
+      public string Name
+      {
+        get { return "恶魔"; }
+      }
+
+      public string Description
+      {
+        get { return "恶魔契约生效期间，攻击受到双倍伤害"; }
+      }
+
+      public async Task<bool> OnAttack( SimpleGamePlayer user, SimpleGamePlayer target, int point )
+      {
+        target.SpecialEffect = null;
+        target.HealthPoint -= point * 2;
+        target.PlayerHost.WriteWarningMessage( "您输掉了恶魔契约，受到双倍伤害 {0} 点，目前 HP {1}", point * 2, target.HealthPoint );
+        return true;
+      }
+
+
+      public override string ToString()
+      {
+        return "D";
+      }
+
+      public async Task OnTurnedAround( SimpleGamePlayer player )
+      {
+        var point = 10;
+        player.SpecialEffect = null;
+        player.HealthPoint += point;
+        player.PlayerHost.WriteMessage( "您赢得了恶魔的契约，增加 HP {0} 点", point );
+      }
     }
 
   }

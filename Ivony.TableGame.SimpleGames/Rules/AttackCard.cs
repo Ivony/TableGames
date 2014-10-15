@@ -8,7 +8,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
 {
 
   /// <summary>
-  /// 攻击卡牌
+  /// 定义攻击卡牌
   /// </summary>
   public class AttackCard : SimpleGameCard
   {

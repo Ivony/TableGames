@@ -11,6 +11,13 @@ namespace Ivony.TableGame.SimpleGames
   public interface ISimpleGameEffect : IEffect
   {
     Task<bool> OnAttack( SimpleGamePlayer user, SimpleGamePlayer target, int point );
+
+  }
+
+
+  public interface IAroundEffect : ISimpleGameEffect
+  {
+    Task OnTurnedAround( SimpleGamePlayer player );
   }
 
   public interface ISpecialEffect : ISimpleGameEffect
