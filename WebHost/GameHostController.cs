@@ -51,7 +51,10 @@ namespace Ivony.TableGame.WebHost
         PlayerHost.SetMessageIndex( 0 );
 
       else if ( int.TryParse( messageMode, out amount ) )
+      {
+        PlayerHost.GetMessages();
         PlayerHost.SetMessageIndex( Math.Max( PlayerHost.LastMesageIndex - amount, 0 ) );
+      }
 
 
 
