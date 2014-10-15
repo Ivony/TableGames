@@ -97,5 +97,21 @@ namespace Ivony.TableGame.SimpleGames
     {
       DealCards( 5 - Cards.Length );
     }
+
+    internal void Purify()
+    {
+      if ( SpecialEffect != null )
+      {
+        PlayerHost.WriteWarningMessage( "您当前的 {0} 效果已经被解除", DefenceEffect.Name );
+        SpecialEffect = null;
+      }
+
+      if ( DefenceEffect != null )
+      {
+        PlayerHost.WriteWarningMessage( "您当前的 {0} 效果已经被解除", DefenceEffect.Name );
+        DefenceEffect = null;
+      }
+
+    }
   }
 }
