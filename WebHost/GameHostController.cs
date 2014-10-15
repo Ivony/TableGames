@@ -45,8 +45,16 @@ namespace Ivony.TableGame.WebHost
     [HttpGet]
     public object Status( HttpRequestMessage request, string messageMode = null )
     {
+
+      int amount;
       if ( messageMode == "all" )
         PlayerHost.SetMessageIndex( 0 );
+
+      else if ( int.TryParse( messageMode, out amount ) )
+        PlayerHost.SetMessageIndex( Math.Max( PlayerHost.LastMesageIndex - amount, 0 ) );
+
+
+
 
 
       return new
