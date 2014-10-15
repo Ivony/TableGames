@@ -88,14 +88,16 @@ namespace Ivony.TableGame.WebHost
         PromptText = prompt;
 
 
-        token.Register( () =>
+        token.Register( Canceled );
+      }
+
+      protected virtual void Canceled()
+      {
+        taskSource.TrySetCanceled();
+        lock ( Host.SyncRoot )
         {
-          taskSource.TrySetCanceled();
-          lock ( Host.SyncRoot )
-          {
-            Host._responding = null;
-          }
-        } );
+          Host._responding = null;
+        }
       }
 
 
@@ -184,6 +186,13 @@ namespace Ivony.TableGame.WebHost
 
         option = Options[index - 1];
         return true;
+      }
+
+      protected override void Canceled()
+      {
+        taskSource.TrySetCanceled();
+
+        base.Canceled();
       }
 
     }
