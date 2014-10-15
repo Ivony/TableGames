@@ -10,12 +10,9 @@ namespace Ivony.TableGame.SimpleGames.Rules
   {
     public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
-      var game = user.Game;
-      lock ( game.SyncRoot )
-      {
-        foreach ( var player in game.Players )
-          player.Purify();
-      }
+      AnnounceSpecialCardUsed( user );
+      foreach ( var player in user.Game.Players )
+        player.Purify();
     }
 
     public override string Name

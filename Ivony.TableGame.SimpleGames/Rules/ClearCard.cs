@@ -10,7 +10,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
   {
     public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
-      user.Game.AnnounceMessage( "{0} 使用了一张特殊卡牌", user.CodeName );
+      AnnounceSpecialCardUsed( user );
       user.ClearCards();
     }
 

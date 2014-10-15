@@ -10,6 +10,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
   {
     public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
+      AnnounceSpecialCardUsed( user );
       user.DefenceEffect = Effects.ReboundEffect();
     }
 

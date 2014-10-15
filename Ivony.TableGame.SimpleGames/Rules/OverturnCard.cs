@@ -13,6 +13,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
     public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
+      AnnounceSpecialCardUsed( user );
       foreach ( var player in user.Game.Players )
       {
         player.Purify();
