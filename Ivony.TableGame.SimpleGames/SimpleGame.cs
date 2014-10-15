@@ -25,11 +25,12 @@ namespace Ivony.TableGame.SimpleGames
       dealer.RegisterCard( () => new AngelCard(), 3 );
       dealer.RegisterCard( () => new DevilCard(), 25 );
       dealer.RegisterCard( () => new ClearCard(), 30 );
+      dealer.RegisterCard( () => new PurifyCard(), 20 );
       dealer.RegisterCard( () => new ReboundCard(), 2 );
       dealer.RegisterCard( () => new ShieldCard(), 20 );
       dealer.RegisterCard( () => new PeepCard(), 15 );
-      dealer.RegisterCard( () => new AttackCard( 1 ), 50 );
-      dealer.RegisterCard( () => new AttackCard( 2 ), 80 );
+      dealer.RegisterCard( () => new AttackCard( 1 ), 40 );
+      dealer.RegisterCard( () => new AttackCard( 2 ), 60 );
       dealer.RegisterCard( () => new AttackCard( 3 ), 50 );
       dealer.RegisterCard( () => new AttackCard( 4 ), 20 );
       dealer.RegisterCard( () => new AttackCard( 5 ), 10 );
