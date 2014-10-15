@@ -69,7 +69,7 @@ namespace Ivony.TableGame.SimpleGames
     {
       return new
       {
-        Players = Game.Players.ToDictionary( item => item.CodeName, item => item.HealthPoint ),
+        Players = Game.Players.Select( item => item.CodeName ),
         Cards = Cards,
       };
     }
