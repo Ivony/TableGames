@@ -43,6 +43,15 @@ namespace Ivony.TableGame.WebHost
 
 
     [HttpGet]
+    public object Rename( string name )
+    {
+      return PlayerHost.TrySetName( name );
+    }
+
+
+
+
+    [HttpGet]
     public object Status( HttpRequestMessage request, string messageMode = null )
     {
 
@@ -102,7 +111,7 @@ namespace Ivony.TableGame.WebHost
     }
 
 
-    public PlayerHost PlayerHost
+    protected PlayerHost PlayerHost
     {
       get
       {
