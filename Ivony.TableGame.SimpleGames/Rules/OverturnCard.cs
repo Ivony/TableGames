@@ -22,7 +22,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
         player.ClearCards();
         var point = player.HealthPoint / 3;
         player.HealthPoint -= point;
-        player.PlayerHost.WriteWarningMessage( "您正在遭受伤害导致 HP 减少 {0} 点，目前 HP 还有 {1} 点", point, player.HealthPoint );
+        player.PlayerHost.WriteWarningMessage( "您遭受了伤害导致 HP 减少 {0} 点，目前 HP 还有 {1} 点", point, player.HealthPoint );
       }
     }
 
