@@ -35,11 +35,11 @@ namespace Ivony.TableGame
     /// </summary>
     /// <typeparam name="T">要注册的卡牌类型</typeparam>
     /// <param name="probability">出现概率</param>
-    public void RegisterCard<T>( Func<T> creator, int probability ) where T : Card
+    public UnlimitedCardDealer Register<T>( Func<T> creator, int probability ) where T : Card
     {
 
       list.Add( new RegisteredCard( creator, probability ) );
-
+      return this;
     }
 
 
@@ -55,15 +55,6 @@ namespace Ivony.TableGame
       }
 
       throw new InvalidOperationException();
-    }
-
-    /// <summary>
-    /// 注册空白卡牌概率
-    /// </summary>
-    /// <param name="probability">出现概率</param>
-    public void RegisterBlankCard( int probability )
-    {
-      list.Add( new RegisteredCard( () => null, probability ) );
     }
   }
 }
