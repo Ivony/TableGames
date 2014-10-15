@@ -56,24 +56,26 @@ namespace Ivony.TableGame.WebHost
       {
         if ( PlayerHost.Responding == this )
         {
-          OnResponseCore( message );
-          PlayerHost.Responding = null;
+          if ( OnResponseCore( message ) )
+            PlayerHost.Responding = null;
         }
       }
 
     }
 
-    protected abstract void OnResponseCore( string message );
+    protected abstract bool OnResponseCore( string message );
 
 
     protected void OnCancelled()
     {
-      TaskCompletionSource.TrySetCanceled();
 
-      lock ( PlayerHost )
+      if ( TaskCompletionSource.TrySetCanceled() )
       {
-        if ( PlayerHost.Responding == this )
-          PlayerHost.Responding = null;
+        lock ( PlayerHost )
+        {
+          if ( PlayerHost.Responding == this )
+            PlayerHost.Responding = null;
+        }
       }
     }
 
@@ -86,9 +88,10 @@ namespace Ivony.TableGame.WebHost
     public TextMessageResponding( PlayerHost playerHost, string promptText, CancellationToken token ) : base( playerHost, promptText, token ) { }
 
 
-    protected override void OnResponseCore( string message )
+    protected override bool OnResponseCore( string message )
     {
       TaskCompletionSource.TrySetResult( message );
+      return true;
     }
   }
 
@@ -105,17 +108,18 @@ namespace Ivony.TableGame.WebHost
     public IOption[] Options { get; private set; }
 
 
-    protected override void OnResponseCore( string message )
+    protected override bool OnResponseCore( string message )
     {
 
       IOption option;
       if ( !TryGetOption( message, out option ) )
       {
         PlayerHost.WriteWarningMessage( "您输入的格式不正确，应该输入 {0} - {1} 之间的数字", 1, Options.Length );
-        return;
+        return false;
       }
 
       TaskCompletionSource.TrySetResult( option );
+      return true;
     }
 
     private bool TryGetOption( string text, out IOption option )
