@@ -42,6 +42,8 @@ namespace Ivony.TableGame.WebHost
 
     private Responding _responding;
 
+
+
     internal void Response( string message )
     {
 
@@ -96,7 +98,8 @@ namespace Ivony.TableGame.WebHost
         taskSource.TrySetCanceled();
         lock ( Host.SyncRoot )
         {
-          Host._responding = null;
+          if ( Host._responding == this )
+            Host._responding = null;
         }
       }
 
@@ -118,8 +121,14 @@ namespace Ivony.TableGame.WebHost
       {
         lock ( Host.SyncRoot )
         {
-          taskSource.TrySetResult( message );
-          Host._responding = null;
+          if ( Host._responding == this )
+          {
+            Host._responding = null;
+            taskSource.TrySetResult( message );
+          }
+
+          else
+            taskSource.TrySetCanceled();
         }
       }
     }
@@ -191,7 +200,6 @@ namespace Ivony.TableGame.WebHost
       protected override void Canceled()
       {
         taskSource.TrySetCanceled();
-
         base.Canceled();
       }
 
