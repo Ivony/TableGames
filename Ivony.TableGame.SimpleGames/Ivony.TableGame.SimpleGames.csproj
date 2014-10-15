@@ -42,13 +42,16 @@
     <Compile Include="Rules\AngelCard.cs" />
     <Compile Include="Rules\AngelEffect.cs" />
     <Compile Include="Rules\AttackCard.cs" />
-    <Compile Include="Rules\CleanCard.cs" />
+    <Compile Include="Rules\ClearCard.cs" />
     <Compile Include="Rules\DevilCard.cs" />
     <Compile Include="Rules\DevilEffect.cs" />
     <Compile Include="Effects.cs" />
     <Compile Include="ISimpleGameEffect.cs" />
     <Compile Include="Rules\PeepCard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rules\PurifyCard.cs" />
+    <Compile Include="Rules\ReboundCard.cs" />
+    <Compile Include="Rules\ReboundEffect.cs" />
     <Compile Include="Rules\ShieldCard.cs" />
     <Compile Include="Rules\ShieldEffect.cs" />
     <Compile Include="SimpleGame.cs" />
