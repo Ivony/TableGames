@@ -318,13 +318,15 @@ namespace Ivony.TableGame.WebHost
     /// </summary>
     internal int LastMesageIndex
     {
-      get { return _messages.Count; }
+      get;
+      private set;
     }
 
     public GameMessage[] GetMessages()
     {
       lock ( SyncRoot )
       {
+        LastMesageIndex = _messages.Count;
         if ( index > LastMesageIndex )
           return new GameMessage[0];
 

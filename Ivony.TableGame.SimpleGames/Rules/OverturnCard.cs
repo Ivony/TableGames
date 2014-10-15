@@ -33,7 +33,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
     public override string Description
     {
-      get { return "把桌子掀了，不玩了。所有玩家状态和卡牌重置，所有玩家扣除 1 点 HP 。"; }
+      get { return "把桌子掀了，不玩了。所有玩家状态和卡牌重置，所有玩家扣除 1/3 的 HP 。"; }
     }
   }
 }
