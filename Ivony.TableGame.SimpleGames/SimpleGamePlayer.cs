@@ -14,8 +14,8 @@ namespace Ivony.TableGame.SimpleGames
   public class SimpleGamePlayer : BasicGamePlayer<SimpleGameCard>
   {
 
-    public SimpleGamePlayer( string codeName, IGameHost gameHost, IPlayerHost playerHost )
-      : base( codeName, gameHost, playerHost )
+    public SimpleGamePlayer( IGameHost gameHost, IPlayerHost playerHost )
+      : base( gameHost, playerHost )
     {
       Game = (SimpleGame) gameHost.Game;
       HealthPoint = 25;
@@ -76,7 +76,7 @@ namespace Ivony.TableGame.SimpleGames
     {
       return new
       {
-        Players = Game.Players.Select( item => item.CodeName ),
+        Players = Game.Players.Select( item => item.PlayerName ),
         Cards = Cards,
       };
     }

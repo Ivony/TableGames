@@ -30,7 +30,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
       {
         target.DefenceEffect = null;
         user.HealthPoint -= point;
-        user.PlayerHost.WriteWarningMessage( "您对 {0} 发起的攻击被反弹了，您的 HP 减少 {1} 点，目前 HP {2} 点", user.CodeName, point, user.HealthPoint );
+        user.PlayerHost.WriteWarningMessage( "您对 {0} 发起的攻击被反弹了，您的 HP 减少 {1} 点，目前 HP {2} 点", user.PlayerName, point, user.HealthPoint );
         target.PlayerHost.WriteMessage( "您遭受了 {0} 点攻击，伤害已经反弹给攻击者，反弹效果已失效。", point );
         return false;
       }

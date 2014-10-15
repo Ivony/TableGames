@@ -16,7 +16,7 @@ namespace Ivony.TableGame.SimpleGames
 
     protected void AnnounceSpecialCardUsed( SimpleGamePlayer user )
     {
-      user.Game.AnnounceMessage( "{0} 使用了一张特殊卡牌", user.CodeName );
+      user.Game.AnnounceMessage( "{0} 使用了一张特殊卡牌", user.PlayerName );
     }
 
   }

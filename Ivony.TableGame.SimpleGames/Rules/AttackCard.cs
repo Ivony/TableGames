@@ -41,17 +41,17 @@ namespace Ivony.TableGame.SimpleGames.Rules
       if ( effect != null )
       {
         if ( await effect.OnAttack( user, target, Point ) )
-          user.GameHost.Game.AnnounceMessage( "{0} 对 {1} 发起攻击。", user.CodeName, target.CodeName );
+          user.GameHost.Game.AnnounceMessage( "{0} 对 {1} 发起攻击。", user.PlayerName, target.PlayerName );
 
         else
-          user.GameHost.Game.AnnounceMessage( "{0} 对 {1} 发起攻击，但攻击无效", user.CodeName, target.CodeName );
+          user.GameHost.Game.AnnounceMessage( "{0} 对 {1} 发起攻击，但攻击无效", user.PlayerName, target.PlayerName );
 
         return;
       }
       else
       {
         target.HealthPoint -= Point;
-        user.GameHost.Game.AnnounceMessage( "{0} 对 {1} 发起攻击。", user.CodeName, target.CodeName );
+        user.GameHost.Game.AnnounceMessage( "{0} 对 {1} 发起攻击。", user.PlayerName, target.PlayerName );
         target.PlayerHost.WriteWarningMessage( "您受到攻击，HP 减少 {0} 点，目前 HP {1}", Point, target.HealthPoint );
       }
     }

@@ -12,10 +12,6 @@ namespace Ivony.TableGame.SimpleGames
   {
 
 
-
-    private string[] names = new[] { "张三", "李四", "王五" };
-
-
     public SimpleGame( IGameHost gameHost ) : base( gameHost ) { }
 
 
@@ -57,9 +53,7 @@ namespace Ivony.TableGame.SimpleGames
           return null;
 
 
-        var name = names[PlayerCollection.Count];
-
-        var player = new SimpleGamePlayer( name, gameHost, playerHost );
+        var player = new SimpleGamePlayer( gameHost, playerHost );
 
         PlayerCollection.Add( player );
 

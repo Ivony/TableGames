@@ -9,10 +9,8 @@ namespace Ivony.TableGame
   public abstract class GamePlayer
   {
 
-    protected GamePlayer( string codeName, IGameHost gameHost, IPlayerHost playerHost )
+    protected GamePlayer( IGameHost gameHost, IPlayerHost playerHost )
     {
-
-      CodeName = codeName;
       PlayerHost = playerHost;
       GameHost = gameHost;
 
@@ -27,7 +25,7 @@ namespace Ivony.TableGame
     /// <summary>
     /// 玩家代号
     /// </summary>
-    public string CodeName { get; private set; }
+    public string PlayerName { get { return PlayerHost.Name; } }
 
 
     /// <summary>

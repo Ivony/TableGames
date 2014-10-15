@@ -17,7 +17,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
       foreach ( var player in user.Game.Players.Where( item => item != user ) )
       {
         player.DealCards();
-        user.PlayerHost.WriteMessage( "{0} HP:{1,-3}{2}{3} 卡牌：{4}", player.CodeName, player.HealthPoint, player.DefenceEffect, player.SpecialEffect, string.Join( ", ", player.Cards.Select( item => item.Name ) ) );
+        user.PlayerHost.WriteMessage( "{0} HP:{1,-3}{2}{3} 卡牌：{4}", player.PlayerName, player.HealthPoint, player.DefenceEffect, player.SpecialEffect, string.Join( ", ", player.Cards.Select( item => item.Name ) ) );
       }
     }
 

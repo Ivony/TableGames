@@ -62,7 +62,7 @@ namespace Ivony.TableGame.Basics
           var dead = Players.FirstOrDefault( item => item.HealthPoint <= 0 );
           if ( dead != null )
           {
-            AnnounceSystemMessage( "玩家 {0} 已经阵亡，游戏结束", dead.CodeName );
+            AnnounceSystemMessage( "玩家 {0} 已经阵亡，游戏结束", dead.PlayerName );
             return;
           }
         }
@@ -80,7 +80,7 @@ namespace Ivony.TableGame.Basics
         if ( !PlayerCollection.Contains( player ) )                          //不存在这个玩家，则忽略。
           return;
 
-        AnnounceSystemMessage( "玩家 {0} 退出了游戏", player.CodeName );
+        AnnounceSystemMessage( "玩家 {0} 退出了游戏", player.PlayerName );
         GameCancellationSource.Cancel();                                     //当有玩家退出时，强行终止游戏
       }
     }

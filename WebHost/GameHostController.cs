@@ -81,7 +81,7 @@ namespace Ivony.TableGame.WebHost
 
       var message = await request.Content.ReadAsStringAsync();
 
-      PlayerHost.Response( message );
+      PlayerHost.OnResponse( message );
       return "OK";
 
     }

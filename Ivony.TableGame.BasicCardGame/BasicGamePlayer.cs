@@ -11,8 +11,8 @@ namespace Ivony.TableGame.Basics
   {
 
 
-    protected BasicGamePlayer( string codeName, IGameHost gameHost, IPlayerHost playerHost )
-      : base( codeName, gameHost, playerHost )
+    protected BasicGamePlayer( IGameHost gameHost, IPlayerHost playerHost )
+      : base( gameHost, playerHost )
     {
 
       SyncRoot = new object();
@@ -30,7 +30,7 @@ namespace Ivony.TableGame.Basics
     public async virtual Task Play( CancellationToken token )
     {
 
-      GameHost.Game.AnnounceMessage( "轮到 {0} 出牌", CodeName );
+      GameHost.Game.AnnounceMessage( "轮到 {0} 出牌", PlayerName );
 
       await OnBeforePlay( token );
       await PlayCard( await CherryCard( token ), token );
