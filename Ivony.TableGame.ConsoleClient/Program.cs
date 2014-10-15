@@ -94,7 +94,7 @@ namespace Ivony.TableGame.ConsoleClient
 
           if ( status.Gaming == false )
           {
-            Console.Write( "您当前尚未加入游戏，请输入要加入的游戏的名称：" );
+            Console.Write( "您当前尚未加入游戏，请输入要加入的游戏房间名：" );
             var name = Console.ReadLine();
 
             var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );

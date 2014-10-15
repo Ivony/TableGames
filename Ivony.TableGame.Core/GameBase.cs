@@ -143,7 +143,7 @@ namespace Ivony.TableGame
         var player = TryJoinGameCore( gameHost, playerHost );
         if ( player != null )
         {
-          player.PlayerHost.WriteSystemMessage( string.Format( "恭喜您已经加入 {0} 游戏，您在游戏中的代号是 {1} ", RoomName, player.PlayerName ) );
+          player.PlayerHost.WriteSystemMessage( string.Format( "恭喜您已经加入 {0} 游戏。", RoomName, player.PlayerName ) );
           AnnounceSystemMessage( "玩家 {0} 已经加入游戏", player.PlayerName );
         }
 

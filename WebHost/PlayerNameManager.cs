@@ -30,7 +30,7 @@ namespace Ivony.TableGame.WebHost
 
 
         if ( time++ > 50 )
-          throw new InvalidOperationException( "无法找到一个合适的名称" );
+          throw new InvalidOperationException( "无法找到一个合适的昵称" );
 
       } while ( playerNames.Contains( name ) );
 
@@ -41,6 +41,12 @@ namespace Ivony.TableGame.WebHost
     public static bool RemoveName( string name )
     {
       return playerNames.Remove( name );
+    }
+
+
+    public static bool ValidName( string name )
+    {
+      return playerNameRegex.IsMatch( name );
     }
 
     public static bool CanReset( string oldName, string newName )

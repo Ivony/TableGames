@@ -104,14 +104,24 @@ namespace Ivony.TableGame.WebHost
     /// <param name="name">玩家名称</param>
     public bool TrySetName( string name )
     {
+      
+      if( !PlayerNameManager.ValidName( name ) )
+      {
+        this.WriteSystemMessage( "昵称不合法，昵称只能使用 3 - 10 位英文字母或汉字" );
+        return false;
+      }
       if ( PlayerNameManager.CanReset( Name, name ) )
       {
         Name = name;
+        this.WriteSystemMessage( "您的昵称已经成功更改为 {0}", Name );
         return true;
       }
 
       else
+      {
+        this.WriteSystemMessage( "更改名字失败，昵称已经被其他用户占用。" );
         return false;
+      }
     }
 
 
