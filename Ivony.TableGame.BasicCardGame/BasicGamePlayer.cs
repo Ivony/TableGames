@@ -56,7 +56,7 @@ namespace Ivony.TableGame.Basics
         lock ( SyncRoot )
         {
           var index = Random.Next( Cards.Length );
-          PlayerHost.WriteWarningMessage( "操作超时，随机打出第 {0} 张牌", index );
+          PlayerHost.WriteWarningMessage( "操作超时，随机打出第 {0} 张牌", index + 1 );
           return Cards[index];
         }
       }
