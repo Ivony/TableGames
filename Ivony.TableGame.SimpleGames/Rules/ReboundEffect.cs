@@ -26,5 +26,10 @@ namespace Ivony.TableGame.SimpleGames.Rules
     {
       get { return "当遭受攻击时，将攻击反弹给攻击者"; }
     }
+
+    public override string ToString()
+    {
+      return "R";
+    }
   }
 }

@@ -34,5 +34,10 @@ namespace Ivony.TableGame.SimpleGames.Rules
       player.HealthPoint += point;
       player.PlayerHost.WriteMessage( "您赢得了恶魔的契约，增加 HP {0} 点", point );
     }
+
+    public override string ToString()
+    {
+      return "D";
+    }
   }
 }
