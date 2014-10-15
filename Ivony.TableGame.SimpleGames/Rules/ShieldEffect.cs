@@ -22,6 +22,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
     public async Task<bool> OnAttack( SimpleGamePlayer user, SimpleGamePlayer target, int point )
     {
+      target.DefenceEffect = null;
       target.PlayerHost.WriteMessage( "您使用盾牌阻挡了 {0} 点攻击，防御效果已经失效", point );
       return false;
     }

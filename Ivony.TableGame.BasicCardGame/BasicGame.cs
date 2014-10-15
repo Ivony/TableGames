@@ -80,7 +80,7 @@ namespace Ivony.TableGame.Basics
         if ( !PlayerCollection.Contains( player ) )                          //不存在这个玩家，则忽略。
           return;
 
-        AnnounceSystemMessage( "玩家 {0} 强行退出了游戏", player.CodeName );
+        AnnounceSystemMessage( "玩家 {0} 退出了游戏", player.CodeName );
         GameCancellationSource.Cancel();                                     //当有玩家退出时，强行终止游戏
       }
     }
