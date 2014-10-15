@@ -138,6 +138,60 @@ namespace Ivony.TableGame.WebHost
     public object SyncRoot { get; private set; }
 
 
+    internal IResponding Responding { get; set; }
+
+
+
+    /// <summary>
+    /// 获取是否正在等待玩家响应
+    /// </summary>
+    public bool WaitForResponse
+    {
+      get { return Responding != null; }
+    }
+
+
+
+    /// <summary>
+    /// 获取输入提示信息，当等待用户响应时，显示该提示信息给用户。
+    /// </summary>
+    public string PromptText
+    {
+      get
+      {
+        lock ( SyncRoot )
+        {
+          if ( Responding == null )
+            return null;
+
+          else
+            return Responding.PromptText;
+        }
+      }
+    }
+
+
+
+    internal void Response( string message )
+    {
+
+      lock ( SyncRoot )
+      {
+        if ( Responding == null )
+        {
+          this.WriteSystemMessage( "未在响应窗口时间或已经超时，无法再接收消息" );
+          return;
+        }
+
+
+        Responding.OnResponse( message );
+      }
+    }
+
+
+
+
+
     private class PlayerConsole : PlayerConsoleBase
     {
 
@@ -155,18 +209,14 @@ namespace Ivony.TableGame.WebHost
 
       public override async Task<string> ReadLine( string prompt, CancellationToken token )
       {
-        return await WaitResponse( prompt, token ).ConfigureAwait( false );
+        return await new TextMessageResponding( PlayerHost, prompt, token ).RespondingTask.ConfigureAwait( false );
       }
 
-      private Task<string> WaitResponse( string prompt, CancellationToken token )
-      {
-        return Responding.CreateResponding( PlayerHost, prompt, token ).RespondingTask;
-      }
 
 
       public override async Task<IOption> Choose( string prompt, IOption[] options, CancellationToken token )
       {
-        return await ChooseResponding.CreateResponding( PlayerHost, prompt, options, token ).RespondingTask.ConfigureAwait( false );
+        return await new OptionsResponding( PlayerHost, prompt, options, token ).RespondingTask.ConfigureAwait( false );
       }
 
     }
@@ -216,7 +266,7 @@ namespace Ivony.TableGame.WebHost
     {
       lock ( SyncRoot )
       {
-        var responding = _responding as ChooseResponding;
+        var responding = Responding as OptionsResponding;
 
         if ( responding == null )
           return null;

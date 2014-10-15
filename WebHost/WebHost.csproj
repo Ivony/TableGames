@@ -92,11 +92,11 @@
     <Compile Include="JsonContentNegotiator.cs" />
     <Compile Include="PlayerHost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Responding.cs" />
     <Compile Include="WebGameHost.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Compile Include="PlayerHost.Responding.cs" />
     <None Include="Properties\PublishProfiles\Jumony.pubxml" />
     <None Include="Properties\PublishProfiles\local.pubxml" />
     <None Include="Web.Debug.config">
