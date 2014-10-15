@@ -25,11 +25,11 @@ namespace Ivony.TableGame.SimpleGames
           .Register( () => new OverturnCard(), 1 )
           .Register( () => new AngelCard(), 2 )
           .Register( () => new DevilCard(), 5 )
-          .Register( () => new ClearCard(), 20 )
-          .Register( () => new PurifyCard(), 10 )
-          .Register( () => new ReboundCard(), 4 )
-          .Register( () => new ShieldCard(), 20 )
-          .Register( () => new PeepCard(), 15 );
+          .Register( () => new ClearCard(), 10 )
+          .Register( () => new PurifyCard(), 5 )
+          .Register( () => new ReboundCard(), 3 )
+          .Register( () => new ShieldCard(), 10 )
+          .Register( () => new PeepCard(), 8 );
 
       var normalDealer = new UnlimitedCardDealer()
           .Register( () => new AttackCard( 1 ), 30 )
