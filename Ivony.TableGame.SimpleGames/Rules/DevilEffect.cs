@@ -23,7 +23,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
     {
       target.SpecialEffect = null;
       target.HealthPoint -= point * 2;
-      target.PlayerHost.WriteWarningMessage( "您输掉了恶魔契约，受到双倍伤害 {0} 点，目前生命值 {1}", point * 2, target.HealthPoint );
+      target.PlayerHost.WriteWarningMessage( "您输掉了恶魔契约，受到双倍伤害 {0} 点，目前 HP {1}", point * 2, target.HealthPoint );
       return true;
     }
 

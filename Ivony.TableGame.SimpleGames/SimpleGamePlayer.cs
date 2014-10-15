@@ -79,16 +79,6 @@ namespace Ivony.TableGame.SimpleGames
 
 
 
-    internal void RemoveCard( SimpleGameCard card )
-    {
-      CardCollection.Remove( card );
-    }
-
-    internal void RemoveAllCard()
-    {
-      CardCollection.RemoveAll( item => true );
-    }
-
 
     /// <summary>
     /// 给玩家发牌
@@ -112,6 +102,12 @@ namespace Ivony.TableGame.SimpleGames
         DefenceEffect = null;
       }
 
+    }
+
+    internal void ClearCards()
+    {
+      CardCollection.RemoveAll( item => true );
+      PlayerHost.WriteMessage( "您手上的卡牌已经清空，请等待下次发牌" );
     }
   }
 }

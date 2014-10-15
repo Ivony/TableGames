@@ -22,6 +22,7 @@ namespace Ivony.TableGame.SimpleGames
     protected override CardDealer CreateCardDealer()
     {
       var dealer = new UnlimitedCardDealer();
+      dealer.RegisterCard( () => new OverturnCard(), 1 );
       dealer.RegisterCard( () => new AngelCard(), 3 );
       dealer.RegisterCard( () => new DevilCard(), 25 );
       dealer.RegisterCard( () => new ClearCard(), 30 );
@@ -32,13 +33,13 @@ namespace Ivony.TableGame.SimpleGames
       dealer.RegisterCard( () => new AttackCard( 1 ), 40 );
       dealer.RegisterCard( () => new AttackCard( 2 ), 60 );
       dealer.RegisterCard( () => new AttackCard( 3 ), 50 );
-      dealer.RegisterCard( () => new AttackCard( 4 ), 20 );
-      dealer.RegisterCard( () => new AttackCard( 5 ), 10 );
-      dealer.RegisterCard( () => new AttackCard( 6 ), 7 );
-      dealer.RegisterCard( () => new AttackCard( 7 ), 5 );
-      dealer.RegisterCard( () => new AttackCard( 8 ), 3 );
-      dealer.RegisterCard( () => new AttackCard( 9 ), 2 );
-      dealer.RegisterCard( () => new AttackCard( 10 ), 1 );
+      dealer.RegisterCard( () => new AttackCard( 4 ), 30 );
+      dealer.RegisterCard( () => new AttackCard( 5 ), 20 );
+      dealer.RegisterCard( () => new AttackCard( 6 ), 10 );
+      dealer.RegisterCard( () => new AttackCard( 7 ), 8 );
+      dealer.RegisterCard( () => new AttackCard( 8 ), 5 );
+      dealer.RegisterCard( () => new AttackCard( 9 ), 3 );
+      dealer.RegisterCard( () => new AttackCard( 10 ), 2 );
 
       return dealer;
     }

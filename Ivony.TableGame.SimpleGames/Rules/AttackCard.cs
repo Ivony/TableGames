@@ -52,7 +52,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
       {
         target.HealthPoint -= Point;
         user.GameHost.Game.AnnounceMessage( "{0} 对 {1} 发起攻击。", user.CodeName, target.CodeName );
-        target.PlayerHost.WriteWarningMessage( "您受到攻击，生命值减少 {0} 点，目前生命值 {1}", Point, target.HealthPoint );
+        target.PlayerHost.WriteWarningMessage( "您受到攻击，HP 减少 {0} 点，目前 HP {1}", Point, target.HealthPoint );
       }
     }
   }
