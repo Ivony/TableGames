@@ -22,24 +22,24 @@ namespace Ivony.TableGame.SimpleGames
     protected override CardDealer CreateCardDealer()
     {
       var dealer = new UnlimitedCardDealer();
-      dealer.RegisterCard( () => new OverturnCard(), 1 );
-      dealer.RegisterCard( () => new AngelCard(), 3 );
-      dealer.RegisterCard( () => new DevilCard(), 25 );
-      dealer.RegisterCard( () => new ClearCard(), 30 );
-      dealer.RegisterCard( () => new PurifyCard(), 20 );
-      dealer.RegisterCard( () => new ReboundCard(), 2 );
-      dealer.RegisterCard( () => new ShieldCard(), 20 );
-      dealer.RegisterCard( () => new PeepCard(), 15 );
-      dealer.RegisterCard( () => new AttackCard( 1 ), 40 );
-      dealer.RegisterCard( () => new AttackCard( 2 ), 60 );
-      dealer.RegisterCard( () => new AttackCard( 3 ), 50 );
-      dealer.RegisterCard( () => new AttackCard( 4 ), 30 );
-      dealer.RegisterCard( () => new AttackCard( 5 ), 20 );
-      dealer.RegisterCard( () => new AttackCard( 6 ), 10 );
-      dealer.RegisterCard( () => new AttackCard( 7 ), 8 );
-      dealer.RegisterCard( () => new AttackCard( 8 ), 5 );
-      dealer.RegisterCard( () => new AttackCard( 9 ), 3 );
-      dealer.RegisterCard( () => new AttackCard( 10 ), 2 );
+      dealer.RegisterCard( () => new OverturnCard(), 15);
+      dealer.RegisterCard( () => new AngelCard(), 40 );
+      dealer.RegisterCard( () => new DevilCard(), 200 );
+      dealer.RegisterCard( () => new ClearCard(), 250 );
+      dealer.RegisterCard( () => new PurifyCard(), 100 );
+      dealer.RegisterCard( () => new ReboundCard(), 20 );
+      dealer.RegisterCard( () => new ShieldCard(), 200 );
+      dealer.RegisterCard( () => new PeepCard(), 120 );
+      dealer.RegisterCard( () => new AttackCard( 1 ), 400 );
+      dealer.RegisterCard( () => new AttackCard( 2 ), 600 );
+      dealer.RegisterCard( () => new AttackCard( 3 ), 500 );
+      dealer.RegisterCard( () => new AttackCard( 4 ), 300 );
+      dealer.RegisterCard( () => new AttackCard( 5 ), 200 );
+      dealer.RegisterCard( () => new AttackCard( 6 ), 150 );
+      dealer.RegisterCard( () => new AttackCard( 7 ), 100 );
+      dealer.RegisterCard( () => new AttackCard( 8 ), 80 );
+      dealer.RegisterCard( () => new AttackCard( 9 ), 50 );
+      dealer.RegisterCard( () => new AttackCard( 10 ), 20 );
 
       return dealer;
     }
