@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
-  
+
   /// <summary>
   /// 定义 (╯‵□′)╯︵┻━┻ 卡牌
   /// </summary>
@@ -20,8 +20,9 @@ namespace Ivony.TableGame.SimpleGames.Rules
       {
         player.Purify();
         player.ClearCards();
-        player.HealthPoint -= 1;
-        player.PlayerHost.WriteWarningMessage( "您正在遭受伤害导致 HP 减少 1 点，目前 HP 还有 {0} 点", player.HealthPoint );
+        var point = player.HealthPoint / 3;
+        player.HealthPoint -= point;
+        player.PlayerHost.WriteWarningMessage( "您正在遭受伤害导致 HP 减少 {0} 点，目前 HP 还有 {1} 点", point, player.HealthPoint );
       }
     }
 
