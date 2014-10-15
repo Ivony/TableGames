@@ -92,7 +92,7 @@ namespace Ivony.TableGame.SimpleGames
     {
       if ( SpecialEffect != null )
       {
-        PlayerHost.WriteWarningMessage( "您当前的 {0} 效果已经被解除", DefenceEffect.Name );
+        PlayerHost.WriteWarningMessage( "您当前的 {0} 效果已经被解除", SpecialEffect.Name );
         SpecialEffect = null;
       }
 
