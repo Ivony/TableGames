@@ -21,9 +21,14 @@ namespace Ivony.TableGame.SimpleGames
       return new AngelEffect();
     }
 
-    internal static DevilEffect DevilEffect()
+    public static DevilEffect DevilEffect()
     {
       return new DevilEffect();
+    }
+
+    public static IDefenceEffect ReboundEffect()
+    {
+      return new ReboundEffect();
     }
   }
 }
