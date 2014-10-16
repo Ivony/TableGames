@@ -40,8 +40,8 @@ namespace Ivony.TableGame.SimpleGames
           .Register( () => new AttackCard( 10 ), 3 );
 
       return new UnlimitedCardDealer()
-          .Register( () => specialDealer.DealCard(), 4 )
-          .Register( () => normalDealer.DealCard(), 6 );
+          .Register( () => specialDealer.DealCard(), 3 )
+          .Register( () => normalDealer.DealCard(), 7 );
     }
 
 
