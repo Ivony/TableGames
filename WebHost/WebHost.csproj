@@ -83,6 +83,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="CookieExtensions.cs" />
+    <Compile Include="GameHostCollection.cs" />
     <Compile Include="GameHostController.cs" />
     <Compile Include="PlayerHostHttpHandler.cs" />
     <Compile Include="Games.cs" />
@@ -94,7 +95,7 @@
     <Compile Include="PlayerNameManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Responding.cs" />
-    <Compile Include="WebGameHost.cs" />
+    <Compile Include="GameHost.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

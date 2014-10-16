@@ -7,11 +7,11 @@ using System.Web;
 
 namespace Ivony.TableGame.WebHost
 {
-  public class WebGameHost : GameHost
+  public class GameHost : GameHostBase
   {
 
 
-    public WebGameHost( string roomName )
+    public GameHost( string roomName )
       : base( roomName )
     {
       _game = new SimpleGame( this );
@@ -40,5 +40,16 @@ namespace Ivony.TableGame.WebHost
     {
       get { return _game; }
     }
+
+
+    public override void ReleaseGame( GameBase game )
+    {
+      base.ReleaseGame( game );
+
+      Games.ReleaseGameHost( this );
+    }
+
+    
+
   }
 }

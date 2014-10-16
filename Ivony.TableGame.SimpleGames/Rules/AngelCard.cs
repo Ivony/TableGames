@@ -30,7 +30,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
     }
 
 
-    public class CardEffect : ISpecialEffect
+    public class CardEffect : IBlessEffect
     {
       public string Name
       {

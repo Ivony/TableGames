@@ -30,6 +30,11 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
+    /// <summary>
+    /// 重写 OnBeforePlay ，在出牌前处理效果和显示状态信息
+    /// </summary>
+    /// <param name="token">取消标识</param>
+    /// <returns>一个 Task 对象，可用于等待操作完成</returns>
     protected override async Task OnBeforePlay( CancellationToken token )
     {
       DealCards();
@@ -37,13 +42,13 @@ namespace Ivony.TableGame.SimpleGames
       {
         var effect = SpecialEffect as IAroundEffect;
         if ( effect != null )
-          effect.OnTurnedAround( this );
+          await effect.OnTurnedAround( this );
       }
 
       {
         var effect = DefenceEffect as IAroundEffect;
         if ( effect != null )
-          effect.OnTurnedAround( this );
+          await effect.OnTurnedAround( this );
       }
 
       PlayerHost.WriteMessage( "HP:{0,-3}{1}{2} 卡牌:{3}", HealthPoint, DefenceEffect, SpecialEffect, string.Join( ", ", Cards.Select( item => item.Name ) ) );
@@ -57,7 +62,7 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
-    public ISpecialEffect SpecialEffect
+    public IBlessEffect SpecialEffect
     {
       get;
       set;

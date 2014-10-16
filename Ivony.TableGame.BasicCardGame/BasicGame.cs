@@ -18,6 +18,9 @@ namespace Ivony.TableGame.Basics
     }
 
 
+    /// <summary>
+    /// 获取所有玩家
+    /// </summary>
     public new TPlayer[] Players
     {
       get { return PlayerCollection.Cast<TPlayer>().ToArray(); }
@@ -39,6 +42,11 @@ namespace Ivony.TableGame.Basics
 
 
 
+    /// <summary>
+    /// 提供 RunGame 方法的标准实现，按照回合依次调用 Player 的 Play 方法，直到某个玩家的 HP 低于 0 为止。
+    /// </summary>
+    /// <param name="token">取消标识</param>
+    /// <returns></returns>
     protected async override Task RunGame( CancellationToken token )
     {
       CardDealer = CreateCardDealer();
@@ -72,16 +80,30 @@ namespace Ivony.TableGame.Basics
 
 
 
-    public void PlayerQuitted( GamePlayer player )
+    /// <summary>
+    /// 当玩家退出游戏时，调用此方法
+    /// </summary>
+    /// <param name="player">退出游戏的玩家</param>
+    public virtual void OnPlayerQuitted( GamePlayer player )
     {
 
       lock ( SyncRoot )
       {
-        if ( !PlayerCollection.Contains( player ) )                          //不存在这个玩家，则忽略。
+
+        if ( GameState == GameState.NotInitialized )
+          throw new InvalidOperationException();
+
+
+        if ( !PlayerCollection.Contains( player ) )                          //如果不存在这个玩家，则忽略。
           return;
 
+
         AnnounceSystemMessage( "玩家 {0} 退出了游戏", player.PlayerName );
-        GameCancellationSource.Cancel();                                     //当有玩家退出时，强行终止游戏
+        PlayerCollection.Remove( player );
+
+
+        if ( GameState == GameState.Running )
+          GameCancellationSource.Cancel();                                   //如果游戏正在进行，则强行终止游戏。
       }
     }
 

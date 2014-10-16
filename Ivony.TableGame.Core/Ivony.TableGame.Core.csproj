@@ -54,7 +54,7 @@
   <ItemGroup>
     <Compile Include="Card.cs" />
     <Compile Include="CardDealer.cs" />
-    <Compile Include="GameHost.cs" />
+    <Compile Include="GameHostBase.cs" />
     <Compile Include="GameBase.cs" />
     <Compile Include="GameMessage.cs" />
     <Compile Include="GameMessageExtensions.cs" />

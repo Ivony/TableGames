@@ -10,7 +10,7 @@ namespace Ivony.TableGame
 {
 
   /// <summary>
-  /// 游戏桌面
+  /// 游戏基类，提供桌面游戏的基本辅助方法
   /// </summary>
   public abstract class GameBase
   {
@@ -22,8 +22,9 @@ namespace Ivony.TableGame
       Random = new Random( DateTime.Now.Millisecond );
     }
 
+
     /// <summary>
-    /// 获取随机数产生器
+    /// 获取用于该游戏的随机数产生器
     /// </summary>
     protected internal static Random Random { get; private set; }
 
@@ -42,13 +43,18 @@ namespace Ivony.TableGame
     }
 
 
-
+    /// <summary>
+    /// 获取承载该游戏的游戏宿主
+    /// </summary>
     protected IGameHost GameHost
     {
       get;
       private set;
     }
 
+    /// <summary>
+    /// 当前游戏房间名称
+    /// </summary>
     public string RoomName
     {
       get { return GameHost.RoomName; }
@@ -63,6 +69,9 @@ namespace Ivony.TableGame
     }
 
 
+    /// <summary>
+    /// 玩家容器，派生类可以通过该容器来增删游戏中的玩家
+    /// </summary>
     protected List<GamePlayer> PlayerCollection
     {
       get;
@@ -70,21 +79,38 @@ namespace Ivony.TableGame
     }
 
 
+
+
     /// <summary>
-    /// 对所有玩家发出消息
+    /// 对所有玩家广播一条消息
+    /// </summary>
+    /// <param name="massage">要广播的消息对象</param>
+
+    public void Announce( GameMessage massage )
+    {
+      lock ( SyncRoot )
+      {
+        foreach ( var item in Players )
+          item.PlayerHost.WriteMessage( massage );
+      }
+    }
+
+
+    /// <summary>
+    /// 对所有玩家广播一个消息
     /// </summary>
     public void AnnounceMessage( string message )
     {
 
-      var _message = new GenericMessage( GameMessageType.Info, message );
+      Announce( new GenericMessage( GameMessageType.Info, message ) );
 
-      lock ( SyncRoot )
-      {
-        foreach ( var item in Players )
-          item.PlayerHost.WriteMessage( _message );
-      }
     }
 
+    /// <summary>
+    /// 对所有玩家广播一个消息
+    /// </summary>
+    /// <param name="format"></param>
+    /// <param name="args"></param>
     public void AnnounceMessage( string format, params object[] args )
     {
       AnnounceMessage( string.Format( CultureInfo.InvariantCulture, format, args ) );
@@ -93,19 +119,19 @@ namespace Ivony.TableGame
 
 
     /// <summary>
-    /// 对所有玩家发出系统消息
+    /// 对所有玩家广播一条系统消息
     /// </summary>
     public void AnnounceSystemMessage( string message )
     {
-      var _message = new SystemMessage( message );
+      Announce( new SystemMessage( message ) );
 
-      lock ( SyncRoot )
-      {
-        foreach ( var item in Players )
-          item.PlayerHost.WriteMessage( _message );
-      }
     }
 
+    /// <summary>
+    /// 对所有玩家广播一条系统消息
+    /// </summary>
+    /// <param name="format"></param>
+    /// <param name="args"></param>
     public void AnnounceSystemMessage( string format, params object[] args )
     {
       AnnounceSystemMessage( string.Format( CultureInfo.InvariantCulture, format, args ) );
@@ -205,7 +231,7 @@ namespace Ivony.TableGame
       }
       finally
       {
-        Release();
+        ReleaseGame();
       }
     }
 
@@ -253,12 +279,14 @@ namespace Ivony.TableGame
     /// <summary>
     /// 游戏结束，释放所有资源。
     /// </summary>
-    public void Release()
+    public virtual void ReleaseGame()
     {
       foreach ( var player in Players )
       {
         player.PlayerHost.QuitGame();
       }
+
+      GameHost.ReleaseGame( this );
     }
 
   }

@@ -12,11 +12,8 @@ namespace Ivony.TableGame.WebHost
   public class Games
   {
 
-    public static SqlDbExecutor Database = SqlServer.FromConfiguration( "Database" );
-
-
     private static object _sync = new object();
-    private static Hashtable _games = new Hashtable();
+    private static GameHostCollection _games = new GameHostCollection();
 
 
     /// <summary>
@@ -24,29 +21,33 @@ namespace Ivony.TableGame.WebHost
     /// </summary>
     /// <param name="name">游戏名称</param>
     /// <returns></returns>
-    public static WebGameHost GetOrCreateGame( string name )
+    public static GameHost GetOrCreateGame( string name )
     {
 
-      WebGameHost game;
 
       lock ( _sync )
       {
+        if ( _games.Contains( name ) )
+          return _games[name];
 
-        game = _games[name] as WebGameHost;
-
-        if ( game == null )
+        else
         {
-          game = CreateGame( name );
-          _games[name] = game;
+          var game = new GameHost( name );
+          _games.Add( game );
+          return game;
         }
       }
-
-      return game;
     }
 
-    private static WebGameHost CreateGame( string name )
+    internal static void ReleaseGameHost( GameHost gameHost )
     {
-      return new WebGameHost( name );
+      lock ( _sync )
+      {
+        _games.Remove( gameHost );
+      }
     }
+
+
+
   }
 }

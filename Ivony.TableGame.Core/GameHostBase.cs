@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame
 {
-  public abstract class GameHost : IGameHost
+  public abstract class GameHostBase : IGameHost
   {
 
 
-    protected GameHost( string roomName )
+    protected GameHostBase( string roomName )
     {
       RoomName = roomName;
     }
@@ -23,14 +23,6 @@ namespace Ivony.TableGame
     public abstract GameBase Game { get; }
 
 
-
-    /// <summary>
-    /// 游戏状态
-    /// </summary>
-    public GameState GameState
-    {
-      get { return Game.GameState; }
-    }
 
     public virtual bool TryJoinGame( IPlayerHost playerHost, out string reason )
     {
@@ -87,6 +79,10 @@ namespace Ivony.TableGame
     }
 
 
+    public virtual void ReleaseGame( GameBase game )
+    {
+      
+    }
 
 
 
@@ -94,6 +90,8 @@ namespace Ivony.TableGame
     {
       get { return Game.SyncRoot; }
     }
+
+
 
   }
 }

@@ -111,7 +111,7 @@ namespace Ivony.TableGame.Basics
 
     public override void QuitGame()
     {
-      InternalGame.PlayerQuitted( this );
+      InternalGame.OnPlayerQuitted( this );
       base.QuitGame();
     }
 
