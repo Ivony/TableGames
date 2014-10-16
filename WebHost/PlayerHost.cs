@@ -115,14 +115,18 @@ namespace Ivony.TableGame.WebHost
       }
       if ( PlayerNameManager.CanReset( Name, name ) )
       {
+        if ( Player != null )
+          Player.GameHost.Game.AnnounceSystemMessage( "玩家 {0} 已经更名为 {1}", Name, name );
+
         Name = name;
         this.WriteSystemMessage( "您的昵称已经成功更改为 {0}", Name );
+
         return true;
       }
 
       else
       {
-        this.WriteSystemMessage( "更改名字失败，昵称已经被其他用户占用。" );
+        this.WriteSystemMessage( "更改昵称失败，昵称已经被其他用户占用。" );
         return false;
       }
     }

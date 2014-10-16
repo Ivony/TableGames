@@ -34,7 +34,6 @@ namespace Ivony.TableGame.Basics
 
       await OnBeforePlay( token );
       await PlayCard( await CherryCard( token ), token );
-
       await OnAfterPlay( token );
 
     }
