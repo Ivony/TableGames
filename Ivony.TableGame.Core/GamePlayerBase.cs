@@ -6,10 +6,10 @@ using System.Text;
 
 namespace Ivony.TableGame
 {
-  public abstract class GamePlayer
+  public abstract class GamePlayerBase
   {
 
-    protected GamePlayer( IGameHost gameHost, IPlayerHost playerHost )
+    protected GamePlayerBase( IGameHost gameHost, IPlayerHost playerHost )
     {
       PlayerHost = playerHost;
       GameHost = gameHost;
@@ -33,6 +33,11 @@ namespace Ivony.TableGame
     /// </summary>
     public IGameHost GameHost { get; private set; }
 
+
+    /// <summary>
+    /// 获取游戏对象
+    /// </summary>
+    public GameBase Game { get { return GameHost.Game; } }
 
     /// <summary>
     /// 玩家宿主对象，用于显示游戏信息和接受玩家输入
@@ -59,6 +64,10 @@ namespace Ivony.TableGame
     /// <returns>游戏信息</returns>
     public abstract object GetGameInformation();
 
+
+    /// <summary>
+    /// 退出游戏
+    /// </summary>
     public virtual void QuitGame()
     {
 

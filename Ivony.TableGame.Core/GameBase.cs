@@ -36,7 +36,7 @@ namespace Ivony.TableGame
     {
       SyncRoot = new object();
       GameState = GameState.NotInitialized;
-      PlayerCollection = new List<GamePlayer>();
+      PlayerCollection = new List<GamePlayerBase>();
       GameCancellationSource = new CancellationTokenSource();
 
       GameHost = gameHost;
@@ -63,7 +63,7 @@ namespace Ivony.TableGame
     /// <summary>
     /// 玩家列表
     /// </summary>
-    public GamePlayer[] Players
+    public GamePlayerBase[] Players
     {
       get { return PlayerCollection.ToArray(); }
     }
@@ -72,7 +72,7 @@ namespace Ivony.TableGame
     /// <summary>
     /// 玩家容器，派生类可以通过该容器来增删游戏中的玩家
     /// </summary>
-    protected List<GamePlayer> PlayerCollection
+    protected List<GamePlayerBase> PlayerCollection
     {
       get;
       private set;
@@ -157,7 +157,7 @@ namespace Ivony.TableGame
     /// <param name="gameHost">游戏宿主</param>
     /// <param name="playerHost">玩家宿主</param>
     /// <returns>若加入游戏成功，则返回一个 Player 对象</returns>
-    public virtual GamePlayer TryJoinGame( IGameHost gameHost, IPlayerHost playerHost )
+    public virtual GamePlayerBase TryJoinGame( IGameHost gameHost, IPlayerHost playerHost )
     {
 
       lock ( SyncRoot )
@@ -183,7 +183,7 @@ namespace Ivony.TableGame
     /// <param name="gameHost">游戏宿主</param>
     /// <param name="playerHost">玩家宿主，游戏环境通过玩家宿主与玩家进行通信</param>
     /// <returns>若成功加入游戏，则返回游戏中的玩家</returns>
-    protected virtual GamePlayer TryJoinGameCore( IGameHost gameHost, IPlayerHost playerHost )
+    protected virtual GamePlayerBase TryJoinGameCore( IGameHost gameHost, IPlayerHost playerHost )
     {
       throw new NotImplementedException();
     }

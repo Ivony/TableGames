@@ -92,7 +92,10 @@ namespace Ivony.TableGame.Basics
         message = await player.PlayerHost.Console.ReadLine( "游戏即将开始，在游戏进行中请不要关闭客户端或浏览器。如果您已经准备好开始游戏，请输入 Ready，若您要退出游戏，请输入 Quit", "quit" );
 
         if ( string.Equals( message, "Ready", StringComparison.OrdinalIgnoreCase ) )
+        {
+          AnnounceSystemMessage( "{0} 已经准备好", player.PlayerName );
           break;
+        }
 
         else if ( string.Equals( message, "Quit", StringComparison.OrdinalIgnoreCase ) )
           player.PlayerHost.QuitGame();
@@ -108,7 +111,7 @@ namespace Ivony.TableGame.Basics
     /// 当玩家退出游戏时，调用此方法
     /// </summary>
     /// <param name="player">退出游戏的玩家</param>
-    public virtual void OnPlayerQuitted( GamePlayer player )
+    public virtual void OnPlayerQuitted( GamePlayerBase player )
     {
 
       lock ( SyncRoot )

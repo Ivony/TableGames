@@ -148,10 +148,10 @@ namespace Ivony.TableGame.WebHost
     /// <summary>
     /// 若已经加入某个游戏，则获取游戏中的玩家对象
     /// </summary>
-    public GamePlayer Player { get; private set; }
+    public GamePlayerBase Player { get; private set; }
 
 
-    GamePlayer IPlayerHost.GetPlayer()
+    GamePlayerBase IPlayerHost.GetPlayer()
     {
       return Player;
     }
@@ -160,7 +160,7 @@ namespace Ivony.TableGame.WebHost
     /// 通知玩家已经加入了某个游戏
     /// </summary>
     /// <param name="player"></param>
-    public void JoinedGame( GamePlayer player )
+    public void JoinedGame( GamePlayerBase player )
     {
 
       lock ( globalSyncRoot )

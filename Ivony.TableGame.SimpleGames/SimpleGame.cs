@@ -45,7 +45,7 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
-    protected override GamePlayer TryJoinGameCore( IGameHost gameHost, IPlayerHost playerHost )
+    protected override GamePlayerBase TryJoinGameCore( IGameHost gameHost, IPlayerHost playerHost )
     {
       lock ( SyncRoot )
       {
