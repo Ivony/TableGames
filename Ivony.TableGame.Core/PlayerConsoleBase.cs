@@ -16,45 +16,24 @@ namespace Ivony.TableGame
 
     public abstract Task<string> ReadLine( string prompt, CancellationToken token );
 
-    public Task<string> ReadLine( string prompt, TimeSpan timeout )
+    public Task<string> ReadLine( string prompt, string defaultValue, CancellationToken token )
     {
-      if ( timeout < TimeSpan.Zero )
-        throw new ArgumentOutOfRangeException( "timeout" );
-
-      return ReadLine( prompt, new CancellationTokenSource( timeout ).Token );
+      return ReadLine( prompt, defaultValue, DefaultTimeout, token );
     }
 
-
-    public Task<string> ReadLine( string prompt )
+    public async Task<string> ReadLine( string prompt, string defaultValue, TimeSpan timeout, CancellationToken token )
     {
-      return ReadLine( prompt, DefaultTimeout );
-    }
 
-
-    public Task<string> ReadLine( string prompt, string defaultValue )
-    {
-      return ReadLine( prompt, DefaultTimeout );
-    }
-
-    public async Task<string> ReadLine( string prompt, string defaultValue, TimeSpan timeout )
-    {
+      var timeoutToken = new CancellationTokenSource( timeout ).Token;
       try
       {
-        return await ReadLine( prompt, timeout );
+        return await ReadLine( prompt, CancellationTokenSource.CreateLinkedTokenSource( timeoutToken, token ).Token );
       }
       catch ( TaskCanceledException )
       {
-        return defaultValue;
-      }
-    }
-    public async Task<string> ReadLine( string prompt, string defaultValue, CancellationToken token )
-    {
-      try
-      {
-        return await ReadLine( prompt, token );
-      }
-      catch ( TaskCanceledException )
-      {
+        if ( token.IsCancellationRequested )
+          throw;
+
         return defaultValue;
       }
 
@@ -64,6 +43,36 @@ namespace Ivony.TableGame
 
     public abstract Task<IOption> Choose( string prompt, IOption[] options, CancellationToken token );
 
+
+    public async Task<T> Choose<T>( string prompt, T[] options, CancellationToken token ) where T : class, IOption
+    {
+      return (T) await Choose( prompt, options, token );
+    }
+
+
+
+    public Task<T> Choose<T>( string prompt, T[] options, T defaultOption, CancellationToken token ) where T : class, IOption
+    {
+      return Choose( prompt, options, defaultOption, DefaultTimeout, token );
+    }
+
+    public async Task<T> Choose<T>( string prompt, T[] options, T defaultOption, TimeSpan timeout, CancellationToken token ) where T : class, IOption
+    {
+
+      var timeoutToken = new CancellationTokenSource( timeout ).Token;
+      try
+      {
+        return await Choose( prompt, options, CancellationTokenSource.CreateLinkedTokenSource( timeoutToken, token ).Token );
+      }
+      catch ( TaskCanceledException )
+      {
+        if ( token.IsCancellationRequested )
+          throw;
+
+        return defaultOption;
+      }
+
+    }
 
 
 

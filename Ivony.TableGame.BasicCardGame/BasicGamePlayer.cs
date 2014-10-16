@@ -41,24 +41,19 @@ namespace Ivony.TableGame.Basics
     private async Task<TCard> CherryCard( CancellationToken token )
     {
 
-      var timeoutToken = new CancellationTokenSource( TimeSpan.FromMinutes( 1 ) ).Token;
-      try
-      {
-        return (TCard) await PlayerHost.Console.Choose( "请出牌：", Cards,
-          CancellationTokenSource.CreateLinkedTokenSource( token, timeoutToken ).Token );
-      }
-      catch ( TaskCanceledException )
-      {
-        if ( token.IsCancellationRequested )
-          throw;
+      var card = await PlayerHost.Console.Choose( "请出牌：", Cards, null, token );
 
-        lock ( SyncRoot )
-        {
-          var index = Random.Next( Cards.Length );
-          PlayerHost.WriteWarningMessage( "操作超时，随机打出第 {0} 张牌", index + 1 );
-          return Cards[index];
-        }
+      if ( card != null )
+        return card;
+
+
+      lock ( SyncRoot )
+      {
+        var index = Random.Next( Cards.Length );
+        PlayerHost.WriteWarningMessage( "操作超时，随机打出第 {0} 张牌", index + 1 );
+        return Cards[index];
       }
+
     }
 
 
