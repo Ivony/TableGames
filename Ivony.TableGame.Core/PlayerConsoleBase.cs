@@ -46,7 +46,7 @@ namespace Ivony.TableGame
 
     public async Task<T> Choose<T>( string prompt, T[] options, CancellationToken token ) where T : class, IOption
     {
-      return (T) await Choose( prompt, options, token );
+      return (T) await Choose( prompt, (IOption[]) options, token );
     }
 
 

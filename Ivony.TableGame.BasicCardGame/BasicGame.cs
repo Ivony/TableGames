@@ -93,16 +93,16 @@ namespace Ivony.TableGame.Basics
 
 
         if ( string.Equals( message, "Ready", StringComparison.OrdinalIgnoreCase ) )
-        {
           AnnounceSystemMessage( "{0} 已经准备好", player.PlayerName );
-          break;
-        }
 
         else if ( string.Equals( message, "Quit", StringComparison.OrdinalIgnoreCase ) )
           player.PlayerHost.QuitGame();
 
+        else
+          continue;
 
-      } while ( true );
+
+      } while ( false );
     }
 
 
