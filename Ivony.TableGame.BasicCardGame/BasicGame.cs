@@ -52,7 +52,7 @@ namespace Ivony.TableGame.Basics
       CardDealer = CreateCardDealer();
 
 
-      await EnsureAlready();
+      await EnsureAlready( token );
 
       AnnounceSystemMessage( "游戏开始" );
 
@@ -79,17 +79,18 @@ namespace Ivony.TableGame.Basics
       }
     }
 
-    protected async virtual Task EnsureAlready()
+    protected async virtual Task EnsureAlready( CancellationToken token )
     {
-      await Task.WhenAll( Players.Select( player => EnsureAlready( player ) ) );
+      await Task.WhenAll( Players.Select( player => EnsureAlready( player, token ) ) );
     }
 
-    private async Task EnsureAlready( TPlayer player )
+    private async Task EnsureAlready( TPlayer player, CancellationToken token )
     {
       string message;
       do
       {
-        message = await player.PlayerHost.Console.ReadLine( "游戏即将开始，在游戏进行中请不要关闭客户端或浏览器。如果您已经准备好开始游戏，请输入 Ready，若您要退出游戏，请输入 Quit", "quit" );
+        message = await player.PlayerHost.Console.ReadLine( "游戏即将开始，在游戏进行中请不要关闭客户端或浏览器。如果您已经准备好开始游戏，请输入 Ready，若您要退出游戏，请输入 Quit", "quit", token );
+
 
         if ( string.Equals( message, "Ready", StringComparison.OrdinalIgnoreCase ) )
         {

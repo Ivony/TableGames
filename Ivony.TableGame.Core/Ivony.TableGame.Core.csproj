@@ -63,7 +63,7 @@
     <Compile Include="IOption.cs" />
     <Compile Include="IPersistableGameHost.cs" />
     <Compile Include="IPlayerHost.cs" />
-    <Compile Include="GamePlayer.cs" />
+    <Compile Include="GamePlayerBase.cs" />
     <Compile Include="OptionEntity.cs" />
     <Compile Include="PlayerConsoleBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
