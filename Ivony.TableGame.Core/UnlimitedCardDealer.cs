@@ -50,7 +50,7 @@ namespace Ivony.TableGame
       foreach ( var item in list )
       {
         n -= item.Probability;
-        if ( n <= 0 )
+        if ( n < 0 )
           return item.CardCreator();
       }
 
