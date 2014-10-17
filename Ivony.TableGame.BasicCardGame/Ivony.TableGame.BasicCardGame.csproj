@@ -42,8 +42,10 @@
     <Compile Include="BasicCard.cs" />
     <Compile Include="BasicGame.cs" />
     <Compile Include="BasicGamePlayer.cs" />
+    <Compile Include="EffectManagerBase.cs" />
     <Compile Include="IBasicGame.cs" />
     <Compile Include="IEffect.cs" />
+    <Compile Include="IEffectSlots.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

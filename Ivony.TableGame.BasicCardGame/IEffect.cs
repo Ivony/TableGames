@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ivony.TableGame.Basics
+namespace Ivony.TableGame.BasicCardGames
 {
   public interface IEffect
   {

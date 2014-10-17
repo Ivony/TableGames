@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Ivony.TableGame.Basics
+namespace Ivony.TableGame.BasicCardGames
 {
   public abstract class BasicGame<TPlayer, TCard> : GameBase, IBasicGame
     where TPlayer : BasicGamePlayer<TCard>
