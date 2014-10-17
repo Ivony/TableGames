@@ -48,8 +48,5 @@ namespace Ivony.TableGame.WebHost
 
       Games.ReleaseGameHost( this );
     }
-
-    
-
   }
 }

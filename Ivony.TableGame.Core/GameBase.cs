@@ -281,12 +281,16 @@ namespace Ivony.TableGame
     /// </summary>
     public virtual void ReleaseGame()
     {
-      foreach ( var player in Players )
+      lock ( SyncRoot )
       {
-        player.PlayerHost.TryQuitGame();
-      }
+        foreach ( var player in Players )
+        {
 
-      GameHost.ReleaseGame( this );
+          if ( player.PlayerHost.TryQuitGame() == false )
+            throw new InvalidOperationException( string.Format( "释放玩家 {0} 失败", player.PlayerHost.Name ) );
+        }
+        GameHost.ReleaseGame( this );
+      }
     }
 
   }
