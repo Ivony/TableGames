@@ -283,7 +283,7 @@ namespace Ivony.TableGame
     {
       foreach ( var player in Players )
       {
-        player.PlayerHost.QuitGame();
+        player.PlayerHost.TryQuitGame();
       }
 
       GameHost.ReleaseGame( this );

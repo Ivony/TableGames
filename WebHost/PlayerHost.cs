@@ -114,22 +114,6 @@ namespace Ivony.TableGame.WebHost
       }
     }
 
-    /// <summary>
-    /// 释放玩家宿主所有资源，若玩家正在游戏，则强行退出。
-    /// </summary>
-    public void Release()
-    {
-      lock ( globalSyncRoot )
-      {
-
-        TryQuitGame();
-        playerHosts.Remove( this );
-        PlayerNameManager.RemoveName( this.Name );
-      }
-    }
-
-
-
 
     /// <summary>
     /// 玩家名称
@@ -214,20 +198,8 @@ namespace Ivony.TableGame.WebHost
 
 
     /// <summary>
-    /// 强行退出某个游戏
+    /// 尝试退出某个游戏
     /// </summary>
-    public void QuitGame()
-    {
-      lock ( SyncRoot )
-      {
-        if ( Player == null )
-          throw new InvalidOperationException( "玩家当前未加入任何游戏，无法从游戏中退出" );
-
-        Player.QuitGame();
-        Player = null;
-      }
-    }
-
     public bool TryQuitGame()
     {
       lock ( SyncRoot )
@@ -238,6 +210,21 @@ namespace Ivony.TableGame.WebHost
         Player.QuitGame();
         Player = null;
         return true;
+      }
+    }
+
+
+    /// <summary>
+    /// 释放玩家宿主所有资源，若玩家正在游戏，则强行退出。
+    /// </summary>
+    public void Release()
+    {
+      lock ( globalSyncRoot )
+      {
+
+        TryQuitGame();
+        playerHosts.Remove( this );
+        PlayerNameManager.RemoveName( this.Name );
       }
     }
 

@@ -35,7 +35,7 @@ namespace Ivony.TableGame
     /// <summary>
     /// 指示玩家应立即退出当前游戏
     /// </summary>
-    void QuitGame();
+    bool TryQuitGame();
 
 
     /// <summary>

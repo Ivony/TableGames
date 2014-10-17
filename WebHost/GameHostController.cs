@@ -35,8 +35,11 @@ namespace Ivony.TableGame.WebHost
         if ( !PlayerHost.Gaming )
           return "玩家未加入任何游戏";
 
-        PlayerHost.QuitGame();
-        return "OK";
+        if ( PlayerHost.TryQuitGame() )
+          return "OK";
+
+        else
+          return "Failed";
       }
     }
 

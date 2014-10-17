@@ -96,7 +96,7 @@ namespace Ivony.TableGame.Basics
           AnnounceSystemMessage( "{0} 已经准备好", player.PlayerName );
 
         else if ( string.Equals( message, "Quit", StringComparison.OrdinalIgnoreCase ) )
-          player.PlayerHost.QuitGame();
+          player.PlayerHost.TryQuitGame();
 
         else
           continue;
