@@ -45,6 +45,9 @@ namespace Ivony.TableGame.WebHost
 
 
 
+    /// <summary>
+    /// 上次状态刷新时间
+    /// </summary>
     public DateTime RefreshTime { get; private set; }
 
     internal void RefreshState()
@@ -162,10 +165,36 @@ namespace Ivony.TableGame.WebHost
     /// <summary>
     /// 获取玩家控制台，用于给玩家显示消息
     /// </summary>
-    public PlayerConsoleBase Console
+    public PlayerConsole Console
     {
       get { return _console; }
     }
+
+    PlayerConsoleBase IPlayerHost.Console
+    {
+      get { return _console; }
+    }
+
+
+
+    /// <summary>
+    /// 设置消息指针位置
+    /// </summary>
+    /// <param name="messageIndex"></param>
+    internal void SetMessageIndex( int messageIndex ) { Console.SetMessageIndex( messageIndex ); }
+
+
+    /// <summary>
+    /// 最后一次收取的消息位置
+    /// </summary>
+    internal int LastMesageIndex { get { return Console.LastMesageIndex; } }
+
+    /// <summary>
+    /// 获取所有未收取的消息
+    /// </summary>
+    /// <returns></returns>
+    public GameMessage[] GetMessages() { return Console.GetMessages(); }
+
 
 
 
@@ -318,77 +347,6 @@ namespace Ivony.TableGame.WebHost
       }
     }
 
-
-
-
-
-    private class PlayerConsole : PlayerConsoleBase
-    {
-
-      public PlayerHost PlayerHost { get; private set; }
-
-      public PlayerConsole( PlayerHost host )
-      {
-        PlayerHost = host;
-      }
-
-      public override void WriteMessage( GameMessage message )
-      {
-        PlayerHost._messages.Add( message );
-      }
-
-      public override async Task<string> ReadLine( string prompt, CancellationToken token )
-      {
-        return await new TextMessageResponding( PlayerHost, prompt, token ).RespondingTask.ConfigureAwait( false );
-      }
-
-
-
-      public override async Task<IOption> Choose( string prompt, IOption[] options, CancellationToken token )
-      {
-        return await new OptionsResponding( PlayerHost, prompt, options, token ).RespondingTask.ConfigureAwait( false );
-      }
-
-    }
-
-
-
-
-    private List<GameMessage> _messages = new List<GameMessage>();
-
-
-    private int index = 0;
-
-    /// <summary>
-    /// 设置最后一次收取的消息位置
-    /// </summary>
-    /// <param name="messageIndex"></param>
-    internal void SetMessageIndex( int messageIndex )
-    {
-      index = messageIndex;
-    }
-
-
-    /// <summary>
-    /// 最后一次收取的消息位置
-    /// </summary>
-    internal int LastMesageIndex
-    {
-      get;
-      private set;
-    }
-
-    public GameMessage[] GetMessages()
-    {
-      lock ( SyncRoot )
-      {
-        LastMesageIndex = _messages.Count;
-        if ( index > LastMesageIndex )
-          return new GameMessage[0];
-
-        return _messages.GetRange( index, LastMesageIndex - index ).ToArray();
-      }
-    }
 
 
 
