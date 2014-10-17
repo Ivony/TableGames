@@ -39,9 +39,18 @@ namespace Ivony.TableGame.WebHost
       Name = name;
 
       SyncRoot = new object();
+      RefreshTime = DateTime.UtcNow;
       _console = new PlayerConsole( this );
     }
 
+
+
+    public DateTime RefreshTime { get; private set; }
+
+    internal void RefreshState()
+    {
+      RefreshTime = DateTime.UtcNow;
+    }
 
 
     /// <summary>
@@ -53,8 +62,8 @@ namespace Ivony.TableGame.WebHost
 
       lock ( globalSyncRoot )
       {
-        var instance = new PlayerHost( Guid.NewGuid(), PlayerNameManager.GetName() );
-        playerHosts.Add( instance.Guid, instance );
+        var instance = new PlayerHost( Guid.NewGuid(), PlayerNameManager.CreateName() );
+        playerHosts.Add( instance );
         instance.ShowInitializeInfo();
         return instance;
 
@@ -72,22 +81,53 @@ namespace Ivony.TableGame.WebHost
     }
 
     private static object globalSyncRoot = new object();
-    private static Hashtable playerHosts = new Hashtable();
+    private static PlayerHostCollection playerHosts = new PlayerHostCollection();
 
+
+
+
+    private static readonly TimeSpan playerHostTimeout = new TimeSpan( 0, 10, 0 );
 
     /// <summary>
-    /// 
+    /// 尝试获取玩家宿主
     /// </summary>
-    /// <param name="userId"></param>
+    /// <param name="id">玩家宿主ID</param>
     /// <returns></returns>
-    public static PlayerHost GetPlayerHost( Guid userId )
+    public static PlayerHost GetPlayerHost( Guid id )
     {
       lock ( globalSyncRoot )
       {
-        return playerHosts[userId] as PlayerHost;
-      }
 
+        var date = DateTime.UtcNow - playerHostTimeout;
+
+        foreach ( var i in playerHosts.Where( item => item.RefreshTime < date ).ToArray() )
+          i.Release();
+
+        if ( playerHosts.Contains( id ) )
+        {
+          var instance = playerHosts[id];
+          instance.RefreshState();
+          return instance;
+        }
+        else
+          return null;
+      }
     }
+
+    /// <summary>
+    /// 释放玩家宿主所有资源，若玩家正在游戏，则强行退出。
+    /// </summary>
+    public void Release()
+    {
+      lock ( globalSyncRoot )
+      {
+
+        TryQuitGame();
+        playerHosts.Remove( this );
+        PlayerNameManager.RemoveName( this.Name );
+      }
+    }
+
 
 
 
@@ -188,6 +228,18 @@ namespace Ivony.TableGame.WebHost
       }
     }
 
+    public bool TryQuitGame()
+    {
+      lock ( SyncRoot )
+      {
+        if ( Player == null )
+          return false;
+
+        Player.QuitGame();
+        Player = null;
+        return true;
+      }
+    }
 
 
     /// <summary>

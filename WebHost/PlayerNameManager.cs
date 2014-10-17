@@ -16,7 +16,7 @@ namespace Ivony.TableGame.WebHost
     private static readonly Regex playerNameRegex = new Regex( @"^([a-zA-Z]{3,10})$|^([\p{IsEnclosedCJKLettersandMonths}\p{IsCJKCompatibility}\p{IsCJKUnifiedIdeographsExtensionA}\p{IsCJKUnifiedIdeographs}\p{IsCJKCompatibilityIdeographs}-[\P{L}]]{2,5})$", RegexOptions.Compiled );
     private static HashSet<string> playerNames = new HashSet<string>();
 
-    public static string GetName()
+    public static string CreateName()
     {
 
       string name;
