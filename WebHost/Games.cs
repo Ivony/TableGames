@@ -48,6 +48,15 @@ namespace Ivony.TableGame.WebHost
     }
 
 
+    internal static GameHost[] GetAllGames()
+    {
+      lock ( _sync )
+      {
+        return _games.ToArray();
+      }
+    }
+
+
 
   }
 }

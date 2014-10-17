@@ -19,11 +19,28 @@ namespace Ivony.TableGame.WebHost
     public object Game( string name )
     {
 
+      return JoinGame( name );
+
+    }
+
+
+    [HttpPost]
+    public object JoinGame( string name )
+    {
       var game = Games.GetOrCreateGame( name );
 
       game.JoinGame( PlayerHost );
       return "OK";
+    }
 
+
+
+    [HttpGet]
+    public object AllGames()
+    {
+      var games = Games.GetAllGames();
+
+      return games.Select( item => new { Name = item.RoomName, State = item.Game.GameState, Players = item.Game.Players.Length } );
     }
 
 
