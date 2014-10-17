@@ -15,16 +15,8 @@ namespace Ivony.TableGame.WebHost
 
 
 
+
     [HttpGet]
-    public object Game( string name )
-    {
-
-      return JoinGame( name );
-
-    }
-
-
-    [HttpPost]
     public object JoinGame( string name )
     {
       var game = Games.GetOrCreateGame( name );
@@ -36,7 +28,7 @@ namespace Ivony.TableGame.WebHost
 
 
     [HttpGet]
-    public object AllGames()
+    public object GameRooms()
     {
       var games = Games.GetAllGames();
 
