@@ -42,6 +42,7 @@
     <Compile Include="BasicCard.cs" />
     <Compile Include="BasicGame.cs" />
     <Compile Include="BasicGamePlayer.cs" />
+    <Compile Include="CardUsingEvent.cs" />
     <Compile Include="GameEventBase.cs" />
     <Compile Include="GameRoundEvent.cs" />
     <Compile Include="IBasicGame.cs" />

@@ -90,7 +90,7 @@ namespace Ivony.TableGame.BasicCardGames
 
 
     private BlankEffectManager _effectManager = new BlankEffectManager();
-    protected virtual EffectManagerBase EffectManager
+    public virtual EffectManagerBase EffectManager
     {
       get { return _effectManager; }
     }

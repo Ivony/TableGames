@@ -30,10 +30,13 @@ namespace Ivony.TableGame.BasicCardGames
     public async virtual Task Play( CancellationToken token )
     {
 
-      GameHost.Game.AnnounceMessage( "轮到 {0} 出牌", PlayerName );
+      Game.AnnounceMessage( "轮到 {0} 出牌", PlayerName );
 
       await OnBeforePlay( token );
-      await PlayCard( await CherryCard( token ), token );
+      var card = await CherryCard( token );
+
+      
+      await PlayCard( card, token );
       await OnAfterPlay( token );
 
     }
