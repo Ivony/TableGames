@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ivony.TableGame.BasicCardGames
+namespace Ivony.TableGame.Effects
 {
-  public interface IEffect
+  public interface IGameEvent
   {
 
-    string Name { get; }
-
-    string Description { get; }
+    IDictionary<string, object> Data { get; }
 
   }
 }

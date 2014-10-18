@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.SimpleGames
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.BasicCardGame", "Ivony.TableGame.BasicCardGame\Ivony.TableGame.BasicCardGame.csproj", "{74742E84-6F8B-467E-8FCA-59FBA784AED9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.Effects", "Ivony.TableGame.Effects\Ivony.TableGame.Effects.csproj", "{B30E814A-C2A6-44EA-99D9-7DB31CFBF7F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{74742E84-6F8B-467E-8FCA-59FBA784AED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74742E84-6F8B-467E-8FCA-59FBA784AED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74742E84-6F8B-467E-8FCA-59FBA784AED9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B30E814A-C2A6-44EA-99D9-7DB31CFBF7F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B30E814A-C2A6-44EA-99D9-7DB31CFBF7F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B30E814A-C2A6-44EA-99D9-7DB31CFBF7F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B30E814A-C2A6-44EA-99D9-7DB31CFBF7F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
