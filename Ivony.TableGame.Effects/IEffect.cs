@@ -17,12 +17,19 @@ namespace Ivony.TableGame.Effects
 
 
 
-  public interface IInitiatorEffect : IEffect
+  public interface IGameBehaviorEffect : IEffect
+  {
+    Task OnBehaviorInitiator( IGameBehaviorEvent gameEvent );
+    
+    Task OnBehaviorRecipient( IGameBehaviorEvent gameEvent );
+
+  }
+
+
+  public interface IGamePlayerEffect : IEffect
   {
 
-    void OnPlayerEvent( IGamePlayerEvent gameEvent );
-
-    void OnBehaviorInitiator( IGameBehaviorEvent gameEvent );
+    Task OnGamePlayerEvent( IGamePlayerEvent gameEvent );
 
   }
 

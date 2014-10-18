@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{74742E84-6F8B-467E-8FCA-59FBA784AED9}</ProjectGuid>
+    <ProjectGuid>{EEBBFAC7-FA90-4DE8-A63F-6615A1FA4D12}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ivony.TableGame.BasicCardGames</RootNamespace>
-    <AssemblyName>Ivony.TableGame.BasicCardGames</AssemblyName>
+    <RootNamespace>Ivony.TableGame.MurderGame</RootNamespace>
+    <AssemblyName>Ivony.TableGame.MurderGame</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,23 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicCard.cs" />
-    <Compile Include="BasicGame.cs" />
-    <Compile Include="BasicGamePlayer.cs" />
-    <Compile Include="GameEventBase.cs" />
-    <Compile Include="GameRoundEvent.cs" />
-    <Compile Include="IBasicGame.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Ivony.TableGame.Core\Ivony.TableGame.Core.csproj">
-      <Project>{ad2e0903-517b-489b-a001-361022d015f3}</Project>
-      <Name>Ivony.TableGame.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Ivony.TableGame.Effects\Ivony.TableGame.Effects.csproj">
-      <Project>{b30e814a-c2a6-44ea-99d9-7db31cfbf7f7}</Project>
-      <Name>Ivony.TableGame.Effects</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

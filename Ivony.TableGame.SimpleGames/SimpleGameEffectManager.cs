@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ivony.TableGame.Effects;
 
-namespace Ivony.TableGame.Effects
+namespace Ivony.TableGame.SimpleGames
 {
-  public interface IGamePlayerEvent
+  public class SimpleGameEffectManager : EffectManagerBase
   {
-    GamePlayerBase Player { get; }
+
+
+
+
   }
 }

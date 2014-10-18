@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.Effects
 {
-  public interface IGameRoundEvent
+  public class BlankEffectManager : EffectManagerBase
   {
-
-    int CurrentRound { get; }
-
-    GamePlayerBase CurrentPlayer { get; }
-
   }
 }

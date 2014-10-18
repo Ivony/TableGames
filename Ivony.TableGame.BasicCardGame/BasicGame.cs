@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ivony.TableGame.Effects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -65,6 +66,9 @@ namespace Ivony.TableGame.BasicCardGames
 
         foreach ( TPlayer player in Players )
         {
+
+          await _effectManager.OnGameEvent( new GameRoundEvent<TPlayer, TCard>( player, turn ) );
+
           await player.Play( token );
 
           token.ThrowIfCancellationRequested();
@@ -83,6 +87,14 @@ namespace Ivony.TableGame.BasicCardGames
     {
       await Task.WhenAll( Players.Select( player => EnsureAlready( player, token ) ) );
     }
+
+
+    private BlankEffectManager _effectManager = new BlankEffectManager();
+    protected virtual EffectManagerBase EffectManager
+    {
+      get { return _effectManager; }
+    }
+
 
     private async Task EnsureAlready( TPlayer player, CancellationToken token )
     {

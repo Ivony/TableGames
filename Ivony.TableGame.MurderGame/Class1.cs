@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ivony.TableGame.Effects
+namespace Ivony.TableGame.MurderGame
 {
-  public interface IGamePlayerEvent
-  {
-    GamePlayerBase Player { get; }
-  }
+    public class Class1
+    {
+    }
 }
