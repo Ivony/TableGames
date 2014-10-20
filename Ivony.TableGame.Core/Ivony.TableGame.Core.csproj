@@ -59,7 +59,10 @@
     <Compile Include="GameMessage.cs" />
     <Compile Include="GameMessageExtensions.cs" />
     <Compile Include="GameState.cs" />
+    <Compile Include="IGameBehaviorEvent.cs" />
+    <Compile Include="IGameEvent.cs" />
     <Compile Include="IGameHost.cs" />
+    <Compile Include="IGamePlayerEvent.cs" />
     <Compile Include="IOption.cs" />
     <Compile Include="IPersistableGameHost.cs" />
     <Compile Include="IPlayerHost.cs" />

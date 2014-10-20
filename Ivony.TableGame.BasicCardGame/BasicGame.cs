@@ -66,9 +66,6 @@ namespace Ivony.TableGame.BasicCardGames
 
         foreach ( TPlayer player in Players )
         {
-
-          await _effectManager.OnGameEvent( new GameRoundEvent<TPlayer, TCard>( player, turn ) );
-
           await player.Play( token );
 
           token.ThrowIfCancellationRequested();
@@ -88,12 +85,6 @@ namespace Ivony.TableGame.BasicCardGames
       await Task.WhenAll( Players.Select( player => EnsureAlready( player, token ) ) );
     }
 
-
-    private BlankEffectManager _effectManager = new BlankEffectManager();
-    public virtual EffectManagerBase EffectManager
-    {
-      get { return _effectManager; }
-    }
 
 
     private async Task EnsureAlready( TPlayer player, CancellationToken token )
@@ -117,6 +108,15 @@ namespace Ivony.TableGame.BasicCardGames
       } while ( false );
     }
 
+
+
+    public async Task OnHappened( IGameEvent gameEvent )
+    {
+
+      var playerEvent = gameEvent as IGamePlayerEvent;
+
+
+    }
 
 
 

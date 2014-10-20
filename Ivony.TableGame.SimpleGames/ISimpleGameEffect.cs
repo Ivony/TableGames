@@ -1,4 +1,5 @@
 ﻿using Ivony.TableGame.BasicCardGames;
+using Ivony.TableGame.Effects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

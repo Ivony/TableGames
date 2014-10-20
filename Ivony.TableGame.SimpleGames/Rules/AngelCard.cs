@@ -13,7 +13,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
     public override async Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
-      user.SpecialEffect = new CardEffect();
+      user.SetEffect( new CardEffect() );
       AnnounceSpecialCardUsed( user );
 
       user.PlayerHost.WriteMessage( "天使保护你，下一次攻击将变成治疗" );

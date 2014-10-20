@@ -9,6 +9,13 @@ namespace Ivony.TableGame.Effects
   public class GameEffectContext
   {
 
+    public GameEffectContext( IGameEvent gameEvent )
+    {
+      GameEvent = gameEvent;
+    }
+
+    public IGameEvent GameEvent { get; private set; }
+
 
   }
 }

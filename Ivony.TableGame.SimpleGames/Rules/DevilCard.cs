@@ -10,7 +10,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
   {
     public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
-      user.SpecialEffect = new CardEffect();
+      user.SetEffect( new CardEffect() );
       AnnounceSpecialCardUsed( user );
       user.PlayerHost.WriteMessage( "您与恶魔签订了契约，若到您下次发牌之前您没有受到攻击，将获得 HP ，否则攻击将变成双倍" );
     }

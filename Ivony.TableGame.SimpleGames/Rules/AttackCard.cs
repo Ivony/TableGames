@@ -36,22 +36,24 @@ namespace Ivony.TableGame.SimpleGames.Rules
     public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
 
+      var gameEvent = new AttackEvent( user, target, Point );
+
 
       ISimpleGameEffect effect = (ISimpleGameEffect) target.SpecialEffect ?? target.DefenceEffect;
       if ( effect != null )
       {
         if ( await effect.OnAttack( user, target, Point ) )
-          user.GameHost.Game.AnnounceMessage( "{0} 对 {1} 发起攻击。", user.PlayerName, target.PlayerName );
+          user.Game.AnnounceMessage( "{0} 对 {1} 发起攻击。", user.PlayerName, target.PlayerName );
 
         else
-          user.GameHost.Game.AnnounceMessage( "{0} 对 {1} 发起攻击，但攻击无效", user.PlayerName, target.PlayerName );
+          user.Game.AnnounceMessage( "{0} 对 {1} 发起攻击，但攻击无效", user.PlayerName, target.PlayerName );
 
         return;
       }
       else
       {
         target.HealthPoint -= Point;
-        user.GameHost.Game.AnnounceMessage( "{0} 对 {1} 发起攻击。", user.PlayerName, target.PlayerName );
+        user.Game.AnnounceMessage( "{0} 对 {1} 发起攻击。", user.PlayerName, target.PlayerName );
         target.PlayerHost.WriteWarningMessage( "您受到攻击，HP 减少 {0} 点，目前 HP {1}", Point, target.HealthPoint );
       }
     }

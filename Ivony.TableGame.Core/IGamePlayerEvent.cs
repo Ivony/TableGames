@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ivony.TableGame.Effects
+namespace Ivony.TableGame
 {
-  public class BlankEffectManager : EffectManagerBase
+  public interface IGamePlayerEvent : IGameEvent
   {
+    GamePlayerBase Player { get; }
   }
 }

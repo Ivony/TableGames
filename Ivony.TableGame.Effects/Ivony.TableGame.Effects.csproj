@@ -39,14 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlankEffectManager.cs" />
     <Compile Include="EffectCollection.cs" />
     <Compile Include="EffectManagerBase.cs" />
     <Compile Include="GameEffectContext.cs" />
     <Compile Include="IEffect.cs" />
-    <Compile Include="IGameEvent.cs" />
-    <Compile Include="IGameBehaviorEvent.cs" />
-    <Compile Include="IGamePlayerEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

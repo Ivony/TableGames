@@ -12,7 +12,11 @@ namespace Ivony.TableGame.SimpleGames
   {
 
 
-    public SimpleGame( IGameHost gameHost ) : base( gameHost ) { }
+    public SimpleGame( IGameHost gameHost )
+      : base( gameHost )
+    {
+      EffectManager = new SimpleGameEffectManager( this );
+    }
 
 
     protected override CardDealer CreateCardDealer()
@@ -63,6 +67,16 @@ namespace Ivony.TableGame.SimpleGames
         return player;
 
       }
+    }
+
+
+    protected SimpleGameEffectManager EffectManager { get; private set; }
+
+
+    internal void SetPlayerEffect( SimpleGamePlayer player, ISimpleGameEffect effect )
+    {
+      if ( !EffectManager.TryAddEffect( player, effect ) )
+        throw new InvalidOperationException();
     }
   }
 }

@@ -88,5 +88,11 @@ namespace Ivony.TableGame.Effects
     {
       return Effects.Add( effect );
     }
+
+    public void RemoveAll( IEnumerable<IEffect> effects )
+    {
+      foreach ( var item in effects )
+        Remove( item );
+    }
   }
 }

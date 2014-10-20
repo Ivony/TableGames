@@ -121,5 +121,10 @@ namespace Ivony.TableGame.SimpleGames
       CardCollection.RemoveAll( item => true );
       PlayerHost.WriteMessage( "您手上的卡牌已经清空，请等待下次发牌" );
     }
+
+    internal void SetEffect( ISimpleGameEffect effect )
+    {
+      Game.SetPlayerEffect( this, effect );
+    }
   }
 }
