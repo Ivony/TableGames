@@ -31,24 +31,26 @@ namespace Ivony.TableGame.SimpleGames.Rules
     }
 
 
-    private class CardEffect : IBlessEffect, IAroundEffect
+    private class CardEffect : SimpleGameEffect, IBlessEffect
     {
-      public string Name
+      public override string Name
       {
         get { return "恶魔"; }
       }
 
-      public string Description
+      public override string Description
       {
         get { return "恶魔契约生效期间，攻击受到双倍伤害"; }
       }
 
-      public async Task<bool> OnAttack( SimpleGamePlayer user, SimpleGamePlayer target, int point )
+
+
+      protected override async Task OnAttack( AttackEvent attackEvent )
       {
-        target.SpecialEffect = null;
-        target.HealthPoint -= point * 2;
-        target.PlayerHost.WriteWarningMessage( "您输掉了恶魔契约，受到双倍伤害 {0} 点，目前 HP {1}", point * 2, target.HealthPoint );
-        return true;
+        attackEvent.AnnounceAttackEffective();
+        attackEvent.RecipientPlayer.HealthPoint -= attackEvent.AttackPoint * 2;
+        attackEvent.RecipientPlayer.PlayerHost.WriteWarningMessage( "您输掉了恶魔契约，受到双倍伤害 {0} 点，目前 HP {1}", attackEvent.AttackPoint * 2, attackEvent.RecipientPlayer.HealthPoint );
+        attackEvent.Handled = true;
       }
 
 

@@ -30,26 +30,28 @@ namespace Ivony.TableGame.SimpleGames.Rules
     }
 
 
-    public class CardEffect : IBlessEffect
+    public class CardEffect : SimpleGameEffect, IBlessEffect
     {
-      public string Name
+      public override string Name
       {
         get { return "天使"; }
       }
 
-      public string Description
+      public override string Description
       {
         get { return "天使将使得对你的攻击转化为治疗"; }
       }
 
 
-      public async Task<bool> OnAttack( SimpleGamePlayer user, SimpleGamePlayer target, int point )
+
+      protected override async Task OnAttack( AttackEvent attackEvent )
       {
-        target.SpecialEffect = null;
-        target.HealthPoint += point;
-        target.PlayerHost.WriteMessage( "天使保护你，攻击变为治疗效果，增加 {0} 点 HP", point );
-        return false;
+        attackEvent.AnnounceAttackIneffective();
+        attackEvent.RecipientPlayer.HealthPoint += attackEvent.AttackPoint;
+        attackEvent.RecipientPlayer.PlayerHost.WriteWarningMessage( "天使保护你，攻击变为治疗效果，增加 {0} 点 HP", attackEvent.AttackPoint, attackEvent.RecipientPlayer.HealthPoint );
+        attackEvent.Handled = true;
       }
+
 
       public override string ToString()
       {

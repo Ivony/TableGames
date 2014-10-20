@@ -73,7 +73,7 @@ namespace Ivony.TableGame.SimpleGames
     protected SimpleGameEffectManager EffectManager { get; private set; }
 
 
-    internal void SetPlayerEffect( SimpleGamePlayer player, ISimpleGameEffect effect )
+    internal void SetPlayerEffect( SimpleGamePlayer player, SimpleGameEffect effect )
     {
       if ( !EffectManager.TryAddEffect( player, effect ) )
         throw new InvalidOperationException();

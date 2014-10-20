@@ -9,24 +9,16 @@ using System.Threading.Tasks;
 namespace Ivony.TableGame.SimpleGames
 {
 
-
-  public interface ISimpleGameEffect : IEffect
-  {
-    Task<bool> OnAttack( SimpleGamePlayer user, SimpleGamePlayer target, int point );
-
-  }
-
-
-  public interface IAroundEffect : ISimpleGameEffect
+  public interface IAroundEffect : IEffect
   {
     Task OnTurnedAround( SimpleGamePlayer player );
   }
 
-  public interface IBlessEffect : ISimpleGameEffect
+  public interface IBlessEffect : IEffect
   {
   }
 
-  public interface IDefenceEffect : ISimpleGameEffect
+  public interface IDefenceEffect : IEffect
   {
   }
 }

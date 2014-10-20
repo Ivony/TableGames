@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Rules\AngelCard.cs" />
     <Compile Include="Rules\AttackCard.cs" />
+    <Compile Include="Rules\AttackEvent.cs" />
     <Compile Include="Rules\ClearCard.cs" />
     <Compile Include="Rules\DevilCard.cs" />
     <Compile Include="ISimpleGameEffect.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="Rules\ShieldCard.cs" />
     <Compile Include="SimpleGame.cs" />
     <Compile Include="SimpleGameCard.cs" />
+    <Compile Include="SimpleGameEffect.cs" />
     <Compile Include="SimpleGameEffectManager.cs" />
     <Compile Include="SimpleGamePlayer.cs" />
   </ItemGroup>

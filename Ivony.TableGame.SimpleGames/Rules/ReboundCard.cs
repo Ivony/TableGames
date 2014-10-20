@@ -11,7 +11,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
     public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
       AnnounceSpecialCardUsed( user );
-      user.DefenceEffect = new CardEffect();
+      user.SetEffect( new CardEffect() );
     }
 
     public override string Name
@@ -24,15 +24,21 @@ namespace Ivony.TableGame.SimpleGames.Rules
       get { return "到下一次发牌之前，您遭受的第一次伤害将反弹给攻击者"; }
     }
 
-    private class CardEffect : IDefenceEffect, IAroundEffect
+    private class CardEffect : SimpleGameEffect, IDefenceEffect
     {
-      public async Task<bool> OnAttack( SimpleGamePlayer user, SimpleGamePlayer target, int point )
+
+
+      protected override async Task OnAttack( AttackEvent attackEvent )
       {
-        target.DefenceEffect = null;
-        user.HealthPoint -= point;
-        user.PlayerHost.WriteWarningMessage( "您对 {0} 发起的攻击被反弹了，您的 HP 减少 {1} 点，目前 HP {2} 点", target.PlayerName, point, user.HealthPoint );
-        target.PlayerHost.WriteMessage( "您遭受了 {0} 点攻击，伤害已经反弹给攻击者，反弹效果已失效。", point );
-        return false;
+        attackEvent.AnnounceAttackIneffective();
+
+        var source = attackEvent.InitiatePlayer;
+        var target = attackEvent.RecipientPlayer;
+
+        source.HealthPoint -= attackEvent.AttackPoint;
+        source.PlayerHost.WriteWarningMessage( "您对 {0} 发起的攻击被反弹了，您的 HP 减少 {1} 点，目前 HP {2} 点", target.PlayerName, attackEvent.AttackPoint, source.HealthPoint );
+        target.PlayerHost.WriteWarningMessage( "您遭受了 {0} 点攻击，伤害已经反弹给攻击者，反弹效果已失效。", attackEvent.AttackPoint );
+        attackEvent.Handled = true;
       }
 
       public string Name
