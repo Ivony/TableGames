@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Ivony.TableGame;
-using Ivony.TableGame.BasicCardGames;
+using Ivony.TableGame.CardGames;
 using Ivony.TableGame.SimpleGames.Rules;
 using System.Threading;
 

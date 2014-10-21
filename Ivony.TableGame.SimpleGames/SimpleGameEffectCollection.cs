@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ivony.TableGame;
-using Ivony.TableGame.BasicCardGames;
+using Ivony.TableGame.CardGames;
 
 namespace Ivony.TableGame.SimpleGames
 {

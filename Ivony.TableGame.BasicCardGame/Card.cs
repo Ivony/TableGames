@@ -10,7 +10,7 @@ namespace Ivony.TableGame
   /// <summary>
   /// 定义游戏卡牌的抽象
   /// </summary>
-  public abstract class Card
+  public abstract class Card : IOption
   {
 
     /// <summary>

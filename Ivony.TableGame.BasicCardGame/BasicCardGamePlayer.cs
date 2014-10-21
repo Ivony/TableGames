@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Ivony.TableGame.BasicCardGames
+namespace Ivony.TableGame.CardGames
 {
-  public abstract class BasicGamePlayer<TCard> : GamePlayerBase where TCard : BasicCard
+  public abstract class BasicGamePlayer<TCard> : GamePlayerBase, IGameEventListener where TCard : Card
   {
 
 
@@ -16,11 +16,19 @@ namespace Ivony.TableGame.BasicCardGames
     {
 
       SyncRoot = new object();
+      CardCollection = new List<Card>();
     }
 
 
+    /// <summary>
+    /// 玩家所持有的卡牌集合
+    /// </summary>
+    protected virtual List<Card> CardCollection { get; private set; }
 
 
+    /// <summary>
+    /// 玩家所持有的卡牌
+    /// </summary>
     public new TCard[] Cards { get { return CardCollection.Cast<TCard>().ToArray(); } }
 
 
@@ -134,7 +142,7 @@ namespace Ivony.TableGame.BasicCardGames
 
 
 
-    public override Task OnGameEvent( IGameEvent gameEvent )
+    public Task OnGameEvent( IGameEvent gameEvent )
     {
       var behaviorEvent = gameEvent as IGameBehaviorEvent;
       if ( behaviorEvent != null )

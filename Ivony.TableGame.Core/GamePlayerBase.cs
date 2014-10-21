@@ -13,8 +13,6 @@ namespace Ivony.TableGame
     {
       PlayerHost = playerHost;
       GameHost = gameHost;
-
-      CardCollection = new List<Card>();
     }
 
 
@@ -44,18 +42,6 @@ namespace Ivony.TableGame
     /// </summary>
     public IPlayerHost PlayerHost { get; private set; }
 
-
-
-    /// <summary>
-    /// 玩家所持有的卡牌集合
-    /// </summary>
-    protected virtual List<Card> CardCollection { get; private set; }
-
-
-    /// <summary>
-    /// 玩家所持有的卡牌
-    /// </summary>
-    public Card[] Cards { get { return CardCollection.ToArray(); } }
 
 
     /// <summary>

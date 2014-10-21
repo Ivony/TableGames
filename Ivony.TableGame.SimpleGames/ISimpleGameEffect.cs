@@ -1,4 +1,4 @@
-﻿using Ivony.TableGame.BasicCardGames;
+﻿using Ivony.TableGame.CardGames;
 using Ivony.TableGame;
 using System;
 using System.Collections.Generic;

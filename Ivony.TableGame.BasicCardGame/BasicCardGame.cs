@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Ivony.TableGame.BasicCardGames
+namespace Ivony.TableGame.CardGames
 {
   public abstract class BasicGame<TPlayer, TCard> : GameBase, IBasicGame
     where TPlayer : BasicGamePlayer<TCard>
-    where TCard : BasicCard
+    where TCard : Card
   {
 
     public BasicGame( IGameHost gameHost )
@@ -113,7 +113,7 @@ namespace Ivony.TableGame.BasicCardGames
     public virtual async Task OnGameEvent( IGameEvent gameEvent )
     {
 
-      
+
     }
 
 

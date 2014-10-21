@@ -1,4 +1,4 @@
-﻿using Ivony.TableGame.BasicCardGames;
+﻿using Ivony.TableGame.CardGames;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames
 {
-  public abstract class SimpleGameCard : BasicCard
+  public abstract class SimpleGameCard : Card
   {
 
     public abstract Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target );

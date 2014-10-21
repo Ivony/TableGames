@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ivony.TableGame.BasicCardGames
+namespace Ivony.TableGame.CardGames
 {
   public class CardUsingEvent<TPlayer, TCard> : GameEventBase, IGameBehaviorEvent
     where TPlayer : BasicGamePlayer<TCard>
-    where TCard : BasicCard
+    where TCard : Card
   {
 
     public CardUsingEvent( TPlayer initiatePLayer, TPlayer recipientPlayer, TCard card )

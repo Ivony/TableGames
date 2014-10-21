@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ivony.TableGame.BasicCardGames
+namespace Ivony.TableGame.CardGames
 {
 
 
@@ -14,7 +14,7 @@ namespace Ivony.TableGame.BasicCardGames
   public abstract class EffectSlotCollection : IEffectCollection
   {
 
-    private List<IEffectSlot> Slots { get; private set; }
+    protected List<IEffectSlot> Slots { get; private set; }
 
 
     private object _sync = new object();

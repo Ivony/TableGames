@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ivony.TableGame.BasicCardGames
+namespace Ivony.TableGame.CardGames
 {
 
   /// <summary>
@@ -18,7 +18,7 @@ namespace Ivony.TableGame.BasicCardGames
 
     bool Contains( IEffect effect );
 
-    int Count { get; set; }
+    int Count { get; }
 
     bool RemoveEffect( IEffect effect );
 
@@ -78,16 +78,9 @@ namespace Ivony.TableGame.BasicCardGames
     }
 
 
-    public bool RemoveEffects()
+    public void RemoveEffects()
     {
-      if ( Effect == null )
-        return false;
-
-      else
-      {
-        Effect = null;
-        return true;
-      }
+      Effect = null;
 
     }
 
