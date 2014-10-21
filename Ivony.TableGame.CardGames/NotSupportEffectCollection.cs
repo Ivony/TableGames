@@ -28,7 +28,7 @@ namespace Ivony.TableGame.CardGames
       return false;
     }
 
-    void IEffectCollection.ClearEffect( IEffect effect )
+    void IEffectCollection.ClearEffect()
     {
     }
 

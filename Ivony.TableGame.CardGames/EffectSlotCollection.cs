@@ -80,7 +80,7 @@ namespace Ivony.TableGame.CardGames
       }
     }
 
-    public void ClearEffect( IEffect effect )
+    public void ClearEffect()
     {
       lock ( SyncRoot )
       {

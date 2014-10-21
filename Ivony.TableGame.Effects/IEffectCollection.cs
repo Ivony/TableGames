@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame
 {
-  
+
   /// <summary>
   /// 定义一个效果容器，可以添加和删除效果
   /// </summary>
@@ -25,8 +25,8 @@ namespace Ivony.TableGame
 
     bool Contains( IEffect effect );
 
-    
-    void ClearEffect( IEffect effect );
+
+    void ClearEffect();
 
 
   }

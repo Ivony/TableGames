@@ -72,7 +72,7 @@ namespace Ivony.TableGame
       return Effects.Contains( effect );
     }
 
-    public void ClearEffect( IEffect effect )
+    public void ClearEffect()
     {
       Effects.Clear();
     }
