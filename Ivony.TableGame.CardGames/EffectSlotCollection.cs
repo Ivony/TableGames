@@ -91,7 +91,7 @@ namespace Ivony.TableGame.CardGames
 
     public IEnumerator<IEffect> GetEnumerator()
     {
-      return Slots.Select( item => item.Effect ).GetEnumerator();
+      return Slots.Select( item => item.Effect ).Where( item => item != null ).GetEnumerator();
     }
 
     System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()

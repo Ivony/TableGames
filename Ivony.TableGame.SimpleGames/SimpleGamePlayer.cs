@@ -76,7 +76,7 @@ namespace Ivony.TableGame.SimpleGames
     /// </summary>
     public void DealCards()
     {
-      DealCards( 10 - Cards.Length );
+      DealCards( 6 - Cards.Length );
     }
 
     internal void Purify()
