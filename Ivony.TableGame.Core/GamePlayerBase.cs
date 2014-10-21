@@ -49,7 +49,7 @@ namespace Ivony.TableGame
     /// <summary>
     /// 玩家所持有的卡牌集合
     /// </summary>
-    protected List<Card> CardCollection { get; private set; }
+    protected virtual List<Card> CardCollection { get; private set; }
 
 
     /// <summary>
@@ -72,5 +72,14 @@ namespace Ivony.TableGame
     {
 
     }
+
+
+
+    public override string ToString()
+    {
+
+      return string.Format( "{0} / {1}", PlayerHost.Name, GameHost.RoomName );
+    }
+
   }
 }

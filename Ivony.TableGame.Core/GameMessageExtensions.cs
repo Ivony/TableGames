@@ -14,6 +14,11 @@ namespace Ivony.TableGame
   public static class GameMessageExtensions
   {
 
+    /// <summary>
+    /// 向玩家控制台写入一条消息
+    /// </summary>
+    /// <param name="playerHost">玩家宿主对象</param>
+    /// <param name="message">要写入的消息</param>
     public static void WriteMessage( this IPlayerHost playerHost, GameMessage message )
     {
       playerHost.Console.WriteMessage( message );
@@ -56,8 +61,8 @@ namespace Ivony.TableGame
     /// 向玩家控制台写入一条系统消息
     /// </summary>
     /// <param name="playerHost">玩家宿主对象</param>
-    /// <param name="format"></param>
-    /// <param name="args"></param>
+    /// <param name="format">消息格式字符串</param>
+    /// <param name="args">要替换的参数内容</param>
     public static void WriteSystemMessage( this IPlayerHost playerHost, string format, params object[] args )
     {
       WriteSystemMessage( playerHost, string.Format( CultureInfo.InvariantCulture, format, args ) );
@@ -79,8 +84,8 @@ namespace Ivony.TableGame
     /// 向玩家控制台写入一条警告消息
     /// </summary>
     /// <param name="playerHost">玩家宿主对象</param>
-    /// <param name="format"></param>
-    /// <param name="args"></param>
+    /// <param name="format">消息格式字符串</param>
+    /// <param name="args">要替换的参数内容</param>
     public static void WriteWarningMessage( this IPlayerHost playerHost, string format, params object[] args )
     {
       WriteWarningMessage( playerHost, string.Format( CultureInfo.InvariantCulture, format, args ) );

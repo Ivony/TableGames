@@ -15,13 +15,17 @@ namespace Ivony.TableGame
   public abstract class GameMessage
   {
 
+    /// <summary>
+    /// 创建 GameMessage 对象
+    /// </summary>
+    /// <param name="type">游戏消息类型</param>
+    /// <param name="message">消息内容</param>
     protected GameMessage( GameMessageType type, string message ) : this( type, message, DateTime.UtcNow ) { }
-    protected GameMessage( GameMessageType type, string message, DateTime date, Version minimumClientVersion = null )
+    protected GameMessage( GameMessageType type, string message, DateTime date )
     {
       Type = type;
       Message = message;
       Date = date;
-      ClientVersion = minimumClientVersion;
     }
 
 
@@ -39,13 +43,6 @@ namespace Ivony.TableGame
     /// 消息产生的时间
     /// </summary>
     public DateTime Date { get; private set; }
-
-
-    /// <summary>
-    /// 最小支持客户端版本，高于此版本的客户端不显示此消息
-    /// </summary>
-    public Version ClientVersion { get; private set; }
-
   }
 
 
@@ -68,7 +65,8 @@ namespace Ivony.TableGame
     Warning,
     Error,
     System,
-    SystemError
+    SystemError,
+    Chat,
   }
 
 }

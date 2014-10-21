@@ -110,13 +110,20 @@ namespace Ivony.TableGame.BasicCardGames
 
 
 
-    public async Task OnHappened( IGameEvent gameEvent )
+    public virtual async Task OnGameEvent( IGameEvent gameEvent )
     {
 
-      var playerEvent = gameEvent as IGamePlayerEvent;
-
-
+      
     }
+
+
+
+    private IEffectCollection _effects = new EffectCollection();
+    protected virtual IEffectCollection Effects
+    {
+      get { return _effects; }
+    }
+
 
 
 

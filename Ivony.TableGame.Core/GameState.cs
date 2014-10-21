@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame
 {
+  /// <summary>
+  /// 定义游戏状态枚举
+  /// </summary>
   public enum GameState
   {
 

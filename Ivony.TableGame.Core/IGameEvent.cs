@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame
 {
+
+  /// <summary>
+  /// 定义游戏中出现的事件抽象
+  /// </summary>
   public interface IGameEvent
   {
 

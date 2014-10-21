@@ -54,7 +54,7 @@
     <Compile Include="SimpleGame.cs" />
     <Compile Include="SimpleGameCard.cs" />
     <Compile Include="SimpleGameEffect.cs" />
-    <Compile Include="SimpleGameEffectManager.cs" />
+    <Compile Include="SimpleGameEffectCollection.cs" />
     <Compile Include="SimpleGamePlayer.cs" />
   </ItemGroup>
   <ItemGroup>

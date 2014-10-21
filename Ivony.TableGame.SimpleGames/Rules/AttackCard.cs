@@ -37,7 +37,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
     {
 
       var attackEvent = new AttackEvent( user, target, Point );
-      await user.Game.OnHappened( attackEvent );
+      await user.Game.OnGameEvent( attackEvent );
 
       if ( !attackEvent.Handled )
       {

@@ -21,5 +21,6 @@ namespace Ivony.TableGame.BasicCardGames
     /// </summary>
     /// <param name="player">退出游戏的玩家</param>
     void OnPlayerQuitted( GamePlayerBase player );
+
   }
 }

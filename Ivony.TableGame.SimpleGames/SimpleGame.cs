@@ -15,7 +15,6 @@ namespace Ivony.TableGame.SimpleGames
     public SimpleGame( IGameHost gameHost )
       : base( gameHost )
     {
-      EffectManager = new SimpleGameEffectManager( this );
     }
 
 
@@ -67,16 +66,6 @@ namespace Ivony.TableGame.SimpleGames
         return player;
 
       }
-    }
-
-
-    protected SimpleGameEffectManager EffectManager { get; private set; }
-
-
-    internal void SetPlayerEffect( SimpleGamePlayer player, SimpleGameEffect effect )
-    {
-      if ( !EffectManager.TryAddEffect( player, effect ) )
-        throw new InvalidOperationException();
     }
   }
 }

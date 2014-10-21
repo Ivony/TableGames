@@ -97,7 +97,7 @@ namespace Ivony.TableGame.SimpleGames
     /// </summary>
     public void DealCards()
     {
-      DealCards( 5 - Cards.Length );
+      DealCards( 10 - Cards.Length );
     }
 
     internal void Purify()
@@ -126,7 +126,7 @@ namespace Ivony.TableGame.SimpleGames
 
     internal void SetEffect( SimpleGameEffect effect )
     {
-      Game.SetPlayerEffect( this, effect );
+      Effects.AddEffect( effect );
     }
 
 

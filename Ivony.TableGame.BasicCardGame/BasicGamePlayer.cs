@@ -35,7 +35,7 @@ namespace Ivony.TableGame.BasicCardGames
       await OnBeforePlay( token );
       var card = await CherryCard( token );
 
-      
+
       await PlayCard( card, token );
       await OnAfterPlay( token );
 
@@ -60,19 +60,21 @@ namespace Ivony.TableGame.BasicCardGames
     }
 
 
-    protected async virtual Task OnBeforePlay( CancellationToken token )
+    protected virtual Task OnBeforePlay( CancellationToken token )
     {
-
+      return null;
     }
 
 
-    protected async virtual Task PlayCard( TCard card, CancellationToken token )
+    protected virtual Task PlayCard( TCard card, CancellationToken token )
     {
+      return null;
     }
 
 
-    protected async virtual Task OnAfterPlay( CancellationToken token )
+    protected virtual Task OnAfterPlay( CancellationToken token )
     {
+      return null;
     }
 
 
@@ -93,14 +95,31 @@ namespace Ivony.TableGame.BasicCardGames
       }
     }
 
+    /// <summary>
+    /// 派生类实现此方法对卡牌进行整理
+    /// </summary>
     protected virtual void ArrangeCards() { }
 
 
+    /// <summary>
+    /// 获取用于同步的对象
+    /// </summary>
     protected object SyncRoot { get; private set; }
 
 
-
+    /// <summary>
+    /// 获取或设置生命点数
+    /// </summary>
     public int HealthPoint { get; set; }
+
+
+    IEffectCollection _effects = new EffectCollection();
+
+    protected virtual IEffectCollection Effects
+    {
+      get { return _effects; }
+    }
+
 
 
 
@@ -111,6 +130,51 @@ namespace Ivony.TableGame.BasicCardGames
       InternalGame.OnPlayerQuitted( this );
       base.QuitGame();
     }
+
+
+
+
+    public override Task OnGameEvent( IGameEvent gameEvent )
+    {
+      var behaviorEvent = gameEvent as IGameBehaviorEvent;
+      if ( behaviorEvent != null )
+        return OnGameEvent( behaviorEvent );
+
+
+      var playerEvent = gameEvent as IGamePlayerEvent;
+      if ( playerEvent != null )
+        return OnGameEvent( playerEvent );
+
+
+      return null;
+    }
+
+
+    protected virtual async Task OnGameEvent( IGamePlayerEvent playerEvent )
+    {
+      if ( playerEvent.Player.Equals( this ) )
+      {
+        foreach ( var item in Effects.OfType<IGamePlayerEffect>() )
+          await item.OnGamePlayerEvent( playerEvent );
+      }
+    }
+
+    protected virtual async Task OnGameEvent( IGameBehaviorEvent behaviorEvent )
+    {
+
+      if ( behaviorEvent.InitiatePlayer.Equals( this ) )
+      {
+        foreach ( var item in Effects.OfType<IGameBehaviorEffect>() )
+          await item.OnBehaviorInitiator( behaviorEvent );
+      }
+
+      if ( behaviorEvent.RecipientPlayer.Equals( this ) )
+      {
+        foreach ( var item in Effects.OfType<IGameBehaviorEffect>() )
+          await item.OnBehaviorRecipient( behaviorEvent );
+      }
+    }
+
 
 
   }

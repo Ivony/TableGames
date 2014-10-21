@@ -7,7 +7,7 @@
     <ProjectGuid>{B30E814A-C2A6-44EA-99D9-7DB31CFBF7F7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ivony.TableGame.Effects</RootNamespace>
+    <RootNamespace>Ivony.TableGame</RootNamespace>
     <AssemblyName>Ivony.TableGame.Effects</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -39,6 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EffectCollection.cs" />
+    <Compile Include="IEffect.cs" />
+    <Compile Include="IEffectCollection.cs" />
+    <Compile Include="IEffectManager.cs" />
+    <Compile Include="IEffectSlot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -352,7 +352,7 @@ namespace Ivony.TableGame.WebHost
 
     public override string ToString()
     {
-      return Guid.ToString();
+      return string.Format( "{0}({1})", Name, Guid );
     }
   }
 }
