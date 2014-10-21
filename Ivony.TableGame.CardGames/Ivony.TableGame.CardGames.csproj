@@ -39,15 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicCardGame.cs" />
-    <Compile Include="BasicCardGamePlayer.cs" />
+    <Compile Include="CardGame.cs" />
+    <Compile Include="CardGamePlayer.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="CardDealer.cs" />
-    <Compile Include="CardUsingEvent.cs" />
     <Compile Include="EffectSlotCollection.cs" />
     <Compile Include="GameEventBase.cs" />
     <Compile Include="GameRoundEvent.cs" />
     <Compile Include="IBasicGame.cs" />
+    <Compile Include="NotSupportEffectCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnlimitedCardDealer.cs" />
   </ItemGroup>

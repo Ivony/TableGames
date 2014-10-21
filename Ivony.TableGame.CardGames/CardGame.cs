@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.CardGames
 {
-  public abstract class BasicGame<TPlayer, TCard> : GameBase, IBasicGame
-    where TPlayer : BasicGamePlayer<TCard>
+  public abstract class CardGame<TPlayer, TCard> : GameBase, IBasicGame
+    where TPlayer : CardGamePlayer<TCard>
     where TCard : Card
   {
 
-    public BasicGame( IGameHost gameHost )
+    public CardGame( IGameHost gameHost )
       : base( gameHost )
     {
     }
@@ -113,12 +113,13 @@ namespace Ivony.TableGame.CardGames
     public virtual async Task OnGameEvent( IGameEvent gameEvent )
     {
 
-
+      foreach ( var player in Players )
+        await player.OnGameEvent( gameEvent );
     }
 
 
 
-    private IEffectCollection _effects = new EffectCollection();
+    private IEffectCollection _effects = new NotSupportEffectCollection();
     protected virtual IEffectCollection Effects
     {
       get { return _effects; }

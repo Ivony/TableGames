@@ -113,7 +113,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ivony.TableGame.BasicCardGame\Ivony.TableGame.CardGames.csproj">
+    <ProjectReference Include="..\Ivony.TableGame.CardGames\Ivony.TableGame.CardGames.csproj">
       <Project>{74742e84-6f8b-467e-8fca-59fba784aed9}</Project>
       <Name>Ivony.TableGame.CardGames</Name>
     </ProjectReference>

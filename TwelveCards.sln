@@ -11,11 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.Core", "Ivo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.SimpleGames", "Ivony.TableGame.SimpleGames\Ivony.TableGame.SimpleGames.csproj", "{E3C44EA2-517E-46D1-8BFA-D4D40A319E90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.CardGames", "Ivony.TableGame.BasicCardGame\Ivony.TableGame.CardGames.csproj", "{74742E84-6F8B-467E-8FCA-59FBA784AED9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.Effects", "Ivony.TableGame.Effects\Ivony.TableGame.Effects.csproj", "{B30E814A-C2A6-44EA-99D9-7DB31CFBF7F7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.MurderGame", "Ivony.TableGame.MurderGame\Ivony.TableGame.MurderGame.csproj", "{EEBBFAC7-FA90-4DE8-A63F-6615A1FA4D12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.CardGames", "Ivony.TableGame.CardGames\Ivony.TableGame.CardGames.csproj", "{74742E84-6F8B-467E-8FCA-59FBA784AED9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,10 +39,6 @@ Global
 		{E3C44EA2-517E-46D1-8BFA-D4D40A319E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3C44EA2-517E-46D1-8BFA-D4D40A319E90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3C44EA2-517E-46D1-8BFA-D4D40A319E90}.Release|Any CPU.Build.0 = Release|Any CPU
-		{74742E84-6F8B-467E-8FCA-59FBA784AED9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{74742E84-6F8B-467E-8FCA-59FBA784AED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{74742E84-6F8B-467E-8FCA-59FBA784AED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{74742E84-6F8B-467E-8FCA-59FBA784AED9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B30E814A-C2A6-44EA-99D9-7DB31CFBF7F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B30E814A-C2A6-44EA-99D9-7DB31CFBF7F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B30E814A-C2A6-44EA-99D9-7DB31CFBF7F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,6 +47,10 @@ Global
 		{EEBBFAC7-FA90-4DE8-A63F-6615A1FA4D12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEBBFAC7-FA90-4DE8-A63F-6615A1FA4D12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEBBFAC7-FA90-4DE8-A63F-6615A1FA4D12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74742E84-6F8B-467E-8FCA-59FBA784AED9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74742E84-6F8B-467E-8FCA-59FBA784AED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74742E84-6F8B-467E-8FCA-59FBA784AED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74742E84-6F8B-467E-8FCA-59FBA784AED9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

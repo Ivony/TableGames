@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.CardGames
 {
-  public abstract class BasicGamePlayer<TCard> : GamePlayerBase, IGameEventListener where TCard : Card
+  public abstract class CardGamePlayer<TCard> : GamePlayerBase, IGameEventListener where TCard : Card
   {
 
 
-    protected BasicGamePlayer( IGameHost gameHost, IPlayerHost playerHost )
+    protected CardGamePlayer( IGameHost gameHost, IPlayerHost playerHost )
       : base( gameHost, playerHost )
     {
 
@@ -29,7 +29,7 @@ namespace Ivony.TableGame.CardGames
     /// <summary>
     /// 玩家所持有的卡牌
     /// </summary>
-    public new TCard[] Cards { get { return CardCollection.Cast<TCard>().ToArray(); } }
+    public TCard[] Cards { get { return CardCollection.Cast<TCard>().ToArray(); } }
 
 
 
@@ -121,7 +121,7 @@ namespace Ivony.TableGame.CardGames
     public int HealthPoint { get; set; }
 
 
-    IEffectCollection _effects = new EffectCollection();
+    IEffectCollection _effects = new NotSupportEffectCollection();
 
     protected virtual IEffectCollection Effects
     {
