@@ -41,12 +41,12 @@ namespace Ivony.TableGame.SimpleGames.Rules
         attackEvent.Handled = true;
       }
 
-      public string Name
+      public override string Name
       {
         get { return "反弹"; }
       }
 
-      public string Description
+      public override string Description
       {
         get { return "当遭受攻击时，将攻击反弹给攻击者"; }
       }
