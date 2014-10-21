@@ -9,7 +9,7 @@ namespace Ivony.TableGame.CardGames
 
 
   /// <summary>
-  /// 基于效果插槽的效果容器
+  /// 基于固定效果槽位的效果容器
   /// </summary>
   public abstract class EffectSlotCollection : IEffectCollection
   {
@@ -19,6 +19,12 @@ namespace Ivony.TableGame.CardGames
 
     private object _sync = new object();
     public object SyncRoot { get { return _sync; } }
+
+
+    protected EffectSlotCollection()
+    {
+      Slots = new List<IEffectSlot>();
+    }
 
 
     protected void RegisterSlot( IEffectSlot slot )
@@ -92,5 +98,12 @@ namespace Ivony.TableGame.CardGames
     {
       return GetEnumerator();
     }
+
+
+    public override string ToString()
+    {
+      return string.Join( "", this );
+    }
+
   }
 }

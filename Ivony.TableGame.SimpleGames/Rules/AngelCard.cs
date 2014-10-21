@@ -46,9 +46,12 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
       protected override async Task OnAttack( AttackEvent attackEvent )
       {
+        var player = attackEvent.RecipientPlayer;
         attackEvent.AnnounceAttackIneffective();
-        attackEvent.RecipientPlayer.HealthPoint += attackEvent.AttackPoint;
-        attackEvent.RecipientPlayer.PlayerHost.WriteWarningMessage( "天使保护你，攻击变为治疗效果，增加 {0} 点 HP", attackEvent.AttackPoint, attackEvent.RecipientPlayer.HealthPoint );
+        player.HealthPoint += attackEvent.AttackPoint;
+        player.PlayerHost.WriteWarningMessage( "天使保护你，攻击变为治疗效果，增加 {0} 点 HP", attackEvent.AttackPoint, player.HealthPoint );
+
+        player.Effects.RemoveEffect( this );
         attackEvent.Handled = true;
       }
 

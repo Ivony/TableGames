@@ -47,9 +47,13 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
       protected override async Task OnAttack( AttackEvent attackEvent )
       {
+        var player = attackEvent.RecipientPlayer;
+
         attackEvent.AnnounceAttackEffective();
-        attackEvent.RecipientPlayer.HealthPoint -= attackEvent.AttackPoint * 2;
-        attackEvent.RecipientPlayer.PlayerHost.WriteWarningMessage( "您输掉了恶魔契约，受到双倍伤害 {0} 点，目前 HP {1}", attackEvent.AttackPoint * 2, attackEvent.RecipientPlayer.HealthPoint );
+        player.HealthPoint -= attackEvent.AttackPoint * 2;
+        player.PlayerHost.WriteWarningMessage( "您输掉了恶魔契约，受到双倍伤害 {0} 点，目前 HP {1}", attackEvent.AttackPoint * 2, player.HealthPoint );
+
+        player.Effects.RemoveEffect( this );
         attackEvent.Handled = true;
       }
 
@@ -62,7 +66,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
       public async Task OnTurnedAround( SimpleGamePlayer player )
       {
         var point = 10;
-        player.SpecialEffect = null;
+        player.Effects.RemoveEffect( this );
         player.HealthPoint += point;
         player.PlayerHost.WriteMessage( "您赢得了恶魔的契约，增加 HP {0} 点", point );
       }

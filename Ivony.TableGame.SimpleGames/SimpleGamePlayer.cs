@@ -39,19 +39,12 @@ namespace Ivony.TableGame.SimpleGames
     {
       DealCards();
 
-      {
-        var effect = SpecialEffect as IAroundEffect;
-        if ( effect != null )
-          await effect.OnTurnedAround( this );
-      }
 
-      {
-        var effect = DefenceEffect as IAroundEffect;
-        if ( effect != null )
-          await effect.OnTurnedAround( this );
-      }
+      foreach ( var effect in Effects.OfType<IAroundEffect>() )
+        await effect.OnTurnedAround( this );
 
-      PlayerHost.WriteMessage( "HP:{0,-3}{1}{2} 卡牌:{3}", HealthPoint, DefenceEffect, SpecialEffect, string.Join( ", ", Cards.Select( item => item.Name ) ) );
+
+      PlayerHost.WriteMessage( "HP:{0,-3}{1} 卡牌:{2}", HealthPoint, Effects, string.Join( ", ", Cards.Select( item => item.Name ) ) );
     }
 
 
@@ -62,18 +55,6 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
-    public IBlessEffect SpecialEffect
-    {
-      get;
-      set;
-    }
-
-
-    public IDefenceEffect DefenceEffect
-    {
-      get;
-      set;
-    }
 
 
 
@@ -90,8 +71,6 @@ namespace Ivony.TableGame.SimpleGames
 
 
 
-
-
     /// <summary>
     /// 给玩家发牌
     /// </summary>
@@ -102,18 +81,13 @@ namespace Ivony.TableGame.SimpleGames
 
     internal void Purify()
     {
-      if ( SpecialEffect != null )
+      foreach ( var effect in Effects )
       {
-        PlayerHost.WriteWarningMessage( "您当前的 {0} 效果已经被解除", SpecialEffect.Name );
-        SpecialEffect = null;
-      }
 
-      if ( DefenceEffect != null )
-      {
-        PlayerHost.WriteWarningMessage( "您当前的 {0} 效果已经被解除", DefenceEffect.Name );
-        DefenceEffect = null;
-      }
+        if ( Effects.RemoveEffect( effect ) )
+          PlayerHost.WriteWarningMessage( "您当前的 {0} 效果已经被解除", effect.Name );
 
+      }
     }
 
     internal void ClearCards()
@@ -122,6 +96,14 @@ namespace Ivony.TableGame.SimpleGames
       PlayerHost.WriteMessage( "您手上的卡牌已经清空，请等待下次发牌" );
     }
 
+
+
+    private SimpleGamePlayerEffectCollection _effects = new SimpleGamePlayerEffectCollection();
+
+    public override IEffectCollection Effects
+    {
+      get { return _effects; }
+    }
 
 
     internal void SetEffect( SimpleGameEffect effect )

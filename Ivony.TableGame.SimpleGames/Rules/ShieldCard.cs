@@ -41,8 +41,11 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
       protected override async Task OnAttack( AttackEvent attackEvent )
       {
+        var player = attackEvent.RecipientPlayer;
         attackEvent.AnnounceAttackIneffective();
-        attackEvent.RecipientPlayer.PlayerHost.WriteWarningMessage( "您使用盾牌阻挡了 {0} 点攻击，防御效果已经失效", attackEvent.AttackPoint, attackEvent.RecipientPlayer.HealthPoint );
+        player.PlayerHost.WriteWarningMessage( "您使用盾牌阻挡了 {0} 点攻击，防御效果已经失效", attackEvent.AttackPoint, player.HealthPoint );
+
+        player.Effects.RemoveEffect( this );
         attackEvent.Handled = true;
       }
 

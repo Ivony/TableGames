@@ -38,6 +38,8 @@ namespace Ivony.TableGame.SimpleGames.Rules
         source.HealthPoint -= attackEvent.AttackPoint;
         source.PlayerHost.WriteWarningMessage( "您对 {0} 发起的攻击被反弹了，您的 HP 减少 {1} 点，目前 HP {2} 点", target.PlayerName, attackEvent.AttackPoint, source.HealthPoint );
         target.PlayerHost.WriteWarningMessage( "您遭受了 {0} 点攻击，伤害已经反弹给攻击者，反弹效果已失效。", attackEvent.AttackPoint );
+
+        target.Effects.RemoveEffect( this );
         attackEvent.Handled = true;
       }
 
@@ -58,7 +60,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
       public async Task OnTurnedAround( SimpleGamePlayer player )
       {
-        player.DefenceEffect = null;
+        player.Effects.RemoveEffect( this );
         player.PlayerHost.WriteWarningMessage( "时间到，反弹效果已经自动解除" );
       }
     }

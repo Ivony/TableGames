@@ -70,19 +70,19 @@ namespace Ivony.TableGame.CardGames
 
     protected virtual Task OnBeforePlay( CancellationToken token )
     {
-      return null;
+      return Task.Run( () => { } );
     }
 
 
     protected virtual Task PlayCard( TCard card, CancellationToken token )
     {
-      return null;
+      return Task.Run( () => { } );
     }
 
 
     protected virtual Task OnAfterPlay( CancellationToken token )
     {
-      return null;
+      return Task.Run( () => { } );
     }
 
 
@@ -123,7 +123,7 @@ namespace Ivony.TableGame.CardGames
 
     IEffectCollection _effects = new NotSupportEffectCollection();
 
-    protected virtual IEffectCollection Effects
+    public virtual IEffectCollection Effects
     {
       get { return _effects; }
     }
@@ -154,7 +154,7 @@ namespace Ivony.TableGame.CardGames
         return OnGameEvent( playerEvent );
 
 
-      return null;
+      return Task.Run( () => { } );
     }
 
 
