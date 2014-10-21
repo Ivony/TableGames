@@ -43,10 +43,12 @@
     <Compile Include="CardGamePlayer.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="CardDealer.cs" />
-    <Compile Include="EffectSlotCollection.cs" />
+    <Compile Include="CardSlotCollection.cs" />
     <Compile Include="GameEventBase.cs" />
     <Compile Include="GameRoundEvent.cs" />
     <Compile Include="IBasicGame.cs" />
+    <Compile Include="ICardCollection.cs" />
+    <Compile Include="ICardSlot.cs" />
     <Compile Include="NotSupportEffectCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnlimitedCardDealer.cs" />

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ivony.TableGame.CardGames
+namespace Ivony.TableGame
 {
 
 
@@ -17,12 +17,12 @@ namespace Ivony.TableGame.CardGames
     protected List<IEffectSlot> Slots { get; private set; }
 
 
-    private object _sync = new object();
-    public object SyncRoot { get { return _sync; } }
+    public object SyncRoot { get; private set; }
 
 
     protected EffectSlotCollection()
     {
+      SyncRoot = new object();
       Slots = new List<IEffectSlot>();
     }
 
