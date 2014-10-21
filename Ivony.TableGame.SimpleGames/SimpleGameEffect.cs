@@ -18,7 +18,7 @@ namespace Ivony.TableGame.SimpleGames
     async Task IGameBehaviorEffect.OnBehaviorRecipient( IGameBehaviorEvent gameEvent )
     {
       var attackEvent = gameEvent as AttackEvent;
-      if ( attackEvent != null )
+      if ( attackEvent != null && attackEvent.Handled == false )
         await OnAttack( attackEvent );
     }
 
@@ -28,8 +28,14 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
+    /// <summary>
+    /// 效果名称
+    /// </summary>
     public abstract string Name { get; }
 
+    /// <summary>
+    /// 效果描述
+    /// </summary>
     public abstract string Description { get; }
   }
 }

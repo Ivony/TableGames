@@ -79,6 +79,15 @@ namespace Ivony.TableGame
 
 
 
+    protected virtual IEffect[] GetPlayerEffects( GamePlayerBase player )
+    {
+      lock ( SyncRoot )
+      {
+        return playerEffects[player].ToArray();
+      }
+    }
+
+
     /// <summary>
     /// 获取指定玩家附加的指定类型的效果列表
     /// </summary>
@@ -87,10 +96,7 @@ namespace Ivony.TableGame
     /// <returns>效果列表</returns>
     protected virtual TEffect[] GetPlayerEffects<TEffect>( GamePlayerBase player ) where TEffect : IEffect
     {
-      lock ( SyncRoot )
-      {
-        return playerEffects[player].OfType<TEffect>().ToArray();
-      }
+      return GetPlayerEffects( player ).OfType<TEffect>().ToArray();
     }
 
 
