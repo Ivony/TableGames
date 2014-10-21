@@ -32,7 +32,7 @@ namespace Ivony.TableGame.WebHost
     {
       var games = Games.GetAllGames();
 
-      return games.Select( item => new { Name = item.RoomName, State = item.Game.GameState, Players = item.Game.Players.Length } );
+      return games.Select( item => new { Name = item.RoomName, State = item.Game.GameState, Players = item.Game.Players.Select( player => player.PlayerName ) } );
     }
 
 
