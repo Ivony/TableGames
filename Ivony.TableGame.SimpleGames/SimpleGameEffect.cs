@@ -1,4 +1,4 @@
-﻿using Ivony.TableGame.Effects;
+﻿using Ivony.TableGame;
 using Ivony.TableGame.SimpleGames.Rules;
 using System;
 using System.Collections.Generic;
@@ -10,12 +10,12 @@ namespace Ivony.TableGame.SimpleGames
 {
   public abstract class SimpleGameEffect : IGameBehaviorEffect
   {
-    public Task OnBehaviorInitiator( IGameBehaviorEvent gameEvent )
+    Task IGameBehaviorEffect.OnBehaviorInitiator( IGameBehaviorEvent gameEvent )
     {
-      return Task.Run( () => { } );
+      return null;
     }
 
-    public async Task OnBehaviorRecipient( IGameBehaviorEvent gameEvent )
+    async Task IGameBehaviorEffect.OnBehaviorRecipient( IGameBehaviorEvent gameEvent )
     {
       var attackEvent = gameEvent as AttackEvent;
       if ( attackEvent != null )
@@ -24,7 +24,7 @@ namespace Ivony.TableGame.SimpleGames
 
     protected virtual Task OnAttack( AttackEvent attackEvent )
     {
-      return Task.Run( () => { } );
+      return null;
     }
 
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Ivony.TableGame.Effects;
+using Ivony.TableGame;
 
 namespace Ivony.TableGame.SimpleGames
 {

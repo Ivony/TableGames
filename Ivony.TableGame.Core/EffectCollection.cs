@@ -4,12 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ivony.TableGame.Effects
+namespace Ivony.TableGame
 {
   public class EffectCollection : ICollection<IEffect>
   {
 
 
+
+    /// <summary>
+    /// 创建 EffectCollection 对象
+    /// </summary>
     public EffectCollection()
     {
       Effects = new HashSet<IEffect>();
@@ -84,15 +88,28 @@ namespace Ivony.TableGame.Effects
       return GetEnumerator();
     }
 
+
+    /// <summary>
+    /// 尝试添加一个效果
+    /// </summary>
+    /// <param name="effect">要添加的</param>
+    /// <returns></returns>
     public virtual bool TryAdd( IEffect effect )
     {
       return Effects.Add( effect );
     }
 
+
+    /// <summary>
+    /// 移除列出的所有效果
+    /// </summary>
+    /// <param name="effects">要移除的效果列表</param>
     public void RemoveAll( IEnumerable<IEffect> effects )
     {
       foreach ( var item in effects )
         Remove( item );
     }
+
+
   }
 }

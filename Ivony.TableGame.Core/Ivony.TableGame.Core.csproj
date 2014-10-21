@@ -54,11 +54,14 @@
   <ItemGroup>
     <Compile Include="Card.cs" />
     <Compile Include="CardDealer.cs" />
+    <Compile Include="EffectCollection.cs" />
+    <Compile Include="EffectManagerBase.cs" />
     <Compile Include="GameHostBase.cs" />
     <Compile Include="GameBase.cs" />
     <Compile Include="GameMessage.cs" />
     <Compile Include="GameMessageExtensions.cs" />
     <Compile Include="GameState.cs" />
+    <Compile Include="IEffect.cs" />
     <Compile Include="IGameBehaviorEvent.cs" />
     <Compile Include="IGameEvent.cs" />
     <Compile Include="IGameHost.cs" />

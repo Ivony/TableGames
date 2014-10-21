@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ivony.TableGame.Effects
+namespace Ivony.TableGame
 {
 
   /// <summary>
@@ -55,11 +55,7 @@ namespace Ivony.TableGame.Effects
     {
       var effects = GetPlayerEffects<IGamePlayerEffect>( playerEvent.Player );
       foreach ( var item in effects )
-      {
-        if ( playerEvent.Handled )
-          break;
         await item.OnGamePlayerEvent( playerEvent );
-      }
     }
 
     protected virtual async Task OnGameEvent( IGameBehaviorEvent behaviorEvent )
@@ -105,8 +101,6 @@ namespace Ivony.TableGame.Effects
 
     private EffectCollection globalEffects = new EffectCollection();
     private Dictionary<GamePlayerBase, EffectCollection> playerEffects = new Dictionary<GamePlayerBase, EffectCollection>();
-
-
 
 
 

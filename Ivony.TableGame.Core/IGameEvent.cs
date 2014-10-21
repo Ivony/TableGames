@@ -14,11 +14,5 @@ namespace Ivony.TableGame
     /// </summary>
     IDictionary<string, object> Data { get; }
 
-
-    /// <summary>
-    /// 指示事件是否已经被处理完毕
-    /// </summary>
-    bool Handled { get; }
-
   }
 }

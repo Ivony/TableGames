@@ -18,8 +18,5 @@ namespace Ivony.TableGame.BasicCardGames
     public IDictionary<string, object> Data { get; private set; }
 
 
-
-    public bool Handled { get; set; }
-
   }
 }

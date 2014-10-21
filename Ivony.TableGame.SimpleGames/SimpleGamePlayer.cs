@@ -122,9 +122,13 @@ namespace Ivony.TableGame.SimpleGames
       PlayerHost.WriteMessage( "您手上的卡牌已经清空，请等待下次发牌" );
     }
 
+
+
     internal void SetEffect( SimpleGameEffect effect )
     {
       Game.SetPlayerEffect( this, effect );
     }
+
+
   }
 }

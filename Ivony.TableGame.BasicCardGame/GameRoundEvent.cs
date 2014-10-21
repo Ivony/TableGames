@@ -1,4 +1,4 @@
-﻿using Ivony.TableGame.Effects;
+﻿using Ivony.TableGame;
 using System;
 using System.Collections.Generic;
 using System.Linq;

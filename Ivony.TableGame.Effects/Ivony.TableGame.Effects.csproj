@@ -39,10 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EffectCollection.cs" />
-    <Compile Include="EffectManagerBase.cs" />
-    <Compile Include="GameEffectContext.cs" />
-    <Compile Include="IEffect.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
