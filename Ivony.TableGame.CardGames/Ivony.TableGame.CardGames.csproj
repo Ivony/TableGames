@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="CardCollection.cs" />
     <Compile Include="CardGame.cs" />
+    <Compile Include="CardGameBase.cs" />
     <Compile Include="CardGamePlayer.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="CardDealer.cs" />

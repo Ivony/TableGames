@@ -64,6 +64,16 @@ namespace Ivony.TableGame.CardGames
 
 
 
+    /// <summary>
+    /// 当玩家阵亡时调用此方法处理玩家。
+    /// </summary>
+    public virtual void Dead()
+    {
+      Game.AnnounceSystemMessage( "玩家 {0} 已经阵亡，游戏结束", PlayerName );
+      ((CardGameBase) Game).Abort();
+    }
+
+
 
     IEffectCollection _effects = new NotSupportEffectCollection();
     /// <summary>

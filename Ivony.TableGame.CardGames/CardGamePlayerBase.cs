@@ -46,6 +46,11 @@ namespace Ivony.TableGame.CardGames
 
 
 
+    /// <summary>
+    /// 玩家进行该回合的操作
+    /// </summary>
+    /// <param name="token">取消标识</param>
+    /// <returns>获取一个用于等待玩家处理完成的 Task</returns>
     public virtual async Task Play( CancellationToken token )
     {
 

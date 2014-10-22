@@ -49,13 +49,7 @@ namespace Ivony.TableGame.SimpleGames
 
 
 
-
-    /// <summary>
-    /// 重写 OnBeforePlay ，在出牌前处理效果和显示状态信息
-    /// </summary>
-    /// <param name="token">取消标识</param>
-    /// <returns>一个 Task 对象，可用于等待操作完成</returns>
-    protected override async Task OnBeforePlayCard( CancellationToken token )
+    protected override async Task PlayCard( CancellationToken token )
     {
       DealCards();
 
@@ -65,15 +59,9 @@ namespace Ivony.TableGame.SimpleGames
 
 
       PlayerHost.WriteMessage( "HP:{0,-3}{1} 卡牌:{2}", HealthPoint, Effects, string.Join( ", ", Cards.Select( item => item.Name ) ) );
-    }
-
-
-
-
-
-    protected override async Task PlayCard( CancellationToken token )
-    {
       var card =await CherryCard( token );
+
+      
       await ((SimpleGameCard) card).UseCard( this, Game.Players.Where( item => item != this ).ToArray().RandomItem() );
       CardCollection.RemoveCard( card );
     }

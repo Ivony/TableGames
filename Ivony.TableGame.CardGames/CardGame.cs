@@ -13,14 +13,11 @@ namespace Ivony.TableGame.CardGames
   /// 提供基本的卡牌游戏实现
   /// </summary>
   /// <typeparam name="TPlayer"></typeparam>
-  public abstract class CardGame<TPlayer> : GameBase, IBasicGame
+  public abstract class CardGame<TPlayer> : CardGameBase, IBasicGame
     where TPlayer : CardGamePlayer
   {
 
-    public CardGame( IGameHost gameHost )
-      : base( gameHost )
-    {
-    }
+    public CardGame( IGameHost gameHost ) : base( gameHost ) { }
 
 
     /// <summary>
@@ -33,83 +30,26 @@ namespace Ivony.TableGame.CardGames
 
 
 
-    /// <summary>
-    /// 提供 RunGame 方法的标准实现，按照回合依次调用 Player 的 Play 方法，直到某个玩家的 HP 低于 0 为止。
-    /// </summary>
-    /// <param name="token">取消标识</param>
-    /// <returns></returns>
-    protected async override Task RunGame( CancellationToken token )
+
+
+    protected override async Task Play( CardGamePlayerBase player, CancellationToken token )
     {
-      await EnsureAlready( token );
+      await base.Play( player, token );
 
-      AnnounceSystemMessage( "游戏开始" );
-
-      int turn = 1;
-
-      while ( true )
+      foreach ( var dead in Players.Where( item => item.HealthPoint <= 0 ).ToArray() )
       {
-
-        AnnounceSystemMessage( "第 {0} 回合", turn++ );
-
-        foreach ( TPlayer player in Players )
-        {
-          await player.Play( token );
-
-          token.ThrowIfCancellationRequested();
-
-          var dead = Players.FirstOrDefault( item => item.HealthPoint <= 0 );
-          if ( dead != null )
-          {
-            AnnounceSystemMessage( "玩家 {0} 已经阵亡，游戏结束", dead.PlayerName );
-            return;
-          }
-        }
+        dead.Dead();
       }
     }
 
 
 
+
     /// <summary>
-    /// 确保所有的玩家都已经准备好了
+    /// 广播一个游戏事件
     /// </summary>
-    /// <param name="token">取消标识</param>
+    /// <param name="gameEvent"></param>
     /// <returns></returns>
-    protected async virtual Task EnsureAlready( CancellationToken token )
-    {
-      await Task.WhenAll( Players.Select( player => EnsureAlready( player, token ) ) );
-    }
-
-
-
-    /// <summary>
-    /// 确保指定的玩家已经准备好
-    /// </summary>
-    /// <param name="player">要确认准备状态的玩家</param>
-    /// <param name="token">取消标识</param>
-    /// <returns>获取一个 Task 用于等待玩家确认准备状态</returns>
-    private async Task EnsureAlready( TPlayer player, CancellationToken token )
-    {
-      string message;
-      do
-      {
-        message = await player.PlayerHost.Console.ReadLine( "游戏即将开始，在游戏进行中请不要关闭客户端或浏览器。如果您已经准备好开始游戏，请输入 Ready，若您要退出游戏，请输入 Quit：", "quit", token );
-
-
-        if ( string.Equals( message, "Ready", StringComparison.OrdinalIgnoreCase ) )
-          AnnounceSystemMessage( "{0} 已经准备好", player.PlayerName );
-
-        else if ( string.Equals( message, "Quit", StringComparison.OrdinalIgnoreCase ) )
-          player.PlayerHost.TryQuitGame();
-
-        else
-          continue;
-
-
-      } while ( false );
-    }
-
-
-
     public virtual async Task OnGameEvent( IGameEvent gameEvent )
     {
 
@@ -119,7 +59,14 @@ namespace Ivony.TableGame.CardGames
 
 
 
+
+
+
     private IEffectCollection _effects = new NotSupportEffectCollection();
+
+    /// <summary>
+    /// 获取全局效果列表
+    /// </summary>
     protected virtual IEffectCollection Effects
     {
       get { return _effects; }
