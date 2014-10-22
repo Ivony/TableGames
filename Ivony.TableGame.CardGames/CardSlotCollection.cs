@@ -28,6 +28,15 @@ namespace Ivony.TableGame.CardGames
       Slots = new List<ICardSlot>();
     }
 
+
+
+
+    protected void AddSlot<TCard>( CardDealer<TCard> dealer ) where TCard : Card
+    {
+      Slots.Add( new CardSlot<TCard>( dealer ) );
+    }
+
+
     /// <summary>
     /// 获取用于同步的对象
     /// </summary>
