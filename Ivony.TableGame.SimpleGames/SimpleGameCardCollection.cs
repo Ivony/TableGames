@@ -13,13 +13,13 @@ namespace Ivony.TableGame.SimpleGames
     public SimpleGameCardCollection()
     {
 
-      base.Slots.Add( new CardSlot( SimpleGame.AttackCardDealer ) );
-      base.Slots.Add( new CardSlot( SimpleGame.AttackCardDealer ) );
-      base.Slots.Add( new CardSlot( SimpleGame.AttackCardDealer ) );
-      base.Slots.Add( new CardSlot( SimpleGame.AttackCardDealer ) );
+      base.Slots.Add( new CardSlot<SimpleGameCard>( SimpleGame.AttackCardDealer ) );
+      base.Slots.Add( new CardSlot<SimpleGameCard>( SimpleGame.AttackCardDealer ) );
+      base.Slots.Add( new CardSlot<SimpleGameCard>( SimpleGame.AttackCardDealer ) );
+      base.Slots.Add( new CardSlot<SimpleGameCard>( SimpleGame.AttackCardDealer ) );
 
-      base.Slots.Add( new CardSlot( SimpleGame.SpecialCardDealer ) );
-      base.Slots.Add( new CardSlot( SimpleGame.SpecialCardDealer ) );
+      base.Slots.Add( new CardSlot<SimpleGameCard>( SimpleGame.SpecialCardDealer ) );
+      base.Slots.Add( new CardSlot<SimpleGameCard>( SimpleGame.SpecialCardDealer ) );
 
     }
   }

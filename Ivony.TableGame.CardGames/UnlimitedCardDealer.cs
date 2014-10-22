@@ -10,7 +10,7 @@ namespace Ivony.TableGame.CardGames
   /// <summary>
   /// 定义一个无限卡牌发牌器
   /// </summary>
-  public class UnlimitedCardDealer : CardDealer
+  public class UnlimitedCardDealer<TCard> : CardDealer<TCard> where TCard : Card
   {
 
     private List<RegisteredCard> list = new List<RegisteredCard>();
@@ -18,13 +18,13 @@ namespace Ivony.TableGame.CardGames
     private class RegisteredCard
     {
 
-      public RegisteredCard( Func<Card> cardCreator, int probability )
+      public RegisteredCard( Func<TCard> cardCreator, int probability )
       {
         CardCreator = cardCreator;
         Probability = probability;
       }
 
-      public Func<Card> CardCreator { get; private set; }
+      public Func<TCard> CardCreator { get; private set; }
 
       public int Probability { get; private set; }
     }
@@ -35,7 +35,7 @@ namespace Ivony.TableGame.CardGames
     /// </summary>
     /// <typeparam name="T">要注册的卡牌类型</typeparam>
     /// <param name="probability">卡牌出现的概率</param>
-    public UnlimitedCardDealer Register<T>( Func<T> creator, int probability ) where T : Card
+    public UnlimitedCardDealer<TCard> Register( Func<TCard> creator, int probability )
     {
 
       list.Add( new RegisteredCard( creator, probability ) );
@@ -47,7 +47,7 @@ namespace Ivony.TableGame.CardGames
     /// 发牌
     /// </summary>
     /// <returns>发出的牌</returns>
-    public override Card DealCard()
+    public override TCard DealCard()
     {
       var n = Random.Next( list.Sum( item => item.Probability ) );
 

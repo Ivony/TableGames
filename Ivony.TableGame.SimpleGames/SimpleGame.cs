@@ -18,14 +18,14 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
-    public static CardDealer SpecialCardDealer { get; private set; }
-    public static CardDealer AttackCardDealer { get; private set; }
+    public static CardDealer<SimpleGameCard> SpecialCardDealer { get; private set; }
+    public static CardDealer<SimpleGameCard> AttackCardDealer { get; private set; }
 
 
     static SimpleGame()
     {
 
-      SpecialCardDealer = new UnlimitedCardDealer()
+      SpecialCardDealer = new UnlimitedCardDealer<SimpleGameCard>()
           .Register( () => new OverturnCard(), 1 )
           .Register( () => new AngelCard(), 2 )
           .Register( () => new DevilCard(), 5 )
@@ -35,7 +35,7 @@ namespace Ivony.TableGame.SimpleGames
           .Register( () => new ShieldCard(), 10 )
           .Register( () => new PeepCard(), 8 );
 
-      AttackCardDealer = new UnlimitedCardDealer()
+      AttackCardDealer = new UnlimitedCardDealer<SimpleGameCard>()
           .Register( () => new AttackCard( 1 ), 30 )
           .Register( () => new AttackCard( 2 ), 40 )
           .Register( () => new AttackCard( 3 ), 50 )

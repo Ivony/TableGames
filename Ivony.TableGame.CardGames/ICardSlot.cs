@@ -24,12 +24,12 @@ namespace Ivony.TableGame.CardGames
 
 
 
-  public class CardSlot : ICardSlot
+  public class CardSlot<TCard> : ICardSlot where TCard : Card
   {
 
-    protected CardDealer CardDealer { get; private set; }
+    protected CardDealer<TCard> CardDealer { get; private set; }
 
-    public CardSlot( CardDealer dealer )
+    public CardSlot( CardDealer<TCard> dealer )
     {
       CardDealer = dealer;
       SyncRoot = new object();
