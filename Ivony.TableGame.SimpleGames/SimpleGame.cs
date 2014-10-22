@@ -18,9 +18,14 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
-    protected override CardDealer CreateCardDealer()
+    public static CardDealer SpecialCardDealer { get; private set; }
+    public static CardDealer AttackCardDealer { get; private set; }
+
+
+    static SimpleGame()
     {
-      var specialDealer = new UnlimitedCardDealer()
+
+      SpecialCardDealer = new UnlimitedCardDealer()
           .Register( () => new OverturnCard(), 1 )
           .Register( () => new AngelCard(), 2 )
           .Register( () => new DevilCard(), 5 )
@@ -30,7 +35,7 @@ namespace Ivony.TableGame.SimpleGames
           .Register( () => new ShieldCard(), 10 )
           .Register( () => new PeepCard(), 8 );
 
-      var normalDealer = new UnlimitedCardDealer()
+      AttackCardDealer = new UnlimitedCardDealer()
           .Register( () => new AttackCard( 1 ), 30 )
           .Register( () => new AttackCard( 2 ), 40 )
           .Register( () => new AttackCard( 3 ), 50 )
@@ -41,11 +46,8 @@ namespace Ivony.TableGame.SimpleGames
           .Register( () => new AttackCard( 8 ), 7 )
           .Register( () => new AttackCard( 9 ), 5 )
           .Register( () => new AttackCard( 10 ), 3 );
-
-      return new UnlimitedCardDealer()
-          .Register( () => specialDealer.DealCard(), 3 )
-          .Register( () => normalDealer.DealCard(), 7 );
     }
+
 
 
     protected override GamePlayerBase TryJoinGameCore( IGameHost gameHost, IPlayerHost playerHost )

@@ -10,10 +10,6 @@ namespace Ivony.TableGame.CardGames
   {
 
 
-    /// <summary>
-    /// 获取发牌器
-    /// </summary>
-    CardDealer CardDealer { get; }
 
 
     /// <summary>

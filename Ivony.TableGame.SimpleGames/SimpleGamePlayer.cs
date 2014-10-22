@@ -23,11 +23,25 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
-    public SimpleGame Game
+    /// <summary>
+    /// 获取当前参加的游戏对象
+    /// </summary>
+    public new SimpleGame Game
     {
       get;
       private set;
     }
+
+
+
+    private SimpleGameCardCollection _cards = new SimpleGameCardCollection();
+    /// <summary>
+    /// 重写此属性自定义卡牌集
+    /// </summary>
+    protected override ICardCollection CardCollection { get { return _cards; } }
+
+
+
 
 
     /// <summary>
@@ -51,7 +65,7 @@ namespace Ivony.TableGame.SimpleGames
     protected override async Task PlayCard( SimpleGameCard card, CancellationToken token )
     {
       await card.UseCard( this, Game.Players.Where( item => item != this ).ToArray().RandomItem() );
-      CardCollection.Remove( card );
+      CardCollection.RemoveCard( card );
     }
 
 
@@ -76,7 +90,7 @@ namespace Ivony.TableGame.SimpleGames
     /// </summary>
     public void DealCards()
     {
-      DealCards( 6 - Cards.Length );
+      _cards.DealCards();
     }
 
     internal void Purify()
@@ -92,7 +106,7 @@ namespace Ivony.TableGame.SimpleGames
 
     internal void ClearCards()
     {
-      CardCollection.RemoveAll( item => true );
+      CardCollection.Clear();
       PlayerHost.WriteMessage( "您手上的卡牌已经清空，请等待下次发牌" );
     }
 

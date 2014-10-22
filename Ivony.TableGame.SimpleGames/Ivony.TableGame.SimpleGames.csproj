@@ -53,6 +53,7 @@
     <Compile Include="Rules\ShieldCard.cs" />
     <Compile Include="SimpleGame.cs" />
     <Compile Include="SimpleGameCard.cs" />
+    <Compile Include="SimpleGameCardCollection.cs" />
     <Compile Include="SimpleGameEffect.cs" />
     <Compile Include="SimpleGameEffectCollection.cs" />
     <Compile Include="SimpleGamePlayer.cs" />

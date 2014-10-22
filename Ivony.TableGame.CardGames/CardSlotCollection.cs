@@ -68,7 +68,7 @@ namespace Ivony.TableGame.CardGames
     {
       lock ( SyncRoot )
       {
-        foreach ( var item in Slots.Where( item => item.Card != null ) )
+        foreach ( var item in Slots.Where( item => item.HasCard ) )
           item.RemoveCard();
       }
     }
@@ -81,6 +81,16 @@ namespace Ivony.TableGame.CardGames
     System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
     {
       return GetEnumerator();
+    }
+
+
+    public void DealCards()
+    {
+      lock ( SyncRoot )
+      {
+        foreach ( var item in Slots.Where( item => item.HasCard == false ) )
+          item.DealCard();
+      }
     }
   }
 }

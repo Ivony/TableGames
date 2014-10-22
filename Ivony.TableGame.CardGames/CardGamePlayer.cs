@@ -14,22 +14,36 @@ namespace Ivony.TableGame.CardGames
     protected CardGamePlayer( IGameHost gameHost, IPlayerHost playerHost )
       : base( gameHost, playerHost )
     {
-
       SyncRoot = new object();
-      CardCollection = new List<Card>();
     }
 
 
+
+    private ICardCollection _cardCollection = new CardCollection();
     /// <summary>
     /// 玩家所持有的卡牌集合
     /// </summary>
-    protected virtual List<Card> CardCollection { get; private set; }
+    protected virtual ICardCollection CardCollection
+    {
+      get { return _cardCollection; }
+    }
 
 
     /// <summary>
     /// 玩家所持有的卡牌
     /// </summary>
     public TCard[] Cards { get { return CardCollection.Cast<TCard>().ToArray(); } }
+
+
+
+    IEffectCollection _effects = new NotSupportEffectCollection();
+    /// <summary>
+    /// 获取玩家目前所有效果的集合
+    /// </summary>
+    public virtual IEffectCollection Effects
+    {
+      get { return _effects; }
+    }
 
 
 
@@ -88,28 +102,6 @@ namespace Ivony.TableGame.CardGames
 
 
     /// <summary>
-    /// 给玩家发牌
-    /// </summary>
-    protected void DealCards( int amount )
-    {
-      if ( amount <= 0 )
-        return;
-
-      lock ( SyncRoot )
-      {
-        CardCollection.AddRange( InternalGame.CardDealer.DealCards( amount ) );
-
-        ArrangeCards();
-      }
-    }
-
-    /// <summary>
-    /// 派生类实现此方法对卡牌进行整理
-    /// </summary>
-    protected virtual void ArrangeCards() { }
-
-
-    /// <summary>
     /// 获取用于同步的对象
     /// </summary>
     protected object SyncRoot { get; private set; }
@@ -121,17 +113,8 @@ namespace Ivony.TableGame.CardGames
     public int HealthPoint { get; set; }
 
 
-    IEffectCollection _effects = new NotSupportEffectCollection();
 
-    public virtual IEffectCollection Effects
-    {
-      get { return _effects; }
-    }
-
-
-
-
-    internal new IBasicGame InternalGame { get { return (IBasicGame) GameHost.Game; } }
+    internal IBasicGame InternalGame { get { return (IBasicGame) GameHost.Game; } }
 
     public override void QuitGame()
     {

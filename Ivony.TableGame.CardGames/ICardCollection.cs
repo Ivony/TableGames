@@ -15,7 +15,6 @@ namespace Ivony.TableGame.CardGames
     bool RemoveCard( Card card );
 
 
-
     int Count { get; }
 
 
@@ -23,6 +22,5 @@ namespace Ivony.TableGame.CardGames
 
 
     void Clear();
-
   }
 }

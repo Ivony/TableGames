@@ -35,14 +35,6 @@ namespace Ivony.TableGame.CardGames
 
 
 
-
-    protected abstract CardDealer CreateCardDealer();
-
-
-    protected CardDealer CardDealer { get; private set; }
-
-
-
     /// <summary>
     /// 提供 RunGame 方法的标准实现，按照回合依次调用 Player 的 Play 方法，直到某个玩家的 HP 低于 0 为止。
     /// </summary>
@@ -50,9 +42,6 @@ namespace Ivony.TableGame.CardGames
     /// <returns></returns>
     protected async override Task RunGame( CancellationToken token )
     {
-      CardDealer = CreateCardDealer();
-
-
       await EnsureAlready( token );
 
       AnnounceSystemMessage( "游戏开始" );
@@ -127,7 +116,6 @@ namespace Ivony.TableGame.CardGames
 
 
 
-
     /// <summary>
     /// 当玩家退出游戏时，调用此方法
     /// </summary>
@@ -154,14 +142,6 @@ namespace Ivony.TableGame.CardGames
           GameCancellationSource.Cancel();                                   //如果游戏正在进行，则强行终止游戏。
       }
     }
-
-
-
-    CardDealer IBasicGame.CardDealer
-    {
-      get { return CardDealer; }
-    }
-
 
   }
 }
