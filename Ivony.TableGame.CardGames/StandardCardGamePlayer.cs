@@ -58,7 +58,7 @@ namespace Ivony.TableGame.CardGames
     /// </summary>
     public override void QuitGame()
     {
-      InternalGame.OnPlayerQuitted( this );
+      Game.OnPlayerQuitted( this );
       base.QuitGame();
     }
 

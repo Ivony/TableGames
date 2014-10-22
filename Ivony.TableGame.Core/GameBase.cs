@@ -221,9 +221,10 @@ namespace Ivony.TableGame
         await Task.Yield();
         await RunGame( GameCancellationSource.Token );
       }
-      catch ( TaskCanceledException )
+      catch ( OperationCanceledException )
       {
-        AnnounceSystemMessage( "游戏结束。" );
+        if ( GameCancellationSource.IsCancellationRequested )
+          AnnounceSystemMessage( "游戏结束。" );
       }
       catch ( Exception e )
       {

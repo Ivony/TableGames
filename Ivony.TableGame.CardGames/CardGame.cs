@@ -160,9 +160,11 @@ namespace Ivony.TableGame.CardGames
         AnnounceSystemMessage( "玩家 {0} 退出了游戏", player.PlayerName );
         PlayerCollection.Remove( player );
 
-
-        if ( GameState == GameState.Running )
-          GameCancellationSource.Cancel();                                   //如果游戏正在进行，则强行终止游戏。
+        lock ( SyncRoot )
+        {
+          if ( GameState == GameState.Running || !Players.Any() )           //如果游戏正在进行，或者一个玩家都没有了，则强行终止游戏。
+            Abort();
+        }
       }
     }
   }

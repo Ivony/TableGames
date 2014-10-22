@@ -41,11 +41,9 @@
   <ItemGroup>
     <Compile Include="CardCollection.cs" />
     <Compile Include="CardGame.cs" />
-    <Compile Include="CardGameBase.cs" />
     <Compile Include="CardGamePlayer.cs" />
     <Compile Include="Card.cs" />
     <Compile Include="CardDealer.cs" />
-    <Compile Include="CardGamePlayerBase.cs" />
     <Compile Include="CardSlotCollection.cs" />
     <Compile Include="GameEventBase.cs" />
     <Compile Include="GameRoundEvent.cs" />
@@ -55,6 +53,8 @@
     <Compile Include="NotSupportEffectCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StandardCard.cs" />
+    <Compile Include="StandardCardGame.cs" />
+    <Compile Include="StandardCardGamePlayer.cs" />
     <Compile Include="UnlimitedCardDealer.cs" />
   </ItemGroup>
   <ItemGroup>
