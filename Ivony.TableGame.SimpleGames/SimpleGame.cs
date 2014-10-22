@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames
 {
-  public class SimpleGame : CardGame<SimpleGamePlayer>
+  public class SimpleGame : StandardCardGame<SimpleGamePlayer>
   {
 
 

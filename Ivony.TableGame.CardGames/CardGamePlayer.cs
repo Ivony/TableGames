@@ -9,137 +9,87 @@ namespace Ivony.TableGame.CardGames
 {
 
   /// <summary>
-  /// 提供一个通用标准的卡牌用户实现
+  /// 定义卡牌游戏玩家的基本抽象
   /// </summary>
-  public abstract class CardGamePlayer : CardGamePlayerBase, IGameEventListener
+  public abstract class CardGamePlayer : GamePlayerBase
   {
-
-
-    protected CardGamePlayer( IGameHost gameHost, IPlayerHost playerHost ) : base( gameHost, playerHost ) { }
-
-
-    protected virtual async Task<Card> CherryCard( CancellationToken token )
+    protected CardGamePlayer( IGameHost gameHost, IPlayerHost playerHost )
+      : base( gameHost, playerHost )
     {
-
-      var card = await PlayerHost.Console.Choose( "请出牌：", Cards, null, token );
-
-      if ( card != null )
-        return card;
-
-
-      lock ( SyncRoot )
-      {
-        var index = Random.Next( Cards.Length );
-        PlayerHost.WriteWarningMessage( "操作超时，随机打出第 {0} 张牌", index + 1 );
-        return Cards[index];
-      }
-
+      Game = (CardGame) gameHost.Game;
+      SyncRoot = new object();
     }
 
 
     /// <summary>
-    /// 获取或设置生命点数
+    /// 获取当前游戏对象
     /// </summary>
-    public int HealthPoint { get; set; }
-
+    protected new CardGame Game { get; private set; }
 
     /// <summary>
-    /// 获取或设置行动点数（若行动力点数小于目前所要执行的行动点数，则不能行动）
+    /// 获取用于同步的对象
     /// </summary>
-    public int ActionPoint { get; set; }
+    protected object SyncRoot { get; private set; }
 
 
-
-    internal IBasicGame InternalGame { get { return (IBasicGame) GameHost.Game; } }
-
-
+    private ICardCollection _cardCollection = new CardCollection();
     /// <summary>
-    /// 重写此方法退出游戏
+    /// 获取玩家卡牌容器
     /// </summary>
-    public override void QuitGame()
+    protected virtual ICardCollection CardCollection
     {
-      InternalGame.OnPlayerQuitted( this );
-      base.QuitGame();
+      get { return _cardCollection; }
+    }
+
+
+    /// <summary>
+    /// 玩家当前所持有的卡牌
+    /// </summary>
+    public virtual Card[] Cards
+    {
+      get { return CardCollection.ToArray(); }
     }
 
 
 
     /// <summary>
-    /// 当玩家阵亡时调用此方法处理玩家。
+    /// 玩家进行该回合的操作
     /// </summary>
-    public virtual void Dead()
+    /// <param name="token">取消标识</param>
+    /// <returns>获取一个用于等待玩家处理完成的 Task</returns>
+    public virtual async Task Play( CancellationToken token )
     {
-      Game.AnnounceSystemMessage( "玩家 {0} 已经阵亡，游戏结束", PlayerName );
-      ((CardGameBase) Game).Abort();
+
+      Game.AnnounceMessage( "轮到 {0} 出牌", PlayerName );
+
+      await OnBeforePlayCard( token );
+
+      await PlayCard( token );
+
+      await OnAfterPlayCard( token );
+
     }
 
 
 
-    IEffectCollection _effects = new NotSupportEffectCollection();
-    /// <summary>
-    /// 获取玩家目前所有效果的集合
-    /// </summary>
-    public virtual IEffectCollection Effects
+    protected virtual Task OnBeforePlayCard( CancellationToken token )
     {
-      get { return _effects; }
-    }
-
-
-    /// <summary>
-    /// 处理游戏中发生的事件
-    /// </summary>
-    /// <param name="gameEvent">游戏事件</param>
-    /// <returns>用于等待事件处理完成的 Task</returns>
-    public Task OnGameEvent( IGameEvent gameEvent )
-    {
-      var behaviorEvent = gameEvent as IGameBehaviorEvent;
-      if ( behaviorEvent != null )
-        return OnGameEvent( behaviorEvent );
-
-
-      var playerEvent = gameEvent as IGamePlayerEvent;
-      if ( playerEvent != null )
-        return OnGameEvent( playerEvent );
-
-
       return Task.Run( () => { } );
     }
 
 
-    /// <summary>
-    /// 处理玩家事件
-    /// </summary>
-    /// <param name="playerEvent">玩家事件/param>
-    /// <returns>用于等待事件处理完成的 Task</returns>
-    protected virtual async Task OnGameEvent( IGamePlayerEvent playerEvent )
+    protected abstract Task PlayCard( CancellationToken token );
+
+
+    protected virtual Task OnAfterPlayCard( CancellationToken token )
     {
-      if ( playerEvent.Player.Equals( this ) )
-      {
-        foreach ( var item in Effects.OfType<IGamePlayerEffect>() )
-          await item.OnGamePlayerEvent( playerEvent );
-      }
+      return Task.Run( () => { } );
     }
 
 
-    /// <summary>
-    /// 处理玩家行为事件
-    /// </summary>
-    /// <param name="behaviorEvent">玩家行为事件/param>
-    /// <returns>用于等待事件处理完成的 Task</returns>
-    protected virtual async Task OnGameEvent( IGameBehaviorEvent behaviorEvent )
-    {
 
-      if ( behaviorEvent.InitiatePlayer.Equals( this ) )
-      {
-        foreach ( var item in Effects.OfType<IGameBehaviorEffect>() )
-          await item.OnBehaviorInitiator( behaviorEvent );
-      }
 
-      if ( behaviorEvent.RecipientPlayer.Equals( this ) )
-      {
-        foreach ( var item in Effects.OfType<IGameBehaviorEffect>() )
-          await item.OnBehaviorRecipient( behaviorEvent );
-      }
-    }
+
+
   }
 }

@@ -261,12 +261,18 @@ namespace Ivony.TableGame
       }
     }
 
+    /// <summary>
+    /// 派生类实现此方法完成初始化工作
+    /// </summary>
     protected virtual void InitializeCore()
     { }
 
 
 
 
+    /// <summary>
+    /// 确保游戏正在运行
+    /// </summary>
     protected void EnsureGameRunning()
     {
       if ( GameState != GameState.Running )

@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace Ivony.TableGame.SimpleGames
 {
-  public class SimpleGamePlayer : CardGamePlayer
+  public class SimpleGamePlayer : StandardCardGamePlayer
   {
 
 
