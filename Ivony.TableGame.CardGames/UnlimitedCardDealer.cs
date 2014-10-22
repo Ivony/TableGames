@@ -34,7 +34,7 @@ namespace Ivony.TableGame.CardGames
     /// 注册一种卡牌
     /// </summary>
     /// <typeparam name="T">要注册的卡牌类型</typeparam>
-    /// <param name="probability">出现概率</param>
+    /// <param name="probability">卡牌出现的概率</param>
     public UnlimitedCardDealer Register<T>( Func<T> creator, int probability ) where T : Card
     {
 
@@ -43,6 +43,10 @@ namespace Ivony.TableGame.CardGames
     }
 
 
+    /// <summary>
+    /// 发牌
+    /// </summary>
+    /// <returns>发出的牌</returns>
     public override Card DealCard()
     {
       var n = Random.Next( list.Sum( item => item.Probability ) );

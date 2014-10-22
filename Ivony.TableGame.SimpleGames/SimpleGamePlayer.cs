@@ -11,9 +11,15 @@ using System.Threading;
 
 namespace Ivony.TableGame.SimpleGames
 {
-  public class SimpleGamePlayer : CardGamePlayer<SimpleGameCard>
+  public class SimpleGamePlayer : CardGamePlayer
   {
 
+
+    /// <summary>
+    /// 创建 SimpleGamePlayer 对象
+    /// </summary>
+    /// <param name="gameHost">游戏宿主</param>
+    /// <param name="playerHost">玩家宿主</param>
     public SimpleGamePlayer( IGameHost gameHost, IPlayerHost playerHost )
       : base( gameHost, playerHost )
     {
@@ -49,7 +55,7 @@ namespace Ivony.TableGame.SimpleGames
     /// </summary>
     /// <param name="token">取消标识</param>
     /// <returns>一个 Task 对象，可用于等待操作完成</returns>
-    protected override async Task OnBeforePlay( CancellationToken token )
+    protected override async Task OnBeforePlayCard( CancellationToken token )
     {
       DealCards();
 
@@ -62,9 +68,13 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
-    protected override async Task PlayCard( SimpleGameCard card, CancellationToken token )
+
+
+
+    protected override async Task PlayCard( CancellationToken token )
     {
-      await card.UseCard( this, Game.Players.Where( item => item != this ).ToArray().RandomItem() );
+      var card =await CherryCard( token );
+      await ((SimpleGameCard) card).UseCard( this, Game.Players.Where( item => item != this ).ToArray().RandomItem() );
       CardCollection.RemoveCard( card );
     }
 
@@ -77,7 +87,7 @@ namespace Ivony.TableGame.SimpleGames
       return new
       {
         Players = Game.Players.Select( item => item.PlayerName ),
-        Cards = Cards,
+        Cards = CardCollection,
       };
     }
 

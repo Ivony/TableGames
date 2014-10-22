@@ -10,8 +10,6 @@ namespace Ivony.TableGame.CardGames
   {
 
 
-
-
     /// <summary>
     /// 当玩家退出游戏时，调用此方法通知游戏
     /// </summary>

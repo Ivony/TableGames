@@ -7,63 +7,18 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.CardGames
 {
-  public abstract class CardGamePlayer<TCard> : GamePlayerBase, IGameEventListener where TCard : Card
+
+  /// <summary>
+  /// 提供一个通用标准的卡牌用户实现
+  /// </summary>
+  public abstract class CardGamePlayer : CardGamePlayerBase, IGameEventListener
   {
 
 
-    protected CardGamePlayer( IGameHost gameHost, IPlayerHost playerHost )
-      : base( gameHost, playerHost )
-    {
-      SyncRoot = new object();
-    }
+    protected CardGamePlayer( IGameHost gameHost, IPlayerHost playerHost ) : base( gameHost, playerHost ) { }
 
 
-
-    private ICardCollection _cardCollection = new CardCollection();
-    /// <summary>
-    /// 玩家所持有的卡牌集合
-    /// </summary>
-    protected virtual ICardCollection CardCollection
-    {
-      get { return _cardCollection; }
-    }
-
-
-    /// <summary>
-    /// 玩家所持有的卡牌
-    /// </summary>
-    public TCard[] Cards { get { return CardCollection.Cast<TCard>().ToArray(); } }
-
-
-
-    IEffectCollection _effects = new NotSupportEffectCollection();
-    /// <summary>
-    /// 获取玩家目前所有效果的集合
-    /// </summary>
-    public virtual IEffectCollection Effects
-    {
-      get { return _effects; }
-    }
-
-
-
-
-
-    public async virtual Task Play( CancellationToken token )
-    {
-
-      Game.AnnounceMessage( "轮到 {0} 出牌", PlayerName );
-
-      await OnBeforePlay( token );
-      var card = await CherryCard( token );
-
-
-      await PlayCard( card, token );
-      await OnAfterPlay( token );
-
-    }
-
-    private async Task<TCard> CherryCard( CancellationToken token )
+    protected virtual async Task<Card> CherryCard( CancellationToken token )
     {
 
       var card = await PlayerHost.Console.Choose( "请出牌：", Cards, null, token );
@@ -82,40 +37,25 @@ namespace Ivony.TableGame.CardGames
     }
 
 
-    protected virtual Task OnBeforePlay( CancellationToken token )
-    {
-      return Task.Run( () => { } );
-    }
-
-
-    protected virtual Task PlayCard( TCard card, CancellationToken token )
-    {
-      return Task.Run( () => { } );
-    }
-
-
-    protected virtual Task OnAfterPlay( CancellationToken token )
-    {
-      return Task.Run( () => { } );
-    }
-
-
-
-    /// <summary>
-    /// 获取用于同步的对象
-    /// </summary>
-    protected object SyncRoot { get; private set; }
-
-
     /// <summary>
     /// 获取或设置生命点数
     /// </summary>
     public int HealthPoint { get; set; }
 
 
+    /// <summary>
+    /// 获取或设置行动点数（若行动力点数小于目前所要执行的行动点数，则不能行动）
+    /// </summary>
+    public int ActionPoint { get; set; }
+
+
 
     internal IBasicGame InternalGame { get { return (IBasicGame) GameHost.Game; } }
 
+
+    /// <summary>
+    /// 重写此方法退出游戏
+    /// </summary>
     public override void QuitGame()
     {
       InternalGame.OnPlayerQuitted( this );
@@ -125,6 +65,21 @@ namespace Ivony.TableGame.CardGames
 
 
 
+    IEffectCollection _effects = new NotSupportEffectCollection();
+    /// <summary>
+    /// 获取玩家目前所有效果的集合
+    /// </summary>
+    public virtual IEffectCollection Effects
+    {
+      get { return _effects; }
+    }
+
+
+    /// <summary>
+    /// 处理游戏中发生的事件
+    /// </summary>
+    /// <param name="gameEvent">游戏事件</param>
+    /// <returns>用于等待事件处理完成的 Task</returns>
     public Task OnGameEvent( IGameEvent gameEvent )
     {
       var behaviorEvent = gameEvent as IGameBehaviorEvent;
@@ -141,6 +96,11 @@ namespace Ivony.TableGame.CardGames
     }
 
 
+    /// <summary>
+    /// 处理玩家事件
+    /// </summary>
+    /// <param name="playerEvent">玩家事件/param>
+    /// <returns>用于等待事件处理完成的 Task</returns>
     protected virtual async Task OnGameEvent( IGamePlayerEvent playerEvent )
     {
       if ( playerEvent.Player.Equals( this ) )
@@ -150,6 +110,12 @@ namespace Ivony.TableGame.CardGames
       }
     }
 
+
+    /// <summary>
+    /// 处理玩家行为事件
+    /// </summary>
+    /// <param name="behaviorEvent">玩家行为事件/param>
+    /// <returns>用于等待事件处理完成的 Task</returns>
     protected virtual async Task OnGameEvent( IGameBehaviorEvent behaviorEvent )
     {
 
@@ -165,8 +131,5 @@ namespace Ivony.TableGame.CardGames
           await item.OnBehaviorRecipient( behaviorEvent );
       }
     }
-
-
-
   }
 }

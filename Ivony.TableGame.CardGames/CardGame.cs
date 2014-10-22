@@ -8,9 +8,13 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.CardGames
 {
-  public abstract class CardGame<TPlayer, TCard> : GameBase, IBasicGame
-    where TPlayer : CardGamePlayer<TCard>
-    where TCard : Card
+
+  /// <summary>
+  /// 提供基本的卡牌游戏实现
+  /// </summary>
+  /// <typeparam name="TPlayer"></typeparam>
+  public abstract class CardGame<TPlayer> : GameBase, IBasicGame
+    where TPlayer : CardGamePlayer
   {
 
     public CardGame( IGameHost gameHost )
@@ -25,12 +29,6 @@ namespace Ivony.TableGame.CardGames
     public new TPlayer[] Players
     {
       get { return PlayerCollection.Cast<TPlayer>().ToArray(); }
-    }
-
-
-    internal TPlayer GetPlayer( int targetIndex )
-    {
-      return Players[targetIndex];
     }
 
 
@@ -69,6 +67,13 @@ namespace Ivony.TableGame.CardGames
       }
     }
 
+
+
+    /// <summary>
+    /// 确保所有的玩家都已经准备好了
+    /// </summary>
+    /// <param name="token">取消标识</param>
+    /// <returns></returns>
     protected async virtual Task EnsureAlready( CancellationToken token )
     {
       await Task.WhenAll( Players.Select( player => EnsureAlready( player, token ) ) );
@@ -76,12 +81,18 @@ namespace Ivony.TableGame.CardGames
 
 
 
+    /// <summary>
+    /// 确保指定的玩家已经准备好
+    /// </summary>
+    /// <param name="player">要确认准备状态的玩家</param>
+    /// <param name="token">取消标识</param>
+    /// <returns>获取一个 Task 用于等待玩家确认准备状态</returns>
     private async Task EnsureAlready( TPlayer player, CancellationToken token )
     {
       string message;
       do
       {
-        message = await player.PlayerHost.Console.ReadLine( "游戏即将开始，在游戏进行中请不要关闭客户端或浏览器。如果您已经准备好开始游戏，请输入 Ready，若您要退出游戏，请输入 Quit", "quit", token );
+        message = await player.PlayerHost.Console.ReadLine( "游戏即将开始，在游戏进行中请不要关闭客户端或浏览器。如果您已经准备好开始游戏，请输入 Ready，若您要退出游戏，请输入 Quit：", "quit", token );
 
 
         if ( string.Equals( message, "Ready", StringComparison.OrdinalIgnoreCase ) )

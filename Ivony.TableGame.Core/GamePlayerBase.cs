@@ -6,9 +6,19 @@ using System.Text;
 
 namespace Ivony.TableGame
 {
+
+  /// <summary>
+  /// 定义游戏玩家的抽象
+  /// </summary>
   public abstract class GamePlayerBase
   {
 
+
+    /// <summary>
+    /// 创建 GamePlayerBase 对象
+    /// </summary>
+    /// <param name="gameHost">游戏宿主</param>
+    /// <param name="playerHost">玩家宿主</param>
     protected GamePlayerBase( IGameHost gameHost, IPlayerHost playerHost )
     {
       PlayerHost = playerHost;
@@ -16,6 +26,9 @@ namespace Ivony.TableGame
     }
 
 
+    /// <summary>
+    /// 获取一个随机数产生器
+    /// </summary>
     protected static Random Random { get { return GameBase.Random; } }
 
 
@@ -27,7 +40,7 @@ namespace Ivony.TableGame
 
 
     /// <summary>
-    /// 游戏宿主对象，用于记录游戏的状态和
+    /// 游戏宿主对象，用于记录游戏的状态和保存加载游戏
     /// </summary>
     public IGameHost GameHost { get; private set; }
 
@@ -61,6 +74,10 @@ namespace Ivony.TableGame
 
 
 
+    /// <summary>
+    /// 重写 ToString 方法，显示玩家信息
+    /// </summary>
+    /// <returns>玩家信息的字符串表达形式</returns>
     public override string ToString()
     {
 

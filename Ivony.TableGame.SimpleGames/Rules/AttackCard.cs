@@ -13,6 +13,10 @@ namespace Ivony.TableGame.SimpleGames.Rules
   public class AttackCard : SimpleGameCard
   {
 
+    /// <summary>
+    /// 创建攻击卡牌对象
+    /// </summary>
+    /// <param name="point">攻击点数</param>
     public AttackCard( int point = 1 )
     {
 
@@ -21,6 +25,9 @@ namespace Ivony.TableGame.SimpleGames.Rules
     }
 
 
+    /// <summary>
+    /// 攻击点数
+    /// </summary>
     public int Point { get; private set; }
 
     public override string Name

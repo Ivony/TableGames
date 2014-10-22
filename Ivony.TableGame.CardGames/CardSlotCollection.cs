@@ -6,19 +6,38 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.CardGames
 {
-  public class CardSlotCollection : ICardCollection
+
+
+  /// <summary>
+  /// 实现一个基于卡牌槽位的卡牌容器
+  /// </summary>
+  public abstract class CardSlotCollection : ICardCollection
   {
 
+    /// <summary>
+    /// 获取当前所有的卡牌槽位
+    /// </summary>
     protected List<ICardSlot> Slots { get; private set; }
 
+    /// <summary>
+    /// 创建 CardSlotCollection 对象
+    /// </summary>
     protected CardSlotCollection()
     {
       SyncRoot = new object();
       Slots = new List<ICardSlot>();
     }
 
+    /// <summary>
+    /// 获取用于同步的对象
+    /// </summary>
     public object SyncRoot { get; private set; }
 
+    /// <summary>
+    /// 添加一张卡牌
+    /// </summary>
+    /// <param name="card">要添加的卡牌</param>
+    /// <returns>是否添加成功</returns>
     public bool AddCard( Card card )
     {
       if ( card == null )
@@ -31,6 +50,12 @@ namespace Ivony.TableGame.CardGames
       }
     }
 
+
+    /// <summary>
+    /// 移除一张卡牌
+    /// </summary>
+    /// <param name="card">要移除的卡牌</param>
+    /// <returns>是否移除成功</returns>
     public bool RemoveCard( Card card )
     {
       if ( card == null )
@@ -42,6 +67,10 @@ namespace Ivony.TableGame.CardGames
       }
     }
 
+
+    /// <summary>
+    /// 当前卡牌数量
+    /// </summary>
     public int Count
     {
       get
@@ -53,6 +82,12 @@ namespace Ivony.TableGame.CardGames
       }
     }
 
+
+    /// <summary>
+    /// 获取是否存在某张卡牌
+    /// </summary>
+    /// <param name="card">要检测的卡牌对象</param>
+    /// <returns>是否存在这张卡牌</returns>
     public bool Contains( Card card )
     {
       if ( card == null )
@@ -64,6 +99,10 @@ namespace Ivony.TableGame.CardGames
       }
     }
 
+
+    /// <summary>
+    /// 清空所有卡牌
+    /// </summary>
     public void Clear()
     {
       lock ( SyncRoot )
@@ -73,14 +112,14 @@ namespace Ivony.TableGame.CardGames
       }
     }
 
-    public IEnumerator<Card> GetEnumerator()
+    IEnumerator<Card> IEnumerable<Card>.GetEnumerator()
     {
       return Slots.Where( item => item.Card != null ).Select( item => item.Card ).GetEnumerator();
     }
 
     System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
     {
-      return GetEnumerator();
+      return ((IEnumerable<Card>) this).GetEnumerator();
     }
 
 
