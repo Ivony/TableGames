@@ -37,26 +37,26 @@ namespace Ivony.TableGame.CardGames
 
 
     /// <summary>
-    /// 重写 Play 方法，在每个玩家操作完毕后，检查所有玩家是否都还活着
+    /// 重写 PlayerPlay 方法，在每个玩家操作完毕后，检查所有玩家是否都还活着
     /// </summary>
     /// <param name="player">正在执行操作的玩家</param>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个 Task 用于等待操作完成</returns>
-    protected override async Task Play( CardGamePlayer player, CancellationToken token )
+    protected override async Task PlayerPlay( CardGamePlayer player, CancellationToken token )
     {
-      await base.Play( player, token );
+      await base.PlayerPlay( player, token );
       await EnsurePlayersAlive();
     }
 
 
     /// <summary>
-    /// 确保所有玩家都还活着
+    /// 确保所有玩家都还活着，对已经死亡的玩家调用 OnDead 方法
     /// </summary>
     /// <returns>获取一个 Task 用于等待操作完成</returns>
-    private async Task EnsurePlayersAlive()
+    public async Task EnsurePlayersAlive()
     {
-      foreach ( var dead in Players.Where( item => item.HealthPoint <= 0 ).ToArray() )
-        await dead.Dead();
+      foreach ( var player in Players.ToArray() )
+        await player.EnsureAlive();
     }
 
 

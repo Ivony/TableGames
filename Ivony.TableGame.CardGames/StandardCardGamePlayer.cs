@@ -64,10 +64,26 @@ namespace Ivony.TableGame.CardGames
 
 
 
+
+    /// <summary>
+    /// 确认玩家目前还活着，若已经死亡，则调用 OnDead 方法
+    /// </summary>
+    /// <returns></returns>
+    public virtual Task EnsureAlive()
+    {
+      if ( this.HealthPoint <= 0 )
+        return OnDead();
+
+      else
+        return Task.Run( () => { } );
+    }
+
+
+
     /// <summary>
     /// 当玩家死亡时调用此方法。
     /// </summary>
-    public virtual Task Dead()
+    public virtual Task OnDead()
     {
       return Task.Run( () =>
         {

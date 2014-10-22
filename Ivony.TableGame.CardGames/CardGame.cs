@@ -29,7 +29,7 @@ namespace Ivony.TableGame.CardGames
 
       while ( true )
       {
-        await PlayRound( token );
+        await PlayAround( token );
       }
     }
 
@@ -47,12 +47,12 @@ namespace Ivony.TableGame.CardGames
     /// </summary>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个 Task，用于等待这个回合游戏结束</returns>
-    protected virtual async Task PlayRound( CancellationToken token )
+    protected virtual async Task PlayAround( CancellationToken token )
     {
       AnnounceSystemMessage( "第 {0} 回合", Rounds++ );
       foreach ( CardGamePlayer player in Players )
       {
-        await Play( player, token );
+        await PlayerPlay( player, token );
         token.ThrowIfCancellationRequested();
       }
     }
@@ -60,12 +60,12 @@ namespace Ivony.TableGame.CardGames
 
 
     /// <summary>
-    /// 
+    /// 玩家出牌
     /// </summary>
-    /// <param name="player"></param>
-    /// <param name="token"></param>
-    /// <returns></returns>
-    protected virtual async Task Play( CardGamePlayer player, CancellationToken token )
+    /// <param name="player">轮到出牌的玩家</param>
+    /// <param name="token">取消标识</param>
+    /// <returns>获取一个 Task，用于等待这个玩家处理结束</returns>
+    protected virtual async Task PlayerPlay( CardGamePlayer player, CancellationToken token )
     {
       await OnBeforePlay( player, token );
       await player.Play( token );
