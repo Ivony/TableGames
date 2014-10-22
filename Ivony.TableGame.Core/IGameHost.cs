@@ -53,5 +53,10 @@ namespace Ivony.TableGame
     /// </summary>
     /// <param name="game">已经结束并释放资源的游戏对象</param>
     void ReleaseGame( GameBase game );
+
+
+
+    void SendChatMessage( GameChatMessage message );
+
   }
 }

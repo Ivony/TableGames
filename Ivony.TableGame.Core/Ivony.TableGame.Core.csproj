@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameChatMessage.cs" />
     <Compile Include="GameHostBase.cs" />
     <Compile Include="GameBase.cs" />
     <Compile Include="GameMessage.cs" />

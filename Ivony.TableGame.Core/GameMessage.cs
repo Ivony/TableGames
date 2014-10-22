@@ -59,13 +59,23 @@ namespace Ivony.TableGame
 
 
 
+
+  /// <summary>
+  /// 定义消息类型枚举
+  /// </summary>
   public enum GameMessageType
   {
+    /// <summary>一般信息消息</summary>
     Info,
+    /// <summary>警告消息</summary>
     Warning,
+    /// <summary>错误消息</summary>
     Error,
+    /// <summary>系统消息</summary>
     System,
+    /// <summary>系统错误消息</summary>
     SystemError,
+    /// <summary>聊天消息消息</summary>
     Chat,
   }
 
