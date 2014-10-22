@@ -45,7 +45,7 @@ namespace Ivony.TableGame.CardGames
 
       lock ( SyncRoot )
       {
-        var emptySlots = Slots.Where( item => item.Card == null ).ToArray();
+        var emptySlots = Slots.Where( item => item.HasCard == false ).ToArray();
         return emptySlots.Any( item => item.SetCard( card ) );
       }
     }

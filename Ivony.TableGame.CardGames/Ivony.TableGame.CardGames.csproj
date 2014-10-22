@@ -53,6 +53,7 @@
     <Compile Include="ICardSlot.cs" />
     <Compile Include="NotSupportEffectCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StandardCard.cs" />
     <Compile Include="UnlimitedCardDealer.cs" />
   </ItemGroup>
   <ItemGroup>
