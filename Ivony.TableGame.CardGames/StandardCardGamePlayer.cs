@@ -38,7 +38,7 @@ namespace Ivony.TableGame.CardGames
 
 
     /// <summary>
-    /// 获取或设置生命点数
+    /// 获取或设置生命点数（若在回合结束后，某玩家的生命点数小于等于 0 ，该玩家将退出游戏）
     /// </summary>
     public int HealthPoint { get; set; }
 
