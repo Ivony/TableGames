@@ -86,9 +86,24 @@ namespace Ivony.TableGame
 
 
 
+    /// <summary>
+    /// 让客户端在多个选项中选择一个
+    /// </summary>
+    /// <param name="prompt">提示信息</param>
+    /// <param name="options">选项列表</param>
+    /// <param name="token">取消标识</param>
+    /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
     public abstract Task<IOption> Choose( string prompt, IOption[] options, CancellationToken token );
 
 
+    /// <summary>
+    /// 让客户端在多个选项中选择一个
+    /// </summary>
+    /// <typeparam name="T">选项类型</typeparam>
+    /// <param name="prompt">提示信息</param>
+    /// <param name="options">选项列表</param>
+    /// <param name="token">取消标识</param>
+    /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
     public async Task<T> Choose<T>( string prompt, T[] options, CancellationToken token ) where T : class, IOption
     {
       return (T) await Choose( prompt, (IOption[]) options, token );
@@ -96,11 +111,30 @@ namespace Ivony.TableGame
 
 
 
+    /// <summary>
+    /// 让客户端在多个选项中选择一个
+    /// </summary>
+    /// <typeparam name="T">选项类型</typeparam>
+    /// <param name="prompt">提示信息</param>
+    /// <param name="options">选项列表</param>
+    /// <param name="defaultOption">默认选项</param>
+    /// <param name="token">取消标识</param>
+    /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
     public Task<T> Choose<T>( string prompt, T[] options, T defaultOption, CancellationToken token ) where T : class, IOption
     {
       return Choose( prompt, options, defaultOption, DefaultTimeout, token );
     }
 
+    /// <summary>
+    /// 让客户端在多个选项中选择一个
+    /// </summary>
+    /// <typeparam name="T">选项类型</typeparam>
+    /// <param name="prompt">提示信息</param>
+    /// <param name="options">选项列表</param>
+    /// <param name="defaultOption">默认选项</param>
+    /// <param name="timeout">超时时间</param>
+    /// <param name="token">取消标识</param>
+    /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
     public async Task<T> Choose<T>( string prompt, T[] options, T defaultOption, TimeSpan timeout, CancellationToken token ) where T : class, IOption
     {
 
