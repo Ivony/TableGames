@@ -21,7 +21,7 @@ namespace Ivony.TableGame.WebHost
   /// <summary>
   /// 玩家宿主，登陆用户在系统中的宿主对象
   /// </summary>
-  public partial class PlayerHost : IPlayerHost
+  public partial class PlayerHost : PlayerHostBase
   {
 
 
@@ -34,13 +34,14 @@ namespace Ivony.TableGame.WebHost
 
 
     internal PlayerHost( Guid id, string name )
+      : base( name )
     {
       Guid = id;
       Name = name;
 
       SyncRoot = new object();
       RefreshTime = DateTime.UtcNow;
-      _console = new PlayerConsole( this );
+      base.Console = new PlayerConsole( this );
     }
 
 
@@ -66,15 +67,6 @@ namespace Ivony.TableGame.WebHost
 
     }
 
-
-    /// <summary>
-    /// 玩家名称
-    /// </summary>
-    public string Name
-    {
-      get;
-      private set;
-    }
 
 
     /// <summary>
@@ -109,21 +101,17 @@ namespace Ivony.TableGame.WebHost
 
 
 
-    private PlayerConsole _console;
 
-    /// <summary>
-    /// 获取玩家控制台，用于给玩家显示消息
-    /// </summary>
-    public PlayerConsole Console
+    protected override PlayerConsoleBase CreatePlayerConsole()
     {
-      get { return _console; }
+      return new PlayerConsole( this );
     }
 
-    PlayerConsoleBase IPlayerHost.Console
-    {
-      get { return _console; }
-    }
 
+    protected new PlayerConsole Console
+    {
+      get { return (PlayerConsole) base.Console; }
+    }
 
 
     /// <summary>
@@ -145,51 +133,6 @@ namespace Ivony.TableGame.WebHost
     public GameMessage[] GetMessages() { return Console.GetMessages(); }
 
 
-
-
-    /// <summary>
-    /// 若已经加入某个游戏，则获取游戏中的玩家对象
-    /// </summary>
-    public GamePlayerBase Player { get; private set; }
-
-
-    GamePlayerBase IPlayerHost.GetPlayer()
-    {
-      return Player;
-    }
-
-    /// <summary>
-    /// 通知玩家已经加入了某个游戏
-    /// </summary>
-    /// <param name="player"></param>
-    public void JoinedGame( GamePlayerBase player )
-    {
-
-      lock ( SyncRoot )
-      {
-        if ( Player != null )
-          throw new InvalidOperationException( "玩家当前已经在另一个游戏，无法加入游戏" );
-
-        Player = player;
-      }
-    }
-
-
-    /// <summary>
-    /// 尝试退出某个游戏
-    /// </summary>
-    public bool TryQuitGame()
-    {
-      lock ( SyncRoot )
-      {
-        if ( Player == null )
-          return false;
-
-        Player.QuitGame();
-        Player = null;
-        return true;
-      }
-    }
 
 
     /// <summary>

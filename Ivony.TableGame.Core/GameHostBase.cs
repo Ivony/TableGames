@@ -46,7 +46,7 @@ namespace Ivony.TableGame
     /// <returns></returns>
     public virtual bool TryJoinGame( IPlayerHost playerHost, out string reason )
     {
-      var player = playerHost.GetPlayer();
+      var player = playerHost.Player;
       reason = null;
 
       if ( player != null )
@@ -77,7 +77,7 @@ namespace Ivony.TableGame
         }
         else
         {
-          playerHost.JoinedGame( player );
+          playerHost.OnJoinedGame( player );
           return true;
         }
 

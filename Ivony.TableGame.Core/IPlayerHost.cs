@@ -29,7 +29,7 @@ namespace Ivony.TableGame
     /// 当玩家加入了某个游戏后，将调用此方法
     /// </summary>
     /// <param name="player">在游戏中的玩家对象</param>
-    void JoinedGame( GamePlayerBase player );
+    void OnJoinedGame( GamePlayerBase player );
 
 
     /// <summary>
@@ -42,7 +42,7 @@ namespace Ivony.TableGame
     /// 获取当前在游戏的玩家对象（如果有的话）
     /// </summary>
     /// <returns>玩家对象</returns>
-    GamePlayerBase GetPlayer();
+    GamePlayerBase Player { get; }
 
 
 
