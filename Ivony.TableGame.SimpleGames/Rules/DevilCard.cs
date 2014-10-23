@@ -31,7 +31,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
     }
 
 
-    private class CardEffect : SimpleGameEffect, IBlessEffect
+    private class CardEffect : SimpleGameEffect, IBlessEffect, IAroundEffect
     {
       public override string Name
       {

@@ -24,7 +24,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
       get { return "到下一次发牌之前，您遭受的第一次伤害将反弹给攻击者"; }
     }
 
-    private class CardEffect : SimpleGameEffect, IDefenceEffect
+    private class CardEffect : SimpleGameEffect, IDefenceEffect, IAroundEffect
     {
 
 
