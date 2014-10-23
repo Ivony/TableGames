@@ -15,11 +15,12 @@ namespace Ivony.TableGame.WebHost
     public object SyncRoot { get; private set; }
 
 
-    public PlayerHost PlayerHost { get; private set; }
+    public new PlayerHost PlayerHost { get; private set; }
 
-    public PlayerConsole( PlayerHost host )
+    public PlayerConsole( PlayerHost playerHost )
+      : base( playerHost )
     {
-      PlayerHost = host;
+      PlayerHost = playerHost;
       SyncRoot = new object();
     }
 

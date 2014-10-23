@@ -7,17 +7,25 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.CardGames
 {
+
+  /// <summary>
+  /// 定义卡牌游戏的抽象
+  /// </summary>
   public abstract class CardGame : GameBase
   {
 
 
 
+    /// <summary>
+    /// 创建 CardGame 对象
+    /// </summary>
+    /// <param name="gameHost">承载该游戏的游戏宿主</param>
     protected CardGame( IGameHost gameHost ) : base( gameHost ) { }
 
 
 
     /// <summary>
-    /// 提供 RunGame 方法的标准实现，按照回合依次调用 Player 的 Play 方法，直到某个玩家的 HP 低于 0 为止。
+    /// 提供 RunGame 方法的标准实现，按照回合依次调用 Player 的 Play 方法，直到游戏被终止。
     /// </summary>
     /// <param name="token">取消标识</param>
     /// <returns></returns>
@@ -26,6 +34,8 @@ namespace Ivony.TableGame.CardGames
       await EnsureAlready( token );
 
       AnnounceSystemMessage( "游戏开始" );
+
+      Rounds = 1;
 
       while ( true )
       {

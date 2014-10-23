@@ -70,6 +70,7 @@
     <Compile Include="GamePlayerBase.cs" />
     <Compile Include="OptionEntity.cs" />
     <Compile Include="PlayerConsoleBase.cs" />
+    <Compile Include="PlayerHostBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomExtensions.cs" />
   </ItemGroup>

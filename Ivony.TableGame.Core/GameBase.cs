@@ -299,6 +299,7 @@ namespace Ivony.TableGame
           if ( player.PlayerHost.TryQuitGame() == false )
             throw new InvalidOperationException( string.Format( "释放玩家 {0} 失败", player.PlayerHost.Name ) );
         }
+        
         GameHost.ReleaseGame( this );
       }
     }

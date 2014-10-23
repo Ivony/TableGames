@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame
 {
+
+  /// <summary>
+  /// 代表一个玩家聊天消息
+  /// </summary>
   public class GameChatMessage : GameMessage
   {
 

@@ -89,7 +89,9 @@ namespace Ivony.TableGame.WebHost
 
 
 
+
     private static readonly TimeSpan playerHostTimeout = new TimeSpan( 0, 10, 0 );
+
 
     /// <summary>
     /// 尝试获取玩家宿主
@@ -116,6 +118,9 @@ namespace Ivony.TableGame.WebHost
           return null;
       }
     }
+
+
+
 
 
     /// <summary>
@@ -349,10 +354,24 @@ namespace Ivony.TableGame.WebHost
 
 
 
+    /// <summary>
+    /// 重写 ToString 方法，输出玩家名称和编号
+    /// </summary>
+    /// <returns></returns>
 
     public override string ToString()
     {
       return string.Format( "{0}({1})", Name, Guid );
+    }
+
+
+
+    /// <summary>
+    /// 获取客户端所支持的特性列表
+    /// </summary>
+    public string[] Supports
+    {
+      get { return null; }
     }
   }
 }

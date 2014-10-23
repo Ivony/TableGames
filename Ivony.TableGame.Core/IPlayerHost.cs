@@ -44,5 +44,12 @@ namespace Ivony.TableGame
     /// <returns>玩家对象</returns>
     GamePlayerBase GetPlayer();
 
+
+
+    /// <summary>
+    /// 获取客户端所支持的特性列表
+    /// </summary>
+    string[] Supports { get; }
+
   }
 }

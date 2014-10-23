@@ -37,7 +37,7 @@ namespace Ivony.TableGame
     /// <summary>
     /// 尝试开始运行游戏
     /// </summary>
-    /// <returns></returns>
+    /// <returns>返回一个 Task 对象，用于等待游戏结束</returns>
     Task Run();
 
 
@@ -56,6 +56,10 @@ namespace Ivony.TableGame
 
 
 
+    /// <summary>
+    /// 对游戏房间的玩家推送聊天消息
+    /// </summary>
+    /// <param name="message">消息内容</param>
     void SendChatMessage( GameChatMessage message );
 
   }
