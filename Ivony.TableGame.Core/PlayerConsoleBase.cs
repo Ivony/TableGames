@@ -108,20 +108,43 @@ namespace Ivony.TableGame
       PlayerHost.WriteMessage( prompt );
 
 
-      var text = string.Join( ", ", options.Select( ( item, index ) => string.Format( "{0}.{1}", index + 1, item.Name ) ) );
+      var promptText = string.Join( ", ", options.Select( ( item, index ) => string.Format( "{0}.{1}", index + 1, item.Name ) ) );
+      promptText += " ";
 
 
       while ( true )
       {
 
         int optionIndex;
-        if ( int.TryParse( await ReadLine( text, token ), out optionIndex ) )
+
+        var helpMode = false;
+        var message = await ReadLine( promptText, token );
+
+
+        if ( message.StartsWith( "?" ) )
         {
-          if ( optionIndex > 0 && optionIndex <= options.Length )
-            return options[optionIndex - 1];
+          message = message.Substring( 1 );
+          helpMode = true;
         }
 
-        PlayerHost.WriteWarningMessage( "您输入的格式不正确，应该输入 {0} - {1} 之间的数字", 1, options.Length );
+
+        if ( int.TryParse( message, out optionIndex ) )
+        {
+          if ( optionIndex > 0 && optionIndex <= options.Length )
+          {
+            var item = options[optionIndex - 1];
+
+            if ( helpMode )
+            {
+              PlayerHost.WriteMessage( "{0}：{1}", item.Name, item.Description );
+              continue;
+            }
+
+            return item;
+          }
+        }
+
+        PlayerHost.WriteWarningMessage( "您输入的格式不正确，应该输入 {0} - {1} 之间的数字以选择对应序号的选项，输入 ?+数字 则可以查看对应选项的说明", 1, options.Length );
       }
 
     }

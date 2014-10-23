@@ -36,7 +36,7 @@ namespace Ivony.TableGame.WebHost
 
 
 
-    public override async Task<IOption> ChooseImplement( string prompt, IOption[] options, CancellationToken token )
+    protected override async Task<IOption> ChooseImplement( string prompt, IOption[] options, CancellationToken token )
     {
       return await new OptionsResponding( PlayerHost, prompt, options, token ).RespondingTask.ConfigureAwait( false );
     }

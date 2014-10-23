@@ -58,10 +58,10 @@ namespace Ivony.TableGame.SimpleGames
         await effect.OnTurnedAround( this );
 
 
-      PlayerHost.WriteMessage( "HP:{0,-3}{1} 卡牌:{2}", HealthPoint, Effects, string.Join( ", ", Cards.Select( item => item.Name ) ) );
-      var card =await CherryCard( token );
+      PlayerHost.WriteMessage( "HP:{0,-3}{1}", HealthPoint, Effects );
+      var card = await CherryCard( token );
 
-      
+
       await ((SimpleGameCard) card).UseCard( this, Game.Players.Where( item => item != this ).ToArray().RandomItem() );
       CardCollection.RemoveCard( card );
     }
