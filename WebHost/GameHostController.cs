@@ -78,9 +78,6 @@ namespace Ivony.TableGame.WebHost
       }
 
 
-
-
-
       return new
       {
 
@@ -96,6 +93,22 @@ namespace Ivony.TableGame.WebHost
       };
     }
 
+
+    [HttpGet]
+
+    public object Say( string message )
+    {
+      lock ( PlayerHost.SyncRoot )
+      {
+        var player = PlayerHost.Player;
+        if ( player == null )
+          throw new InvalidOperationException();
+
+
+        player.GameHost.SendChatMessage( new GameChatMessage( player, message ) );
+        return "OK";
+      }
+    }
 
 
     /// <summary>

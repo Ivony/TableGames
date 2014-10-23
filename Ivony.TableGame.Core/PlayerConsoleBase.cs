@@ -36,7 +36,7 @@ namespace Ivony.TableGame
     {
 
       var chatMessage = message as GameChatMessage;
-      if ( !PlayerHost.Support( "Chat" ) )
+      if ( chatMessage != null && !PlayerHost.Support( "Chat" ) )
         message = new CompatibilityChatMessage( chatMessage );
 
 
