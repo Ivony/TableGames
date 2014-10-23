@@ -23,15 +23,36 @@ namespace Ivony.TableGame
       : base( GameMessageType.Chat, message )
     {
 
-      Player = player;
+      Player = new PlayerInfo( player );
 
     }
 
 
+
+    public class PlayerInfo
+    {
+      public PlayerInfo( GamePlayerBase player )
+      {
+
+        PlayerName = player.PlayerName;
+        PlayerHostID = Guid.Empty;
+
+      }
+
+
+
+      public string PlayerName { get; private set; }
+
+
+      public Guid PlayerHostID { get; private set; }
+
+
+    }
+
     /// <summary>
     /// 发出消息的玩家
     /// </summary>
-    public GamePlayerBase Player { get; private set; }
+    public PlayerInfo Player { get; private set; }
 
   }
 }
