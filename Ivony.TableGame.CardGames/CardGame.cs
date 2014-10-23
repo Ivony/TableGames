@@ -162,7 +162,10 @@ namespace Ivony.TableGame.CardGames
 
         lock ( SyncRoot )
         {
-          if ( GameState == GameState.Running || !Players.Any() )           //如果游戏正在进行，或者一个玩家都没有了，则强行终止游戏。
+          if ( !Players.Any() )                           //若已经没有玩家了，释放游戏资源
+            ReleaseGame();
+
+          if ( GameState == GameState.Running )           //如果游戏正在进行，则强行终止游戏。
             Abort();
         }
       }

@@ -53,17 +53,6 @@ namespace Ivony.TableGame.CardGames
     internal IBasicGame InternalGame { get { return (IBasicGame) GameHost.Game; } }
 
 
-    /// <summary>
-    /// 重写此方法退出游戏
-    /// </summary>
-    public override void QuitGame()
-    {
-      Game.OnPlayerQuitted( this );
-      base.QuitGame();
-    }
-
-
-
 
     /// <summary>
     /// 确认玩家目前还活着，若已经死亡，则调用 OnDead 方法

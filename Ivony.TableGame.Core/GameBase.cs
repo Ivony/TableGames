@@ -284,10 +284,13 @@ namespace Ivony.TableGame
 
 
     /// <summary>
-    /// 游戏结束，释放所有资源。
+    /// 终止游戏，释放所有资源。
     /// </summary>
     public virtual void ReleaseGame()
     {
+
+      GameCancellationSource.Cancel();//立即终止游戏进程
+
       lock ( SyncRoot )
       {
         foreach ( var player in Players )

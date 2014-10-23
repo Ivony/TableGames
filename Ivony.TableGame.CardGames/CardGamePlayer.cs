@@ -88,10 +88,23 @@ namespace Ivony.TableGame.CardGames
 
 
 
+    /// <summary>
+    /// 重写此方法退出游戏
+    /// </summary>
+    public override void QuitGame()
+    {
+      Game.OnPlayerQuitted( this );
+      base.QuitGame();
+    }
+
+
+
     public virtual Task OnGameEvent( IGameEvent gameEvent )
     {
       return Task.Run( () => { } );
     }
+
+
 
 
 
