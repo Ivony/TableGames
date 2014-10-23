@@ -32,7 +32,27 @@ namespace Ivony.TableGame
     /// 向玩家客户端写入一条消息
     /// </summary>
     /// <param name="message">消息对象</param>
-    public abstract void WriteMessage( GameMessage message );
+    public virtual void WriteMessage( GameMessage message )
+    {
+
+      var chatMessage = message as GameChatMessage;
+      if ( !PlayerHost.Support( "Chat" ) )
+        message = new CompatibilityChatMessage( chatMessage );
+
+
+      WriteMessageImplement( message );
+    }
+
+
+    protected class CompatibilityChatMessage : GameMessage
+    {
+      public CompatibilityChatMessage( GameChatMessage message ) : base( GameMessageType.Info, string.Format( "{0}：{1}", message.Player.PlayerName, message.Message ), message.Date ) { }
+
+    }
+
+
+
+    protected abstract void WriteMessageImplement( GameMessage message );
 
 
 

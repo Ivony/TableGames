@@ -24,7 +24,8 @@ namespace Ivony.TableGame.WebHost
       SyncRoot = new object();
     }
 
-    public override void WriteMessage( GameMessage message )
+
+    protected override void WriteMessageImplement( GameMessage message )
     {
       _messages.Add( message );
     }
