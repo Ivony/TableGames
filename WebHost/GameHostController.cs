@@ -91,7 +91,48 @@ namespace Ivony.TableGame.WebHost
 
         GameInformation = GetGameInformation(),
         Messages = PlayerHost.GetMessages(),
+
+        FeatureDeclared = PlayerHost.FeatureDeclared,
       };
+    }
+
+
+
+    /// <summary>
+    /// 客户端访问此方法声明自己支持的特性
+    /// </summary>
+    /// <param name="feature"></param>
+    /// <returns></returns>
+    [HttpGet]
+    public object DeclaringSupport( [FromUri] string[] feature )
+    {
+
+      feature = feature.SelectMany( item => item.Split( ',' ) ).ToArray();
+
+
+      PlayerHost.SetSupportFeatures( feature );
+      return feature;
+
+    }
+
+
+
+    /// <summary>
+    /// 客户端访问此方法声明自己支持的特性
+    /// </summary>
+    /// <param name="feature"></param>
+    /// <returns></returns>
+    [HttpPost]
+    public async Task<object> DeclaringSupport()
+    {
+
+      var text = await ControllerContext.Request.Content.ReadAsStringAsync();
+      var features = text.Split( ',' ).ToArray();
+
+
+      PlayerHost.SetSupportFeatures( features );
+      return features;
+
     }
 
 

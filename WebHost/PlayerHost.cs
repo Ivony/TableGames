@@ -251,5 +251,29 @@ namespace Ivony.TableGame.WebHost
     {
       get { return null; }
     }
+
+    
+
+    /// <summary>
+    /// 获取一个值，指示客户端是否已经声明自己支持的特性列表
+    /// </summary>
+    public bool FeatureDeclared{ get; private set; }
+
+    /// <summary>
+    /// 设置客户端支持的特性列表
+    /// </summary>
+    /// <param name="features"></param>
+    internal void SetSupportFeatures( string[] features )
+    {
+      lock ( SyncRoot )
+      {
+        SupportFeatures.Clear();
+        foreach ( var item in features )
+          SupportFeatures.Add( item );
+
+
+        FeatureDeclared = true;
+      }
+    }
   }
 }
