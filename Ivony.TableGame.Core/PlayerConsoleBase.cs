@@ -93,7 +93,50 @@ namespace Ivony.TableGame
     /// <param name="options">选项列表</param>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
-    public abstract Task<IOption> Choose( string prompt, IOption[] options, CancellationToken token );
+    public virtual Task<IOption> Choose( string prompt, IOption[] options, CancellationToken token )
+    {
+
+      if ( PlayerHost.Support( "Choose" ) )
+        return ChooseImplement( prompt, options, token );
+
+      else
+        return ChooseCompatibilityImplement( prompt, options, token );
+    }
+
+    protected virtual async Task<IOption> ChooseCompatibilityImplement( string prompt, IOption[] options, CancellationToken token )
+    {
+      PlayerHost.WriteMessage( prompt );
+
+
+      var text = string.Join( ", ", options.Select( ( item, index ) => string.Format( "{0}.{1}", index + 1, item.Name ) ) );
+
+
+      while ( true )
+      {
+
+        int optionIndex;
+        if ( int.TryParse( await ReadLine( text, token ), out optionIndex ) )
+        {
+          if ( optionIndex > 0 && optionIndex <= options.Length )
+            return options[optionIndex - 1];
+        }
+
+        PlayerHost.WriteWarningMessage( "您输入的格式不正确，应该输入 {0} - {1} 之间的数字", 1, options.Length );
+      }
+
+    }
+
+
+
+
+    /// <summary>
+    /// 派生类实现此方法以实现 Choose 功能
+    /// </summary>
+    /// <param name="prompt">提示信息</param>
+    /// <param name="options">选项列表</param>
+    /// <param name="token">取消标识</param>
+    /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
+    protected abstract Task<IOption> ChooseImplement( string prompt, IOption[] options, CancellationToken token );
 
 
     /// <summary>

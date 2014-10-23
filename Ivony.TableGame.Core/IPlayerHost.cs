@@ -47,9 +47,10 @@ namespace Ivony.TableGame
 
 
     /// <summary>
-    /// 获取客户端所支持的特性列表
+    /// 判断客户端是否支持某个特性
     /// </summary>
-    string[] Supports { get; }
+    /// <param name="feature">要判断是否支持的特性</param>
+    bool Support( string feature );
 
   }
 }

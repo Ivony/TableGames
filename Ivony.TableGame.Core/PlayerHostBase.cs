@@ -22,6 +22,7 @@ namespace Ivony.TableGame
     {
       Name = playerName;
       SyncRoot = new object();
+      SupportFeatures = new HashSet<string>();
     }
 
     /// <summary>
@@ -123,9 +124,23 @@ namespace Ivony.TableGame
     public virtual GamePlayerBase Player { get; protected set; }
 
 
+
+
+    /// <summary>
+    /// 判断玩家客户端是否支持某个特性
+    /// </summary>
+    /// <param name="feature">要判断的特性</param>
+    /// <returns></returns>
+    public virtual bool Support( string feature )
+    {
+      return SupportFeatures.Contains( feature );
+    }
+
     /// <summary>
     /// 获取玩家游戏客户端所支持的功能列表
     /// </summary>
-    public virtual string[] Supports { get; protected set; }
+    protected HashSet<string> SupportFeatures { get; private set; }
+
+
   }
 }
