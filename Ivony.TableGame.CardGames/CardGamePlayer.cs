@@ -88,6 +88,10 @@ namespace Ivony.TableGame.CardGames
 
 
 
+    public virtual Task OnGameEvent( IGameEvent gameEvent )
+    {
+      return Task.Run( () => { } );
+    }
 
 
 

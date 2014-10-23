@@ -19,4 +19,15 @@ namespace Ivony.TableGame
     IDictionary<string, object> Data { get; }
 
   }
+
+
+
+  /// <summary>
+  /// 代表一个可以并行广播的游戏事件
+  /// </summary>
+  public interface IParallelGameEvent : IGameEvent
+  {
+
+  }
+
 }

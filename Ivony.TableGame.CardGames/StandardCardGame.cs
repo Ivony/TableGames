@@ -61,24 +61,6 @@ namespace Ivony.TableGame.CardGames
 
 
 
-
-    /// <summary>
-    /// 广播一个游戏事件
-    /// </summary>
-    /// <param name="gameEvent"></param>
-    /// <returns></returns>
-    public virtual async Task OnGameEvent( IGameEvent gameEvent )
-    {
-
-      foreach ( var player in Players )
-        await player.OnGameEvent( gameEvent );
-    }
-
-
-
-
-
-
     private IEffectCollection _effects = new NotSupportEffectCollection();
 
     /// <summary>

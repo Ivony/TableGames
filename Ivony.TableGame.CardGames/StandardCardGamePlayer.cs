@@ -109,7 +109,7 @@ namespace Ivony.TableGame.CardGames
     /// </summary>
     /// <param name="gameEvent">游戏事件</param>
     /// <returns>用于等待事件处理完成的 Task</returns>
-    public Task OnGameEvent( IGameEvent gameEvent )
+    public override Task OnGameEvent( IGameEvent gameEvent )
     {
       var behaviorEvent = gameEvent as IGameBehaviorEvent;
       if ( behaviorEvent != null )

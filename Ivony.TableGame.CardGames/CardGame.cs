@@ -167,5 +167,33 @@ namespace Ivony.TableGame.CardGames
         }
       }
     }
+
+
+
+    /// <summary>
+    /// 广播一个游戏事件
+    /// </summary>
+    /// <param name="gameEvent"></param>
+    /// <returns></returns>
+    public virtual async Task OnGameEvent( IGameEvent gameEvent )
+    {
+
+      var parallelEvent = gameEvent as IParallelGameEvent;
+
+
+      if ( parallelEvent != null )
+      {
+        //并行广播游戏事件
+        var tasks = Players.Cast<CardGamePlayer>().Select( item => item.OnGameEvent( parallelEvent ) ).ToArray();
+        await Task.WhenAll( tasks );
+      }
+      else
+      {
+        foreach ( var player in Players.Cast<CardGamePlayer>() )
+          await player.OnGameEvent( gameEvent );
+      }
+    }
+
+
   }
 }
