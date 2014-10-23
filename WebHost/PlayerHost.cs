@@ -33,7 +33,7 @@ namespace Ivony.TableGame.WebHost
 
 
 
-    private PlayerHost( Guid id, string name )
+    internal PlayerHost( Guid id, string name )
     {
       Guid = id;
       Name = name;
@@ -56,24 +56,7 @@ namespace Ivony.TableGame.WebHost
     }
 
 
-    /// <summary>
-    /// 创建一个新的玩家宿主
-    /// </summary>
-    /// <returns>新的玩家宿主</returns>
-    public static PlayerHost CreatePlayerHost()
-    {
-
-      lock ( globalSyncRoot )
-      {
-        var instance = new PlayerHost( Guid.NewGuid(), PlayerNameManager.CreateName() );
-        playerHosts.Add( instance );
-        instance.ShowInitializeInfo();
-        return instance;
-
-      }
-    }
-
-    private void ShowInitializeInfo()
+    internal void ShowInitializeInfo()
     {
       this.WriteSystemMessage( "欢迎您参与到通用卡牌游戏引擎实例游戏项目，您在游戏中的昵称是 {0}，希望您能喜欢。", Name );
       this.WriteSystemMessage( "通用卡牌游戏引擎可以帮助您快速的构建您想象中的卡牌游戏，其项目通过 Apache 2.0 协议开源。" );
@@ -82,45 +65,6 @@ namespace Ivony.TableGame.WebHost
       this.WriteSystemMessage( "记得点赞哦，，，，，，" );
 
     }
-
-    private static object globalSyncRoot = new object();
-    private static PlayerHostCollection playerHosts = new PlayerHostCollection();
-
-
-
-
-
-    private static readonly TimeSpan playerHostTimeout = new TimeSpan( 0, 10, 0 );
-
-
-    /// <summary>
-    /// 尝试获取玩家宿主
-    /// </summary>
-    /// <param name="id">玩家宿主ID</param>
-    /// <returns></returns>
-    public static PlayerHost GetPlayerHost( Guid id )
-    {
-      lock ( globalSyncRoot )
-      {
-
-        var date = DateTime.UtcNow - playerHostTimeout;
-
-        foreach ( var i in playerHosts.Where( item => item.RefreshTime < date ).ToArray() )
-          i.Release();
-
-        if ( playerHosts.Contains( id ) )
-        {
-          var instance = playerHosts[id];
-          instance.RefreshState();
-          return instance;
-        }
-        else
-          return null;
-      }
-    }
-
-
-
 
 
     /// <summary>
@@ -221,7 +165,7 @@ namespace Ivony.TableGame.WebHost
     public void JoinedGame( GamePlayerBase player )
     {
 
-      lock ( globalSyncRoot )
+      lock ( SyncRoot )
       {
         if ( Player != null )
           throw new InvalidOperationException( "玩家当前已经在另一个游戏，无法加入游戏" );
@@ -253,13 +197,8 @@ namespace Ivony.TableGame.WebHost
     /// </summary>
     public void Release()
     {
-      lock ( globalSyncRoot )
-      {
-
-        TryQuitGame();
-        playerHosts.Remove( this );
-        PlayerNameManager.RemoveName( this.Name );
-      }
+      TryQuitGame();
+      Players.Release( this );
     }
 
 

@@ -26,10 +26,10 @@ namespace Ivony.TableGame.WebHost
 
       Guid userId;
       if ( userToken == null || !Guid.TryParse( userToken, out userId ) )
-        player = PlayerHost.CreatePlayerHost();
+        player = Players.CreatePlayerHost();
 
       else
-        player = PlayerHost.GetPlayerHost( userId ) ?? PlayerHost.CreatePlayerHost();
+        player = Players.GetPlayerHost( userId ) ?? Players.CreatePlayerHost();
 
 
       int messageIndex;
