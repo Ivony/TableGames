@@ -101,13 +101,9 @@ namespace Ivony.TableGame.WebHost
 
 
 
-
-    protected override PlayerConsoleBase CreatePlayerConsole()
-    {
-      return new PlayerConsole( this );
-    }
-
-
+    /// <summary>
+    /// 覆写 Console 属性，返回强类型的玩家客户端对象
+    /// </summary>
     protected new PlayerConsole Console
     {
       get { return (PlayerConsole) base.Console; }
