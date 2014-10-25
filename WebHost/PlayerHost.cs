@@ -195,7 +195,7 @@ namespace Ivony.TableGame.WebHost
     /// 获取需要玩家选择的选项信息（如果有的话）
     /// </summary>
     /// <returns>选项信息</returns>
-    public OptionEntity[] GetOptions()
+    public Option[] GetOptions()
     {
       lock ( SyncRoot )
       {
@@ -204,7 +204,7 @@ namespace Ivony.TableGame.WebHost
         if ( responding == null )
           return null;
 
-        return responding.Options.Select( item => new OptionEntity( item ) ).ToArray();
+        return responding.Options;
       }
     }
 
@@ -252,12 +252,12 @@ namespace Ivony.TableGame.WebHost
       get { return null; }
     }
 
-    
+
 
     /// <summary>
     /// 获取一个值，指示客户端是否已经声明自己支持的特性列表
     /// </summary>
-    public bool FeatureDeclared{ get; private set; }
+    public bool FeatureDeclared { get; private set; }
 
     /// <summary>
     /// 设置客户端支持的特性列表

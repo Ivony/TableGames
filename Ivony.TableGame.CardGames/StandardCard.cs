@@ -18,6 +18,10 @@ namespace Ivony.TableGame.CardGames
     /// </summary>
     public virtual int ActionPoint { get { return 0; } }
 
+
+    public virtual Type TargetType { get { return null; } }
+
+
     /// <summary>
     /// 使用一张卡牌
     /// </summary>

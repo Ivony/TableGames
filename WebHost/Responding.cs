@@ -96,22 +96,22 @@ namespace Ivony.TableGame.WebHost
   }
 
 
-  internal class OptionsResponding : Responding<IOption>
+  internal class OptionsResponding : Responding<Option>
   {
 
-    public OptionsResponding( PlayerHost playerHost, string promptText, IOption[] options, CancellationToken token )
+    public OptionsResponding( PlayerHost playerHost, string promptText, Option[] options, CancellationToken token )
       : base( playerHost, promptText, token )
     {
       Options = options;
     }
 
-    public IOption[] Options { get; private set; }
+    public Option[] Options { get; private set; }
 
 
     protected override bool OnResponseCore( string message )
     {
 
-      IOption option;
+      Option option;
       if ( !TryGetOption( message, out option ) )
       {
         PlayerHost.WriteWarningMessage( "您输入的格式不正确，应该输入 {0} - {1} 之间的数字", 1, Options.Length );
@@ -122,7 +122,7 @@ namespace Ivony.TableGame.WebHost
       return true;
     }
 
-    private bool TryGetOption( string text, out IOption option )
+    private bool TryGetOption( string text, out Option option )
     {
       option = null;
       int index;

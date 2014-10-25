@@ -45,6 +45,7 @@
     <Compile Include="Card.cs" />
     <Compile Include="CardDealer.cs" />
     <Compile Include="CardSlotCollection.cs" />
+    <Compile Include="GameAroundEvent.cs" />
     <Compile Include="GameEventBase.cs" />
     <Compile Include="GameRoundEvent.cs" />
     <Compile Include="IBasicGame.cs" />

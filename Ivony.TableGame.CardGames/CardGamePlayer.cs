@@ -62,6 +62,8 @@ namespace Ivony.TableGame.CardGames
 
       Game.AnnounceMessage( "轮到 {0} 出牌", PlayerName );
 
+      await OnGameEvent( new GameAroundEvent( this ) );
+
       await OnBeforePlayCard( token );
 
       await PlayCard( token );

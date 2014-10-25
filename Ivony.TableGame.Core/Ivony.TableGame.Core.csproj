@@ -64,11 +64,10 @@
     <Compile Include="IGameEventListener.cs" />
     <Compile Include="IGameHost.cs" />
     <Compile Include="IGamePlayerEvent.cs" />
-    <Compile Include="IOption.cs" />
     <Compile Include="IPersistableGameHost.cs" />
     <Compile Include="IPlayerHost.cs" />
     <Compile Include="GamePlayerBase.cs" />
-    <Compile Include="OptionEntity.cs" />
+    <Compile Include="Option.cs" />
     <Compile Include="PlayerConsoleBase.cs" />
     <Compile Include="PlayerHostBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

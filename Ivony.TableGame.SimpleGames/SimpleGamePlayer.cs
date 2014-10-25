@@ -51,25 +51,21 @@ namespace Ivony.TableGame.SimpleGames
 
     protected override async Task PlayCard( CancellationToken token )
     {
+      ActionPoint = 1;
       DealCards();
 
 
-      foreach ( var effect in Effects.OfType<IAroundEffect>() )
-        await effect.OnTurnedAround( this );
-
-
-      PlayerHost.WriteMessage( "HP:{0,-3}{1}", HealthPoint, Effects );
-      var card = await CherryCard( token );
-
-
-      await ((SimpleGameCard) card).UseCard( this, Game.Players.Where( item => item != this ).ToArray().RandomItem() );
-      CardCollection.RemoveCard( card );
+      await base.PlayCard( token );
     }
 
 
 
 
 
+    /// <summary>
+    /// 重写 GetGameInformation 方法获取该玩家可以看到的游戏信息
+    /// </summary>
+    /// <returns>游戏信息对象</returns>
     public override object GetGameInformation()
     {
       return new

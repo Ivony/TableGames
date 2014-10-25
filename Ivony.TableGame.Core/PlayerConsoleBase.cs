@@ -17,6 +17,10 @@ namespace Ivony.TableGame
 
 
 
+    /// <summary>
+    /// 创建玩家控制台对象
+    /// </summary>
+    /// <param name="playerHost">控制台所关联的玩家宿主</param>
     protected PlayerConsoleBase( IPlayerHost playerHost )
     {
       PlayerHost = playerHost;
@@ -25,6 +29,9 @@ namespace Ivony.TableGame
 
 
 
+    /// <summary>
+    /// 获取控制台所关联的玩家宿主
+    /// </summary>
     protected IPlayerHost PlayerHost { get; private set; }
 
 
@@ -44,6 +51,9 @@ namespace Ivony.TableGame
     }
 
 
+    /// <summary>
+    /// 定义一个类型提供聊天消息的兼容实现
+    /// </summary>
     protected class CompatibilityChatMessage : GameMessage
     {
       public CompatibilityChatMessage( GameChatMessage message ) : base( GameMessageType.Info, string.Format( "{0}：{1}", message.Player.PlayerName, message.Message ), message.Date ) { }
@@ -52,6 +62,10 @@ namespace Ivony.TableGame
 
 
 
+    /// <summary>
+    /// 派生类实现此方法向客户端推送消息
+    /// </summary>
+    /// <param name="message">要推送的消息</param>
     protected abstract void WriteMessageImplement( GameMessage message );
 
 
@@ -113,7 +127,7 @@ namespace Ivony.TableGame
     /// <param name="options">选项列表</param>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
-    public virtual Task<IOption> Choose( string prompt, IOption[] options, CancellationToken token )
+    public virtual Task<Option> Choose( string prompt, Option[] options, CancellationToken token )
     {
 
       if ( PlayerHost.Support( "Choose" ) )
@@ -123,7 +137,14 @@ namespace Ivony.TableGame
         return ChooseCompatibilityImplement( prompt, options, token );
     }
 
-    protected virtual async Task<IOption> ChooseCompatibilityImplement( string prompt, IOption[] options, CancellationToken token )
+    /// <summary>
+    /// 提供 Choose 方法的兼容性实现
+    /// </summary>
+    /// <param name="prompt">提示信息</param>
+    /// <param name="options">可供选择的选项</param>
+    /// <param name="token">取消标识</param>
+    /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
+    protected virtual async Task<Option> ChooseCompatibilityImplement( string prompt, Option[] options, CancellationToken token )
     {
       PlayerHost.WriteMessage( prompt );
 
@@ -179,7 +200,7 @@ namespace Ivony.TableGame
     /// <param name="options">选项列表</param>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
-    protected abstract Task<IOption> ChooseImplement( string prompt, IOption[] options, CancellationToken token );
+    protected abstract Task<Option> ChooseImplement( string prompt, Option[] options, CancellationToken token );
 
 
     /// <summary>
@@ -190,9 +211,13 @@ namespace Ivony.TableGame
     /// <param name="options">选项列表</param>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
-    public async Task<T> Choose<T>( string prompt, T[] options, CancellationToken token ) where T : class, IOption
+    public async Task<T> Choose<T>( string prompt, Option<T>[] options, CancellationToken token ) where T : class
     {
-      return (T) await Choose( prompt, (IOption[]) options, token );
+
+      var dictionary = options.ToDictionary( item => item.OptionItem, item => item.OptionObject );
+      var option = await Choose( prompt, dictionary.Keys.ToArray(), token );
+
+      return dictionary[option];
     }
 
 
@@ -206,7 +231,7 @@ namespace Ivony.TableGame
     /// <param name="defaultOption">默认选项</param>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
-    public Task<T> Choose<T>( string prompt, T[] options, T defaultOption, CancellationToken token ) where T : class, IOption
+    public Task<T> Choose<T>( string prompt, Option<T>[] options, T defaultOption, CancellationToken token ) where T : class
     {
       return Choose( prompt, options, defaultOption, DefaultTimeout, token );
     }
@@ -221,7 +246,7 @@ namespace Ivony.TableGame
     /// <param name="timeout">超时时间</param>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
-    public async Task<T> Choose<T>( string prompt, T[] options, T defaultOption, TimeSpan timeout, CancellationToken token ) where T : class, IOption
+    public async Task<T> Choose<T>( string prompt, Option<T>[] options, T defaultOption, TimeSpan timeout, CancellationToken token ) where T : class
     {
 
       var timeoutToken = new CancellationTokenSource( timeout ).Token;
