@@ -14,6 +14,9 @@ namespace Ivony.TableGame.CardGames
   {
 
 
+    /// <summary>
+    /// 创建无限卡牌发牌器
+    /// </summary>
     public UnlimitedCardDealer()
     {
       Random = new Random( DateTime.Now.Millisecond );

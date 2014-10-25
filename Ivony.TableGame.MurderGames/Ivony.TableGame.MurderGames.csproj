@@ -7,8 +7,8 @@
     <ProjectGuid>{EEBBFAC7-FA90-4DE8-A63F-6615A1FA4D12}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Ivony.TableGame.MurderGame</RootNamespace>
-    <AssemblyName>Ivony.TableGame.MurderGame</AssemblyName>
+    <RootNamespace>Ivony.TableGame.MurderGames</RootNamespace>
+    <AssemblyName>Ivony.TableGame.MurderGames</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

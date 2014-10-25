@@ -162,7 +162,7 @@ namespace Ivony.TableGame
 
       lock ( SyncRoot )
       {
-        if ( GameState != GameState.NotStarted )
+        if ( GameState != GameState.Already && GameState != GameState.NotAvailable )
           return null;
 
 
@@ -210,7 +210,7 @@ namespace Ivony.TableGame
 
       lock ( SyncRoot )
       {
-        if ( GameState != GameState.NotStarted )
+        if ( GameState != GameState.Already )
           throw new InvalidOperationException();
 
         GameState = GameState.Running;
@@ -258,7 +258,7 @@ namespace Ivony.TableGame
 
 
         InitializeCore();
-        GameState = GameState.NotStarted;
+        GameState = GameState.Already;
       }
     }
 
@@ -299,7 +299,7 @@ namespace Ivony.TableGame
           if ( player.PlayerHost.TryQuitGame() == false )
             throw new InvalidOperationException( string.Format( "释放玩家 {0} 失败", player.PlayerHost.Name ) );
         }
-        
+
         GameHost.ReleaseGame( this );
       }
     }
