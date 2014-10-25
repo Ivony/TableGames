@@ -58,13 +58,13 @@ namespace Ivony.TableGame.CardGames
     /// <summary>
     /// 发牌器
     /// </summary>
-    protected CardDealer<TCard> CardDealer { get; private set; }
+    protected ICardDealer<TCard> CardDealer { get; private set; }
 
     /// <summary>
     /// 创建 CardSlot 对象
     /// </summary>
     /// <param name="dealer"></param>
-    public CardSlot( CardDealer<TCard> dealer )
+    public CardSlot( ICardDealer<TCard> dealer )
     {
       CardDealer = dealer;
       SyncRoot = new object();

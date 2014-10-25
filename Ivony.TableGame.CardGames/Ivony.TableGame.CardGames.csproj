@@ -40,10 +40,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CardCollection.cs" />
+    <Compile Include="CardCollectionBase.cs" />
     <Compile Include="CardGame.cs" />
     <Compile Include="CardGamePlayer.cs" />
     <Compile Include="Card.cs" />
-    <Compile Include="CardDealer.cs" />
+    <Compile Include="ICardDealer.cs" />
     <Compile Include="CardSlotCollection.cs" />
     <Compile Include="GameAroundEvent.cs" />
     <Compile Include="GameEventBase.cs" />

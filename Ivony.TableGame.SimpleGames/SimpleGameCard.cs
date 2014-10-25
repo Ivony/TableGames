@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using Ivony.TableGame.CardGames;
 
 namespace Ivony.TableGame.SimpleGames
 {
@@ -21,7 +21,7 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
-    public override Task Play( CardGamePlayer initiatePlayer, object target )
+    public override Task Play( CardGamePlayer initiatePlayer, object target, CancellationToken token )
     {
       var user = (SimpleGamePlayer) initiatePlayer;
       var targetPlayer = user.Game.Players.RandomItem();

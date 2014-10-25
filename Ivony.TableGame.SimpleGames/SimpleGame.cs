@@ -18,8 +18,8 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
-    public static CardDealer<SimpleGameCard> SpecialCardDealer { get; private set; }
-    public static CardDealer<SimpleGameCard> AttackCardDealer { get; private set; }
+    public static ICardDealer<SimpleGameCard> SpecialCardDealer { get; private set; }
+    public static ICardDealer<SimpleGameCard> AttackCardDealer { get; private set; }
 
 
     static SimpleGame()

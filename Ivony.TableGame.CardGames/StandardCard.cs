@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ivony.TableGame.CardGames
@@ -28,7 +29,7 @@ namespace Ivony.TableGame.CardGames
     /// <param name="initiatePlayer">发起玩家</param>
     /// <param name="target">目标对象</param>
     /// <returns>获取用于等待处理卡牌使用过程的 Task</returns>
-    public abstract Task Play( CardGamePlayer initiatePlayer, object target );
+    public abstract Task Play( CardGamePlayer initiatePlayer, object target, CancellationToken token );
 
     /// <summary>
     /// 合并多张卡牌

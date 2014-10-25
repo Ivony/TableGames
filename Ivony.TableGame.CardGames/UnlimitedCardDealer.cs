@@ -10,8 +10,15 @@ namespace Ivony.TableGame.CardGames
   /// <summary>
   /// 定义一个无限卡牌发牌器
   /// </summary>
-  public class UnlimitedCardDealer<TCard> : CardDealer<TCard> where TCard : Card
+  public class UnlimitedCardDealer<TCard> : ICardDealer<TCard> where TCard : Card
   {
+
+
+    public UnlimitedCardDealer()
+    {
+      Random = new Random( DateTime.Now.Millisecond );
+    }
+
 
     private List<RegisteredCard> list = new List<RegisteredCard>();
 
@@ -43,11 +50,15 @@ namespace Ivony.TableGame.CardGames
     }
 
 
+
+    protected Random Random { get; private set; }
+
+
     /// <summary>
     /// 发牌
     /// </summary>
     /// <returns>发出的牌</returns>
-    public override TCard DealCard()
+    public TCard DealCard()
     {
       var n = Random.Next( list.Sum( item => item.Probability ) );
 

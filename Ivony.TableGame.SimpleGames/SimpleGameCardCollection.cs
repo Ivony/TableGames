@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames
 {
-  public class SimpleGameCardCollection : CardSlotCollection
+  public class SimpleGameCardCollection : CardSlotCollection<SimpleGameCard>
   {
 
     public SimpleGameCardCollection()

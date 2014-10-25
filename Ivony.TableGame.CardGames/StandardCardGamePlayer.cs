@@ -58,7 +58,7 @@ namespace Ivony.TableGame.CardGames
           break;
         }
 
-        await card.Play( this, CherryTarget( card.TargetType, token ) );
+        await card.Play( this, CherryTarget( card.TargetType, token ), token );
 
         CardCollection.RemoveCard( card );
         ActionPoint -= card.ActionPoint;
