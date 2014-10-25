@@ -15,7 +15,12 @@ namespace Ivony.TableGame.CardGames
   {
 
 
-    protected StandardCardGamePlayer( IGameHost gameHost, IPlayerHost playerHost ) : base( gameHost, playerHost ) { }
+    protected StandardCardGamePlayer( IGameHost gameHost, IPlayerHost playerHost ) :
+      base( gameHost, playerHost )
+    {
+
+
+    }
 
 
 
@@ -33,12 +38,20 @@ namespace Ivony.TableGame.CardGames
 
 
 
+
+
+
+    protected abstract ICardCollection<StandardCard> StandardCardCollection { get; }
+
+    protected override ICardCollection CardCollection { get { return StandardCardCollection; } }
+
+
     /// <summary>
     /// 获取标准卡牌组
     /// </summary>
-    protected StandardCard[] StandardCards
+    protected new StandardCard[] Cards
     {
-      get { return Cards.Cast<StandardCard>().ToArray(); }
+      get { return StandardCardCollection.Cast<StandardCard>().ToArray(); }
     }
 
 
@@ -75,7 +88,7 @@ namespace Ivony.TableGame.CardGames
     protected virtual async Task<StandardCard> CherryCard( CancellationToken token )
     {
 
-      var options = CreateOptions( StandardCards );
+      var options = CreateOptions( Cards );
 
       if ( options.All( item => item.Disabled ) )//如果所有卡牌都不可用，则此回合不能再行动
         return null;
@@ -88,9 +101,9 @@ namespace Ivony.TableGame.CardGames
 
       lock ( SyncRoot )
       {
-        var index = Random.Next( StandardCards.Length );
+        var index = Random.Next( Cards.Length );
         PlayerHost.WriteWarningMessage( "操作超时，随机打出第 {0} 张牌", index + 1 );
-        return StandardCards[index];
+        return Cards[index];
       }
     }
 
