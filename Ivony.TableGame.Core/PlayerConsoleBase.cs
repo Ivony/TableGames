@@ -274,7 +274,7 @@ namespace Ivony.TableGame
 
 
     /// <summary>
-    /// 定义从 IPlayerHost 到 PlayerConsoleBase 的隐式类型转换
+    /// 定义从 PlayerHostBase 到 PlayerConsoleBase 的隐式类型转换
     /// </summary>
     public static implicit operator PlayerConsoleBase( PlayerHostBase playerHost )
     {
