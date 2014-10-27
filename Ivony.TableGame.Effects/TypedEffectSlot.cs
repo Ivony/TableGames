@@ -15,6 +15,11 @@ namespace Ivony.TableGame
 
 
 
+    /// <summary>
+    /// 定义效果槽位到效果对象的隐式类型转换
+    /// </summary>
+    /// <param name="slot">效果槽位</param>
+    /// <returns>槽位中的效果</returns>
     public static implicit operator TEffect( TypedEffectSlot<TEffect> slot )
     {
       return slot.Effect;

@@ -13,9 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.SimpleGames
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.Effects", "Ivony.TableGame.Effects\Ivony.TableGame.Effects.csproj", "{B30E814A-C2A6-44EA-99D9-7DB31CFBF7F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.MurderGame", "Ivony.TableGame.MurderGame\Ivony.TableGame.MurderGame.csproj", "{EEBBFAC7-FA90-4DE8-A63F-6615A1FA4D12}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.CardGames", "Ivony.TableGame.CardGames\Ivony.TableGame.CardGames.csproj", "{74742E84-6F8B-467E-8FCA-59FBA784AED9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.MurderGames", "Ivony.TableGame.MurderGames\Ivony.TableGame.MurderGames.csproj", "{11567B47-A1C3-4F25-9CCE-7817A63F6F82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,14 +43,14 @@ Global
 		{B30E814A-C2A6-44EA-99D9-7DB31CFBF7F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B30E814A-C2A6-44EA-99D9-7DB31CFBF7F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B30E814A-C2A6-44EA-99D9-7DB31CFBF7F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EEBBFAC7-FA90-4DE8-A63F-6615A1FA4D12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EEBBFAC7-FA90-4DE8-A63F-6615A1FA4D12}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EEBBFAC7-FA90-4DE8-A63F-6615A1FA4D12}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EEBBFAC7-FA90-4DE8-A63F-6615A1FA4D12}.Release|Any CPU.Build.0 = Release|Any CPU
 		{74742E84-6F8B-467E-8FCA-59FBA784AED9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{74742E84-6F8B-467E-8FCA-59FBA784AED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74742E84-6F8B-467E-8FCA-59FBA784AED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74742E84-6F8B-467E-8FCA-59FBA784AED9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11567B47-A1C3-4F25-9CCE-7817A63F6F82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11567B47-A1C3-4F25-9CCE-7817A63F6F82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11567B47-A1C3-4F25-9CCE-7817A63F6F82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11567B47-A1C3-4F25-9CCE-7817A63F6F82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
