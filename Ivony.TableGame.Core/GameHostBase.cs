@@ -63,7 +63,7 @@ namespace Ivony.TableGame
       else
       {
 
-        if ( Game.GameState != GameState.Already && Game.GameState != GameState.NotAvailable )
+        if ( Game.GameState != GameState.Initialized )
         {
           reason = "游戏已经开始或结束";
           return false;

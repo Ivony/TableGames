@@ -162,7 +162,7 @@ namespace Ivony.TableGame
 
       lock ( SyncRoot )
       {
-        if ( GameState != GameState.Already && GameState != GameState.NotAvailable )
+        if ( GameState != GameState.Initialized )
           return null;
 
 
@@ -210,7 +210,7 @@ namespace Ivony.TableGame
 
       lock ( SyncRoot )
       {
-        if ( GameState != GameState.Already )
+        if ( GameState != GameState.Initialized )
           throw new InvalidOperationException();
 
         GameState = GameState.Running;
@@ -258,7 +258,7 @@ namespace Ivony.TableGame
 
 
         InitializeCore();
-        GameState = GameState.Already;
+        GameState = GameState.Initialized;
       }
     }
 
