@@ -21,11 +21,19 @@ namespace Ivony.TableGame
     protected GameHostBase( string roomName )
     {
       RoomName = roomName;
+      ID = Guid.NewGuid();
     }
 
 
+
     /// <summary>
-    /// 房间名称
+    /// 获取游戏宿主唯一ID
+    /// </summary>
+    public Guid ID { get; private set; }
+
+
+    /// <summary>
+    /// 宿主名称
     /// </summary>
     public string RoomName { get; private set; }
 

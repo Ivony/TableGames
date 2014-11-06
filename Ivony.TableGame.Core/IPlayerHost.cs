@@ -15,6 +15,12 @@ namespace Ivony.TableGame
 
 
     /// <summary>
+    /// 玩家 ID
+    /// </summary>
+    Guid ID { get; }
+
+
+    /// <summary>
     /// 玩家名称
     /// </summary>
     string Name { get; }

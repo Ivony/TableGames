@@ -51,7 +51,7 @@ namespace Ivony.TableGame.WebHost
 
       lock ( sync )
       {
-        var instance = new PlayerHost( Guid.NewGuid(), PlayerNameManager.CreateName() );
+        var instance = new PlayerHost( PlayerNameManager.CreateName() );
         players.Add( instance );
         instance.ShowInitializeInfo();
         return instance;

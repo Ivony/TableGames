@@ -29,21 +29,30 @@ namespace Ivony.TableGame
 
 
 
+    /// <summary>
+    /// 发出聊天消息的玩家信息
+    /// </summary>
     public class PlayerInfo
     {
       public PlayerInfo( GamePlayerBase player )
       {
 
         PlayerName = player.PlayerName;
-        PlayerHostID = Guid.Empty;
+        PlayerHostID = player.PlayerHost.ID;
 
       }
 
 
 
+      /// <summary>
+      /// 在游戏中的玩家名称
+      /// </summary>
       public string PlayerName { get; private set; }
 
 
+      /// <summary>
+      /// 玩家的唯一标识
+      /// </summary>
       public Guid PlayerHostID { get; private set; }
 
 

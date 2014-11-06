@@ -10,7 +10,7 @@ namespace Ivony.TableGame.WebHost
   {
     protected override Guid GetKeyForItem( PlayerHost item )
     {
-      return item.Guid;
+      return item.ID;
     }
   }
 }

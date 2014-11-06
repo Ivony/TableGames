@@ -25,18 +25,9 @@ namespace Ivony.TableGame.WebHost
   {
 
 
-    public Guid Guid
-    {
-      get;
-      private set;
-    }
-
-
-
-    internal PlayerHost( Guid id, string name )
+    internal PlayerHost( string name )
       : base( name )
     {
-      Guid = id;
       Name = name;
 
       SyncRoot = new object();
@@ -239,7 +230,7 @@ namespace Ivony.TableGame.WebHost
 
     public override string ToString()
     {
-      return string.Format( "{0}({1})", Name, Guid );
+      return string.Format( "{0}({1})", Name, ID );
     }
 
 

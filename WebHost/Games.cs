@@ -39,6 +39,11 @@ namespace Ivony.TableGame.WebHost
       }
     }
 
+
+    /// <summary>
+    /// 释放 GameHost 资源
+    /// </summary>
+    /// <param name="gameHost">要释放的 GameHost</param>
     internal static void ReleaseGameHost( GameHost gameHost )
     {
       lock ( _sync )

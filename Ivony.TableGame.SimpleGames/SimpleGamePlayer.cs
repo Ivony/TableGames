@@ -48,7 +48,6 @@ namespace Ivony.TableGame.SimpleGames
 
 
 
-
     protected override async Task PlayCard( CancellationToken token )
     {
       ActionPoint = 1;
@@ -118,7 +117,5 @@ namespace Ivony.TableGame.SimpleGames
     {
       Effects.AddEffect( effect );
     }
-
-
   }
 }

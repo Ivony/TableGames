@@ -14,8 +14,15 @@ namespace Ivony.TableGame
   public interface IGameHost
   {
 
+
     /// <summary>
-    /// 游戏房间名称
+    /// 游戏房间 ID
+    /// </summary>
+    Guid ID { get; }
+
+
+    /// <summary>
+    /// 游戏宿主名称
     /// </summary>
     string RoomName { get; }
 

@@ -23,7 +23,16 @@ namespace Ivony.TableGame
       Name = playerName;
       SyncRoot = new object();
       SupportFeatures = new HashSet<string>();
+      ID = Guid.NewGuid();
     }
+
+
+
+    /// <summary>
+    /// 获取玩家唯一ID
+    /// </summary>
+    public Guid ID { get; private set; }
+
 
     /// <summary>
     /// 获取玩家名称
