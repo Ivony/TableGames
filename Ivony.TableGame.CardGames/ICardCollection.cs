@@ -50,7 +50,7 @@ namespace Ivony.TableGame.CardGames
   }
 
 
-  public interface ICardCollection<TCard> : ICardCollection where TCard : Card
+  public interface ICardCollection<in TCard> : ICardCollection where TCard : Card
   {
 
     /// <summary>

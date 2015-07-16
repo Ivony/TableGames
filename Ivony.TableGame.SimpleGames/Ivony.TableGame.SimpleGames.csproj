@@ -67,10 +67,6 @@
       <Project>{ad2e0903-517b-489b-a001-361022d015f3}</Project>
       <Name>Ivony.TableGame.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Ivony.TableGame.Effects\Ivony.TableGame.Effects.csproj">
-      <Project>{b30e814a-c2a6-44ea-99d9-7db31cfbf7f7}</Project>
-      <Name>Ivony.TableGame.Effects</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

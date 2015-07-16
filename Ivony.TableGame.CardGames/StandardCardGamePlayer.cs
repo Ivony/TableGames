@@ -41,9 +41,7 @@ namespace Ivony.TableGame.CardGames
 
 
 
-    protected abstract ICardCollection<StandardCard> StandardCardCollection { get; }
-
-    protected override ICardCollection CardCollection { get { return StandardCardCollection; } }
+    protected abstract ICardCollection CardCollection { get; }
 
 
     /// <summary>
@@ -51,7 +49,7 @@ namespace Ivony.TableGame.CardGames
     /// </summary>
     protected new StandardCard[] Cards
     {
-      get { return StandardCardCollection.Cast<StandardCard>().ToArray(); }
+      get { return CardCollection.Cast<StandardCard>().ToArray(); }
     }
 
 

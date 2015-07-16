@@ -11,6 +11,16 @@ namespace Ivony.TableGame.MurderGames
   {
 
 
+
+
+    public MurderGame( IGameHost host )
+      : base( host )
+    {
+
+    }
+
+
+
     /// <summary>
     /// 重写此方法以实现杀人游戏过程
     /// </summary>
