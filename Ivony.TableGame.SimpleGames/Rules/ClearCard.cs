@@ -8,10 +8,12 @@ namespace Ivony.TableGame.SimpleGames.Rules
 {
   public class ClearCard : SimpleGameCard
   {
-    public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
+    public override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
       AnnounceSpecialCardUsed( user );
       user.ClearCards();
+
+      return Task.CompletedTask;
     }
 
 

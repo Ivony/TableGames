@@ -186,7 +186,7 @@ namespace Ivony.TableGame.WebHost
     /// 获取需要玩家选择的选项信息（如果有的话）
     /// </summary>
     /// <returns>选项信息</returns>
-    public Option[] GetOptions()
+    public OptionItem[] GetOptions()
     {
       lock ( SyncRoot )
       {

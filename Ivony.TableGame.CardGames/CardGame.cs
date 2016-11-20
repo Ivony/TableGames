@@ -153,7 +153,7 @@ namespace Ivony.TableGame.CardGames
     /// 当玩家退出游戏时，调用此方法
     /// </summary>
     /// <param name="player">退出游戏的玩家</param>
-    public virtual void OnPlayerQuitted( GamePlayerBase player )
+    public override void OnPlayerQuitted( GamePlayerBase player )
     {
 
       lock ( SyncRoot )

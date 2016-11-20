@@ -189,6 +189,14 @@ namespace Ivony.TableGame
     }
 
 
+    /// <summary>
+    /// 当玩家退出游戏时，调用此方法通知游戏
+    /// </summary>
+    /// <param name="player">退出游戏的玩家</param>
+    public virtual void OnPlayerQuitted( GamePlayerBase player ) { }
+
+
+
 
     /// <summary>
     /// 游戏状态

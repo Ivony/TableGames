@@ -34,6 +34,11 @@ namespace Ivony.TableGame
     /// </summary>
     public class PlayerInfo
     {
+
+      /// <summary>
+      /// 创建 PlayerInfo 对象
+      /// </summary>
+      /// <param name="player"></param>
       public PlayerInfo( GamePlayerBase player )
       {
 

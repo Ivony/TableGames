@@ -56,6 +56,10 @@ namespace Ivony.TableGame
     /// </summary>
     protected class CompatibilityChatMessage : GameMessage
     {
+      /// <summary>
+      /// 创建 CompatibilityChatMessage 实例
+      /// </summary>
+      /// <param name="message"></param>
       public CompatibilityChatMessage( GameChatMessage message ) : base( GameMessageType.Info, string.Format( "{0}：{1}", message.Player.PlayerName, message.Message ), message.Date ) { }
 
     }
@@ -127,7 +131,7 @@ namespace Ivony.TableGame
     /// <param name="options">选项列表</param>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
-    public virtual Task<Option> Choose( string prompt, Option[] options, CancellationToken token )
+    public virtual Task<OptionItem> Choose( string prompt, OptionItem[] options, CancellationToken token )
     {
 
       if ( PlayerHost.Support( "Choose" ) )
@@ -144,7 +148,7 @@ namespace Ivony.TableGame
     /// <param name="options">可供选择的选项</param>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
-    protected virtual async Task<Option> ChooseCompatibilityImplement( string prompt, Option[] options, CancellationToken token )
+    protected virtual async Task<OptionItem> ChooseCompatibilityImplement( string prompt, OptionItem[] options, CancellationToken token )
     {
       PlayerHost.WriteMessage( prompt );
 
@@ -200,7 +204,7 @@ namespace Ivony.TableGame
     /// <param name="options">选项列表</param>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
-    protected abstract Task<Option> ChooseImplement( string prompt, Option[] options, CancellationToken token );
+    protected abstract Task<OptionItem> ChooseImplement( string prompt, OptionItem[] options, CancellationToken token );
 
 
     /// <summary>
@@ -214,7 +218,7 @@ namespace Ivony.TableGame
     public async Task<T> Choose<T>( string prompt, Option<T>[] options, CancellationToken token ) where T : class
     {
 
-      var dictionary = options.ToDictionary( item => item.OptionItem, item => item.OptionObject );
+      var dictionary = options.ToDictionary( item => item.OptionItem, item => item.OptionValue );
       var option = await Choose( prompt, dictionary.Keys.ToArray(), token );
 
       return dictionary[option];
