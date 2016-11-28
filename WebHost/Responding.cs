@@ -7,20 +7,52 @@ using System.Web;
 
 namespace Ivony.TableGame.WebHost
 {
-  public interface IResponding
+
+  /// <summary>
+  /// 定义客户端的响应
+  /// </summary>
+  internal interface IResponding
   {
+
+    /// <summary>
+    /// 提示文字，提示客户端应当产生何种响应格式
+    /// </summary>
     string PromptText { get; }
 
+    /// <summary>
+    /// 当客户端响应信息时调用此方法
+    /// </summary>
+    /// <param name="message">响应信息</param>
     void OnResponse( string message );
 
 
+    /// <summary>
+    /// 响应标识
+    /// </summary>
+    Guid Identifier { get; }
+
   }
 
+
+  /// <summary>
+  /// 辅助实现 IResponding
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
   public abstract class Responding<T> : IResponding
   {
 
+
+    /// <summary>
+    /// 创建 Responding 对象
+    /// </summary>
+    /// <param name="playerHost">玩家宿主</param>
+    /// <param name="promptText">响应提示文字</param>
+    /// <param name="token">取消标识</param>
     protected Responding( PlayerHost playerHost, string promptText, CancellationToken token )
     {
+
+
+      Identifier = Guid.NewGuid();
 
       lock ( playerHost.SyncRoot )
       {
@@ -39,14 +71,27 @@ namespace Ivony.TableGame.WebHost
 
 
 
+    /// <summary>
+    /// 获取响应唯一标识
+    /// </summary>
+    public Guid Identifier { get; }
+
+
 
     protected TaskCompletionSource<T> TaskCompletionSource { get; private set; }
 
 
+    /// <summary>
+    /// 获取等待响应的任务
+    /// </summary>
     public Task<T> RespondingTask { get { return TaskCompletionSource.Task; } }
+
 
     protected PlayerHost PlayerHost { get; private set; }
 
+    /// <summary>
+    /// 获取响应提示文字
+    /// </summary>
     public string PromptText { get; private set; }
 
 
