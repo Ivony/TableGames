@@ -13,7 +13,7 @@ namespace Ivony.TableGame.CardGames
   /// 提供基本的卡牌游戏实现
   /// </summary>
   /// <typeparam name="TPlayer"></typeparam>
-  public abstract class StandardCardGame<TPlayer> : CardGame, IBasicGame
+  public abstract class StandardCardGame<TPlayer> : CardGame
     where TPlayer : StandardCardGamePlayer
   {
 

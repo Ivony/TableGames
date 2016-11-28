@@ -51,7 +51,6 @@
     <Compile Include="GameAroundEvent.cs" />
     <Compile Include="GameEventBase.cs" />
     <Compile Include="GameRoundEvent.cs" />
-    <Compile Include="IBasicGame.cs" />
     <Compile Include="ICardCollection.cs" />
     <Compile Include="ICardSlot.cs" />
     <Compile Include="IEffect.cs" />
