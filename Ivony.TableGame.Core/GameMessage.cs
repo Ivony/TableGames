@@ -21,6 +21,13 @@ namespace Ivony.TableGame
     /// <param name="type">游戏消息类型</param>
     /// <param name="message">消息内容</param>
     protected GameMessage( GameMessageType type, string message ) : this( type, message, DateTime.UtcNow ) { }
+
+    /// <summary>
+    /// 创建 GameMessage 对象
+    /// </summary>
+    /// <param name="type">游戏消息类型</param>
+    /// <param name="message">消息内容</param>
+    /// <param name="date">消息创建时间</param>
     protected GameMessage( GameMessageType type, string message, DateTime date )
     {
       Type = type;
@@ -46,14 +53,30 @@ namespace Ivony.TableGame
   }
 
 
+
+  /// <summary>
+  /// 系统消息
+  /// </summary>
   public sealed class SystemMessage : GameMessage
   {
+    /// <summary>
+    /// 创建 SystemMassage 对象
+    /// </summary>
+    /// <param name="message"></param>
     public SystemMessage( string message ) : base( GameMessageType.System, message ) { }
   }
 
 
+  /// <summary>
+  /// 通用消息
+  /// </summary>
   public sealed class GenericMessage : GameMessage
   {
+    /// <summary>
+    /// 创建 GenericMessage 对象
+    /// </summary>
+    /// <param name="type">消息类型</param>
+    /// <param name="message">消息内容</param>
     public GenericMessage( GameMessageType type, string message ) : base( type, message ) { }
   }
 

@@ -12,17 +12,17 @@ namespace Ivony.TableGame
   /// 定义一个 IOption 的标准实现，仅包含所需要的内容
   /// </summary>
   [Serializable]
-  public sealed class Option
+  public sealed class OptionItem
   {
 
 
     /// <summary>
-    /// 创建 Option 对象
+    /// 创建 OptionItem 对象
     /// </summary>
-    /// <param name="name"></param>
-    /// <param name="description"></param>
-    /// <param name="disabled"></param>
-    public Option( string name, string description, bool disabled )
+    /// <param name="name">选项名称</param>
+    /// <param name="description">选项描述</param>
+    /// <param name="disabled">是否禁用</param>
+    public OptionItem( string name, string description, bool disabled )
     {
       Name = name;
       Description = description;
@@ -49,31 +49,35 @@ namespace Ivony.TableGame
 
 
 
-  [Serializable]
   /// <summary>
-  /// 定义一个 IOption 的标准实现，除了包含所需要的内容，还包含一个指向的对象实例
+  /// 定义一个 IOption 的标准实现，除了包含所需要的内容，还包含一个指定值对象的实例
   /// </summary>
+  /// <typeparam name="T">值对象类型</typeparam>
+  [Serializable]
   public sealed class Option<T> where T : class
   {
 
     /// <summary>
     /// 创建 Option 对象
     /// </summary>
-    /// <param name="option"></param>
-    public Option( T obj, string name, string description, bool disabled = false )
+    /// <param name="value">选项值</param>
+    /// <param name="name">选项名称</param>
+    /// <param name="description">选项描述</param>
+    /// <param name="disabled">是否禁用</param>
+    public Option( T value, string name, string description, bool disabled = false )
     {
 
-      OptionItem = new Option( name, description, disabled );
+      OptionItem = new OptionItem( name, description, disabled );
 
-      OptionObject = obj;
+      OptionValue = value;
     }
 
 
-    public Option OptionItem
-    {
-      get;
-      private set;
-    }
+    /// <summary>
+    /// 选项实例
+    /// </summary>
+    public OptionItem OptionItem { get; }
+
 
     /// <summary>
     /// 选项名称
@@ -93,9 +97,9 @@ namespace Ivony.TableGame
 
 
     /// <summary>
-    /// 该选项所代表的对象
+    /// 该选项所代表的值对象
     /// </summary>
-    public T OptionObject { get; private set; }
+    public T OptionValue { get; private set; }
   }
 
 

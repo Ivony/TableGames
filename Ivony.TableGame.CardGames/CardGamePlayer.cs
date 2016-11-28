@@ -32,14 +32,10 @@ namespace Ivony.TableGame.CardGames
     protected object SyncRoot { get; private set; }
 
 
-    private ICardCollection _cardCollection = new CardCollection();
     /// <summary>
     /// 获取玩家卡牌容器
     /// </summary>
-    protected virtual ICardCollection CardCollection
-    {
-      get { return _cardCollection; }
-    }
+    protected virtual ICardCollection CardCollection { get; } = new CardCollection();
 
 
     /// <summary>

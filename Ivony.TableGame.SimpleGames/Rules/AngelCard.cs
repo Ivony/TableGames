@@ -7,16 +7,27 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
+  /// <summary>
+  /// 天使卡
+  /// </summary>
   public class AngelCard : SimpleGameCard
   {
 
 
-    public override async Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
+    /// <summary>
+    /// 使用卡牌
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
       user.SetEffect( new CardEffect() );
       AnnounceSpecialCardUsed( user );
 
       user.PlayerHost.WriteMessage( "天使保护你，下一次攻击将变成治疗" );
+
+      return Task.CompletedTask;
     }
 
     public override string Name
@@ -44,7 +55,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
 
 
-      protected override async Task OnAttack( AttackEvent attackEvent )
+      protected override Task OnAttack( AttackEvent attackEvent )
       {
         var player = attackEvent.RecipientPlayer;
         attackEvent.AnnounceAttackIneffective();
@@ -53,6 +64,8 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
         player.Effects.RemoveEffect( this );
         attackEvent.Handled = true;
+
+        return Task.CompletedTask;
       }
 
 

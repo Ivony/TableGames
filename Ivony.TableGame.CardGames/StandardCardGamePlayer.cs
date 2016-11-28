@@ -41,9 +41,6 @@ namespace Ivony.TableGame.CardGames
 
 
 
-    protected abstract ICardCollection CardCollection { get; }
-
-
     /// <summary>
     /// 获取标准卡牌组
     /// </summary>
