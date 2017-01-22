@@ -9,20 +9,20 @@ namespace Ivony.TableGame
 
 
   /// <summary>
-  /// 定义一个 IOption 的标准实现，仅包含所需要的内容
+  /// 定义一个选项的标准实现，仅包含所需要的内容
   /// </summary>
   [Serializable]
-  public sealed class OptionItem
+  public sealed class Option
   {
 
 
     /// <summary>
-    /// 创建 OptionItem 对象
+    /// 创建 Option 对象
     /// </summary>
     /// <param name="name">选项名称</param>
     /// <param name="description">选项描述</param>
     /// <param name="disabled">是否禁用</param>
-    public OptionItem( string name, string description, bool disabled )
+    public Option( string name, string description, bool disabled )
     {
       Name = name;
       Description = description;
@@ -50,12 +50,25 @@ namespace Ivony.TableGame
 
 
   /// <summary>
-  /// 定义一个 IOption 的标准实现，除了包含所需要的内容，还包含一个指定值对象的实例
+  /// 定义一个选项的标准实现，除了包含所需要的内容，还包含一个指定值对象的实例
   /// </summary>
   /// <typeparam name="T">值对象类型</typeparam>
   [Serializable]
   public sealed class Option<T> where T : class
   {
+
+
+
+    /// <summary>
+    /// 创建 Option 对象
+    /// </summary>
+    /// <param name="value">选项值</param>
+    /// <param name="optionItem">选项描述</param>
+    public Option( T value, Option optionItem )
+    {
+      OptionItem = optionItem;
+      OptionValue = value;
+    }
 
     /// <summary>
     /// 创建 Option 对象
@@ -64,35 +77,13 @@ namespace Ivony.TableGame
     /// <param name="name">选项名称</param>
     /// <param name="description">选项描述</param>
     /// <param name="disabled">是否禁用</param>
-    public Option( T value, string name, string description, bool disabled = false )
-    {
-
-      OptionItem = new OptionItem( name, description, disabled );
-
-      OptionValue = value;
-    }
+    public Option( T value, string name, string description, bool disabled = false ) : this( value, new Option( name, description, disabled ) ) { }
 
 
     /// <summary>
     /// 选项实例
     /// </summary>
-    public OptionItem OptionItem { get; }
-
-
-    /// <summary>
-    /// 选项名称
-    /// </summary>
-    public string Name { get { return OptionItem.Name; } }
-
-    /// <summary>
-    /// 选项描述
-    /// </summary>
-    public string Description { get { return OptionItem.Description; } }
-
-    /// <summary>
-    /// 选项是否不可选
-    /// </summary>
-    public bool Disabled { get { return OptionItem.Disabled; } }
+    public Option OptionItem { get; }
 
 
 

@@ -7,6 +7,11 @@ using System.Web;
 
 namespace Ivony.TableGame.WebHost
 {
+
+
+  /// <summary>
+  /// 玩家控制台
+  /// </summary>
   public class PlayerConsole : PlayerConsoleBase
   {
 
@@ -37,7 +42,7 @@ namespace Ivony.TableGame.WebHost
 
 
 
-    protected override async Task<OptionItem> ChooseImplement( string prompt, OptionItem[] options, CancellationToken token )
+    protected override async Task<Option> ChooseImplement( string prompt, Option[] options, CancellationToken token )
     {
       return await new OptionsResponding( PlayerHost, prompt, options, token ).RespondingTask.ConfigureAwait( false );
     }

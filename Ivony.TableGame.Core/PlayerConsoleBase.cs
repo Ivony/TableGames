@@ -131,7 +131,7 @@ namespace Ivony.TableGame
     /// <param name="options">选项列表</param>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
-    public virtual Task<OptionItem> Choose( string prompt, OptionItem[] options, CancellationToken token )
+    public virtual Task<Option> Choose( string prompt, Option[] options, CancellationToken token )
     {
 
       if ( PlayerHost.Support( "Choose" ) )
@@ -148,7 +148,7 @@ namespace Ivony.TableGame
     /// <param name="options">可供选择的选项</param>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
-    protected virtual async Task<OptionItem> ChooseCompatibilityImplement( string prompt, OptionItem[] options, CancellationToken token )
+    protected virtual async Task<Option> ChooseCompatibilityImplement( string prompt, Option[] options, CancellationToken token )
     {
       PlayerHost.WriteMessage( prompt );
 
@@ -204,7 +204,7 @@ namespace Ivony.TableGame
     /// <param name="options">选项列表</param>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
-    protected abstract Task<OptionItem> ChooseImplement( string prompt, OptionItem[] options, CancellationToken token );
+    protected abstract Task<Option> ChooseImplement( string prompt, Option[] options, CancellationToken token );
 
 
     /// <summary>

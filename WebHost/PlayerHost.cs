@@ -30,7 +30,6 @@ namespace Ivony.TableGame.WebHost
     {
       Name = name;
 
-      SyncRoot = new object();
       RefreshTime = DateTime.UtcNow;
       base.Console = new PlayerConsole( this );
     }
@@ -143,12 +142,10 @@ namespace Ivony.TableGame.WebHost
 
 
 
+
     /// <summary>
-    /// 获取用于同步的对象
+    /// 获取正在等待的响应
     /// </summary>
-    public object SyncRoot { get; private set; }
-
-
     internal IResponding Responding { get; set; }
 
 
@@ -186,7 +183,7 @@ namespace Ivony.TableGame.WebHost
     /// 获取需要玩家选择的选项信息（如果有的话）
     /// </summary>
     /// <returns>选项信息</returns>
-    public OptionItem[] GetOptions()
+    public Option[] GetOptions()
     {
       lock ( SyncRoot )
       {

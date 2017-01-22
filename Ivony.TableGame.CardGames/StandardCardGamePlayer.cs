@@ -85,7 +85,7 @@ namespace Ivony.TableGame.CardGames
 
       var options = CreateOptions( Cards );
 
-      if ( options.All( item => item.Disabled ) )//如果所有卡牌都不可用，则此回合不能再行动
+      if ( options.All( item => item.OptionItem.Disabled ) )//如果所有卡牌都不可用，则此回合不能再行动
         return null;
 
       var card = await PlayerHost.Console.Choose( "请出牌：", options, null, token );

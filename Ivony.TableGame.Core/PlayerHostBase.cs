@@ -21,7 +21,6 @@ namespace Ivony.TableGame
     protected PlayerHostBase( string playerName )
     {
       Name = playerName;
-      SyncRoot = new object();
       SupportFeatures = new HashSet<string>();
       ID = Guid.NewGuid();
     }
@@ -44,11 +43,7 @@ namespace Ivony.TableGame
     /// <summary>
     /// 获取用于同步的对象
     /// </summary>
-    public object SyncRoot
-    {
-      get;
-      private set;
-    }
+    public object SyncRoot { get; } = new object();
 
 
 

@@ -7,15 +7,31 @@ using System.Web;
 
 namespace Ivony.TableGame.WebHost
 {
+
+  /// <summary>
+  /// 定义玩家响应行为
+  /// </summary>
   public interface IResponding
   {
+    /// <summary>
+    /// 提示文字
+    /// </summary>
     string PromptText { get; }
 
+    /// <summary>
+    /// 当玩家响应时调用此方法
+    /// </summary>
+    /// <param name="message"></param>
     void OnResponse( string message );
 
 
   }
 
+
+  /// <summary>
+  /// 辅助实现 IResponding
+  /// </summary>
+  /// <typeparam name="T"></typeparam>
   public abstract class Responding<T> : IResponding
   {
 
@@ -96,22 +112,22 @@ namespace Ivony.TableGame.WebHost
   }
 
 
-  internal class OptionsResponding : Responding<OptionItem>
+  internal class OptionsResponding : Responding<Option>
   {
 
-    public OptionsResponding( PlayerHost playerHost, string promptText, OptionItem[] options, CancellationToken token )
+    public OptionsResponding( PlayerHost playerHost, string promptText, Option[] options, CancellationToken token )
       : base( playerHost, promptText, token )
     {
       Options = options;
     }
 
-    public OptionItem[] Options { get; private set; }
+    public Option[] Options { get; private set; }
 
 
     protected override bool OnResponseCore( string message )
     {
 
-      OptionItem option;
+      Option option;
       if ( !TryGetOption( message, out option ) )
       {
         PlayerHost.WriteWarningMessage( "您输入的格式不正确，应该输入 {0} - {1} 之间的数字", 1, Options.Length );
@@ -122,7 +138,7 @@ namespace Ivony.TableGame.WebHost
       return true;
     }
 
-    private bool TryGetOption( string text, out OptionItem option )
+    private bool TryGetOption( string text, out Option option )
     {
       option = null;
       int index;
@@ -135,7 +151,21 @@ namespace Ivony.TableGame.WebHost
       option = Options[index - 1];
       return true;
     }
+  }
 
+
+  public class MultipleOptionsResponding : Responding<Option[]>
+  {
+    public MultipleOptionsResponding( PlayerHost playerHost, string promptText, Option[] options, CancellationToken token )
+      : base( playerHost, promptText, token )
+    {
+
+    }
+
+    protected override bool OnResponseCore( string message )
+    {
+      throw new NotImplementedException();
+    }
   }
 
 
