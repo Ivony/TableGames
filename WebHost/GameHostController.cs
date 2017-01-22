@@ -154,9 +154,16 @@ namespace Ivony.TableGame.WebHost
     public async Task<object> Response( HttpRequestMessage request )
     {
 
-      var message = await request.Content.ReadAsStringAsync();
+      Guid id;
 
-      PlayerHost.OnResponse( message );
+      var responding = request.Headers.GetValues( "Responding" ).FirstOrDefault();
+      if ( responding == null || Guid.TryParse( responding, out id ) == false )
+        return request.CreateErrorResponse( HttpStatusCode.BadRequest, "Responding missed" );
+
+
+      var message = await request.Content.ReadAsStringAsync();
+      PlayerHost.OnResponse( id, message );
+
       return "OK";
 
     }

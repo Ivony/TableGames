@@ -13,6 +13,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Runtime.Remoting.Messaging;
 using System.Text.RegularExpressions;
+using System.Collections.Concurrent;
 
 namespace Ivony.TableGame.WebHost
 {
@@ -197,25 +198,28 @@ namespace Ivony.TableGame.WebHost
     }
 
 
+    private ConcurrentDictionary<Guid, IResponding> respondings = new ConcurrentDictionary<Guid, IResponding>();
+
+
+
 
     /// <summary>
     /// 当玩家响应了消息时，调用此方法
     /// </summary>
+    /// <param name="id">响应标识</param>
     /// <param name="message">响应的消息</param>
-    internal void OnResponse( string message )
+    internal void OnResponse( Guid id, string message )
     {
 
-      lock ( SyncRoot )
+      IResponding responding;
+
+      if ( respondings.TryGetValue( id, out responding ) == false )
       {
-        if ( Responding == null )
-        {
-          this.WriteSystemMessage( "未在响应窗口时间或已经超时，无法再接收消息" );
-          return;
-        }
-
-
-        Responding.OnResponse( message );
+        this.WriteSystemMessage( "响应已经失效" );
+        return;
       }
+
+      responding.OnResponse( message );
     }
 
 
