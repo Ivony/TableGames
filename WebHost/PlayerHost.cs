@@ -208,18 +208,16 @@ namespace Ivony.TableGame.WebHost
     /// </summary>
     /// <param name="id">响应标识</param>
     /// <param name="message">响应的消息</param>
-    internal void OnResponse( Guid id, string message )
+    internal void OnResponse( string message )
     {
 
-      IResponding responding;
-
-      if ( respondings.TryGetValue( id, out responding ) == false )
+      if ( Responding == null )
       {
         this.WriteSystemMessage( "响应已经失效" );
         return;
       }
 
-      responding.OnResponse( message );
+      Responding.OnResponse( message );
     }
 
 
@@ -237,11 +235,11 @@ namespace Ivony.TableGame.WebHost
 
 
     /// <summary>
-    /// 获取客户端所支持的特性列表
+    /// 获取兼容的客户端列表
     /// </summary>
-    public string[] Supports
+    public string[] Compatibility
     {
-      get { return null; }
+      get { return new[] { "Console" }; }
     }
 
 

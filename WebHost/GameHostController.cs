@@ -86,6 +86,8 @@ namespace Ivony.TableGame.WebHost
         PromptText = PlayerHost.PromptText,
         Options = PlayerHost.GetOptions(),
 
+
+        Compatibility = PlayerHost.Compatibility,
         GameInformation = GetGameInformation(),
         Messages = PlayerHost.GetMessages(),
 
@@ -156,13 +158,13 @@ namespace Ivony.TableGame.WebHost
 
       Guid id;
 
-      var responding = request.Headers.GetValues( "Responding" ).FirstOrDefault();
-      if ( responding == null || Guid.TryParse( responding, out id ) == false )
-        return request.CreateErrorResponse( HttpStatusCode.BadRequest, "Responding missed" );
+
+      if ( request.Content.Headers.ContentType.MediaType != "text/responding" )
+        return BadRequest();
 
 
       var message = await request.Content.ReadAsStringAsync();
-      PlayerHost.OnResponse( id, message );
+      PlayerHost.OnResponse( message );
 
       return "OK";
 

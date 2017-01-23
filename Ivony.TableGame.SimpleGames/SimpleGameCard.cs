@@ -24,7 +24,7 @@ namespace Ivony.TableGame.SimpleGames
     public override Task Play( CardGamePlayer initiatePlayer, object target, CancellationToken token )
     {
       var user = (SimpleGamePlayer) initiatePlayer;
-      var targetPlayer = user.Game.Players.RandomItem();
+      var targetPlayer = (SimpleGamePlayer) target;
       return UseCard( user, targetPlayer );
     }
 
@@ -35,5 +35,8 @@ namespace Ivony.TableGame.SimpleGames
     {
       get { return 1; }
     }
+
+    public override Type TargetType { get { return typeof( SimpleGamePlayer ); } }
+
   }
 }

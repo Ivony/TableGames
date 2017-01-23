@@ -22,7 +22,7 @@ namespace Ivony.TableGame
     /// <param name="name">选项名称</param>
     /// <param name="description">选项描述</param>
     /// <param name="disabled">是否禁用</param>
-    public Option( string name, string description, bool disabled )
+    public Option( string name, string description, bool disabled = false )
     {
       Name = name;
       Description = description;
@@ -45,6 +45,18 @@ namespace Ivony.TableGame
     /// </summary>
     public bool Disabled { get; private set; }
 
+
+    /// <summary>
+    /// 创建包含指定值对象实例的选项
+    /// </summary>
+    /// <typeparam name="T">值对象类型</typeparam>
+    /// <param name="value">值对象</param>
+    /// <param name="option">选项数据</param>
+    /// <returns>Option 对象</returns>
+    public static Option<T> Create<T>( T value, Option option ) where T : class
+    {
+      return new Option<T>( value, option );
+    }
   }
 
 

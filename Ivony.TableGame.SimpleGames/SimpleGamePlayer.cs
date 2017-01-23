@@ -86,6 +86,10 @@ namespace Ivony.TableGame.SimpleGames
       _cards.DealCards();
     }
 
+
+    /// <summary>
+    /// 移除所有效果
+    /// </summary>
     internal void Purify()
     {
       foreach ( var effect in Effects )

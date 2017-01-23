@@ -58,19 +58,15 @@ namespace Ivony.TableGame.CardGames
     protected override async Task PlayCard( CancellationToken token )
     {
 
-      while ( true )
-      {
-        var card = await CherryCard( token );
-        if ( card == null )
-        {
-          break;
-        }
+      var card = await CherryCard( token );
+      if ( card == null )
+        return;
 
-        await card.Play( this, CherryTarget( card.TargetType, token ), token );
 
-        CardCollection.RemoveCard( card );
-        ActionPoint -= card.ActionPoint;
-      }
+      await card.Play( this, await CherryTarget( card.TargetType, token ), token );
+
+      CardCollection.RemoveCard( card );
+      ActionPoint -= card.ActionPoint;
     }
 
 
@@ -110,7 +106,7 @@ namespace Ivony.TableGame.CardGames
     /// <returns>选项组</returns>
     protected virtual Option<StandardCard>[] CreateOptions( StandardCard[] cards )
     {
-      return cards.Select( item => CreateOption( item ) ).ToArray();
+      return cards.Select( item => CreateOption( item ) ).Where( item => item != null ).ToArray();
     }
 
     /// <summary>
@@ -120,6 +116,10 @@ namespace Ivony.TableGame.CardGames
     /// <returns>选项对象</returns>
     protected virtual Option<StandardCard> CreateOption( StandardCard card )
     {
+
+      if ( card == null )
+        return null;
+
 
       var disabled = card.ActionPoint > ActionPoint;
       var name = card.Name;
@@ -165,9 +165,12 @@ namespace Ivony.TableGame.CardGames
     /// </summary>
     /// <param name="token"></param>
     /// <returns></returns>
-    protected virtual Task<StandardCardGamePlayer> CherryPlayer( CancellationToken token )
+    protected virtual async Task<StandardCardGamePlayer> CherryPlayer( CancellationToken token )
     {
-      throw new NotImplementedException();
+
+      var options = Game.Players.Select( item => Option.Create( (StandardCardGamePlayer) item, new Option( item.PlayerName, item.PlayerName ) ) ).ToArray();
+
+      return await PlayerHost.Console.Choose( "请选择使用对象", options, token );
     }
 
 

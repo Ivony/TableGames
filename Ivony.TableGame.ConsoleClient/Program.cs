@@ -90,8 +90,6 @@ namespace Ivony.TableGame.ConsoleClient
 
           }
 
-
-
           if ( status.Gaming == false )
           {
             Console.Write( "您当前尚未加入游戏，请输入要加入的游戏房间名：" );
@@ -102,7 +100,19 @@ namespace Ivony.TableGame.ConsoleClient
             continue;
           }
 
-          else if ( status.WaitForResponse == true )
+
+          var compatibility = ((JArray) status.Compatibility).ToObject<string[]>();
+          if ( compatibility.Contains( "Console", StringComparer.OrdinalIgnoreCase ) == false )
+          {
+
+
+            Console.Write( "游戏不兼容控制台客户端，正在退出" );
+            QuitGame( client );
+            continue;
+          }
+
+
+          if ( status.WaitForResponse == true )
           {
             Console.Beep();
             Console.Write( status.PromptText );
@@ -138,6 +148,11 @@ namespace Ivony.TableGame.ConsoleClient
       }
     }
 
+    private async static void QuitGame( HttpClient client )
+    {
+      await client.GetAsync( host + "/QuitGame" );
+    }
+
     private async static Task<dynamic> GetStatus( HttpClient client )
     {
       var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
@@ -154,7 +169,7 @@ namespace Ivony.TableGame.ConsoleClient
     {
       var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
 
-      var data = new StringContent( message, Encoding.UTF8 );
+      var data = new StringContent( message, Encoding.UTF8, "text/responding" );
       var response = await client.PostAsync( host + "Response", data, source.Token );
       return;
     }

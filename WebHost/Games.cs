@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Collections;
 using Ivony.TableGame.SimpleGames;
+using System.Text.RegularExpressions;
 
 namespace Ivony.TableGame.WebHost
 {
@@ -24,6 +25,14 @@ namespace Ivony.TableGame.WebHost
     public static GameHost GetOrCreateGame( string name )
     {
 
+      if ( name == null )
+        throw new ArgumentNullException( name );
+
+      if ( name == "" || Regex.IsMatch( name, @"^\s+$" ) )
+        throw new ArgumentException( "游戏名称不能为空", "name" );
+
+      if ( string.IsNullOrEmpty( name ) )
+        throw new ArgumentNullException( name );
 
       lock ( _sync )
       {
