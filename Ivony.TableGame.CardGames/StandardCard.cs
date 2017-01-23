@@ -20,9 +20,6 @@ namespace Ivony.TableGame.CardGames
     public virtual int ActionPoint { get { return 0; } }
 
 
-    public virtual Type TargetType { get { return null; } }
-
-
     /// <summary>
     /// 使用一张卡牌
     /// </summary>
@@ -31,15 +28,14 @@ namespace Ivony.TableGame.CardGames
     /// <returns>获取用于等待处理卡牌使用过程的 Task</returns>
     public abstract Task Play( CardGamePlayer initiatePlayer, object target, CancellationToken token );
 
-    /// <summary>
-    /// 合并多张卡牌
-    /// </summary>
-    /// <param name="cards">要与当前卡牌合并的卡牌列表</param>
-    /// <returns></returns>
-    public virtual StandardCard Combine( params Card[] cards )
-    {
-      throw new NotSupportedException();
-    }
 
+    /// <summary>
+    /// 卡牌可以使用的对象选择列表
+    /// </summary>
+    /// <returns>对象选项列表</returns>
+    public Option<object>[] CreateTargetOptions()
+    {
+      return new Option<object>[0];
+    }
   }
 }

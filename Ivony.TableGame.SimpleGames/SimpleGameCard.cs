@@ -35,8 +35,5 @@ namespace Ivony.TableGame.SimpleGames
     {
       get { return 1; }
     }
-
-    public override Type TargetType { get { return typeof( SimpleGamePlayer ); } }
-
   }
 }

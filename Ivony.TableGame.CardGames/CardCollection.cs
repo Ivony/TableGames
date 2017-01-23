@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,102 +8,71 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.CardGames
 {
-
-  /// <summary>
-  /// 提供 ICardCollection 的一个标准实现
-  /// </summary>
-  public class CardCollection : ICardCollection
+  public class CardCollection<TCard> : ICardCollection<TCard> where TCard : Card
   {
 
-    /// <summary>
-    /// 创建 CardCollection 对象
-    /// </summary>
-    public CardCollection()
+
+
+    private List<TCard> collection = new List<TCard>();
+
+    protected object SyncRoot { get; } = new object();
+
+
+    public int Count { get { return collection.Count; } }
+
+
+
+    protected void DealCards( ICardDealer<TCard> dealer, int count )
     {
-      CardList = new List<Card>();
-      SyncRoot = new object();
+      for ( var i = 0; i < count; i++ )
+      {
+        AddCard( dealer.DealCard() );
+      }
     }
 
-    /// <summary>
-    /// 获取用于同步的对象
-    /// </summary>
-    public object SyncRoot { get; private set; }
 
-    /// <summary>
-    /// 获取内部的卡牌容器
-    /// </summary>
-    protected List<Card> CardList { get; private set; }
-
-    /// <summary>
-    /// 尝试添加一个卡牌
-    /// </summary>
-    /// <param name="card"></param>
-    /// <returns></returns>
-    public bool AddCard( Card card )
+    public bool AddCard( TCard card )
     {
       lock ( SyncRoot )
       {
-        if ( CardList.Contains( card ) )
-          return false;
-
-        CardList.Add( card );
+        collection.Add( card );
         return true;
       }
     }
 
-    /// <summary>
-    /// 尝试移除一个卡牌
-    /// </summary>
-    /// <param name="card"></param>
-    /// <returns></returns>
-    public bool RemoveCard( Card card )
-    {
-      lock ( SyncRoot )
-      {
-        return CardList.Remove( card );
-      }
-    }
-
-    /// <summary>
-    /// 获取目前卡牌数量
-    /// </summary>
-    public int Count
-    {
-      get { return CardList.Count; }
-    }
-
-
-    /// <summary>
-    /// 确定是否存在指定的卡牌
-    /// </summary>
-    /// <param name="card"></param>
-    /// <returns></returns>
-    public bool Contains( Card card )
-    {
-      lock ( SyncRoot )
-      {
-        return CardList.Contains( card );
-      }
-    }
-
-
-    /// <summary>
-    /// 清除所有的卡牌
-    /// </summary>
     public void Clear()
     {
       lock ( SyncRoot )
       {
-        CardList.Clear();
+        collection.Clear();
+      }
+
+    }
+
+    public bool Contains( TCard card )
+    {
+      lock ( SyncRoot )
+      {
+        return collection.Contains( card );
       }
     }
 
-    public IEnumerator<Card> GetEnumerator()
+    public bool RemoveCard( TCard card )
     {
-      return CardList.GetEnumerator();
+      lock ( SyncRoot )
+      {
+        return collection.Remove( card );
+      }
     }
 
-    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+
+
+    public IEnumerator<Card> GetEnumerator()
+    {
+      return collection.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
     {
       return GetEnumerator();
     }

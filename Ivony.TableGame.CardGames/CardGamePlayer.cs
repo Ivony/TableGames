@@ -33,18 +33,9 @@ namespace Ivony.TableGame.CardGames
 
 
     /// <summary>
-    /// 获取玩家卡牌容器
-    /// </summary>
-    protected virtual ICardCollection CardCollection { get; } = new CardCollection();
-
-
-    /// <summary>
     /// 玩家当前所持有的卡牌
     /// </summary>
-    public virtual Card[] Cards
-    {
-      get { return CardCollection.ToArray(); }
-    }
+    public abstract Card[] Cards { get; }
 
 
 

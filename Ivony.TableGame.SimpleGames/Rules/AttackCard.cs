@@ -17,11 +17,9 @@ namespace Ivony.TableGame.SimpleGames.Rules
     /// 创建攻击卡牌对象
     /// </summary>
     /// <param name="point">攻击点数</param>
-    public AttackCard( int point = 1 )
+    public AttackCard()
     {
-
-      Point = point;
-
+      Point = 1;
     }
 
 

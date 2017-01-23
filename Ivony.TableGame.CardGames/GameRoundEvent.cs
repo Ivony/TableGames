@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.CardGames
 {
-  public class GameRoundEvent<TPlayer> : GameEventBase, IGamePlayerEvent
-    where TPlayer : StandardCardGamePlayer
+  public class GameRoundEvent<TPlayer, TCard> : GameEventBase, IGamePlayerEvent
+    where TPlayer : StandardCardGamePlayer<TCard>
+    where TCard : StandardCard
   {
 
     public GameRoundEvent( TPlayer player, int rounds )

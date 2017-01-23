@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames
 {
-  public class SimpleGame : StandardCardGame<SimpleGamePlayer>
+  public class SimpleGame : StandardCardGame<SimpleGamePlayer, SimpleGameCard>
   {
 
 
@@ -18,34 +18,9 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
-    public static ICardDealer<SimpleGameCard> SpecialCardDealer { get; private set; }
-    public static ICardDealer<SimpleGameCard> AttackCardDealer { get; private set; }
-
-
     static SimpleGame()
     {
 
-      SpecialCardDealer = new UnlimitedCardDealer<SimpleGameCard>()
-          .Register( () => new OverturnCard(), 1 )
-          .Register( () => new AngelCard(), 2 )
-          .Register( () => new DevilCard(), 5 )
-          .Register( () => new ClearCard(), 10 )
-          .Register( () => new PurifyCard(), 5 )
-          .Register( () => new ReboundCard(), 3 )
-          .Register( () => new ShieldCard(), 10 )
-          .Register( () => new PeepCard(), 8 );
-
-      AttackCardDealer = new UnlimitedCardDealer<SimpleGameCard>()
-          .Register( () => new AttackCard( 1 ), 30 )
-          .Register( () => new AttackCard( 2 ), 40 )
-          .Register( () => new AttackCard( 3 ), 50 )
-          .Register( () => new AttackCard( 4 ), 25 )
-          .Register( () => new AttackCard( 5 ), 20 )
-          .Register( () => new AttackCard( 6 ), 15 )
-          .Register( () => new AttackCard( 7 ), 10 )
-          .Register( () => new AttackCard( 8 ), 7 )
-          .Register( () => new AttackCard( 9 ), 5 )
-          .Register( () => new AttackCard( 10 ), 3 );
     }
 
 

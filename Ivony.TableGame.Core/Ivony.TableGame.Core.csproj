@@ -69,6 +69,7 @@
     <Compile Include="IPlayerHost.cs" />
     <Compile Include="GamePlayerBase.cs" />
     <Compile Include="Option.cs" />
+    <Compile Include="OptionProvider.cs" />
     <Compile Include="PlayerConsoleBase.cs" />
     <Compile Include="PlayerHostBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

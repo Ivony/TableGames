@@ -11,7 +11,7 @@ namespace Ivony.TableGame.CardGames
   /// <summary>
   /// 提供一个通用标准的卡牌用户实现
   /// </summary>
-  public abstract class StandardCardGamePlayer : CardGamePlayer, IGameEventListener
+  public abstract class StandardCardGamePlayer<TCard> : CardGamePlayer, IGameEventListener where TCard : StandardCard
   {
 
 
@@ -41,13 +41,19 @@ namespace Ivony.TableGame.CardGames
 
 
 
+    protected virtual ICardCollection<TCard> CardCollection { get; } = new CardCollection<TCard>();
+
+
     /// <summary>
     /// 获取标准卡牌组
     /// </summary>
-    protected new StandardCard[] Cards
+    protected TCard[] StandardCards
     {
-      get { return CardCollection.Cast<StandardCard>().ToArray(); }
+      get { return CardCollection.Cast<TCard>().ToArray(); }
     }
+
+
+    public override Card[] Cards { get { return StandardCards; } }
 
 
     /// <summary>
@@ -63,7 +69,7 @@ namespace Ivony.TableGame.CardGames
         return;
 
 
-      await card.Play( this, await CherryTarget( card.TargetType, token ), token );
+      await card.Play( this, CherryTarget( card.CreateTargetOptions(), token ), token );
 
       CardCollection.RemoveCard( card );
       ActionPoint -= card.ActionPoint;
@@ -76,10 +82,10 @@ namespace Ivony.TableGame.CardGames
     /// </summary>
     /// <param name="token">取消标识</param>
     /// <returns></returns>
-    protected virtual async Task<StandardCard> CherryCard( CancellationToken token )
+    protected virtual async Task<TCard> CherryCard( CancellationToken token )
     {
 
-      var options = CreateOptions( Cards );
+      var options = CreateOptions( StandardCards );
 
       if ( options.All( item => item.OptionItem.Disabled ) )//如果所有卡牌都不可用，则此回合不能再行动
         return null;
@@ -94,7 +100,7 @@ namespace Ivony.TableGame.CardGames
       {
         var index = Random.Next( Cards.Length );
         PlayerHost.WriteWarningMessage( "操作超时，随机打出第 {0} 张牌", index + 1 );
-        return Cards[index];
+        return StandardCards[index];
       }
     }
 
@@ -104,7 +110,7 @@ namespace Ivony.TableGame.CardGames
     /// </summary>
     /// <param name="cards">卡牌组</param>
     /// <returns>选项组</returns>
-    protected virtual Option<StandardCard>[] CreateOptions( StandardCard[] cards )
+    protected virtual Option<TCard>[] CreateOptions( TCard[] cards )
     {
       return cards.Select( item => CreateOption( item ) ).Where( item => item != null ).ToArray();
     }
@@ -114,7 +120,7 @@ namespace Ivony.TableGame.CardGames
     /// </summary>
     /// <param name="card">要创建选项对象的卡牌</param>
     /// <returns>选项对象</returns>
-    protected virtual Option<StandardCard> CreateOption( StandardCard card )
+    protected virtual Option<TCard> CreateOption( TCard card )
     {
 
       if ( card == null )
@@ -128,7 +134,7 @@ namespace Ivony.TableGame.CardGames
         name = "*" + name;
 
 
-      return new Option<StandardCard>( card, name, card.Description, disabled );
+      return Option.Create( card, name, card.Description, disabled );
     }
 
 
@@ -139,42 +145,13 @@ namespace Ivony.TableGame.CardGames
     /// <param name="targetType">目标类型</param>
     /// <param name="token">取消标识</param>
     /// <returns>玩家选择的目标</returns>
-    protected virtual async Task<object> CherryTarget( Type targetType, CancellationToken token )
+    protected virtual async Task<object> CherryTarget( object[] targets, CancellationToken token )
     {
 
-      if ( targetType == null )
-        return null;
-
-      else if ( typeof( StandardCardGamePlayer ).IsAssignableFrom( targetType ) )
-      {
-        var player = await CherryPlayer( token );
-        if ( !player.GetType().IsAssignableFrom( targetType ) )
-          throw new InvalidOperationException();
-
-        else
-          return player;
-      }
-
-      else
-        throw new NotSupportedException();
-    }
-
-
-    /// <summary>
-    /// 选取一个玩家
-    /// </summary>
-    /// <param name="token"></param>
-    /// <returns></returns>
-    protected virtual async Task<StandardCardGamePlayer> CherryPlayer( CancellationToken token )
-    {
-
-      var options = Game.Players.Select( item => Option.Create( (StandardCardGamePlayer) item, new Option( item.PlayerName, item.PlayerName ) ) ).ToArray();
-
+      var options = targets.Select( item => Option.Create( item ) ).ToArray();
       return await PlayerHost.Console.Choose( "请选择使用对象", options, token );
+
     }
-
-
-
 
 
 

@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace Ivony.TableGame.SimpleGames
 {
-  public class SimpleGamePlayer : StandardCardGamePlayer
+  public class SimpleGamePlayer : StandardCardGamePlayer<SimpleGameCard>
   {
 
 
@@ -44,7 +44,8 @@ namespace Ivony.TableGame.SimpleGames
     /// <summary>
     /// 重写此属性自定义卡牌集
     /// </summary>
-    protected override ICardCollection CardCollection { get { return _cards; } }
+    protected override ICardCollection<SimpleGameCard> CardCollection { get { return _cards; } }
+
 
 
 

@@ -57,6 +57,36 @@ namespace Ivony.TableGame
     {
       return new Option<T>( value, option );
     }
+
+
+    /// <summary>
+    /// 创建 Option 对象
+    /// </summary>
+    /// <param name="value">选项值</param>
+    /// <param name="name">选项名称</param>
+    /// <param name="description">选项描述</param>
+    /// <param name="disabled">是否禁用</param>
+    public static Option<T> Create<T>( T value, string name, string description, bool disabled = false ) where T : class
+    {
+      return Create( value, new Option( name, description, disabled ) );
+    }
+
+
+    /// <summary>
+    /// 创建包含指定值对象实例的选项
+    /// </summary>
+    /// <typeparam name="T">值对象类型</typeparam>
+    /// <param name="value">值对象</param>
+    /// <returns>Option 对象</returns>
+    public static Option<T> Create<T>( T value ) where T : class
+    {
+
+      var option = OptionProvider.CreateOption( value );
+      if ( option == null )
+        return null;
+
+      return Create( value, option );
+    }
   }
 
 
@@ -81,16 +111,6 @@ namespace Ivony.TableGame
       OptionItem = optionItem;
       OptionValue = value;
     }
-
-    /// <summary>
-    /// 创建 Option 对象
-    /// </summary>
-    /// <param name="value">选项值</param>
-    /// <param name="name">选项名称</param>
-    /// <param name="description">选项描述</param>
-    /// <param name="disabled">是否禁用</param>
-    public Option( T value, string name, string description, bool disabled = false ) : this( value, new Option( name, description, disabled ) ) { }
-
 
     /// <summary>
     /// 选项实例
