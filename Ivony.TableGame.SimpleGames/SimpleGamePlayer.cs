@@ -78,6 +78,41 @@ namespace Ivony.TableGame.SimpleGames
 
 
 
+    protected override async Task<object> CherryTarget( SimpleGameCard card, CancellationToken token )
+    {
+
+
+      var targets = GetTargets( card );
+
+      if ( targets == null || targets.Any() == false )
+        return null;
+
+      if ( targets.Length == 1 )
+        return targets[0].OptionValue;
+
+      return await PlayerHost.Console.Choose( "请选择使用对象", targets, token );
+
+
+
+    }
+
+    private IOption<object>[] GetTargets( SimpleGameCard card )
+    {
+      if ( card is IOtherPlayerTarget )
+        return Game.Players.Where( item => item != this ).Select( item => Option.Create( item ) ).ToArray();
+
+      else if ( card is IAnyPlayerTarget )
+        return Game.Players.Select( item => Option.Create( item ) ).ToArray();
+
+      else if ( card is ISelfTarget )
+        return new[] { Option.Create( this ) };
+
+      else
+        return null;
+
+    }
+
+
 
     /// <summary>
     /// 给玩家发牌

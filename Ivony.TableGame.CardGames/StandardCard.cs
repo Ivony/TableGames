@@ -28,14 +28,5 @@ namespace Ivony.TableGame.CardGames
     /// <returns>获取用于等待处理卡牌使用过程的 Task</returns>
     public abstract Task Play( CardGamePlayer initiatePlayer, object target, CancellationToken token );
 
-
-    /// <summary>
-    /// 卡牌可以使用的对象选择列表
-    /// </summary>
-    /// <returns>对象选项列表</returns>
-    public Option<object>[] CreateTargetOptions()
-    {
-      return new Option<object>[0];
-    }
   }
 }

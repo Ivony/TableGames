@@ -35,5 +35,6 @@ namespace Ivony.TableGame.SimpleGames
     {
       get { return 1; }
     }
+
   }
 }

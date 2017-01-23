@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
-  public class ReboundCard : SimpleGameCard
+  public class ReboundCard : SimpleGameCard, IAnyPlayerTarget
   {
     public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
       AnnounceSpecialCardUsed( user );
-      user.SetEffect( new CardEffect() );
+      target.SetEffect( new CardEffect() );
     }
 
     public override string Name

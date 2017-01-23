@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
-  public class ShieldCard : SimpleGameCard
+  public class ShieldCard : SimpleGameCard, IAnyPlayerTarget
   {
     public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
-      user.SetEffect( new CardEffect() );
+      target.SetEffect( new CardEffect() );
       AnnounceSpecialCardUsed( user );
-      user.PlayerHost.WriteMessage( "下一次攻击将对您无效。" );
+      target.PlayerHost.WriteMessage( "{0} 对您使用了盾牌，下一次攻击将对您无效。", user.PlayerName );
     }
 
     public override string Name

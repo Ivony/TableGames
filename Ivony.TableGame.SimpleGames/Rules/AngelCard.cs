@@ -10,7 +10,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
   /// <summary>
   /// 天使卡
   /// </summary>
-  public class AngelCard : SimpleGameCard
+  public class AngelCard : SimpleGameCard, IAnyPlayerTarget
   {
 
 
@@ -22,10 +22,10 @@ namespace Ivony.TableGame.SimpleGames.Rules
     /// <returns></returns>
     public override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
-      user.SetEffect( new CardEffect() );
+      target.SetEffect( new CardEffect() );
       AnnounceSpecialCardUsed( user );
 
-      user.PlayerHost.WriteMessage( "天使保护你，下一次攻击将变成治疗" );
+      target.PlayerHost.WriteMessage( "天使保护你，下一次攻击将变成治疗" );
 
       return Task.CompletedTask;
     }

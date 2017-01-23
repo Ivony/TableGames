@@ -9,7 +9,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
   /// <summary>
   /// 净化卡
   /// </summary>
-  public class PurifyCard : SimpleGameCard
+  public class PurifyCard : SimpleGameCard, IAnyPlayerTarget
   {
 
     /// <summary>
@@ -21,8 +21,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
     public override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
       AnnounceSpecialCardUsed( user );
-      foreach ( var player in user.Game.Players )
-        player.Purify();
+      target.Purify();
 
       return Task.CompletedTask;
     }

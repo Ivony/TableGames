@@ -24,8 +24,13 @@ namespace Ivony.TableGame
     public static Option CreateOption<T>( T value )
     {
 
-      return null;
-    }
+      var player = value as GamePlayerBase;
+      if ( player != null )
+        return new Option( player.PlayerName, "玩家 - " + player.PlayerName );
 
+
+      return null;
+
+    }
   }
 }

@@ -215,10 +215,10 @@ namespace Ivony.TableGame
     /// <param name="options">选项列表</param>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
-    public async Task<T> Choose<T>( string prompt, Option<T>[] options, CancellationToken token ) where T : class
+    public async Task<T> Choose<T>( string prompt, IOption<T>[] options, CancellationToken token ) where T : class
     {
 
-      var dictionary = options.ToDictionary( item => item.OptionItem, item => item.OptionValue );
+      var dictionary = options.ToDictionary( item => item.OptionDescriptor, item => item.OptionValue );
       var option = await Choose( prompt, dictionary.Keys.ToArray(), token );
 
       return dictionary[option];
@@ -235,7 +235,7 @@ namespace Ivony.TableGame
     /// <param name="defaultOption">默认选项</param>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
-    public Task<T> Choose<T>( string prompt, Option<T>[] options, T defaultOption, CancellationToken token ) where T : class
+    public Task<T> Choose<T>( string prompt, IOption<T>[] options, T defaultOption, CancellationToken token ) where T : class
     {
       return Choose( prompt, options, defaultOption, DefaultTimeout, token );
     }
@@ -250,7 +250,7 @@ namespace Ivony.TableGame
     /// <param name="timeout">超时时间</param>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
-    public async Task<T> Choose<T>( string prompt, Option<T>[] options, T defaultOption, TimeSpan timeout, CancellationToken token ) where T : class
+    public async Task<T> Choose<T>( string prompt, IOption<T>[] options, T defaultOption, TimeSpan timeout, CancellationToken token ) where T : class
     {
 
       var timeoutToken = new CancellationTokenSource( timeout ).Token;

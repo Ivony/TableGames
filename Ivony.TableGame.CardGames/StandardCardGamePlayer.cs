@@ -69,7 +69,7 @@ namespace Ivony.TableGame.CardGames
         return;
 
 
-      await card.Play( this, CherryTarget( card.CreateTargetOptions(), token ), token );
+      await card.Play( this, await CherryTarget( card, token ), token );
 
       CardCollection.RemoveCard( card );
       ActionPoint -= card.ActionPoint;
@@ -87,7 +87,7 @@ namespace Ivony.TableGame.CardGames
 
       var options = CreateOptions( StandardCards );
 
-      if ( options.All( item => item.OptionItem.Disabled ) )//如果所有卡牌都不可用，则此回合不能再行动
+      if ( options.All( item => item.OptionDescriptor.Disabled ) )//如果所有卡牌都不可用，则此回合不能再行动
         return null;
 
       var card = await PlayerHost.Console.Choose( "请出牌：", options, null, token );
@@ -110,7 +110,7 @@ namespace Ivony.TableGame.CardGames
     /// </summary>
     /// <param name="cards">卡牌组</param>
     /// <returns>选项组</returns>
-    protected virtual Option<TCard>[] CreateOptions( TCard[] cards )
+    protected virtual IOption<TCard>[] CreateOptions( TCard[] cards )
     {
       return cards.Select( item => CreateOption( item ) ).Where( item => item != null ).ToArray();
     }
@@ -120,7 +120,7 @@ namespace Ivony.TableGame.CardGames
     /// </summary>
     /// <param name="card">要创建选项对象的卡牌</param>
     /// <returns>选项对象</returns>
-    protected virtual Option<TCard> CreateOption( TCard card )
+    protected virtual IOption<TCard> CreateOption( TCard card )
     {
 
       if ( card == null )
@@ -145,11 +145,10 @@ namespace Ivony.TableGame.CardGames
     /// <param name="targetType">目标类型</param>
     /// <param name="token">取消标识</param>
     /// <returns>玩家选择的目标</returns>
-    protected virtual async Task<object> CherryTarget( object[] targets, CancellationToken token )
+    protected virtual Task<object> CherryTarget( TCard card, CancellationToken token )
     {
 
-      var options = targets.Select( item => Option.Create( item ) ).ToArray();
-      return await PlayerHost.Console.Choose( "请选择使用对象", options, token );
+      return Task.FromResult<object>( null );
 
     }
 

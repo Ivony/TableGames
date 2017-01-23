@@ -10,7 +10,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
   /// <summary>
   /// 定义攻击卡牌
   /// </summary>
-  public class AttackCard : SimpleGameCard
+  public class AttackCard : SimpleGameCard, IOtherPlayerTarget
   {
 
     /// <summary>
@@ -30,12 +30,12 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
     public override string Name
     {
-      get { return string.Format( "攻击{0}", Point ); }
+      get { return string.Format( "攻击", Point ); }
     }
 
     public override string Description
     {
-      get { return string.Format( "攻击任何一个玩家，造成 {0} 点伤害", Point ); }
+      get { return string.Format( "攻击任何一个玩家，造成 1 点伤害", Point ); }
     }
 
     public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
@@ -51,5 +51,8 @@ namespace Ivony.TableGame.SimpleGames.Rules
         target.PlayerHost.WriteWarningMessage( "您受到攻击，HP 减少 {0} 点，目前 HP {1}", Point, target.HealthPoint );
       }
     }
+
+
+
   }
 }

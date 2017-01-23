@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
-  public class DevilCard : SimpleGameCard
+  public class DevilCard : SimpleGameCard, ISelfTarget
   {
     public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {

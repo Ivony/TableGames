@@ -44,8 +44,9 @@
     <Compile Include="Rules\AttackCard.cs" />
     <Compile Include="Rules\AttackEvent.cs" />
     <Compile Include="Rules\ClearCard.cs" />
-    <Compile Include="Rules\DevilCard.cs" />
     <Compile Include="ISimpleGameEffect.cs" />
+    <Compile Include="Rules\DevilCard.cs" />
+    <Compile Include="Rules\Targets.cs" />
     <Compile Include="Rules\OverturnCard.cs" />
     <Compile Include="Rules\PeepCard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
