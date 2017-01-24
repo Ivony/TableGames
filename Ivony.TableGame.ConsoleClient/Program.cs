@@ -112,12 +112,20 @@ namespace Ivony.TableGame.ConsoleClient
           }
 
 
-          if ( status.WaitForResponse == true )
+          var respondingId = (string) status.RespondingID;
+
+          if ( respondingId != null )
           {
             Console.Beep();
             Console.Write( status.PromptText );
             var message = Console.ReadLine();
-            await SendResponse( client, message );
+            var response = await SendResponse( client, respondingId, message );
+            if ( response.StatusCode == HttpStatusCode.RequestTimeout )
+            {
+              Console.ForegroundColor = ConsoleColor.Red;
+              Console.WriteLine( "响应超时" );
+            }
+
             continue;
           }
 
@@ -150,7 +158,7 @@ namespace Ivony.TableGame.ConsoleClient
 
     private async static void QuitGame( HttpClient client )
     {
-      await client.GetAsync( host + "/QuitGame" );
+      await client.GetAsync( host + "QuitGame" );
     }
 
     private async static Task<dynamic> GetStatus( HttpClient client )
@@ -165,13 +173,17 @@ namespace Ivony.TableGame.ConsoleClient
       return JObject.Parse( await response.Content.ReadAsStringAsync() );
     }
 
-    private static async Task SendResponse( HttpClient client, string message )
+    private static async Task<HttpResponseMessage> SendResponse( HttpClient client, string respondingId, string message )
     {
       var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
 
-      var data = new StringContent( message, Encoding.UTF8, "text/responding" );
-      var response = await client.PostAsync( host + "Response", data, source.Token );
-      return;
+
+
+      var request = new HttpRequestMessage( HttpMethod.Post, host + "Response" );
+      request.Content = new StringContent( message, Encoding.UTF8, "text/responding" );
+      request.Headers.Add( "Responding", respondingId );
+
+      return await client.SendAsync( request, source.Token );
     }
 
 

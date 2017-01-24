@@ -31,6 +31,11 @@ namespace Ivony.TableGame.WebHost
     /// </summary>
     Guid Identifier { get; }
 
+
+    /// <summary>
+    /// 是否已经完成
+    /// </summary>
+    bool IsCompleted { get; }
   }
 
 
@@ -57,7 +62,13 @@ namespace Ivony.TableGame.WebHost
       lock ( playerHost.SyncRoot )
       {
         if ( playerHost.Responding != null )
-          throw new InvalidOperationException();
+        {
+          if ( playerHost.Responding.IsCompleted )
+            playerHost.Responding = null;
+
+          else
+            throw new InvalidOperationException();
+        }
 
 
         PlayerHost = playerHost;
@@ -114,9 +125,9 @@ namespace Ivony.TableGame.WebHost
     protected void OnCancelled()
     {
 
-      if ( TaskCompletionSource.TrySetCanceled() )
+      lock ( PlayerHost.SyncRoot )
       {
-        lock ( PlayerHost )
+        if ( TaskCompletionSource.TrySetCanceled() )
         {
           if ( PlayerHost.Responding == this )
             PlayerHost.Responding = null;
@@ -124,6 +135,20 @@ namespace Ivony.TableGame.WebHost
       }
     }
 
+    bool IResponding.IsCompleted
+    {
+
+      get
+      {
+        var task = RespondingTask;
+        if ( task.IsCanceled || task.IsCompleted || task.IsFaulted )
+          return true;
+
+        else
+          return false;
+      }
+
+    }
   }
 
 

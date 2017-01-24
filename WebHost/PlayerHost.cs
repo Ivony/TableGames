@@ -150,14 +150,21 @@ namespace Ivony.TableGame.WebHost
     internal IResponding Responding { get; set; }
 
 
-
     /// <summary>
-    /// 获取是否正在等待玩家响应
+    /// 如果有正在等待的响应，获取响应标识。
     /// </summary>
-    public bool WaitForResponse
+    public string RespondingID
     {
-      get { return Responding != null; }
+      get
+      {
+        if ( Responding == null )
+          return null;
+
+        else
+          return Responding.Identifier.ToString();
+      }
     }
+
 
 
 
@@ -196,9 +203,6 @@ namespace Ivony.TableGame.WebHost
         return responding.Options;
       }
     }
-
-
-    private ConcurrentDictionary<Guid, IResponding> respondings = new ConcurrentDictionary<Guid, IResponding>();
 
 
 

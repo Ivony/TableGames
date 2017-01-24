@@ -82,7 +82,7 @@ namespace Ivony.TableGame.WebHost
       {
 
         Gaming = PlayerHost.Gaming,
-        WaitForResponse = PlayerHost.WaitForResponse,
+        RespondingID = PlayerHost.RespondingID,
         PromptText = PlayerHost.PromptText,
         Options = PlayerHost.GetOptions(),
 
@@ -156,11 +156,13 @@ namespace Ivony.TableGame.WebHost
     public async Task<object> Response( HttpRequestMessage request )
     {
 
-      Guid id;
+      var responding = GetResponding( request );
 
+      if ( responding == null )
+        throw new HttpResponseException( HttpStatusCode.RequestTimeout );
 
       if ( request.Content.Headers.ContentType.MediaType != "text/responding" )
-        return BadRequest();
+        throw new HttpResponseException( HttpStatusCode.BadRequest );
 
 
       var message = await request.Content.ReadAsStringAsync();
@@ -168,6 +170,33 @@ namespace Ivony.TableGame.WebHost
 
       return "OK";
 
+    }
+
+    private IResponding GetResponding( HttpRequestMessage request )
+    {
+
+      var responding = PlayerHost.Responding;
+
+      if ( responding == null )
+        return null;
+
+
+      IEnumerable<string> values;
+      if ( request.Headers.TryGetValues( "Responding", out values ) == false )
+        return responding;
+
+
+      Guid id;
+      if ( Guid.TryParse( values.FirstOrDefault(), out id ) )
+      {
+        if ( responding.Identifier == id )
+          return responding;
+
+        else
+          return null;
+      }
+
+      return responding;
     }
 
     private object GetGameInformation()
