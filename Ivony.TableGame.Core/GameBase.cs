@@ -312,5 +312,13 @@ namespace Ivony.TableGame
       }
     }
 
+
+    /// <summary>
+    /// 获取参与此游戏客户端必须支持的特性列表
+    /// </summary>
+    public virtual IEnumerable<string> GetRequiredFeatures()
+    {
+      return Enumerable.Empty<string>();
+    }
   }
 }

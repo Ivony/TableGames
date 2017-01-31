@@ -134,67 +134,8 @@ namespace Ivony.TableGame
     public virtual Task<Option> Choose( string prompt, Option[] options, CancellationToken token )
     {
 
-      if ( PlayerHost.Support( "Choose" ) )
-        return ChooseImplement( prompt, options, token );
-
-      else
-        return ChooseCompatibilityImplement( prompt, options, token );
+      return ChooseImplement( prompt, options, token );
     }
-
-    /// <summary>
-    /// 提供 Choose 方法的兼容性实现
-    /// </summary>
-    /// <param name="prompt">提示信息</param>
-    /// <param name="options">可供选择的选项</param>
-    /// <param name="token">取消标识</param>
-    /// <returns>获取一个 Task 用于等待用户选择，并返回选择结果</returns>
-    protected virtual async Task<Option> ChooseCompatibilityImplement( string prompt, Option[] options, CancellationToken token )
-    {
-      PlayerHost.WriteMessage( prompt );
-
-
-      var promptText = string.Join( ", ", options.Select( ( item, index ) => string.Format( "{0}.{1}", index + 1, item.Name ) ) );
-      promptText += " ";
-
-
-      while ( true )
-      {
-
-        int optionIndex;
-
-        var helpMode = false;
-        var message = await ReadLine( promptText, token );
-
-
-        if ( message.StartsWith( "?" ) )
-        {
-          message = message.Substring( 1 );
-          helpMode = true;
-        }
-
-
-        if ( int.TryParse( message, out optionIndex ) )
-        {
-          if ( optionIndex > 0 && optionIndex <= options.Length )
-          {
-            var item = options[optionIndex - 1];
-
-            if ( helpMode )
-            {
-              PlayerHost.WriteMessage( "{0}：{1}", item.Name, item.Description );
-              continue;
-            }
-
-            return item;
-          }
-        }
-
-        PlayerHost.WriteWarningMessage( "您输入的格式不正确，应该输入 {0} - {1} 之间的数字以选择对应序号的选项，输入 ?+数字 则可以查看对应选项的说明", 1, options.Length );
-      }
-
-    }
-
-
 
 
     /// <summary>
@@ -272,7 +213,7 @@ namespace Ivony.TableGame
     /// <summary>
     /// 派生类重写此方法获取默认超时时间
     /// </summary>
-    protected TimeSpan DefaultTimeout { get { return TimeSpan.FromMinutes( 1 ); } }
+    protected TimeSpan DefaultTimeout { get { return TimeSpan.FromMinutes( 0.1 ); } }
 
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -8,11 +9,24 @@ using System.Web;
 namespace Ivony.TableGame.WebHost
 {
 
+
   /// <summary>
   /// 定义客户端的响应
   /// </summary>
   internal interface IResponding
   {
+
+
+    /// <summary>
+    /// 获取响应类型
+    /// </summary>
+    string Type { get; }
+
+    /// <summary>
+    /// 获取需要告知客户端的响应信息
+    /// </summary>
+    /// <returns>响应信息</returns>
+    JObject GetInfo();
 
     /// <summary>
     /// 提示文字，提示客户端应当产生何种响应格式
@@ -29,7 +43,7 @@ namespace Ivony.TableGame.WebHost
     /// <summary>
     /// 响应标识
     /// </summary>
-    Guid Identifier { get; }
+    Guid RespondingID { get; }
 
 
     /// <summary>
@@ -47,6 +61,23 @@ namespace Ivony.TableGame.WebHost
   {
 
 
+
+    /// <summary>
+    /// 获取响应类型
+    /// </summary>
+    public abstract string Type { get; }
+
+    public virtual JObject GetInfo()
+    {
+      return JObject.FromObject( new
+      {
+        Url = "Responding/" + RespondingID,
+        Type,
+        PromptText,
+      } );
+    }
+
+
     /// <summary>
     /// 创建 Responding 对象
     /// </summary>
@@ -57,7 +88,7 @@ namespace Ivony.TableGame.WebHost
     {
 
 
-      Identifier = Guid.NewGuid();
+      RespondingID = Guid.NewGuid();
 
       lock ( playerHost.SyncRoot )
       {
@@ -85,10 +116,13 @@ namespace Ivony.TableGame.WebHost
     /// <summary>
     /// 获取响应唯一标识
     /// </summary>
-    public Guid Identifier { get; }
+    public Guid RespondingID { get; }
 
 
 
+    /// <summary>
+    /// 获取控制响应结果任务的 TaskCompletionSource 对象
+    /// </summary>
     protected TaskCompletionSource<T> TaskCompletionSource { get; private set; }
 
 
@@ -98,6 +132,9 @@ namespace Ivony.TableGame.WebHost
     public Task<T> RespondingTask { get { return TaskCompletionSource.Task; } }
 
 
+    /// <summary>
+    /// 获取玩家宿主
+    /// </summary>
     protected PlayerHost PlayerHost { get; private set; }
 
     /// <summary>
@@ -106,6 +143,10 @@ namespace Ivony.TableGame.WebHost
     public string PromptText { get; private set; }
 
 
+    /// <summary>
+    /// 当玩家宿主获取到响应时
+    /// </summary>
+    /// <param name="message">响应消息</param>
     public void OnResponse( string message )
     {
       lock ( PlayerHost.SyncRoot )
@@ -119,6 +160,11 @@ namespace Ivony.TableGame.WebHost
 
     }
 
+    /// <summary>
+    /// 派生类实现此方法处理客户端响应
+    /// </summary>
+    /// <param name="message">响应消息</param>
+    /// <returns>是否处理成功</returns>
     protected abstract bool OnResponseCore( string message );
 
 
@@ -155,6 +201,10 @@ namespace Ivony.TableGame.WebHost
   internal class TextMessageResponding : Responding<string>
   {
 
+
+    public override string Type { get { return "Text"; } }
+
+
     public TextMessageResponding( PlayerHost playerHost, string promptText, CancellationToken token ) : base( playerHost, promptText, token ) { }
 
 
@@ -168,6 +218,17 @@ namespace Ivony.TableGame.WebHost
 
   internal class OptionsResponding : Responding<Option>
   {
+
+    public override string Type { get { return "Options"; } }
+
+
+    public override JObject GetInfo()
+    {
+      var data = base.GetInfo();
+      data["Options"] = JArray.FromObject( Options );
+
+      return data;
+    }
 
     public OptionsResponding( PlayerHost playerHost, string promptText, Option[] options, CancellationToken token )
       : base( playerHost, promptText, token )
@@ -183,10 +244,7 @@ namespace Ivony.TableGame.WebHost
 
       Option option;
       if ( !TryGetOption( message, out option ) )
-      {
-        PlayerHost.WriteWarningMessage( "您输入的格式不正确，应该输入 {0} - {1} 之间的数字", 1, Options.Length );
         return false;
-      }
 
       TaskCompletionSource.TrySetResult( option );
       return true;
@@ -199,28 +257,12 @@ namespace Ivony.TableGame.WebHost
       if ( !int.TryParse( text, out index ) )
         return false;
 
-      if ( index < 1 || index > Options.Length )
+      if ( index < 0 || index >= Options.Length )
         return false;
 
-      option = Options[index - 1];
+      option = Options[index];
       return true;
     }
   }
-
-
-  public class MultipleOptionsResponding : Responding<Option[]>
-  {
-    public MultipleOptionsResponding( PlayerHost playerHost, string promptText, Option[] options, CancellationToken token )
-      : base( playerHost, promptText, token )
-    {
-
-    }
-
-    protected override bool OnResponseCore( string message )
-    {
-      throw new NotImplementedException();
-    }
-  }
-
 
 }

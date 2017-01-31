@@ -90,7 +90,7 @@ namespace Ivony.TableGame.SimpleGames
       if ( targets.Length == 1 )
         return targets[0];
 
-      var result = await PlayerHost.Console.Choose( "请选择使用对象", targets.Select( item => Option.Create( item ) ).ToArray(), null, token );
+      var result = await PlayerHost.Console.Choose( "请选择使用对象：", targets.Select( item => Option.Create( item ) ).ToArray(), null, token );
       if ( result == null )
       {
         PlayerHost.WriteWarningMessage( "操作超时" );

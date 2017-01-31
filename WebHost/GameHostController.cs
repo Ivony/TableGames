@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
+
 namespace Ivony.TableGame.WebHost
 {
-  public class GameHostController : ApiController
+  public class GameHostController : GameControllerBase
   {
 
 
@@ -82,16 +83,10 @@ namespace Ivony.TableGame.WebHost
       {
 
         Gaming = PlayerHost.Gaming,
-        RespondingID = PlayerHost.RespondingID,
-        PromptText = PlayerHost.PromptText,
-        Options = PlayerHost.GetOptions(),
+        RespondingUrl = PlayerHost.Responding == null ? null : "Responding/" + PlayerHost.Responding.RespondingID,
 
-
-        Compatibility = PlayerHost.Compatibility,
         GameInformation = GetGameInformation(),
         Messages = PlayerHost.GetMessages(),
-
-        FeatureDeclared = PlayerHost.FeatureDeclared,
       };
     }
 
@@ -114,63 +109,15 @@ namespace Ivony.TableGame.WebHost
 
 
     /// <summary>
-    /// 客户端访问此方法声明自己支持的特性
+    /// 客户端访问此方法获取游戏请求的特性列表
     /// </summary>
-    /// <param name="feature"></param>
-    /// <returns></returns>
-    [HttpGet]
-    public object DeclaringSupport( [FromUri] string[] feature )
-    {
-
-      feature = feature.SelectMany( item => item.Split( ',' ) ).ToArray();
-
-
-      PlayerHost.SetSupportFeatures( feature );
-      return feature;
-
-    }
-
-
-
-    /// <summary>
-    /// 客户端访问此方法声明自己支持的特性
-    /// </summary>
-    /// <param name="feature"></param>
-    /// <returns></returns>
+    /// <returns>游戏所需的特性</returns>
     [HttpPost]
-    public async Task<object> DeclaringSupport()
+    public async Task<object> RequiredFeatures()
     {
-
-      var text = await ControllerContext.Request.Content.ReadAsStringAsync();
-      var features = text.Split( ',' ).ToArray();
-
-
-      PlayerHost.SetSupportFeatures( features );
-      return features;
-
+      return new string[0];
     }
 
-
-    [HttpPost]
-
-    public async Task<object> Response( HttpRequestMessage request )
-    {
-
-      var responding = GetResponding( request );
-
-      if ( responding == null )
-        throw new HttpResponseException( HttpStatusCode.RequestTimeout );
-
-      if ( request.Content.Headers.ContentType.MediaType != "text/responding" )
-        throw new HttpResponseException( HttpStatusCode.BadRequest );
-
-
-      var message = await request.Content.ReadAsStringAsync();
-      PlayerHost.OnResponse( message );
-
-      return "OK";
-
-    }
 
     private IResponding GetResponding( HttpRequestMessage request )
     {
@@ -189,7 +136,7 @@ namespace Ivony.TableGame.WebHost
       Guid id;
       if ( Guid.TryParse( values.FirstOrDefault(), out id ) )
       {
-        if ( responding.Identifier == id )
+        if ( responding.RespondingID == id )
           return responding;
 
         else
@@ -214,14 +161,6 @@ namespace Ivony.TableGame.WebHost
       };
     }
 
-
-    protected PlayerHost PlayerHost
-    {
-      get
-      {
-        return (PlayerHost) ControllerContext.Request.Properties[PlayerHostHttpHandler.playerKey];
-      }
-    }
 
   }
 }

@@ -118,23 +118,15 @@ namespace Ivony.TableGame.CardGames
     /// <returns>获取一个 Task 用于等待玩家确认准备状态</returns>
     private async Task EnsureAlready( CardGamePlayer player, CancellationToken token )
     {
-      string message;
-      do
-      {
-        message = await player.PlayerHost.Console.ReadLine( "游戏即将开始，在游戏进行中请不要关闭客户端或浏览器。如果您已经准备好开始游戏，请输入 Ready，若您要退出游戏，请输入 Quit：", "quit", token );
+      player.PlayerHost.WriteSystemMessage( "游戏即将开始，在游戏进行中请不要关闭客户端或浏览器。" );
+      var option = await player.PlayerHost.Console.Choose( null, new[] { new Option( "准备好了", "准备好可以进行游戏" ), new Option( "退出游戏", "退出这个游戏" ) }, token );
 
+      if ( option.Name == "准备好了" )
+        AnnounceSystemMessage( "{0} 已经准备好", player.PlayerName );
 
-        if ( string.Equals( message, "Ready", StringComparison.OrdinalIgnoreCase ) )
-          AnnounceSystemMessage( "{0} 已经准备好", player.PlayerName );
+      else if ( option.Name == "退出游戏" )
+        player.PlayerHost.TryQuitGame();
 
-        else if ( string.Equals( message, "Quit", StringComparison.OrdinalIgnoreCase ) )
-          player.PlayerHost.TryQuitGame();
-
-        else
-          continue;
-
-
-      } while ( false );
     }
 
 
@@ -208,5 +200,13 @@ namespace Ivony.TableGame.CardGames
     }
 
 
+
+    /// <summary>
+    /// 获取参与此游戏客户端必须支持的特性列表
+    /// </summary>
+    public override IEnumerable<string> GetRequiredFeatures()
+    {
+      return base.GetRequiredFeatures().Union( new[] { "OptionsResponding" } );
+    }
   }
 }
