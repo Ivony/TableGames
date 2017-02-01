@@ -11,9 +11,14 @@ namespace Ivony.TableGame.ConsoleClient
   public static class Extensions
   {
 
-    public static async Task<JObject> ReadAsJsonAsync( this HttpContent content )
+    public static async Task<JObject> ReadAsJsonObjectAsync( this HttpContent content )
     {
       return JObject.Parse( await content.ReadAsStringAsync() );
+    }
+
+    public static async Task<JToken> ReadAsJsonAsync( this HttpContent content )
+    {
+      return JToken.Parse( await content.ReadAsStringAsync() );
     }
 
   }

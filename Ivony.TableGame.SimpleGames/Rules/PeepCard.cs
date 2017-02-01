@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
-  public class PeepCard : SimpleGameCard
+  public class PeepCard : BasicCard
   {
 
 

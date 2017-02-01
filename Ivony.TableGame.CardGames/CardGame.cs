@@ -86,13 +86,13 @@ namespace Ivony.TableGame.CardGames
 
     protected virtual Task OnBeforePlay( CardGamePlayer player, CancellationToken token )
     {
-      return Task.Run( () => { } );
+      return Task.CompletedTask;
     }
 
 
     protected virtual Task OnAfterPlay( CardGamePlayer player, CancellationToken token )
     {
-      return Task.Run( () => { } );
+      return Task.CompletedTask;
     }
 
 
@@ -155,7 +155,7 @@ namespace Ivony.TableGame.CardGames
           throw new InvalidOperationException();
 
 
-        if ( !PlayerCollection.Contains( player ) )                          //如果不存在这个玩家，则忽略。
+        if ( !PlayerCollection.Contains( player ) )       //如果不存在这个玩家，则忽略。
           return;
 
 

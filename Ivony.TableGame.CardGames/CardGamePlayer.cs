@@ -63,7 +63,7 @@ namespace Ivony.TableGame.CardGames
 
     protected virtual Task OnBeforePlayCard( CancellationToken token )
     {
-      return Task.Run( () => { } );
+      return Task.CompletedTask;
     }
 
 
@@ -72,7 +72,7 @@ namespace Ivony.TableGame.CardGames
 
     protected virtual Task OnAfterPlayCard( CancellationToken token )
     {
-      return Task.Run( () => { } );
+      return Task.CompletedTask;
     }
 
 
@@ -90,7 +90,7 @@ namespace Ivony.TableGame.CardGames
 
     public virtual Task OnGameEvent( IGameEvent gameEvent )
     {
-      return Task.Run( () => { } );
+      return Task.CompletedTask;
     }
 
 

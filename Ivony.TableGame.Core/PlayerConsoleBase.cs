@@ -213,7 +213,7 @@ namespace Ivony.TableGame
     /// <summary>
     /// 派生类重写此方法获取默认超时时间
     /// </summary>
-    protected TimeSpan DefaultTimeout { get { return TimeSpan.FromMinutes( 0.1 ); } }
+    protected TimeSpan DefaultTimeout { get { return TimeSpan.FromMinutes( 1 ); } }
 
 
 

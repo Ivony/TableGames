@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
-  public class ReboundCard : SimpleGameCard, IAnyPlayerTarget
+  public class ReboundCard : BasicCard, IAnyPlayerTarget
   {
     public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {

@@ -10,7 +10,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
   /// <summary>
   /// 定义 (╯‵□′)╯︵┻━┻ 卡牌
   /// </summary>
-  public class OverturnCard : SimpleGameCard
+  public class OverturnCard : BasicCard
   {
 
     public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )

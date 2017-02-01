@@ -69,7 +69,7 @@ namespace Ivony.TableGame.CardGames
         return;
 
 
-      await card.Play( this, await CherryTarget( card, token ), token );
+      await card.Play( this, token );
 
       CardCollection.RemoveCard( card );
       ActionPoint -= card.ActionPoint;
@@ -139,19 +139,6 @@ namespace Ivony.TableGame.CardGames
 
 
 
-    /// <summary>
-    /// 令玩家选取一个目标
-    /// </summary>
-    /// <param name="targetType">目标类型</param>
-    /// <param name="token">取消标识</param>
-    /// <returns>玩家选择的目标</returns>
-    protected virtual Task<object> CherryTarget( TCard card, CancellationToken token )
-    {
-
-      return Task.FromResult<object>( null );
-
-    }
-
 
 
 
@@ -166,7 +153,7 @@ namespace Ivony.TableGame.CardGames
         return OnDead();
 
       else
-        return Task.Run( () => { } );
+        return Task.CompletedTask;
     }
 
 
@@ -212,7 +199,7 @@ namespace Ivony.TableGame.CardGames
         return OnGameEvent( playerEvent );
 
 
-      return Task.Run( () => { } );
+      return Task.CompletedTask;
     }
 
 

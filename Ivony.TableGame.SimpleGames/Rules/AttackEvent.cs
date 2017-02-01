@@ -8,10 +8,11 @@ namespace Ivony.TableGame.SimpleGames.Rules
 {
   public class AttackEvent : GameEventBase, IGameBehaviorEvent
   {
-    public AttackEvent( SimpleGamePlayer user, SimpleGamePlayer target, int point )
+    public AttackEvent( SimpleGamePlayer user, SimpleGamePlayer target, Element element, int point )
     {
       InitiatePlayer = user;
       RecipientPlayer = target;
+      Element = element;
       AttackPoint = point;
 
 
@@ -28,21 +29,17 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
 
 
-    public SimpleGamePlayer InitiatePlayer { get; private set; }
+    public SimpleGamePlayer InitiatePlayer { get; }
 
 
-    public SimpleGamePlayer RecipientPlayer { get; private set; }
-
-
-
-    public int AttackPoint { get; private set; }
+    public SimpleGamePlayer RecipientPlayer { get; }
 
 
 
-    public void AnnounceAttackEffective()
-    {
-      Game.AnnounceMessage( "{0} 对 {1} 发起攻击，{1} 受到重创，HP 损失无数。", InitiatePlayer.PlayerName, RecipientPlayer.PlayerName );
-    }
+    public Element Element { get; }
+
+    public int AttackPoint { get; }
+
 
 
     public void AnnounceAttackIneffective()

@@ -26,7 +26,7 @@ namespace Ivony.TableGame.CardGames
     /// <param name="initiatePlayer">发起玩家</param>
     /// <param name="target">目标对象</param>
     /// <returns>获取用于等待处理卡牌使用过程的 Task</returns>
-    public abstract Task Play( CardGamePlayer initiatePlayer, object target, CancellationToken token );
+    public abstract Task Play( CardGamePlayer initiatePlayer, CancellationToken token );
 
   }
 }

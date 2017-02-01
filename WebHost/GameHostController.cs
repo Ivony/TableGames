@@ -112,10 +112,10 @@ namespace Ivony.TableGame.WebHost
     /// 客户端访问此方法获取游戏请求的特性列表
     /// </summary>
     /// <returns>游戏所需的特性</returns>
-    [HttpPost]
-    public async Task<object> RequiredFeatures()
+    [HttpGet]
+    public string[] RequiredFeatures()
     {
-      return new string[0];
+      return PlayerHost.Player.Game.GetRequiredFeatures().ToArray();
     }
 
 

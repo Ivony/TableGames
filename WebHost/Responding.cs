@@ -261,6 +261,9 @@ namespace Ivony.TableGame.WebHost
         return false;
 
       option = Options[index];
+      if ( option.Disabled == true )
+        return false;
+
       return true;
     }
   }

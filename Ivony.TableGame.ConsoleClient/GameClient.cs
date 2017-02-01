@@ -7,19 +7,28 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace Ivony.TableGame.ConsoleClient
 {
   public sealed class GameClient : IDisposable
   {
 
-    private readonly string host;
+    private readonly Uri host;
     private readonly HttpClient client;
 
-    public GameClient( string host )
+    public GameClient( Uri host )
     {
+
+      if ( host == null )
+        throw new ArgumentNullException( "host" );
+
+      if ( host.IsAbsoluteUri == false )
+        throw new ArgumentException( "host 必须是一个绝对 URL", "host" );
+
       this.host = host;
       client = new HttpClient( new HttpClientHandler { CookieContainer = new CookieContainer() } );
+      client.BaseAddress = host;
     }
 
     public void Dispose()
@@ -48,26 +57,16 @@ namespace Ivony.TableGame.ConsoleClient
             var name = Console.ReadLine();
 
             var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
-            await client.GetAsync( host + "Game?name=" + name, source.Token );
+            await client.GetAsync( "Game?name=" + name, source.Token );
             continue;
           }
 
 
-          /*
-          var compatibility = ((JArray) status.Compatibility).ToObject<string[]>();
-          if ( compatibility.Contains( "Console", StringComparer.OrdinalIgnoreCase ) == false )
-          {
-
-
-            Console.Write( "游戏不兼容控制台客户端，正在退出" );
-            await QuitGame();
-            continue;
-          }
-          */
+          await EnsureCompatibility();
 
           if ( status.RespondingUrl != null )
           {
-            await Responding( host + (string) status.RespondingUrl );
+            await Responding( (string) status.RespondingUrl );
             continue;
           }
 
@@ -87,7 +86,7 @@ namespace Ivony.TableGame.ConsoleClient
         catch ( NotSupportedException )
         {
           Console.ForegroundColor = ConsoleColor.Yellow;
-          Console.WriteLine( "遇到不支持的特性，正在退出游戏" );
+          Console.WriteLine( "客户端不兼容正在进行的游戏，正在退出" );
           await QuitGame();
 
           Console.ResetColor();
@@ -105,6 +104,23 @@ namespace Ivony.TableGame.ConsoleClient
       }
     }
 
+
+    private static readonly HashSet<string> supportedFeatures = new HashSet<string>( new[] { "OptionsResponding" } );
+
+    private async Task EnsureCompatibility()
+    {
+
+      var response = await client.GetAsync( "RequiredFeatures" );
+
+      var features = (await response.Content.ReadAsJsonAsync()).ToObject<string[]>();
+
+      if ( supportedFeatures.IsSupersetOf( features ) )
+        return;
+
+
+      throw new NotSupportedException();
+
+    }
 
     private void ShowMessages( dynamic messages )
     {
@@ -148,7 +164,7 @@ namespace Ivony.TableGame.ConsoleClient
 
 
       var response = await client.GetAsync( url );
-      var responding = (dynamic) await response.Content.ReadAsJsonAsync();
+      var responding = (dynamic) await response.Content.ReadAsJsonObjectAsync();
 
 
 
@@ -170,12 +186,24 @@ namespace Ivony.TableGame.ConsoleClient
     {
 
       Console.Write( responding.PromptText );
-      var options = ((JArray) responding.Options).Select( ( item, index ) => new { Index = index, Name = (string) item["Name"] } ).ToArray();
+      var options = ((JArray) responding.Options).Select( ( item, index ) => new { Index = index, Name = (string) item["Name"], Disabled = (bool) item["Disabled"] } ).ToArray();
 
 
 
       foreach ( var item in options )
-        Console.Write( "{0}.{1} ", indexKeys[item.Index], item.Name );
+      {
+        if ( item.Disabled )
+        {
+          Console.ForegroundColor = ConsoleColor.DarkYellow;
+          Console.Write( " .{0} ", item.Name );
+        }
+        else
+        {
+          Console.ForegroundColor = ConsoleColor.White;
+          Console.Write( "{0}.{1} ", indexKeys[item.Index], item.Name );
+        }
+      }
+      Console.ResetColor();
 
 
       Console.Write( ">" );
@@ -204,7 +232,7 @@ namespace Ivony.TableGame.ConsoleClient
         var key = Console.ReadKey( true );
 
         optionIndex = ((IList<char>) indexKeys).IndexOf( Char.ToUpperInvariant( key.KeyChar ) );
-        if ( optionIndex < 0 || optionIndex >= options.Length )
+        if ( optionIndex < 0 || optionIndex >= options.Length || options[optionIndex].Disabled )
         {
           Console.Beep( 3000, 200 );
           Thread.Sleep( 50 );
@@ -256,7 +284,7 @@ namespace Ivony.TableGame.ConsoleClient
 
     private async Task QuitGame()
     {
-      await client.GetAsync( host + "QuitGame" );
+      await client.GetAsync( "QuitGame" );
     }
 
 
@@ -265,14 +293,22 @@ namespace Ivony.TableGame.ConsoleClient
     {
       var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
 
-      var response = await client.GetAsync( host, source.Token );
+      var response = await client.GetAsync( "", source.Token );
 
       if ( response.StatusCode != HttpStatusCode.OK )
         throw new Exception( "访问服务器出现错误" );
 
-      return await response.Content.ReadAsJsonAsync();
+      return await response.Content.ReadAsJsonObjectAsync();
     }
 
-  }
 
+
+
+    private class ContinueRunningException : Exception
+    {
+      public ContinueRunningException()
+      {
+      }
+    }
+  }
 }

@@ -1,4 +1,5 @@
 ﻿using Ivony.TableGame.CardGames;
+using Ivony.TableGame.SimpleGames.Rules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,6 @@ namespace Ivony.TableGame.SimpleGames
   public abstract class SimpleGameCard : StandardCard
   {
 
-    public abstract Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target );
-
 
 
     protected void AnnounceSpecialCardUsed( SimpleGamePlayer user )
@@ -21,11 +20,42 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
-    public override Task Play( CardGamePlayer initiatePlayer, object target, CancellationToken token )
+
+    protected virtual async Task<SimpleGamePlayer> CherryTarget( SimpleGamePlayer player, CancellationToken token )
     {
-      var user = (SimpleGamePlayer) initiatePlayer;
-      var targetPlayer = (SimpleGamePlayer) target;
-      return UseCard( user, targetPlayer );
+      var targets = GetTargets( player );
+
+      if ( targets == null || targets.Any() == false )
+        return null;
+
+      if ( targets.Length == 1 )
+        return targets[0];
+
+      var result = await player.PlayerHost.Console.Choose( "请选择使用对象：", targets.Select( item => Option.Create( item ) ).ToArray(), null, token );
+      if ( result == null )
+      {
+        player.PlayerHost.WriteWarningMessage( "操作超时" );
+        result = targets.RandomItem();
+      }
+
+      return result;
+    }
+
+
+    protected SimpleGamePlayer[] GetTargets( SimpleGamePlayer player )
+    {
+      if ( this is IOtherPlayerTarget )
+        return player.Game.Players.Where( item => item != player ).ToArray();
+
+      else if ( this is IAnyPlayerTarget )
+        return player.Game.Players;
+
+      else if ( this is ISelfTarget )
+        return new[] { player };
+
+      else
+        return null;
+
     }
 
     /// <summary>

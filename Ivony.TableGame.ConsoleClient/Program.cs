@@ -16,15 +16,13 @@ namespace Ivony.TableGame.ConsoleClient
   {
 
 
-    private static string host = ConfigurationManager.AppSettings["server"] ?? "http://game.jumony.net/";
-
-
 
 
     static void Main( string[] args )
     {
+      var url = new Uri( ConfigurationManager.AppSettings["server"] ?? "http://game.jumony.net/" );
 
-      var client = new GameClient( host );
+      var client = new GameClient( url );
 
       client.Run().Wait();
 

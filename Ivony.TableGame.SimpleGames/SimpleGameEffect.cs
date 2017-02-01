@@ -20,7 +20,7 @@ namespace Ivony.TableGame.SimpleGames
     /// <returns></returns>
     Task IGameBehaviorEffect.OnBehaviorInitiator( IGameBehaviorEvent gameEvent )
     {
-      return Task.Run( () => { } );
+      return Task.CompletedTask;
     }
 
 
@@ -38,7 +38,7 @@ namespace Ivony.TableGame.SimpleGames
 
     protected virtual Task OnAttack( AttackEvent attackEvent )
     {
-      return Task.Run( () => { } );
+      return Task.CompletedTask;
     }
 
 
@@ -58,7 +58,7 @@ namespace Ivony.TableGame.SimpleGames
 
       }
 
-      return Task.Run( () => { } ); 
+      return Task.CompletedTask; 
     }
 
 

@@ -9,7 +9,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
   /// <summary>
   /// 净化卡
   /// </summary>
-  public class PurifyCard : SimpleGameCard, IAnyPlayerTarget
+  public class PurifyCard : BasicCard, IAnyPlayerTarget
   {
 
     /// <summary>
