@@ -39,8 +39,9 @@ namespace Ivony.TableGame.SimpleGames.Rules
     public override async Task Play( CardGamePlayer initiatePlayer, CancellationToken token )
     {
 
+      var player = (SimpleGamePlayer) initiatePlayer;
 
-      var options = initiatePlayer.Cards.Cast<SimpleGameCard>()
+      var options = player.Cards.Cast<SimpleGameCard>()
         .Select( item => Option.Create( item, item.Name, item.Description, item is ElementAttachmentCard == false ) )
         .ToArray();
 

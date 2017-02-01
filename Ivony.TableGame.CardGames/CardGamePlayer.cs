@@ -32,12 +32,6 @@ namespace Ivony.TableGame.CardGames
     protected object SyncRoot { get; private set; }
 
 
-    /// <summary>
-    /// 玩家当前所持有的卡牌
-    /// </summary>
-    public abstract Card[] Cards { get; }
-
-
 
     /// <summary>
     /// 玩家进行该回合的操作

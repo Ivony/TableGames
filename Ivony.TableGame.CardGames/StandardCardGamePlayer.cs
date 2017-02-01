@@ -47,13 +47,12 @@ namespace Ivony.TableGame.CardGames
     /// <summary>
     /// 获取标准卡牌组
     /// </summary>
-    protected TCard[] StandardCards
+    public TCard[] Cards
     {
       get { return CardCollection.Cast<TCard>().ToArray(); }
     }
 
 
-    public override Card[] Cards { get { return StandardCards; } }
 
 
     /// <summary>
@@ -64,15 +63,18 @@ namespace Ivony.TableGame.CardGames
     protected override async Task PlayCard( CancellationToken token )
     {
 
-      var card = await CherryCard( token );
-      if ( card == null )
-        return;
+      while ( ActionPoint > 0 )
+      {
+        var card = await CherryCard( token );
+        if ( card == null )
+          return;
 
 
-      await card.Play( this, token );
+        await card.Play( this, token );
 
-      CardCollection.RemoveCard( card );
-      ActionPoint -= card.ActionPoint;
+        CardCollection.RemoveCard( card );
+        ActionPoint -= card.ActionPoint;
+      }
     }
 
 
@@ -85,7 +87,7 @@ namespace Ivony.TableGame.CardGames
     protected virtual async Task<TCard> CherryCard( CancellationToken token )
     {
 
-      var options = CreateOptions( StandardCards );
+      var options = CreateOptions( Cards );
 
       if ( options.All( item => item.OptionDescriptor.Disabled ) )//如果所有卡牌都不可用，则此回合不能再行动
         return null;
@@ -100,7 +102,7 @@ namespace Ivony.TableGame.CardGames
       {
         var index = Random.Next( Cards.Length );
         PlayerHost.WriteWarningMessage( "操作超时，随机打出第 {0} 张牌", index + 1 );
-        return StandardCards[index];
+        return Cards[index];
       }
     }
 

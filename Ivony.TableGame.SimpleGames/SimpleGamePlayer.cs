@@ -103,13 +103,6 @@ namespace Ivony.TableGame.SimpleGames
       }
     }
 
-    internal void ClearCards()
-    {
-      CardCollection.Clear();
-      PlayerHost.WriteMessage( "您手上的卡牌已经清空，请等待下次发牌" );
-    }
-
-
 
     private SimpleGamePlayerEffectCollection _effects = new SimpleGamePlayerEffectCollection();
 

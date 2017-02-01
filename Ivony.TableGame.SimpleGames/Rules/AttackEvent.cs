@@ -29,9 +29,15 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
 
 
+    /// <summary>
+    /// 发起攻击的玩家对象
+    /// </summary>
     public SimpleGamePlayer InitiatePlayer { get; }
 
 
+    /// <summary>
+    /// 攻击的目标玩家对象
+    /// </summary>
     public SimpleGamePlayer RecipientPlayer { get; }
 
 
@@ -45,6 +51,11 @@ namespace Ivony.TableGame.SimpleGames.Rules
     public void AnnounceAttackIneffective()
     {
       Game.AnnounceMessage( "{0} 对 {1} 发起攻击，但 {1} 看起来毫发无损。", InitiatePlayer.PlayerName, RecipientPlayer.PlayerName );
+    }
+
+    public void AnnounceDoubleAttack()
+    {
+      Game.AnnounceMessage( "{0} 对 {1} 发起攻击并造成了严重的伤害", InitiatePlayer.PlayerName, RecipientPlayer.PlayerName );
     }
 
 
