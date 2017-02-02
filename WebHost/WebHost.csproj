@@ -79,7 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FirstNames.txt" />
-    <Content Include="Global.asax" />
     <EmbeddedResource Include="LastNames.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -93,9 +92,6 @@
     <Compile Include="PlayerHostCollection.cs" />
     <Compile Include="PlayerHostHttpHandler.cs" />
     <Compile Include="Games.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="JsonContentNegotiator.cs" />
     <Compile Include="PlayerHost.cs" />
     <Compile Include="PlayerNameManager.cs" />

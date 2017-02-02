@@ -164,6 +164,9 @@ namespace Ivony.TableGame.ConsoleClient
 
 
       var response = await client.GetAsync( url );
+      if ( response.IsSuccessStatusCode == false )
+        return;
+
       var responding = (dynamic) await response.Content.ReadAsJsonObjectAsync();
 
 
@@ -175,7 +178,11 @@ namespace Ivony.TableGame.ConsoleClient
 
 
       else
+      {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine( $"遇到错误，服务器端提供了不被识别的响应类型 \"{type}\"。" );
         throw new NotSupportedException();
+      }
 
 
     }

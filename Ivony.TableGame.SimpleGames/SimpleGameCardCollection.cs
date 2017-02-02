@@ -12,11 +12,10 @@ namespace Ivony.TableGame.SimpleGames
   {
 
     private ICardDealer<SimpleGameCard> dealer = new UnlimitedCardDealer<SimpleGameCard>()
-      .Register( () => new AttackCard( 1 ), 200 )
-      .Register( () => new AttackCard( 2 ), 50 )
-      .Register( () => new AttackCard( 3 ), 20 )
-      .Register( () => new AttackCard( 4 ), 5 )
-      .Register( () => new ShieldCard(), 200 )
+      .Register( () => new AttackCard( 1 ), 150 )
+      .Register( () => new AttackCard( 2 ), 20 )
+      .Register( () => new AttackCard( 3 ), 5 )
+      .Register( () => new ShieldCard(), 170 )
       .Register( () => new PeepCard(), 10 )
       .Register( () => new ElementCard( Element.金 ), 20 )
       .Register( () => new ElementCard( Element.木 ), 20 )
