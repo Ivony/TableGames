@@ -158,7 +158,7 @@ namespace Ivony.TableGame.CardGames
       return Task.Run( () =>
         {
           Game.AnnounceSystemMessage( "玩家 {0} 已经阵亡", PlayerName );
-          QuitGame();
+          PlayerHost.TryQuitGame();
         } );
     }
 
