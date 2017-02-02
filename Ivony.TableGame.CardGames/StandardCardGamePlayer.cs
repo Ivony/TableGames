@@ -67,7 +67,7 @@ namespace Ivony.TableGame.CardGames
       {
         var card = await CherryCard( token );
         if ( card == null )
-          return;
+          throw new TimeoutException();
 
 
         await card.Play( this, token );

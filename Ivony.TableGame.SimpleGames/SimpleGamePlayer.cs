@@ -24,7 +24,7 @@ namespace Ivony.TableGame.SimpleGames
       : base( gameHost, playerHost )
     {
       Game = (SimpleGame) gameHost.Game;
-      HealthPoint = 25;
+      HealthPoint = 15;
 
     }
 

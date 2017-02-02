@@ -33,10 +33,7 @@ namespace Ivony.TableGame.SimpleGames
 
       var result = await player.PlayerHost.Console.Choose( "请选择使用对象：", targets.Select( item => Option.Create( item ) ).ToArray(), null, token );
       if ( result == null )
-      {
         player.PlayerHost.WriteWarningMessage( "操作超时" );
-        result = targets.RandomItem();
-      }
 
       return result;
     }

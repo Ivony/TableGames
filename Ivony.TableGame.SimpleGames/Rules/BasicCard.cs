@@ -14,6 +14,8 @@ namespace Ivony.TableGame.SimpleGames.Rules
     {
 
       var target = await CherryTarget( (SimpleGamePlayer) initiatePlayer, token );
+      if ( target == null )
+        throw new TimeoutException();
 
       var user = (SimpleGamePlayer) initiatePlayer;
       var targetPlayer = (SimpleGamePlayer) target;

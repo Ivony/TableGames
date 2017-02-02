@@ -45,10 +45,20 @@ namespace Ivony.TableGame.SimpleGames.Rules
         .Select( item => Option.Create( item, item.Name, item.Description, item is ElementAttachmentCard == false ) )
         .ToArray();
 
-      var card = (ElementAttachmentCard) await initiatePlayer.PlayerHost.Console.Choose( "请选择要使用的卡牌：", options, token );
+      var card = (ElementAttachmentCard) await initiatePlayer.PlayerHost.Console.Choose( "请选择要使用的卡牌：", options, null, token );
+      if ( card == null )
+        throw new TimeoutException();
 
       card.WithElement( Element );
-      await player.PlayCard( card, token );
+      try
+      {
+        await player.PlayCard( card, token );
+      }
+      catch ( TimeoutException )
+      {
+        card.WithElement( null );
+        throw;
+      }
     }
 
 

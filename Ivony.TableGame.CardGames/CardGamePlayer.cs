@@ -47,7 +47,13 @@ namespace Ivony.TableGame.CardGames
 
       await OnBeforePlayCard( token );
 
-      await PlayCard( token );
+      try
+      {
+        await PlayCard( token );
+      }
+      catch ( TimeoutException )
+      {
+      }
 
       await OnAfterPlayCard( token );
 
