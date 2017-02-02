@@ -136,7 +136,7 @@ namespace Ivony.TableGame.SimpleGames
     /// <returns>用于等待处理完成的 Task 对象</returns>
     protected override Task OnTimeout()
     {
-      Game.AnnounceMessage( $"{PlayerName} 面临严峻的局面，陷入了深深地沉思，以至于忘记了时间。天神见状想用一道惊雷唤醒，却将其雷了个外焦里嫩。" );
+      Game.AnnounceMessage( $"{PlayerName} 面临严峻的局面，陷入了深深地沉思，忽然天空中出现了一道惊雷，将其雷了个外焦里嫩。" );
 
       HealthPoint -= 1;
       PlayerHost.WriteWarningMessage( $"操作超时，生命值减少 1 点，剩余生命值: {HealthPoint}" );

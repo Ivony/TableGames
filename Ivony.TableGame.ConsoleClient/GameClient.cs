@@ -77,6 +77,10 @@ namespace Ivony.TableGame.ConsoleClient
 
 
         }
+        catch ( ContinueRunningException )
+        {
+          continue;
+        }
         catch ( TaskCanceledException )
         {
           Console.ForegroundColor = ConsoleColor.Red;
@@ -113,6 +117,8 @@ namespace Ivony.TableGame.ConsoleClient
       var response = await client.GetAsync( "RequiredFeatures" );
 
       var features = (await response.Content.ReadAsJsonAsync()).ToObject<string[]>();
+      if ( features == null )
+        throw new ContinueRunningException();
 
       if ( supportedFeatures.IsSupersetOf( features ) )
         return;

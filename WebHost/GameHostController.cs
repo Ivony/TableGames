@@ -115,7 +115,7 @@ namespace Ivony.TableGame.WebHost
     [HttpGet]
     public string[] RequiredFeatures()
     {
-      return PlayerHost.Player.Game.GetRequiredFeatures().ToArray();
+      return PlayerHost.Player?.Game?.GetRequiredFeatures()?.ToArray();
     }
 
 

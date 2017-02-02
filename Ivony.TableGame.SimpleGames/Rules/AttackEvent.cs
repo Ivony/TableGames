@@ -60,7 +60,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
     public void AnnounceDoubleAttack()
     {
-      Game.AnnounceMessage( "{0} 对 {1} 发起攻击， {1} 看起来弱不禁风，整个人像树叶一样的飞了出去。", InitiatePlayer.PlayerName, RecipientPlayer.PlayerName );
+      Game.AnnounceMessage( "{0} 对 {1} 发起攻击， {1} 整个人像树叶一样的飞了出去。", InitiatePlayer.PlayerName, RecipientPlayer.PlayerName );
     }
 
 
