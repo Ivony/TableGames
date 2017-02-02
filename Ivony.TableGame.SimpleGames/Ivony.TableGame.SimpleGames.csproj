@@ -43,11 +43,13 @@
     <Compile Include="Rules\AttackCard.cs" />
     <Compile Include="Rules\AttackEvent.cs" />
     <Compile Include="Rules\BasicCard.cs" />
+    <Compile Include="Rules\ConfineEffect.cs" />
     <Compile Include="Rules\ExchangeCard.cs" />
     <Compile Include="ISimpleGameEffect.cs" />
     <Compile Include="Rules\Element.cs" />
     <Compile Include="Rules\ElementAttachmentCard.cs" />
     <Compile Include="Rules\ElementCard.cs" />
+    <Compile Include="Rules\ShieldEffect.cs" />
     <Compile Include="Rules\Targets.cs" />
     <Compile Include="Rules\PeepCard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

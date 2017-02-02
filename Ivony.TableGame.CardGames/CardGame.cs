@@ -178,9 +178,9 @@ namespace Ivony.TableGame.CardGames
     /// <summary>
     /// 广播一个游戏事件
     /// </summary>
-    /// <param name="gameEvent"></param>
-    /// <returns></returns>
-    public virtual async Task OnGameEvent( IGameEvent gameEvent )
+    /// <param name="gameEvent">要广播的游戏事件</param>
+    /// <returns>用于等待事件广播完毕的 Task 对象</returns>
+    public virtual async Task SendGameEvent( IGameEvent gameEvent )
     {
 
       var parallelEvent = gameEvent as IParallelGameEvent;
@@ -196,6 +196,12 @@ namespace Ivony.TableGame.CardGames
       {
         foreach ( var player in Players.Cast<CardGamePlayer>() )
           await player.OnGameEvent( gameEvent );
+      }
+
+      var handledEvent = gameEvent as IGameNeedHandledEvent;
+      if ( handledEvent != null )
+      {
+        await handledEvent.HandleEvent();
       }
     }
 

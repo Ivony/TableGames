@@ -51,11 +51,27 @@ namespace Ivony.TableGame.SimpleGames
 
     protected override async Task PlayCard( CancellationToken token )
     {
+
+      var confine = Effects.OfType<ConfineEffect>().FirstOrDefault();
+      if ( confine != null )
+      {
+        Game.AnnounceMessage( $"只见 {PlayerName} 动弹不得，什么也做不了。" );
+        PlayerHost.WriteMessage( "您被禁锢一回合，无法出牌" );
+        Effects.RemoveEffect( confine );
+        return;
+      }
+
       ActionPoint = 1;
       DealCards();
 
 
       await base.PlayCard( token );
+    }
+
+    internal async Task PlayCard( ElementAttachmentCard card, CancellationToken token )
+    {
+      await card.Play( this, token );
+      CardCollection.RemoveCard( card );
     }
 
 
@@ -101,6 +117,16 @@ namespace Ivony.TableGame.SimpleGames
           PlayerHost.WriteWarningMessage( "您当前的 {0} 效果已经被解除", effect.Name );
 
       }
+    }
+
+
+    /// <summary>
+    /// 禁锢玩家一个回合
+    /// </summary>
+    internal void Confine()
+    {
+      PlayerHost.WriteWarningMessage( "您被禁锢一个回合" );
+      SetEffect( new ConfineEffect() );
     }
 
 

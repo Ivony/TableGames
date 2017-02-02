@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
-  public class AttackEvent : GameEventBase, IGameBehaviorEvent
+  public class AttackEvent : GameEventBase, IGameBehaviorEvent, IGameNeedHandledEvent
   {
     public AttackEvent( SimpleGamePlayer user, SimpleGamePlayer target, Element element, int point )
     {
@@ -47,6 +48,10 @@ namespace Ivony.TableGame.SimpleGames.Rules
     public int AttackPoint { get; }
 
 
+    public void AnnounceNormalAttack()
+    {
+      InitiatePlayer.Game.AnnounceMessage( "{0} 对 {1} 发起{2}攻击。", InitiatePlayer.PlayerName, RecipientPlayer.PlayerName, Element == null ? "" : "某种五行属性的" );
+    }
 
     public void AnnounceAttackIneffective()
     {
@@ -66,6 +71,18 @@ namespace Ivony.TableGame.SimpleGames.Rules
     {
       get;
       set;
+    }
+
+
+    public Task HandleEvent()
+    {
+      if ( Handled )
+        return Task.CompletedTask;
+
+      RecipientPlayer.HealthPoint -= AttackPoint;
+      AnnounceNormalAttack();
+      RecipientPlayer.PlayerHost.WriteWarningMessage( "您受到攻击，HP 减少 {0} 点，目前 HP {1}", AttackPoint, RecipientPlayer.HealthPoint );
+      return Task.CompletedTask;
     }
 
   }

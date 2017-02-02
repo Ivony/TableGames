@@ -23,11 +23,12 @@ namespace Ivony.TableGame.SimpleGames
   }
 
   /// <summary>
-  /// 定义一种祝福效果
+  /// 定义一种增益效果
   /// </summary>
   public interface IBlessEffect : IEffect
   {
   }
+
 
   /// <summary>
   /// 定义一种防御效果
@@ -35,4 +36,5 @@ namespace Ivony.TableGame.SimpleGames
   public interface IDefenceEffect : IEffect
   {
   }
+
 }

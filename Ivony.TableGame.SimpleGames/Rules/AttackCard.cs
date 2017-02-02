@@ -30,7 +30,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
     public override string Name
     {
-      get { return string.Format( "攻击", Point ); }
+      get { return Element?.Name + "攻击"; }
     }
 
     public override string Description
@@ -40,16 +40,8 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
     public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
     {
-
       var attackEvent = new AttackEvent( user, target, Element, Point );
-      await user.Game.OnGameEvent( attackEvent );
-
-      if ( !attackEvent.Handled )
-      {
-        target.HealthPoint -= Point;
-        user.Game.AnnounceMessage( "{0} 对 {1} 发起{2}攻击。", user.PlayerName, target.PlayerName, Element == null ? "" : Element.Name + "属性" );
-        target.PlayerHost.WriteWarningMessage( "您受到攻击，HP 减少 {0} 点，目前 HP {1}", Point, target.HealthPoint );
-      }
+      await user.Game.SendGameEvent( attackEvent );
     }
   }
 }

@@ -48,7 +48,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
       var card = (ElementAttachmentCard) await initiatePlayer.PlayerHost.Console.Choose( "请选择要使用的卡牌：", options, token );
 
       card.WithElement( Element );
-      await card.Play( initiatePlayer, token );
+      await player.PlayCard( card, token );
     }
 
 

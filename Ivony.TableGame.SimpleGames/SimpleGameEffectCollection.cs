@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Ivony.TableGame;
 using Ivony.TableGame.CardGames;
+using Ivony.TableGame.SimpleGames.Rules;
 
 namespace Ivony.TableGame.SimpleGames
 {
@@ -13,18 +14,15 @@ namespace Ivony.TableGame.SimpleGames
 
 
 
-    public IBlessEffect BlessEffect { get { return _blessEffectSlot.Effect; } }
-    public IDefenceEffect DefenceEffect { get { return _defenceEffectSlot.Effect; } }
-
-
 
     private TypedEffectSlot<IBlessEffect> _blessEffectSlot = new TypedEffectSlot<IBlessEffect>();
-    private TypedEffectSlot<IDefenceEffect> _defenceEffectSlot = new TypedEffectSlot<IDefenceEffect>();
+    private TypedEffectSlot<ConfineEffect> _confineEffectSlot = new TypedEffectSlot<ConfineEffect>();
+    private TypedEffectSlot<ShieldEffect> _shieldEffectSlot = new TypedEffectSlot<ShieldEffect>();
 
 
     public SimpleGamePlayerEffectCollection()
     {
-      RegisterSlot( _blessEffectSlot, _defenceEffectSlot );
+      RegisterSlot( _blessEffectSlot, _shieldEffectSlot, _confineEffectSlot );
     }
   }
 }
