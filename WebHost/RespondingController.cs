@@ -30,7 +30,6 @@ namespace Ivony.TableGame.WebHost
       return base.ExecuteAsync( controllerContext, cancellationToken );
     }
 
-    [HttpGet]
     public object GetResponding( Guid id )
     {
       var responding = PlayerHost.Responding;
@@ -43,10 +42,9 @@ namespace Ivony.TableGame.WebHost
 
 
 
-    [HttpPost]
     public async Task<object> PostResponding( Guid id )
     {
-      var responding = GetResponding( id );
+      var responding = PlayerHost.Responding;
 
       if ( responding == null )
         return NotFound();

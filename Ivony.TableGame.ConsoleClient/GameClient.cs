@@ -218,23 +218,21 @@ namespace Ivony.TableGame.ConsoleClient
       int optionIndex;
 
 
+      while ( Console.KeyAvailable )
+        Console.ReadKey( true );
       Console.Beep( 1000, 500 );
+
 
       while ( true )
       {
-
-        while ( Console.KeyAvailable )
-          Console.ReadKey( true );
-
-
-        do
+        while ( Console.KeyAvailable == false )
         {
           if ( await EnsureResponding( url ) == false )
             return;
 
           await Task.Delay( 100 );
+        };
 
-        } while ( Console.KeyAvailable == false );
 
         var key = Console.ReadKey( true );
 

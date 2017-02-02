@@ -103,7 +103,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
           attackEvent.AnnounceDoubleAttack();
           recipient.HealthPoint -= attackEvent.AttackPoint * 2;
 
-          recipient.PlayerHost.WriteWarningMessage( $"您受到{attackEvent.Element.Name}属性的攻击，与您的盾牌属性相克，造成了双倍伤害 {attackEvent.AttackPoint * 2} 点，目前 HP 还剩 {recipient.HealthPoint} 点。" );
+          recipient.PlayerHost.WriteWarningMessage( $"您受到{attackEvent.Element.Name}属性的攻击，与您的盾牌属性相克，造成了双倍伤害 {attackEvent.AttackPoint * 2} 点，目前生命值 {recipient.HealthPoint} 点。" );
         }
 
         else if ( attackEvent.Element.IsReinforce( Element ) )
@@ -111,7 +111,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
           attackEvent.AnnounceAttackIneffective();
           recipient.HealthPoint += attackEvent.AttackPoint;
 
-          recipient.PlayerHost.WriteWarningMessage( $"您受到{attackEvent.Element.Name}属性的攻击，与您的盾牌属性相生，所受伤害变为治疗，增加 HP {attackEvent.AttackPoint} 点，目前 HP 还剩 {recipient.HealthPoint} 点。" );
+          recipient.PlayerHost.WriteWarningMessage( $"您受到{attackEvent.Element.Name}属性的攻击，与您的盾牌属性相生，所受伤害变为治疗，增加生命值 {attackEvent.AttackPoint} 点，目前生命值 {recipient.HealthPoint} 点。" );
         }
         else
         {

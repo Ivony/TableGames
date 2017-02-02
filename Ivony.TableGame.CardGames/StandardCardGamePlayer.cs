@@ -93,17 +93,7 @@ namespace Ivony.TableGame.CardGames
         return null;
 
       var card = await PlayerHost.Console.Choose( "请出牌：", options, null, token );
-
-      if ( card != null )
-        return card;
-
-
-      lock ( SyncRoot )
-      {
-        var index = Random.Next( Cards.Length );
-        PlayerHost.WriteWarningMessage( "操作超时，随机打出第 {0} 张牌", index + 1 );
-        return Cards[index];
-      }
+      return card;
     }
 
 

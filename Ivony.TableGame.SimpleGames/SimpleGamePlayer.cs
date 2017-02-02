@@ -130,6 +130,20 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
+    /// <summary>
+    /// 重写 OnTimeout 方法处理玩家超时。
+    /// </summary>
+    /// <returns>用于等待处理完成的 Task 对象</returns>
+    protected override Task OnTimeout()
+    {
+      Game.AnnounceMessage( $"{PlayerName} 面临严峻的局面，陷入了深深地沉思，以至于忘记了时间。天神见状想用一道惊雷唤醒，却将其雷了个外焦里嫩。" );
+
+      HealthPoint -= 1;
+      PlayerHost.WriteWarningMessage( $"操作超时，生命值减少 1 点，剩余生命值: {HealthPoint}" );
+      return Task.CompletedTask;
+    }
+
+
     private SimpleGamePlayerEffectCollection _effects = new SimpleGamePlayerEffectCollection();
 
     public override IEffectCollection Effects

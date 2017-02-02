@@ -50,17 +50,17 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
     public void AnnounceNormalAttack()
     {
-      InitiatePlayer.Game.AnnounceMessage( "{0} 对 {1} 发起{2}攻击。", InitiatePlayer.PlayerName, RecipientPlayer.PlayerName, Element == null ? "" : "某种五行属性的" );
+      InitiatePlayer.Game.AnnounceMessage( "{0} 对 {1} 发起攻击， {1} 胸口一闷，哇的吐了一口鲜血。", InitiatePlayer.PlayerName, RecipientPlayer.PlayerName );
     }
 
     public void AnnounceAttackIneffective()
     {
-      Game.AnnounceMessage( "{0} 对 {1} 发起攻击，但 {1} 看起来毫发无损。", InitiatePlayer.PlayerName, RecipientPlayer.PlayerName );
+      Game.AnnounceMessage( "{0} 对 {1} 发起攻击，但 {1} 看起来毫发无损，随手整理了一下被风吹乱的秀发。", InitiatePlayer.PlayerName, RecipientPlayer.PlayerName );
     }
 
     public void AnnounceDoubleAttack()
     {
-      Game.AnnounceMessage( "{0} 对 {1} 发起攻击并造成了严重的伤害", InitiatePlayer.PlayerName, RecipientPlayer.PlayerName );
+      Game.AnnounceMessage( "{0} 对 {1} 发起攻击， {1} 看起来弱不禁风，整个人像树叶一样的飞了出去。", InitiatePlayer.PlayerName, RecipientPlayer.PlayerName );
     }
 
 
@@ -81,7 +81,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
       RecipientPlayer.HealthPoint -= AttackPoint;
       AnnounceNormalAttack();
-      RecipientPlayer.PlayerHost.WriteWarningMessage( "您受到攻击，HP 减少 {0} 点，目前 HP {1}", AttackPoint, RecipientPlayer.HealthPoint );
+      RecipientPlayer.PlayerHost.WriteWarningMessage( "您受到攻击，生命值减少 {0} 点，目前生命值 {1}", AttackPoint, RecipientPlayer.HealthPoint );
       return Task.CompletedTask;
     }
 

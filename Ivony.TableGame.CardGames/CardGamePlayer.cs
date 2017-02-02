@@ -53,13 +53,12 @@ namespace Ivony.TableGame.CardGames
       }
       catch ( TimeoutException )
       {
+        await OnTimeout();
       }
 
       await OnAfterPlayCard( token );
 
     }
-
-
 
     protected virtual Task OnBeforePlayCard( CancellationToken token )
     {
@@ -72,6 +71,18 @@ namespace Ivony.TableGame.CardGames
 
     protected virtual Task OnAfterPlayCard( CancellationToken token )
     {
+      return Task.CompletedTask;
+    }
+
+
+    /// <summary>
+    /// 派生类重写此方法处理玩家操作超时。
+    /// </summary>
+    /// <returns>用于等待处理完成的 Task 对象</returns>
+    protected virtual Task OnTimeout()
+    {
+      PlayerHost.WriteWarningMessage( "操作超时。" );
+      Game.AnnounceMessage( $"玩家 {PlayerName} 操作超时" );
       return Task.CompletedTask;
     }
 
