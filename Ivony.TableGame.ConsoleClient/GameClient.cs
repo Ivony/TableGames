@@ -255,14 +255,13 @@ namespace Ivony.TableGame.ConsoleClient
       }
 
 
-      var response = await SendResponding( url, optionIndex.ToString() );
-      if ( response.StatusCode != HttpStatusCode.OK )
-      {
-        RespondingTimeout();
-        return;
-      }
+      var indexKey = indexKeys[optionIndex];
+      Console.Write( indexKey + "\b" );
 
-      Console.WriteLine();
+      if ( await SendResponding( url, optionIndex.ToString() ) )
+      {
+        Console.WriteLine( indexKey + "." + options[optionIndex].Name );
+      }
     }
 
     private async Task<bool> EnsureResponding( string url )
@@ -283,12 +282,22 @@ namespace Ivony.TableGame.ConsoleClient
       Console.Beep( 3700, 700 );
     }
 
-    private async Task<HttpResponseMessage> SendResponding( string url, string message )
+    private async Task<bool> SendResponding( string url, string message )
     {
       var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
 
       var content = new StringContent( message, Encoding.UTF8, "text/responding" );
-      return await client.PostAsync( url, content, source.Token );
+      var response = await client.PostAsync( url, content, source.Token );
+
+      if ( response.StatusCode != HttpStatusCode.OK )
+      {
+        RespondingTimeout();
+        return false;
+      }
+
+      else
+        return true;
+
     }
 
 
