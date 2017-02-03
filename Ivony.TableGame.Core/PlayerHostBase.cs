@@ -114,6 +114,7 @@ namespace Ivony.TableGame
           return false;
 
         Player.QuitGame();
+        Player = null;
         return true;
       }
     }

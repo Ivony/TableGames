@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
@@ -18,7 +19,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
     /// <param name="user">发起玩家</param>
     /// <param name="target">目标玩家</param>
     /// <returns>获取用于等待使用结束的 Task 对象</returns>
-    public override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
+    public override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target, CancellationToken token )
     {
       AnnounceSpecialCardUsed( user );
       target.Purify();

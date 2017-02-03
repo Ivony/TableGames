@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
@@ -38,7 +39,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
       get { return string.Format( "攻击任何一个玩家，造成伤害", Point ); }
     }
 
-    public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
+    public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target, CancellationToken token )
     {
       var attackEvent = new AttackEvent( user, target, Element, Point );
       await user.Game.SendGameEvent( attackEvent );

@@ -53,7 +53,10 @@ namespace Ivony.TableGame.ConsoleClient
           ShowMessages( status.Messages );
 
           if ( _nameEnsured == false )
+          {
             await EnsureName();
+            continue;
+          }
 
           if ( status.Gaming == false )
           {
@@ -123,20 +126,21 @@ namespace Ivony.TableGame.ConsoleClient
       if ( _nameEnsured )
         return;
 
-      var name = await client.GetStringAsync( "Player/Name" );
+      var response = await client.GetAsync( "Player/Name" );
+      var name = (string) await response.Content.ReadAsJsonAsync();
       Console.Write( "您当前在游戏中的昵称是：" );
       Console.ForegroundColor = ConsoleColor.White;
-      Console.WriteLine( name );
+      Console.Write( name );
       Console.ResetColor();
 
-      Console.WriteLine( "如果您不喜欢这个昵称，请在下面输入一个，如果您接受这个昵称，请直接回车。" );
+      Console.WriteLine( "。如果您不喜欢这个昵称，请在下面输入一个，如果您接受这个昵称，请直接回车。" );
       name = Console.ReadLine();
       if ( string.IsNullOrWhiteSpace( name ) )
       {
         _nameEnsured = true;
         return;
       }
-      var response = await client.GetAsync( "Player/Name?name=" + name );
+      response = await client.GetAsync( "Player/Name?name=" + name );
       if ( response.IsSuccessStatusCode )
       {
         _nameEnsured = true;

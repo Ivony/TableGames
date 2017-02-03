@@ -12,18 +12,14 @@ namespace Ivony.TableGame.SimpleGames.Rules
   {
     public override async Task Play( CardGamePlayer initiatePlayer, CancellationToken token )
     {
+      var player = (SimpleGamePlayer) initiatePlayer;
 
-      var target = await CherryTarget( (SimpleGamePlayer) initiatePlayer, token );
-      if ( target == null )
-        throw new TimeoutException();
-
-      var user = (SimpleGamePlayer) initiatePlayer;
-      var targetPlayer = (SimpleGamePlayer) target;
-      await UseCard( user, targetPlayer );
+      var target = await CherryTarget( player, token );
+      await UseCard( player, (SimpleGamePlayer) target, token );
     }
 
 
-    public abstract Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target );
+    public abstract Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target, CancellationToken token );
 
   }
 }

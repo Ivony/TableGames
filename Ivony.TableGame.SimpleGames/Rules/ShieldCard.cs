@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
   public class ShieldCard : ElementAttachmentCard, ISelfTarget
   {
-    public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
+    public override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target, CancellationToken token )
     {
 
       if ( Element == Element.水 )
@@ -18,26 +19,31 @@ namespace Ivony.TableGame.SimpleGames.Rules
       AnnounceSpecialCardUsed( user );
 
       string message;
-      if ( Element == null )
-        message = $"{user.PlayerName} 对您使用了盾牌，下一次普通攻击将对您无效。";
+
+      if ( Element == Element.金 )
+        message = $"您使用了金属性盾牌，可以抵挡三次普通攻击。";
+
+      else if ( Element == Element.木 )
+        message = $"您使用了木属性盾牌，下一次普通攻击无效，且为您恢复生命。";
+
+      else if ( Element == Element.水 )
+        message = $"您使用了水属性盾牌，下一次普通攻击无效，且净化攻击者。";
+
+      else if ( Element == Element.火 )
+        message = $"您使用了火属性盾牌，下一次普通攻击无效，且给予攻击者伤害。";
+
+      else if ( Element == Element.土 )
+        message = $"您使用了水属性盾牌，下一次普通攻击无效，且攻击者将无法行动一个回合。";
+
+      else if ( Element == null )
+        message = $"您使用了盾牌，下一次普通攻击将对您无效。";
 
       else
-      {
-        if ( Element == Element.金 )
-          message = $"{user.PlayerName} 对您使用了金属性盾牌，可以抵挡五次普通攻击。";
+        throw new InvalidOperationException( "未知的属性" );
 
-        if ( Element == Element.木 )
-          message = $"{user.PlayerName} 对您使用了木属性盾牌，下一次普通攻击无效，且为您恢复生命。";
+      target.PlayerHost.WriteMessage( message );
 
-        if ( Element == Element.水 )
-          message = $"{user.PlayerName} 对您使用了水属性盾牌，下一次普通攻击无效，且净化攻击者。";
-
-        if ( Element == Element.火 )
-          message = $"{user.PlayerName} 对您使用了火属性盾牌，下一次普通攻击无效，且给予攻击者伤害。";
-
-        if ( Element == Element.土 )
-          message = $"{user.PlayerName} 对您使用了水属性盾牌，下一次普通攻击无效，且攻击者将无法行动一个回合。";
-      }
+      return Task.CompletedTask;
     }
 
 

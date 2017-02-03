@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
   public class ExchangeCard : BasicCard, ISelfTarget
   {
-    public override async Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
+    public override async Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target, CancellationToken token )
     {
 
     }

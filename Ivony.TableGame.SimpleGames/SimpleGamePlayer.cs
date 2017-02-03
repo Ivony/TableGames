@@ -28,6 +28,44 @@ namespace Ivony.TableGame.SimpleGames
 
     }
 
+    /// <summary>
+    /// 丢弃指定的卡牌
+    /// </summary>
+    /// <param name="predicate">确定卡牌是不是要丢弃的方法</param>
+    internal void DiscardCards( Func<SimpleGameCard, bool> predicate )
+    {
+      foreach ( var card in Cards.Where( predicate ).ToArray() )
+        CardCollection.RemoveCard( card );
+
+      DealCards();
+    }
+
+    /// <summary>
+    /// 实现卡牌被抢夺的方法
+    /// </summary>
+    /// <param name="user">抢夺者</param>
+    /// <param name="token">取消标识</param>
+    /// <returns>用于等待的 Task 对象</returns>
+    internal async Task StealCardBy( SimpleGamePlayer user, CancellationToken token )
+    {
+      DealCards();
+
+      var options = Cards.Select( item =>
+      {
+        var normal = item is AttackCard || item is ShieldCard;
+        return Option.Create( item, normal ? "普通牌" : "特殊牌", normal ? "一张普通卡牌" : "一张特殊卡牌" );
+      } ).ToArray();
+
+      var card = await user.PlayerHost.Console.Choose( "请选择要抢夺的卡牌：", options, null, token );
+      if ( card == null )
+        throw new TimeoutException();
+
+      CardCollection.RemoveCard( card );
+      PlayerHost.WriteWarningMessage( $"一天深夜，你回到家，发现被你藏在绝密地方的 {card.Name} 卡牌被人偷走了。" );
+      user.CardCollection.AddCard( card );
+      user.PlayerHost.WriteMessage( $"您偷到了一张 {card.Name} 卡牌" );
+    }
+
 
     /// <summary>
     /// 获取当前参加的游戏对象

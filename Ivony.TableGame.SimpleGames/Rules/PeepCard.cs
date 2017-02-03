@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
@@ -11,7 +12,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
 
 
-    public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target )
+    public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target, CancellationToken token )
     {
       foreach ( var player in user.Game.Players.Where( item => item != user ) )
       {
