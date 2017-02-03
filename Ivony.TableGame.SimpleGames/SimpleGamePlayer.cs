@@ -41,9 +41,9 @@ namespace Ivony.TableGame.SimpleGames
     }
 
     /// <summary>
-    /// 实现卡牌被抢夺的方法
+    /// 实现卡牌被盗窃的方法
     /// </summary>
-    /// <param name="user">抢夺者</param>
+    /// <param name="user">盗窃者</param>
     /// <param name="token">取消标识</param>
     /// <returns>用于等待的 Task 对象</returns>
     internal async Task StealCardBy( SimpleGamePlayer user, CancellationToken token )
@@ -56,7 +56,7 @@ namespace Ivony.TableGame.SimpleGames
         return Option.Create( item, normal ? "普通牌" : "特殊牌", normal ? "一张普通卡牌" : "一张特殊卡牌" );
       } ).ToArray();
 
-      var card = await user.PlayerHost.Console.Choose( "请选择要抢夺的卡牌：", options, null, token );
+      var card = await user.PlayerHost.Console.Choose( "请选择要盗取的卡牌：", options, null, token );
       if ( card == null )
         throw new TimeoutException();
 
