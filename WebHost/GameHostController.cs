@@ -55,13 +55,6 @@ namespace Ivony.TableGame.WebHost
 
 
 
-    [HttpGet]
-    public object Rename( string name )
-    {
-      return PlayerHost.TrySetName( name );
-    }
-
-
 
 
     [HttpGet]

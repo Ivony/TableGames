@@ -46,6 +46,7 @@ namespace Ivony.TableGame.WebHost
 
 
       config.Routes.MapHttpRoute( name: "Responding", routeTemplate: "Responding/{id}", defaults: new { controller = "Responding" } );
+      config.Routes.MapHttpRoute( name: "Player", routeTemplate: "Player/{action}", defaults: new { controller = "Player" } );
     }
   }
 }

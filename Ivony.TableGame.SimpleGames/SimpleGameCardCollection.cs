@@ -26,7 +26,7 @@ namespace Ivony.TableGame.SimpleGames
 
     public void DealCards()
     {
-      DealCards( dealer, Math.Max( 10 - Count, 0 ) );
+      DealCards( dealer, Math.Max( 7 - Count, 0 ) );
     }
 
   }

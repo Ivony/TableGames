@@ -39,6 +39,7 @@ namespace Ivony.TableGame.ConsoleClient
     public async Task Run()
     {
 
+
       while ( true )
       {
         var lastRequestTime = DateTime.UtcNow;
@@ -47,6 +48,8 @@ namespace Ivony.TableGame.ConsoleClient
         try
         {
 
+          if ( _nameEnsured == false )
+            await EnsureName();
           var status = await GetStatus( client );
 
           ShowMessages( status.Messages );
@@ -58,11 +61,11 @@ namespace Ivony.TableGame.ConsoleClient
 
             var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
             await client.GetAsync( "Game?name=" + name, source.Token );
+            await EnsureCompatibility();
+
             continue;
           }
 
-
-          await EnsureCompatibility();
 
           if ( status.RespondingUrl != null )
           {
@@ -109,8 +112,43 @@ namespace Ivony.TableGame.ConsoleClient
     }
 
 
+    private bool _nameEnsured = false;
+    /// <summary>
+    /// 确认玩家名称
+    /// </summary>
+    /// <returns></returns>
+    private async Task EnsureName()
+    {
+      if ( _nameEnsured )
+        return;
+
+      var name = await client.GetStringAsync( "Player/Name" );
+      Console.Write( "您当前在游戏中的昵称是：" );
+      Console.ForegroundColor = ConsoleColor.White;
+      Console.WriteLine( name );
+      Console.ResetColor();
+
+      Console.WriteLine( "如果您不喜欢这个昵称，请在下面输入一个，如果您接受这个昵称，请直接回车。" );
+      name = Console.ReadLine();
+      if ( string.IsNullOrWhiteSpace( name ) )
+      {
+        _nameEnsured = true;
+        return;
+      }
+      var response = await client.GetAsync( "Player/Name?name=" + name );
+      if ( response.IsSuccessStatusCode )
+      {
+        _nameEnsured = true;
+        return;
+      }
+    }
+
     private static readonly HashSet<string> supportedFeatures = new HashSet<string>( new[] { "OptionsResponding" } );
 
+    /// <summary>
+    /// 确认客户端兼容性
+    /// </summary>
+    /// <returns></returns>
     private async Task EnsureCompatibility()
     {
 
