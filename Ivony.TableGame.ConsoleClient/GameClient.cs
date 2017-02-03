@@ -48,11 +48,12 @@ namespace Ivony.TableGame.ConsoleClient
         try
         {
 
-          if ( _nameEnsured == false )
-            await EnsureName();
           var status = await GetStatus( client );
 
           ShowMessages( status.Messages );
+
+          if ( _nameEnsured == false )
+            await EnsureName();
 
           if ( status.Gaming == false )
           {
