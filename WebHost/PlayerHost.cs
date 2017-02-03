@@ -50,11 +50,9 @@ namespace Ivony.TableGame.WebHost
 
     internal void ShowInitializeInfo()
     {
-      this.WriteSystemMessage( "欢迎您参与到通用卡牌游戏引擎实例游戏项目，您在游戏中的昵称是 {0}，希望您能喜欢。", Name );
-      this.WriteSystemMessage( "通用卡牌游戏引擎可以帮助您快速的构建您想象中的卡牌游戏，其项目通过 Apache 2.0 协议开源。" );
+      this.WriteSystemMessage( "欢迎您参与到通用桌面游戏引擎实例游戏项目，您在游戏中的昵称是 {0}，希望您能喜欢。", Name );
+      this.WriteSystemMessage( "通用桌面游戏引擎可以帮助您快速的构建您想象中的桌面游戏，其项目通过 Apache 2.0 协议开源。" );
       this.WriteSystemMessage( "项目地址： https://github.com/Ivony/TableGames" );
-      this.WriteSystemMessage( "特别感谢群友 @谁在秋千 对项目的大力支持和开发的 Web 游戏客户端。" );
-      this.WriteSystemMessage( "记得点赞哦，，，，，，" );
 
     }
 
