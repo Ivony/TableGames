@@ -28,7 +28,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
     public override string Name
     {
-      get { return "盾牌"; }
+      get { return Element?.Name + "盾牌"; }
     }
 
     public override string Description

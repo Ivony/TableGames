@@ -33,7 +33,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
         message = $"您使用了火属性盾牌，下一次普通攻击无效，且给予攻击者伤害。";
 
       else if ( Element == Element.土 )
-        message = $"您使用了水属性盾牌，下一次普通攻击无效，且攻击者将无法行动一个回合。";
+        message = $"您使用了土属性盾牌，下一次普通攻击无效，且攻击者将无法行动一个回合。";
 
       else if ( Element == null )
         message = $"您使用了盾牌，下一次普通攻击将对您无效。";
