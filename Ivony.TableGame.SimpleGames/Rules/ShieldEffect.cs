@@ -14,7 +14,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
     {
       Element = element;
       if ( Element == Element.金 )
-        times = 5;
+        times = 3;
 
       else
         times = 1;
@@ -92,6 +92,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
         {
           recipient.PlayerHost.WriteWarningMessage( $"您的盾牌完全无法抵挡{attackEvent.Element}属性的攻击，盾牌已经被击碎" );
           attackEvent.Handled = false;
+          recipient.Effects.RemoveEffect( this );
         }
         else if ( attackEvent.Element == Element )
         {
