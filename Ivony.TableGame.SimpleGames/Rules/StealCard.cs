@@ -9,7 +9,7 @@ using Ivony.TableGame.CardGames;
 namespace Ivony.TableGame.SimpleGames.Rules
 {
   /// <summary>
-  /// 盗窃卡牌
+  /// 窃取卡牌
   /// </summary>
   public class StealCard : BasicCard, IOtherPlayerTarget
   {
@@ -20,7 +20,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
     public override string Name
     {
-      get { return "盗窃"; }
+      get { return "窃取"; }
     }
 
     public override async Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target, CancellationToken token )

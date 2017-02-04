@@ -66,7 +66,7 @@ namespace Ivony.TableGame.SimpleGames
 
     private void NotifyCardsHasBeenReset()
     {
-      PlayerHost.WriteWarningMessage( "一个魔术师借了你所有卡牌表演魔术，一阵闪光过后，你的卡牌和魔术师都消失了，空中飘落下来一堆你没见过的卡牌。" );
+      PlayerHost.WriteWarningMessage( "一个魔术师借了你所有卡牌表演魔术，一阵闪光过后你的卡牌和魔术师都消失了，空中飘下来几张你没见过的卡牌。" );
     }
 
     /// <summary>

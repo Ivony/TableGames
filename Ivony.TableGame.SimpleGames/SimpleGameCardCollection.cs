@@ -13,9 +13,9 @@ namespace Ivony.TableGame.SimpleGames
 
     private ICardDealer<SimpleGameCard> dealer = new UnlimitedCardDealer<SimpleGameCard>()
       .Register( () => new AttackCard( 1 ), 150 )
-      .Register( () => new AttackCard( 2 ), 20 )
+      .Register( () => new AttackCard( 2 ), 30 )
       .Register( () => new AttackCard( 3 ), 5 )
-      .Register( () => new ShieldCard(), 170 )
+      .Register( () => new ShieldCard(), 150 )
 
       .Register( () => new HealingCard( 2 ), 10 )
       .Register( () => new HealingCard( 3 ), 3 )

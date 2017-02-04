@@ -116,7 +116,7 @@ namespace Ivony.TableGame.ConsoleClient
     }
 
 
-    private bool _nameEnsured = false;
+    private bool _nameEnsured = true;
     /// <summary>
     /// 确认玩家名称
     /// </summary>
