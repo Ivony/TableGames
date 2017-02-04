@@ -17,6 +17,8 @@ namespace Ivony.TableGame.WebHost
     private static GameHostCollection _games = new GameHostCollection();
 
 
+    private static readonly Regex nameRegex = new Regex( @"^([a-zA-Z]{1,10})$|^([\p{IsEnclosedCJKLettersandMonths}\p{IsCJKCompatibility}\p{IsCJKUnifiedIdeographsExtensionA}\p{IsCJKUnifiedIdeographs}\p{IsCJKCompatibilityIdeographs}-[\P{L}]]{1,5})$", RegexOptions.Compiled );
+
     /// <summary>
     /// 获取或创建一个游戏
     /// </summary>
@@ -28,11 +30,9 @@ namespace Ivony.TableGame.WebHost
       if ( name == null )
         throw new ArgumentNullException( name );
 
-      if ( name == "" || Regex.IsMatch( name, @"^\s+$" ) )
-        throw new ArgumentException( "游戏名称不能为空", "name" );
+      if ( nameRegex.IsMatch( name ) == false )
+        throw new ArgumentException( "游戏名称必须由10个英文字母或者5个汉字组成", "name" );
 
-      if ( string.IsNullOrEmpty( name ) )
-        throw new ArgumentNullException( name );
 
       lock ( _sync )
       {

@@ -20,10 +20,19 @@ namespace Ivony.TableGame.WebHost
     [HttpGet]
     public object JoinGame( string name )
     {
-      var game = Games.GetOrCreateGame( name );
 
-      game.JoinGame( PlayerHost );
-      return "OK";
+      try
+      {
+        var game = Games.GetOrCreateGame( name );
+        game.JoinGame( PlayerHost );
+      }
+      catch ( ArgumentException e )
+      {
+        PlayerHost.WriteWarningMessage( "房间名称不合法，必须由不超过10个英文字母或者不超过5个中文字符组成" );
+        return new HttpResponseMessage( HttpStatusCode.BadRequest );
+      }
+
+      return new HttpResponseMessage( HttpStatusCode.OK );
     }
 
 

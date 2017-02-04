@@ -44,5 +44,11 @@ namespace Ivony.TableGame.SimpleGames.Rules
       var attackEvent = new AttackEvent( user, target, Element, Point );
       await user.Game.SendGameEvent( attackEvent );
     }
+
+
+    public override bool Availables( SimpleGamePlayer player )
+    {
+      return base.Availables( player ) && player.Game.Rounds > 1;
+    }
   }
 }

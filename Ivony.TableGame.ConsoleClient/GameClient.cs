@@ -60,12 +60,7 @@ namespace Ivony.TableGame.ConsoleClient
 
           if ( status.Gaming == false )
           {
-            Console.Write( "您当前尚未加入游戏，请输入要加入的游戏房间名：" );
-            var name = Console.ReadLine();
-
-            var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
-            await client.GetAsync( "Game?name=" + name, source.Token );
-            await EnsureCompatibility();
+            await JoinGame();
 
             continue;
           }
@@ -115,7 +110,6 @@ namespace Ivony.TableGame.ConsoleClient
       }
     }
 
-
     private bool _nameEnsured = true;
     /// <summary>
     /// 确认玩家名称
@@ -147,6 +141,43 @@ namespace Ivony.TableGame.ConsoleClient
         return;
       }
     }
+
+
+
+
+    /// <summary>
+    /// 加入游戏
+    /// </summary>
+    /// <returns></returns>
+    private async Task JoinGame()
+    {
+      var response = await client.GetAsync( "GameRooms" );
+      var rooms = from dynamic item in (JArray) await response.Content.ReadAsJsonAsync()
+                  where (string) item.State == "Initialized"
+                  select new
+                  {
+                    Name = (string) item.Name,
+                    Players = (int) item.Players.Count,
+                  };
+
+      rooms = rooms.Take( 20 );
+
+      Console.WriteLine( "您当前尚未加入游戏，目前可以加入的游戏房间有：" );
+      foreach ( var item in rooms )
+        Console.Write( $"{item.Name}({item.Players})\t" );
+
+      Console.WriteLine();
+
+
+      Console.Write( "请输入要加入的游戏房间名，如果您输入的游戏房间名称不存在，则会为您创建：" );
+      var name = Console.ReadLine();
+
+      var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
+      await client.GetAsync( "Game?name=" + name, source.Token );
+      await EnsureCompatibility();
+    }
+
+
 
     private static readonly HashSet<string> supportedFeatures = new HashSet<string>( new[] { "OptionsResponding" } );
 
