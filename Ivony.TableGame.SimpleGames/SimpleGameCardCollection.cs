@@ -23,6 +23,7 @@ namespace Ivony.TableGame.SimpleGames
       .Register( () => new PeepCard(), 10 )
       .Register( () => new StealCard(), 20 )
       .Register( () => new DiscardCard(), 15 )
+      .Register( () => new ExchangeCard(), 15 )
       .Register( () => new ElementCard( Element.金 ), 20 )
       .Register( () => new ElementCard( Element.木 ), 20 )
       .Register( () => new ElementCard( Element.水 ), 20 )

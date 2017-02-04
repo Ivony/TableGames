@@ -63,5 +63,15 @@ namespace Ivony.TableGame.SimpleGames
       get { return 1; }
     }
 
+
+    /// <summary>
+    /// 获取卡牌当前是否可用
+    /// </summary>
+    /// <param name="player">使用卡牌的玩家</param>
+    /// <returns>是否可用</returns>
+    public virtual bool Availables( SimpleGamePlayer player )
+    {
+      return player.ActionPoint >= ActionPoint;
+    }
   }
 }

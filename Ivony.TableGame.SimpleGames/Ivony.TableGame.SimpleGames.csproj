@@ -51,6 +51,7 @@
     <Compile Include="Rules\ElementAttachmentCard.cs" />
     <Compile Include="Rules\ElementCard.cs" />
     <Compile Include="Rules\HealingCard.cs" />
+    <Compile Include="Rules\ResetCard.cs" />
     <Compile Include="Rules\ShieldEffect.cs" />
     <Compile Include="Rules\StealCard.cs" />
     <Compile Include="Rules\Targets.cs" />

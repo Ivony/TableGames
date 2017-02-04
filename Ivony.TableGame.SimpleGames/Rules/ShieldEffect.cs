@@ -33,7 +33,29 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
     public override string Description
     {
-      get { return "盾牌效果可以抵御一次攻击"; }
+      get
+      {
+        if ( Element == Element.金 )
+          return "可以抵挡三次普通攻击。";
+
+        else if ( Element == Element.木 )
+          return "可以抵挡一次普通攻击，且为您恢复生命。";
+
+        else if ( Element == Element.水 )
+          return "可以抵挡一次普通攻击，且净化攻击者。";
+
+        else if ( Element == Element.火 )
+          return "可以抵挡一次普通攻击，且给予攻击者伤害。";
+
+        else if ( Element == Element.土 )
+          return "可以抵挡一次普通攻击，且攻击者将无法行动一个回合。";
+
+        else if ( Element == null )
+          return "可以抵挡一次普通攻击。";
+
+        else
+          throw new InvalidOperationException( "未知的属性" );
+      }
     }
 
 

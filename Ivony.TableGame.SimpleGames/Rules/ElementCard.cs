@@ -62,5 +62,15 @@ namespace Ivony.TableGame.SimpleGames.Rules
     }
 
 
+
+    /// <summary>
+    /// 重写 Availables 方法，只有存在可以附着属性的卡牌的时候才可用属性牌
+    /// </summary>
+    /// <param name="player">使用卡牌的玩家</param>
+    /// <returns></returns>
+    public override bool Availables( SimpleGamePlayer player )
+    {
+      return base.Availables( player ) && player.Cards.OfType<ElementAttachmentCard>().Any();
+    }
   }
 }

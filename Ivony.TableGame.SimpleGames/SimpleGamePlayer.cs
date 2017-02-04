@@ -29,6 +29,47 @@ namespace Ivony.TableGame.SimpleGames
     }
 
     /// <summary>
+    /// 与另一个玩家交换所有卡牌
+    /// </summary>
+    /// <param name="target"></param>
+    internal void ExchangeCards( SimpleGamePlayer target )
+    {
+      target.DealCards();
+      var cards = Cards.Where( item => item is ExchangeCard == false );
+
+      CardCollection.Clear();
+      foreach ( var item in target.Cards )
+        CardCollection.AddCard( item );
+
+      target.CardCollection.Clear();
+      foreach ( var item in cards )
+        target.CardCollection.AddCard( item );
+
+
+      target.DealCards();
+      target.NotifyCardsHasBeenReset();
+      PlayerHost.WriteWarningMessage( "卡牌已经交换" );
+
+    }
+
+
+    /// <summary>
+    /// 重置手上所有卡牌
+    /// </summary>
+    internal void ResetCards()
+    {
+      CardCollection.Clear();
+      DealCards();
+      NotifyCardsHasBeenReset();
+    }
+
+
+    private void NotifyCardsHasBeenReset()
+    {
+      PlayerHost.WriteWarningMessage( "一个魔术师借了你所有卡牌表演魔术，一阵闪光过后，你的卡牌和魔术师都消失了，空中飘落下来一堆你没见过的卡牌。" );
+    }
+
+    /// <summary>
     /// 丢弃指定的卡牌
     /// </summary>
     /// <param name="predicate">确定卡牌是不是要丢弃的方法</param>
@@ -182,17 +223,33 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
+
     private SimpleGamePlayerEffectCollection _effects = new SimpleGamePlayerEffectCollection();
 
+    /// <summary>
+    /// 获取当前玩家所有效果
+    /// </summary>
     public override IEffectCollection Effects
     {
       get { return _effects; }
     }
 
 
+    /// <summary>
+    /// 为玩家设置一个效果
+    /// </summary>
+    /// <param name="effect"></param>
     internal void SetEffect( SimpleGameEffect effect )
     {
       Effects.AddEffect( effect );
+    }
+
+
+    protected override IOption<SimpleGameCard> CreateOption( SimpleGameCard card )
+    {
+
+      var option = new Option( card.Name, card.Description, card.Availables( this ) == false );
+      return Option.Create( card, option );
     }
   }
 }
