@@ -46,6 +46,11 @@ namespace Ivony.TableGame.SimpleGames.Rules
     }
 
 
+    /// <summary>
+    /// 重写 Availables 方法，第一回合不能出攻击牌
+    /// </summary>
+    /// <param name="player">当前玩家对象</param>
+    /// <returns>卡牌是否可用</returns>
     public override bool Availables( SimpleGamePlayer player )
     {
       return base.Availables( player ) && player.Game.Rounds > 1;

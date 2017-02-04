@@ -59,12 +59,14 @@ namespace Ivony.TableGame.CardGames
     /// <returns>获取一个 Task，用于等待这个回合游戏结束</returns>
     protected virtual async Task PlayAround( CancellationToken token )
     {
-      AnnounceSystemMessage( "第 {0} 回合", Rounds++ );
+      AnnounceSystemMessage( "第 {0} 回合", Rounds );
       foreach ( CardGamePlayer player in Players )
       {
         await PlayerPlay( player, token );
         token.ThrowIfCancellationRequested();
       }
+
+      Rounds++;
     }
 
 

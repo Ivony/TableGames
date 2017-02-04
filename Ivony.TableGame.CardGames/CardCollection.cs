@@ -65,6 +65,17 @@ namespace Ivony.TableGame.CardGames
       }
     }
 
+    public void RemoveCards( Func<TCard, bool> predicate )
+    {
+      lock ( SyncRoot )
+      {
+        foreach ( var card in collection.ToArray() )
+        {
+          if ( predicate( card ) )
+            collection.Remove( card );
+        }
+      }
+    }
 
 
     public IEnumerator<Card> GetEnumerator()
