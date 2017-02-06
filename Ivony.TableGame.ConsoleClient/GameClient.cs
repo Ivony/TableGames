@@ -16,6 +16,7 @@ namespace Ivony.TableGame.ConsoleClient
 
     private readonly Uri host;
     private readonly HttpClient client;
+    private readonly GameHostConsole console;
 
     public GameClient( Uri host )
     {
@@ -29,6 +30,8 @@ namespace Ivony.TableGame.ConsoleClient
       this.host = host;
       client = new HttpClient( new HttpClientHandler { CookieContainer = new CookieContainer() } );
       client.BaseAddress = host;
+
+      console = new GameHostConsole( client );
     }
 
     public void Dispose()
@@ -52,16 +55,10 @@ namespace Ivony.TableGame.ConsoleClient
 
           ShowMessages( status.Messages );
 
-          if ( _nameEnsured == false )
-          {
-            await EnsureName();
-            continue;
-          }
 
           if ( status.Gaming == false )
           {
-            await JoinGame();
-
+            await console.Run();
             continue;
           }
 
@@ -110,108 +107,8 @@ namespace Ivony.TableGame.ConsoleClient
       }
     }
 
-    private bool _nameEnsured = false;
-    /// <summary>
-    /// 确认玩家名称
-    /// </summary>
-    /// <returns></returns>
-    private async Task EnsureName()
-    {
-      if ( _nameEnsured )
-        return;
-
-      var response = await client.GetAsync( "Player/Name" );
-      var name = (string) await response.Content.ReadAsJsonAsync();
-      Console.Write( "您当前在游戏中的昵称是：" );
-      Console.ForegroundColor = ConsoleColor.White;
-      Console.Write( name );
-      Console.ResetColor();
-
-      //禁用改名
-      _nameEnsured = true;
-      return;
 
 
-      Console.WriteLine( "。如果您不喜欢这个昵称，请在下面输入一个，如果您接受这个昵称，请直接回车。" );
-      name = Console.ReadLine();
-      if ( string.IsNullOrWhiteSpace( name ) )
-      {
-        _nameEnsured = true;
-        return;
-      }
-      response = await client.GetAsync( "Player/Name?name=" + name );
-      if ( response.IsSuccessStatusCode )
-      {
-        _nameEnsured = true;
-        return;
-      }
-    }
-
-
-
-
-    /// <summary>
-    /// 加入游戏
-    /// </summary>
-    /// <returns></returns>
-    private async Task JoinGame()
-    {
-      var response = await client.GetAsync( "GameRooms" );
-      var rooms = from dynamic item in (JArray) await response.Content.ReadAsJsonAsync()
-                  where (string) item.State == "Initialized"
-                  select new
-                  {
-                    Name = (string) item.Name,
-                    Players = (int) item.Players.Count,
-                  };
-
-      rooms = rooms.Take( 20 );
-
-      Console.WriteLine( "您当前尚未加入游戏，目前可以加入的游戏房间有：" );
-      if ( rooms.Any() )
-      {
-        foreach ( var item in rooms )
-          Console.Write( $"{item.Name}({item.Players})\t" );
-
-        Console.WriteLine();
-      }
-
-      else
-        Console.Write( "当前没有可用的游戏房间" );
-
-
-      Console.Write( "请输入要加入的游戏房间名，如果您输入的游戏房间名称不存在，则会为您创建：" );
-      var name = Console.ReadLine();
-
-      var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
-      await client.GetAsync( "Game?name=" + name, source.Token );
-      await EnsureCompatibility();
-    }
-
-
-
-    private static readonly HashSet<string> supportedFeatures = new HashSet<string>( new[] { "OptionsResponding" } );
-
-    /// <summary>
-    /// 确认客户端兼容性
-    /// </summary>
-    /// <returns></returns>
-    private async Task EnsureCompatibility()
-    {
-
-      var response = await client.GetAsync( "RequiredFeatures" );
-
-      var features = (await response.Content.ReadAsJsonAsync()).ToObject<string[]>();
-      if ( features == null )
-        throw new ContinueRunningException();
-
-      if ( supportedFeatures.IsSupersetOf( features ) )
-        return;
-
-
-      throw new NotSupportedException();
-
-    }
 
     private void ShowMessages( dynamic messages )
     {
@@ -387,7 +284,7 @@ namespace Ivony.TableGame.ConsoleClient
 
 
 
-    private async Task QuitGame()
+    public async Task QuitGame()
     {
       await client.GetAsync( "QuitGame" );
     }

@@ -50,12 +50,23 @@
   <ItemGroup>
     <Compile Include="Extensions.cs" />
     <Compile Include="GameClient.cs" />
+    <Compile Include="GameHostConsole.cs" />
+    <Compile Include="Help\HelpManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Help\help.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Help\join.txt" />
+    <EmbeddedResource Include="Help\list.txt" />
+    <EmbeddedResource Include="Help\quit.txt" />
+    <EmbeddedResource Include="Help\name.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
