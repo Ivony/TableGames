@@ -123,6 +123,7 @@ namespace Ivony.TableGame.ConsoleClient
       {
         foreach ( var item in rooms )
           Console.Write( $"{item.Name}({item.Players})\t" );
+        Console.WriteLine();
       }
       else
       {
