@@ -58,7 +58,6 @@ namespace Ivony.TableGame.SimpleGames
     {
       DealCards( all, Math.Max( 8 - Count, 0 ) );
 
-      var balance = Math.Max( 10 - Count, 0 );
 
 
       if ( game.Rounds == 1 && this.Any( item => item is ShieldCard ) == false )
@@ -68,11 +67,14 @@ namespace Ivony.TableGame.SimpleGames
       }
 
 
-      if ( this.Any( item => item is IBasicCard ) )
-        DealCards( all, balance );
+      //如果牌组中缺少基本卡牌，则强行发放。
+      var balance = Math.Max( 10 - Count, 0 );
+
+      if ( this.Any( item => item is IBasicCard ) == false )
+        DealCards( basics, balance );
 
       else
-        DealCards( basics, balance );
+        DealCards( all, balance );
 
 
 
