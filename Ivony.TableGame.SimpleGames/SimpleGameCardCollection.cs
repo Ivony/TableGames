@@ -25,7 +25,7 @@ namespace Ivony.TableGame.SimpleGames
 
       basics = new UnlimitedCardDealer<SimpleGameCard>()
         .Register( 5, () => new ShieldCard() )
-        .Register( 6, attack )
+        .Register( 7, attack )
         .Register( 1, healing );
 
 

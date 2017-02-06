@@ -110,7 +110,7 @@ namespace Ivony.TableGame.ConsoleClient
       }
     }
 
-    private bool _nameEnsured = true;
+    private bool _nameEnsured = false;
     /// <summary>
     /// 确认玩家名称
     /// </summary>
@@ -126,6 +126,11 @@ namespace Ivony.TableGame.ConsoleClient
       Console.ForegroundColor = ConsoleColor.White;
       Console.Write( name );
       Console.ResetColor();
+
+      //禁用改名
+      _nameEnsured = true;
+      return;
+
 
       Console.WriteLine( "。如果您不喜欢这个昵称，请在下面输入一个，如果您接受这个昵称，请直接回车。" );
       name = Console.ReadLine();
@@ -163,10 +168,16 @@ namespace Ivony.TableGame.ConsoleClient
       rooms = rooms.Take( 20 );
 
       Console.WriteLine( "您当前尚未加入游戏，目前可以加入的游戏房间有：" );
-      foreach ( var item in rooms )
-        Console.Write( $"{item.Name}({item.Players})\t" );
+      if ( rooms.Any() )
+      {
+        foreach ( var item in rooms )
+          Console.Write( $"{item.Name}({item.Players})\t" );
 
-      Console.WriteLine();
+        Console.WriteLine();
+      }
+
+      else
+        Console.Write( "当前没有可用的游戏房间" );
 
 
       Console.Write( "请输入要加入的游戏房间名，如果您输入的游戏房间名称不存在，则会为您创建：" );

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebHost", "WebHost\WebHost.csproj", "{AB3B2046-645A-4736-A79C-71E62A18B9E7}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.CardGames", "Ivony.TableGame.CardGames\Ivony.TableGame.CardGames.csproj", "{74742E84-6F8B-467E-8FCA-59FBA784AED9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.MurderGames", "Ivony.TableGame.MurderGames\Ivony.TableGame.MurderGames.csproj", "{11567B47-A1C3-4F25-9CCE-7817A63F6F82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ivony.TableGame.Pokers", "Ivony.TableGame.Pokers\Ivony.TableGame.Pokers.csproj", "{EB96CD0E-96D7-4680-9E33-49ED194887D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{11567B47-A1C3-4F25-9CCE-7817A63F6F82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11567B47-A1C3-4F25-9CCE-7817A63F6F82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11567B47-A1C3-4F25-9CCE-7817A63F6F82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB96CD0E-96D7-4680-9E33-49ED194887D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB96CD0E-96D7-4680-9E33-49ED194887D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB96CD0E-96D7-4680-9E33-49ED194887D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB96CD0E-96D7-4680-9E33-49ED194887D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
