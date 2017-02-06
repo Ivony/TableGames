@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
-  public class DiscardCard : BasicCard
+  public class DiscardCard : StandardCard
   {
     public override string Description
     {

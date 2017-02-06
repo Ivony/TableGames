@@ -45,10 +45,30 @@ namespace Ivony.TableGame.CardGames
     /// </summary>
     /// <typeparam name="T">要注册的卡牌类型</typeparam>
     /// <param name="probability">卡牌出现的概率</param>
-    public UnlimitedCardDealer<TCard> Register( Func<TCard> creator, int probability )
+    /// <param name="creator">创建卡牌的方法</param>
+    public UnlimitedCardDealer<TCard> Register( int probability, Func<TCard> creator )
     {
 
       list.Add( new RegisteredCard( creator, probability ) );
+      return this;
+    }
+
+    /// <summary>
+    /// 注册一种卡牌
+    /// </summary>
+    /// <typeparam name="T">要注册的卡牌类型</typeparam>
+    /// <param name="probability">卡牌出现的概率</param>
+    /// <param name="dealer">发牌器</param>
+    /// <param name="defaultCreator">当发牌器无法发出牌时需要使用的创建卡牌的方法</param>
+    public UnlimitedCardDealer<TCard> Register( int probability, ICardDealer<TCard> dealer, Func<TCard> defaultCreator = null )
+    {
+
+      if ( defaultCreator != null )
+        Register( probability, () => dealer.DealCard() ?? defaultCreator() );
+
+      else
+        Register( probability, () => dealer.DealCard() );
+
       return this;
     }
 

@@ -43,7 +43,7 @@
     <Compile Include="Rules\DiscardCard.cs" />
     <Compile Include="Rules\AttackCard.cs" />
     <Compile Include="Rules\AttackEvent.cs" />
-    <Compile Include="Rules\BasicCard.cs" />
+    <Compile Include="Rules\StandardCard.cs" />
     <Compile Include="Rules\ConfineEffect.cs" />
     <Compile Include="Rules\ExchangeCard.cs" />
     <Compile Include="ISimpleGameEffect.cs" />
@@ -54,7 +54,7 @@
     <Compile Include="Rules\ResetCard.cs" />
     <Compile Include="Rules\ShieldEffect.cs" />
     <Compile Include="Rules\StealCard.cs" />
-    <Compile Include="Rules\Targets.cs" />
+    <Compile Include="Rules\CardTypes.cs" />
     <Compile Include="Rules\PeepCard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\PurifyCard.cs" />

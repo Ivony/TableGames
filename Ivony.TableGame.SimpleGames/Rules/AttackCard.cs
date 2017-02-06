@@ -11,7 +11,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
   /// <summary>
   /// 定义攻击卡牌
   /// </summary>
-  public class AttackCard : ElementAttachmentCard, IOtherPlayerTarget
+  public class AttackCard : ElementAttachmentCard, IOtherPlayerTarget, IBasicCard
   {
 
     /// <summary>

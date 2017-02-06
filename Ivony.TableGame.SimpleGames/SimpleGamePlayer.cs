@@ -180,13 +180,7 @@ namespace Ivony.TableGame.SimpleGames
     /// </summary>
     public void DealCards()
     {
-      _cards.DealCards();
-
-      if ( Game.Rounds == 1 )
-      {
-        if ( _cards.Any( item => item is ShieldCard ) == false )
-          _cards.AddCard( new ShieldCard() );
-      }
+      _cards.DealCards( Game );
 
     }
 

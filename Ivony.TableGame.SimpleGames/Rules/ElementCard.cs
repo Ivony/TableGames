@@ -42,7 +42,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
       var player = (SimpleGamePlayer) initiatePlayer;
 
       var options = player.Cards.Cast<SimpleGameCard>()
-        .Select( item => Option.Create( item, item.Name, item.Description, item is ElementAttachmentCard == false && item.Availables( player ) ) )
+        .Select( item => Option.Create( item, item.Name, item.Description, item is ElementAttachmentCard == false || item.Availables( player ) == false ) )
         .ToArray();
 
       var card = (ElementAttachmentCard) await initiatePlayer.PlayerHost.Console.Choose( "请选择要使用的卡牌：", options, null, token );

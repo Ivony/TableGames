@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
-  public class ShieldCard : ElementAttachmentCard, ISelfTarget
+  public class ShieldCard : ElementAttachmentCard, ISelfTarget, IBasicCard
   {
     public override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target, CancellationToken token )
     {

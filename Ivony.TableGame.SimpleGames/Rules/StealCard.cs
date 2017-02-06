@@ -11,7 +11,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
   /// <summary>
   /// 窃取卡牌
   /// </summary>
-  public class StealCard : BasicCard, IOtherPlayerTarget
+  public class StealCard : StandardCard, IOtherPlayerTarget
   {
     public override string Description
     {

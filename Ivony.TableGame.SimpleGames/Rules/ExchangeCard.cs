@@ -11,7 +11,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
   /// <summary>
   /// 定义交换卡牌，与指定玩家交换所有卡牌
   /// </summary>
-  public class ExchangeCard : BasicCard, IOtherPlayerTarget
+  public class ExchangeCard : StandardCard, IOtherPlayerTarget
   {
 
     /// <summary>

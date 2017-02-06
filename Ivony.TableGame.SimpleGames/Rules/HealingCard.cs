@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
-  public class HealingCard : BasicCard, ISelfTarget
+  public class HealingCard : StandardCard, ISelfTarget
   {
     public HealingCard( int point = 2 )
     {

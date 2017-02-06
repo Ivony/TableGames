@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames
 {
-  public abstract class SimpleGameCard : StandardCard
+  public abstract class SimpleGameCard : CardGames.StandardCard
   {
 
 

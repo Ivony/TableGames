@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
-  public abstract class BasicCard : SimpleGameCard
+  public abstract class StandardCard : SimpleGameCard
   {
     public override async Task Play( CardGamePlayer initiatePlayer, CancellationToken token )
     {

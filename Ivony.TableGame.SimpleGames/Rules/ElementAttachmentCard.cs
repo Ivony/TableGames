@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
-  public abstract class ElementAttachmentCard : BasicCard
+  public abstract class ElementAttachmentCard : StandardCard
   {
 
     public Element Element { get; private set; }

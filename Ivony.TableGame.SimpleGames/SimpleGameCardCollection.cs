@@ -10,30 +10,72 @@ namespace Ivony.TableGame.SimpleGames
 {
   public class SimpleGameCardCollection : CardCollection<SimpleGameCard>
   {
-
-    private ICardDealer<SimpleGameCard> dealer = new UnlimitedCardDealer<SimpleGameCard>()
-      .Register( () => new AttackCard( 1 ), 150 )
-      .Register( () => new AttackCard( 2 ), 30 )
-      .Register( () => new AttackCard( 3 ), 5 )
-      .Register( () => new ShieldCard(), 150 )
-
-      .Register( () => new HealingCard( 2 ), 10 )
-      .Register( () => new HealingCard( 3 ), 3 )
-      .Register( () => new HealingCard( 5 ), 1 )
-      .Register( () => new PeepCard(), 10 )
-      .Register( () => new StealCard(), 20 )
-      .Register( () => new DiscardCard(), 15 )
-      .Register( () => new ExchangeCard(), 15 )
-      .Register( () => new ElementCard( Element.金 ), 20 )
-      .Register( () => new ElementCard( Element.木 ), 20 )
-      .Register( () => new ElementCard( Element.水 ), 20 )
-      .Register( () => new ElementCard( Element.火 ), 20 )
-      .Register( () => new ElementCard( Element.土 ), 20 )
-      ;
-
-    public void DealCards()
+    public SimpleGameCardCollection()
     {
-      DealCards( dealer, Math.Max( 7 - Count, 0 ) );
+
+      var attack = new UnlimitedCardDealer<SimpleGameCard>()
+        .Register( 20, () => new AttackCard( 1 ) )
+        .Register( 3, () => new AttackCard( 2 ) )
+        .Register( 1, () => new AttackCard( 3 ) );
+
+      var healing = new UnlimitedCardDealer<SimpleGameCard>()
+        .Register( 20, () => new HealingCard( 2 ) )
+        .Register( 2, () => new HealingCard( 3 ) )
+        .Register( 1, () => new HealingCard( 5 ) );
+
+      basics = new UnlimitedCardDealer<SimpleGameCard>()
+        .Register( 5, () => new ShieldCard() )
+        .Register( 6, attack )
+        .Register( 1, healing );
+
+
+      var elements = new UnlimitedCardDealer<SimpleGameCard>()
+        .Register( 1, () => new ElementCard( Element.金 ) )
+        .Register( 1, () => new ElementCard( Element.木 ) )
+        .Register( 1, () => new ElementCard( Element.水 ) )
+        .Register( 1, () => new ElementCard( Element.火 ) )
+        .Register( 1, () => new ElementCard( Element.土 ) );
+
+
+      var specials = new UnlimitedCardDealer<SimpleGameCard>()
+        .Register( 2, () => new PeepCard() )
+        .Register( 3, () => new StealCard() )
+        .Register( 4, () => new DiscardCard() )
+        .Register( 3, () => new ExchangeCard() );
+
+
+      all = new UnlimitedCardDealer<SimpleGameCard>()
+        .Register( 20, basics )
+        .Register( 2, specials )
+        .Register( 10, elements );
+
+    }
+
+    private ICardDealer<SimpleGameCard> all;
+    private ICardDealer<SimpleGameCard> basics;
+
+    public void DealCards( SimpleGame game )
+    {
+      DealCards( all, Math.Max( 8 - Count, 0 ) );
+
+      var balance = Math.Max( 10 - Count, 0 );
+
+
+      if ( game.Rounds == 1 && this.Any( item => item is ShieldCard ) == false )
+      {//对于第一回合没有盾牌的玩家，强行发放两个盾牌
+        AddCard( new ShieldCard() );
+        AddCard( new ShieldCard() );
+      }
+
+
+      if ( this.Any( item => item is IBasicCard ) )
+        DealCards( all, balance );
+
+      else
+        DealCards( basics, balance );
+
+
+
     }
 
   }
