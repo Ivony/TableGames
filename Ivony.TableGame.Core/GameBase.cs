@@ -32,14 +32,12 @@ namespace Ivony.TableGame
     /// <summary>
     /// 创建游戏对象
     /// </summary>
-    protected GameBase( IGameHost gameHost )
+    protected GameBase()
     {
       SyncRoot = new object();
       GameState = GameState.NotInitialized;
       PlayerCollection = new List<GamePlayerBase>();
       GameCancellationSource = new CancellationTokenSource();
-
-      GameHost = gameHost;
     }
 
 
@@ -57,7 +55,7 @@ namespace Ivony.TableGame
     /// </summary>
     public string RoomName
     {
-      get { return GameHost.RoomName; }
+      get { return GameHost?.RoomName; }
     }
 
     /// <summary>
@@ -157,7 +155,7 @@ namespace Ivony.TableGame
     /// <param name="gameHost">游戏宿主</param>
     /// <param name="playerHost">玩家宿主</param>
     /// <returns>若加入游戏成功，则返回一个 Player 对象</returns>
-    public virtual GamePlayerBase TryJoinGame( IGameHost gameHost, IPlayerHost playerHost )
+    public virtual GamePlayerBase TryJoinGame( IPlayerHost playerHost )
     {
 
       lock ( SyncRoot )
@@ -166,7 +164,7 @@ namespace Ivony.TableGame
           return null;
 
 
-        var player = TryJoinGameCore( gameHost, playerHost );
+        var player = TryJoinGameCore( playerHost );
         if ( player != null )
         {
           player.PlayerHost.WriteSystemMessage( string.Format( "恭喜您已经加入 {0} 游戏。", RoomName, player.PlayerName ) );
@@ -180,10 +178,9 @@ namespace Ivony.TableGame
     /// <summary>
     /// 派生类重写此方法尝试将玩家加入游戏
     /// </summary>
-    /// <param name="gameHost">游戏宿主</param>
     /// <param name="playerHost">玩家宿主，游戏环境通过玩家宿主与玩家进行通信</param>
     /// <returns>若成功加入游戏，则返回游戏中的玩家</returns>
-    protected virtual GamePlayerBase TryJoinGameCore( IGameHost gameHost, IPlayerHost playerHost )
+    protected virtual GamePlayerBase TryJoinGameCore( IPlayerHost playerHost )
     {
       throw new NotImplementedException();
     }
@@ -256,7 +253,8 @@ namespace Ivony.TableGame
     /// <summary>
     /// 对游戏进行初始化
     /// </summary>
-    public void Initialize()
+    /// <param name="host">游戏宿主</param>
+    public void Initialize( IGameHost host )
     {
 
       lock ( SyncRoot )
@@ -264,9 +262,19 @@ namespace Ivony.TableGame
         if ( GameState != GameState.NotInitialized )
           return;
 
+        GameState = GameState.Initializing;
+        try
+        {
 
-        InitializeCore();
-        GameState = GameState.Initialized;
+          GameHost = host;
+          InitializeCore();
+          GameState = GameState.Initialized;
+        }
+        catch
+        {
+          GameState = GameState.NotInitialized;
+          throw;
+        }
       }
     }
 

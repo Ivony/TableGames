@@ -1,0 +1,9 @@
+﻿创建一个游戏房间
+
+语法：
+create <name> [type] [--private]
+
+name: 要创建的游戏房间名称
+type: 游戏类型
+--private: 是否创建为私有房间
+

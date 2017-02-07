@@ -12,19 +12,13 @@ namespace Ivony.TableGame.SimpleGames
   {
 
 
-    public SimpleGame( IGameHost gameHost )
-      : base( gameHost )
-    {
-    }
-
-
     static SimpleGame()
     {
 
     }
 
 
-    protected override GamePlayerBase TryJoinGameCore( IGameHost gameHost, IPlayerHost playerHost )
+    protected override GamePlayerBase TryJoinGameCore( IPlayerHost playerHost )
     {
       lock ( SyncRoot )
       {
@@ -32,12 +26,12 @@ namespace Ivony.TableGame.SimpleGames
           return null;
 
 
-        var player = new SimpleGamePlayer( gameHost, playerHost );
+        var player = new SimpleGamePlayer( GameHost, playerHost );
 
         PlayerCollection.Add( player );
 
         if ( PlayerCollection.Count == 3 )
-          gameHost.Run();
+          GameHost.Run();
 
         return player;
 

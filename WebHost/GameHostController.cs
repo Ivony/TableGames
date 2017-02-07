@@ -17,53 +17,6 @@ namespace Ivony.TableGame.WebHost
 
 
 
-    [HttpGet]
-    public object JoinGame( string name )
-    {
-
-      try
-      {
-        var game = Games.GetOrCreateGame( name );
-        game.JoinGame( PlayerHost );
-      }
-      catch ( ArgumentException e )
-      {
-        PlayerHost.WriteWarningMessage( "房间名称不合法，必须由不超过10个英文字母或者不超过5个中文字符组成" );
-        return new HttpResponseMessage( HttpStatusCode.BadRequest );
-      }
-
-      return new HttpResponseMessage( HttpStatusCode.OK );
-    }
-
-
-
-    [HttpGet]
-    public object GameRooms()
-    {
-      var games = Games.GetAllGames();
-
-      return games.Select( item => new { Name = item.RoomName, State = item.Game.GameState, Players = item.Game.Players.Select( player => player.PlayerName ) } );
-    }
-
-
-    [HttpGet]
-    public object QuitGame()
-    {
-      lock ( PlayerHost.SyncRoot )
-      {
-        if ( !PlayerHost.Gaming )
-          return "玩家未加入任何游戏";
-
-        if ( PlayerHost.TryQuitGame() )
-          return "OK";
-
-        else
-          return "Failed";
-      }
-    }
-
-
-
     /// <summary>
     /// 强行释放用户退出系统
     /// </summary>
@@ -136,32 +89,6 @@ namespace Ivony.TableGame.WebHost
     }
 
 
-    private IResponding GetResponding( HttpRequestMessage request )
-    {
-
-      var responding = PlayerHost.Responding;
-
-      if ( responding == null )
-        return null;
-
-
-      IEnumerable<string> values;
-      if ( request.Headers.TryGetValues( "Responding", out values ) == false )
-        return responding;
-
-
-      Guid id;
-      if ( Guid.TryParse( values.FirstOrDefault(), out id ) )
-      {
-        if ( responding.RespondingID == id )
-          return responding;
-
-        else
-          return null;
-      }
-
-      return responding;
-    }
 
     private object GetGameInformation()
     {

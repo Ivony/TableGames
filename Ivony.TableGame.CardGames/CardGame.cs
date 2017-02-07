@@ -16,12 +16,6 @@ namespace Ivony.TableGame.CardGames
 
 
 
-    /// <summary>
-    /// 创建 CardGame 对象
-    /// </summary>
-    /// <param name="gameHost">承载该游戏的游戏宿主</param>
-    protected CardGame( IGameHost gameHost ) : base( gameHost ) { }
-
 
 
     /// <summary>

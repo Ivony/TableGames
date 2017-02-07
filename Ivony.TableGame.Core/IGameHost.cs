@@ -26,6 +26,13 @@ namespace Ivony.TableGame
     /// </summary>
     string RoomName { get; }
 
+
+    /// <summary>
+    /// 游戏宿主数据
+    /// </summary>
+    Dictionary<string, object> Data { get; }
+
+
     /// <summary>
     /// 正在进行的游戏对象
     /// </summary>

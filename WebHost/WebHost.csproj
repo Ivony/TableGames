@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="CookieExtensions.cs" />
+    <Compile Include="GameRoomsController.cs" />
     <Compile Include="GameControllerBase.cs" />
     <Compile Include="GameHostCollection.cs" />
     <Compile Include="GameHostController.cs" />
@@ -92,14 +93,14 @@
     <Compile Include="PlayerController.cs" />
     <Compile Include="PlayerHostCollection.cs" />
     <Compile Include="PlayerHostHttpHandler.cs" />
-    <Compile Include="Games.cs" />
+    <Compile Include="GameRoomsManager.cs" />
     <Compile Include="JsonContentNegotiator.cs" />
     <Compile Include="PlayerHost.cs" />
     <Compile Include="PlayerNameManager.cs" />
     <Compile Include="Players.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Responding.cs" />
-    <Compile Include="GameHost.cs" />
+    <Compile Include="GameRoom.cs" />
     <Compile Include="RespondingController.cs" />
   </ItemGroup>
   <ItemGroup>

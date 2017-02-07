@@ -18,11 +18,6 @@ namespace Ivony.TableGame.CardGames
     where TCard : StandardCard
   {
 
-    /// <summary>
-    /// 创建 StandardCardGame 对象
-    /// </summary>
-    /// <param name="gameHost"></param>
-    public StandardCardGame( IGameHost gameHost ) : base( gameHost ) { }
 
 
     /// <summary>

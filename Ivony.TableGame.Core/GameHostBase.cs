@@ -22,6 +22,7 @@ namespace Ivony.TableGame
     {
       RoomName = roomName;
       ID = Guid.NewGuid();
+      Data = new Dictionary<string, object>();
     }
 
 
@@ -29,20 +30,46 @@ namespace Ivony.TableGame
     /// <summary>
     /// 获取游戏宿主唯一ID
     /// </summary>
-    public Guid ID { get; private set; }
+    public Guid ID { get; }
 
 
     /// <summary>
     /// 宿主名称
     /// </summary>
-    public string RoomName { get; private set; }
+    public string RoomName { get; }
+
+
+    /// <summary>
+    /// 游戏房间数据
+    /// </summary>
+    public Dictionary<string, object> Data { get; }
 
 
 
     /// <summary>
     /// 派生类实现此属性获取游戏对象
     /// </summary>
-    public abstract GameBase Game { get; }
+    public GameBase Game { get; private set; }
+
+
+    /// <summary>
+    /// 初始化游戏
+    /// </summary>
+    /// <param name="game">游戏对象</param>
+    protected void InitializeGame( GameBase game )
+    {
+      if ( game.GameState != GameState.NotInitialized )
+        throw new InvalidOperationException();
+
+      lock ( SyncRoot )
+      {
+        if ( Game != null )
+          throw new InvalidOperationException();
+
+        Game = game;
+        Game.Initialize( this );
+      }
+    }
 
 
 
@@ -77,7 +104,7 @@ namespace Ivony.TableGame
           return false;
         }
 
-        player = Game.TryJoinGame( this, playerHost );
+        player = Game.TryJoinGame( playerHost );
         if ( player == null )
         {
           reason = "未知原因";
@@ -102,9 +129,8 @@ namespace Ivony.TableGame
       lock ( SyncRoot )
       {
         if ( Game.GameState == GameState.NotInitialized )
-          Game.Initialize();
+          throw new InvalidOperationException( "游戏尚未初始化" );
       }
-
 
       return Game.Run();
     }

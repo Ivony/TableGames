@@ -75,7 +75,7 @@ namespace Ivony.TableGame.ConsoleClient
       }
 
       var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
-      await client.GetAsync( "Game?name=" + name, source.Token );
+      await client.GetAsync( "GameRooms/Join?name=" + name, source.Token );
       await EnsureCompatibility();
     }
 

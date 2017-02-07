@@ -14,11 +14,11 @@ namespace Ivony.TableGame
 
     /// <summary>游戏尚未初始化，此时不能加入游戏</summary>
     NotInitialized,
-    /// <summary>游戏正在初始化，即将切换到Initialized状态</summary>
+    /// <summary>游戏正在初始化，即将切换到 Initialized 状态</summary>
     Initializing,
     /// <summary>游戏已经初始化，正在等待玩家加入游戏</summary>
     Initialized,
-    /// <summary>游戏正在启动，将很快切换到Running状态</summary>
+    /// <summary>游戏正在启动，将很快切换到 Running 状态</summary>
     Starting,
     /// <summary>游戏正在运行</summary>
     Running,
