@@ -5,5 +5,5 @@ create <name> [type] [--private]
 
 name: 要创建的游戏房间名称
 type: 游戏类型
---private: 是否创建为私有房间
+--private: 创建为私有房间
 

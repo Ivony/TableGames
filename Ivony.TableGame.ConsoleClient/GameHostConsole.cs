@@ -14,7 +14,7 @@ namespace Ivony.TableGame.ConsoleClient
   public class GameHostConsole
   {
 
-    private Regex commandRegex = new Regex( @"^(?<command>[a-z]+)(\s+((?<argument>[^""\s]+)|(""(?<argument>.+?)"")))*$" );
+    private Regex commandRegex = new Regex( @"^(?<command>[a-zA-Z-]+)(\s+((?<argument>[^""\s]+)|(""(?<argument>.+?)"")))*$" );
 
     private HttpClient client;
 
@@ -29,7 +29,14 @@ namespace Ivony.TableGame.ConsoleClient
     {
 
       Console.Write( ">" );
-      await InvokeCommand( Console.ReadLine() );
+      try
+      {
+        await InvokeCommand( Console.ReadLine() );
+      }
+      catch ( SyntaxErrorException )
+      {
+        Help( null );
+      }
 
     }
 
@@ -38,10 +45,8 @@ namespace Ivony.TableGame.ConsoleClient
 
       var match = commandRegex.Match( command );
       if ( match.Success == false )
-      {
-        Help( null );
-        return;
-      }
+        throw new SyntaxErrorException();
+
 
       await InvokeCommand( match.Groups["command"].Value, match.Groups["argument"].Captures.Cast<Capture>().Select( item => item.Value ).ToArray() );
 
@@ -61,27 +66,23 @@ namespace Ivony.TableGame.ConsoleClient
       else if ( command.Equals( "join", StringComparison.OrdinalIgnoreCase ) )
         await Join( args );
 
+      else if ( command.Equals( "create", StringComparison.OrdinalIgnoreCase ) )
+        await Create( args );
+
       else
-        Help( null );
+        throw new SyntaxErrorException();
     }
 
     private async Task Join( string[] args )
     {
       var name = args.FirstOrDefault();
       if ( name == null )
-      {
-        Help( null );
-        return;
-      }
+        throw new SyntaxErrorException();
 
       var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
       await client.GetAsync( "GameRooms/Join?name=" + name, source.Token );
       await EnsureCompatibility();
     }
-
-
-
-
 
     private static readonly HashSet<string> supportedFeatures = new HashSet<string>( new[] { "OptionsResponding" } );
 
@@ -108,9 +109,23 @@ namespace Ivony.TableGame.ConsoleClient
 
 
 
+    private async Task Create( string[] args )
+    {
+
+      var name = args.FirstOrDefault();
+      if ( string.IsNullOrWhiteSpace( name ) )
+        throw new SyntaxErrorException();
+
+      var response = await client.GetAsync( $"GameRooms/Create?name={name}" );
+
+    }
+
+
+
+
     private async Task List( string[] args )
     {
-      var response = await client.GetAsync( "GameRooms" );
+      var response = await client.GetAsync( "GameRooms/List" );
       var rooms =
         from dynamic item in (JArray) await response.Content.ReadAsJsonAsync()
         where (string) item.State == "Initialized"
@@ -165,5 +180,12 @@ namespace Ivony.TableGame.ConsoleClient
       Console.Write( HelpManager.GetHelp( command ) );
 
     }
+
+
+    private class SyntaxErrorException : Exception
+    {
+
+    }
+
   }
 }
