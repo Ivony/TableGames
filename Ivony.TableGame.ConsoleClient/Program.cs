@@ -29,7 +29,7 @@ namespace Ivony.TableGame.ConsoleClient
 
       SetConsoleCtrlHandler( controType =>
       {
-        client.QuitGame().Wait();
+        client.Dispose();
         return false;
       }, true );
 

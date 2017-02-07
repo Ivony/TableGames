@@ -64,6 +64,21 @@ namespace Ivony.TableGame.WebHost
 
 
 
+    /// <summary>
+    /// 强行释放用户退出系统
+    /// </summary>
+    /// <returns></returns>
+    [HttpPost]
+    public object Exit()
+    {
+      lock ( PlayerHost.SyncRoot )
+      {
+        PlayerHost.Release();
+        return new HttpResponseMessage( HttpStatusCode.OK );
+      }
+    }
+
+
 
 
     [HttpGet]

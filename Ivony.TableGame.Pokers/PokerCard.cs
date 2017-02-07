@@ -27,14 +27,15 @@ namespace Ivony.TableGame.Pokers
   {
     private PokerCard( PokerKind kind, int point )
     {
-      Name = GetName( kind, point );
+      Name = GetName( Kind = kind, Point = point );
     }
 
     private PokerCard( bool secondJoker )
     {
-      Name = "Joker";
       Kind = PokerKind.Joker;
-      Point = secondJoker ? 1 : 0;
+      Point = secondJoker ? -1 : 0;
+
+      Name = GetName( Kind, Point );
     }
 
 
@@ -57,8 +58,13 @@ namespace Ivony.TableGame.Pokers
           name = "♦";
           break;
         case PokerKind.Joker:
-          name = "Joker";
-          break;
+
+          if ( Point == 0 )
+            return "JOKER";
+
+          else
+            return "joker";
+
         default:
           throw new InvalidOperationException();
       }
@@ -109,7 +115,7 @@ namespace Ivony.TableGame.Pokers
     /// </summary>
     /// <param name="includeJokers">是否包含王牌</param>
     /// <returns>一副扑克牌</returns>
-    public PokerCard[] CreateCardSet( bool includeJokers = false )
+    public static PokerCard[] CreateCardSet( bool includeJokers = false )
     {
 
       var cards = new List<PokerCard>( includeJokers ? 54 : 52 );

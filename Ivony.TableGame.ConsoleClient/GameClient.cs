@@ -36,14 +36,14 @@ namespace Ivony.TableGame.ConsoleClient
 
     public void Dispose()
     {
-      client.Dispose();
+      Release();
     }
 
     public async Task Run()
     {
 
 
-      while ( true )
+      while ( _disposed == false )
       {
         var lastRequestTime = DateTime.UtcNow;
 
@@ -105,6 +105,9 @@ namespace Ivony.TableGame.ConsoleClient
           Console.ResetColor();
         }
       }
+
+
+      Console.WriteLine( "客户端已经退出..." );
     }
 
 
@@ -291,6 +294,22 @@ namespace Ivony.TableGame.ConsoleClient
 
 
 
+
+    private bool _disposed = false;
+
+    /// <summary>
+    /// 释放玩家资源，退出游戏系统。
+    /// </summary>
+    public void Release()
+    {
+      _disposed = true;
+      client.PostAsync( "Exit", new StringContent( "" ) ).Wait();
+      client.Dispose();
+    }
+
+
+
+
     private async Task<dynamic> GetStatus( HttpClient client )
     {
       var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
@@ -308,9 +327,6 @@ namespace Ivony.TableGame.ConsoleClient
 
     private class ContinueRunningException : Exception
     {
-      public ContinueRunningException()
-      {
-      }
     }
   }
 }

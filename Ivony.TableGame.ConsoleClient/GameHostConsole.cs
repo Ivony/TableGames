@@ -111,13 +111,14 @@ namespace Ivony.TableGame.ConsoleClient
     private async Task List( string[] args )
     {
       var response = await client.GetAsync( "GameRooms" );
-      var rooms = from dynamic item in (JArray) await response.Content.ReadAsJsonAsync()
-                  where (string) item.State == "Initialized"
-                  select new
-                  {
-                    Name = (string) item.Name,
-                    Players = (int) item.Players.Count,
-                  };
+      var rooms =
+        from dynamic item in (JArray) await response.Content.ReadAsJsonAsync()
+        where (string) item.State == "Initialized"
+        select new
+        {
+          Name = (string) item.Name,
+          Players = (int) item.Players.Count,
+        };
 
       if ( rooms.Any() )
       {
