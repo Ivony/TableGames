@@ -95,37 +95,50 @@ namespace Ivony.TableGame
         if ( Player != null )
           throw new InvalidOperationException( "玩家当前已经在另一个游戏，无法加入游戏" );
 
-        Player = player;
+        _player = player;
       }
     }
 
 
 
     /// <summary>
-    /// 尝试退出游戏（如果正在游戏的话）
+    /// 退出当前游戏
     /// </summary>
-    /// <returns>是否成功退出游戏</returns>
-    public virtual bool TryQuitGame()
+    public virtual void QuitGame()
     {
-
       lock ( SyncRoot )
       {
+
         if ( Player == null )
-          return false;
+          return;
 
         Player.QuitGame();
-        Player = null;
-        return true;
+        _player = null;
       }
     }
 
 
 
+
+    private GamePlayerBase _player;
     /// <summary>
     /// 获取当前在游戏的玩家对象（如果有的话）
     /// </summary>
     /// <returns>玩家对象</returns>
-    public virtual GamePlayerBase Player { get; protected set; }
+    public virtual GamePlayerBase Player
+    {
+      get
+      {
+        if ( _player == null )
+          return null;
+
+        else if ( _player.PlayerHost != this )
+          return _player = null;
+
+        else
+          return _player;
+      }
+    }
 
 
 

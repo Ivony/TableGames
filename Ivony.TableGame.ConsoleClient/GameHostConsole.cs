@@ -138,7 +138,9 @@ namespace Ivony.TableGame.ConsoleClient
       if ( rooms.Any() )
       {
         foreach ( var item in rooms )
-          Console.Write( $"{item.Name}({item.Players})\t" );
+        {
+          Console.Write( "{0,20}", $"{item.Name}({item.Players})" );
+        }
         Console.WriteLine();
       }
       else

@@ -15,19 +15,24 @@ namespace Ivony.TableGame.WebHost
     public object Join( string name )
     {
 
-      try
+      lock ( PlayerHost.SyncRoot )
       {
-        var game = GameRoomsManager.GetGame( name );
-        if ( game == null )
-          return new HttpResponseMessage( HttpStatusCode.NotFound );
+        CheckGameming();
 
-        game.JoinGame( PlayerHost );
-        return new HttpResponseMessage( HttpStatusCode.OK );
-      }
-      catch ( ArgumentException e )
-      {
-        PlayerHost.WriteWarningMessage( "房间名称不合法，必须由不超过10个英文字母或者不超过5个中文字符组成" );
-        return new HttpResponseMessage( HttpStatusCode.BadRequest );
+        try
+        {
+          var game = GameRoomsManager.GetGame( name );
+          if ( game == null )
+            return new HttpResponseMessage( HttpStatusCode.NotFound );
+
+          game.JoinGame( PlayerHost );
+          return new HttpResponseMessage( HttpStatusCode.OK );
+        }
+        catch ( ArgumentException )
+        {
+          PlayerHost.WriteWarningMessage( "房间名称不合法，必须由不超过10个英文字母或者不超过5个中文字符组成" );
+          return new HttpResponseMessage( HttpStatusCode.BadRequest );
+        }
       }
     }
 
@@ -56,29 +61,33 @@ namespace Ivony.TableGame.WebHost
     [HttpGet]
     public object Create( string name, string type = null, bool @private = false )
     {
-      return GameRoomsManager.CreateGame( name, type, @private );
-
-    }
-
-
-    [HttpGet]
-    public object QuitGame()
-    {
       lock ( PlayerHost.SyncRoot )
       {
-        if ( !PlayerHost.Gaming )
-          return "玩家未加入任何游戏";
+        CheckGameming();
 
-        if ( PlayerHost.TryQuitGame() )
-          return "OK";
+        var game = GameRoomsManager.CreateGame( name, type, @private );
 
-        else
-          return "Failed";
+        game.JoinGame( PlayerHost );
+        return new HttpResponseMessage( HttpStatusCode.OK );
       }
     }
 
+    private void CheckGameming()
+    {
+      if ( PlayerHost.Gaming )
+        throw new HttpResponseException( new HttpResponseMessage { StatusCode = HttpStatusCode.Forbidden, Content = new StringContent( "当前已经在一个游戏房间，不能创建游戏房间" ) } );
+    }
 
 
-
+    /// <summary>
+    /// 退出当前游戏房间
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet]
+    public object QuitGame()
+    {
+      PlayerHost.QuitGame();
+      return new HttpResponseMessage( HttpStatusCode.OK );
+    }
   }
 }

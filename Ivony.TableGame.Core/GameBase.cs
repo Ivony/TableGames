@@ -310,11 +310,7 @@ namespace Ivony.TableGame
       lock ( SyncRoot )
       {
         foreach ( var player in Players )
-        {
-
-          if ( player.PlayerHost.TryQuitGame() == false )
-            throw new InvalidOperationException( string.Format( "释放玩家 {0} 失败", player.PlayerHost.Name ) );
-        }
+          player.QuitGame();
 
         GameHost.ReleaseGame( this );
       }

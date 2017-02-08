@@ -125,7 +125,7 @@ namespace Ivony.TableGame.WebHost
     /// </summary>
     public void Release()
     {
-      TryQuitGame();
+      QuitGame();
       Players.Release( this );
     }
 

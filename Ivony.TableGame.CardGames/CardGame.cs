@@ -121,7 +121,7 @@ namespace Ivony.TableGame.CardGames
         AnnounceSystemMessage( "{0} 已经准备好", player.PlayerName );
 
       else if ( option.Name == "退出游戏" )
-        player.PlayerHost.TryQuitGame();
+        player.QuitGame();
 
     }
 

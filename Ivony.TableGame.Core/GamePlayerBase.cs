@@ -69,6 +69,7 @@ namespace Ivony.TableGame
     /// </summary>
     public virtual void QuitGame()
     {
+      PlayerHost = null;
     }
 
 

@@ -13,8 +13,8 @@ namespace Ivony.TableGame.MurderGames
 
 
 
-    public MurderGame( IGameHost host )
-      : base( host )
+    public MurderGame()
+      : base()
     {
 
     }

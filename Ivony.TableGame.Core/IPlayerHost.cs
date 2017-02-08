@@ -39,12 +39,6 @@ namespace Ivony.TableGame
 
 
     /// <summary>
-    /// 指示玩家应立即退出当前游戏
-    /// </summary>
-    bool TryQuitGame();
-
-
-    /// <summary>
     /// 获取当前在游戏的玩家对象（如果有的话）
     /// </summary>
     /// <returns>玩家对象</returns>
