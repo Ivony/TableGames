@@ -40,7 +40,7 @@ namespace Ivony.TableGame
     /// 派生类实现此方法向客户端推送消息
     /// </summary>
     /// <param name="message">要推送的消息</param>
-    protected abstract void WriteMessage( GameMessage message );
+    public abstract void WriteMessage( GameMessage message );
 
 
 

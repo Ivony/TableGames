@@ -30,7 +30,7 @@ namespace Ivony.TableGame.WebHost
     }
 
 
-    protected override void WriteMessage( GameMessage message )
+    public override void WriteMessage( GameMessage message )
     {
       _messages.Add( message );
     }
