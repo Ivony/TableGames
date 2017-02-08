@@ -35,42 +35,12 @@ namespace Ivony.TableGame
     protected IPlayerHost PlayerHost { get; private set; }
 
 
-    /// <summary>
-    /// 向玩家客户端写入一条消息
-    /// </summary>
-    /// <param name="message">消息对象</param>
-    public virtual void WriteMessage( GameMessage message )
-    {
-
-      var chatMessage = message as GameChatMessage;
-      if ( chatMessage != null && !PlayerHost.Support( "Chat" ) )
-        message = new CompatibilityChatMessage( chatMessage );
-
-
-      WriteMessageImplement( message );
-    }
-
-
-    /// <summary>
-    /// 定义一个类型提供聊天消息的兼容实现
-    /// </summary>
-    protected class CompatibilityChatMessage : GameMessage
-    {
-      /// <summary>
-      /// 创建 CompatibilityChatMessage 实例
-      /// </summary>
-      /// <param name="message"></param>
-      public CompatibilityChatMessage( GameChatMessage message ) : base( GameMessageType.Info, string.Format( "{0}：{1}", message.Player.PlayerName, message.Message ), message.Date ) { }
-
-    }
-
-
 
     /// <summary>
     /// 派生类实现此方法向客户端推送消息
     /// </summary>
     /// <param name="message">要推送的消息</param>
-    protected abstract void WriteMessageImplement( GameMessage message );
+    protected abstract void WriteMessage( GameMessage message );
 
 
 

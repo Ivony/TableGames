@@ -47,13 +47,6 @@ namespace Ivony.TableGame
 
 
     /// <summary>
-    /// 判断客户端是否支持某个特性
-    /// </summary>
-    /// <param name="feature">要判断是否支持的特性</param>
-    bool Support( string feature );
-
-
-    /// <summary>
     /// 获取用于同步的对象
     /// </summary>
     object SyncRoot { get; }
