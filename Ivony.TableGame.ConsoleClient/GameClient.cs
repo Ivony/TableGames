@@ -15,7 +15,6 @@ namespace Ivony.TableGame.ConsoleClient
   {
 
     private readonly Uri host;
-    private readonly HttpClient client;
     private readonly GameHostConsole console;
 
     public GameClient( Uri host )
@@ -28,16 +27,35 @@ namespace Ivony.TableGame.ConsoleClient
         throw new ArgumentException( "host 必须是一个绝对 URL", "host" );
 
       this.host = host;
-      client = new HttpClient( new HttpClientHandler { CookieContainer = new CookieContainer() } );
-      client.BaseAddress = host;
+      HttpClient = new HttpClient( new HttpClientHandler { CookieContainer = new CookieContainer() } );
+      HttpClient.BaseAddress = host;
 
-      console = new GameHostConsole( client );
+      console = new GameHostConsole( this );
     }
+
+
+    internal HttpClient HttpClient { get; }
 
     public void Dispose()
     {
       Release();
     }
+
+    private bool _disposed = false;
+
+    /// <summary>
+    /// 释放玩家资源，退出游戏系统。
+    /// </summary>
+    public void Release()
+    {
+      if ( _disposed )
+        return;
+
+      _disposed = true;
+      HttpClient.PostAsync( "Exit", new StringContent( "" ) ).Wait();
+      HttpClient.Dispose();
+    }
+
 
     public async Task Run()
     {
@@ -51,7 +69,7 @@ namespace Ivony.TableGame.ConsoleClient
         try
         {
 
-          var status = await GetStatus( client );
+          var status = await GetStatus( HttpClient );
 
           ShowMessages( status.Messages );
 
@@ -154,7 +172,7 @@ namespace Ivony.TableGame.ConsoleClient
         throw new ArgumentNullException( "url" );
 
 
-      var response = await client.GetAsync( url );
+      var response = await HttpClient.GetAsync( url );
       if ( response.IsSuccessStatusCode == false )
         return;
 
@@ -251,7 +269,7 @@ namespace Ivony.TableGame.ConsoleClient
 
     private async Task<bool> EnsureResponding( string url )
     {
-      var response = await client.GetAsync( url );
+      var response = await HttpClient.GetAsync( url );
       if ( response.StatusCode == HttpStatusCode.OK )
         return true;
 
@@ -272,7 +290,7 @@ namespace Ivony.TableGame.ConsoleClient
       var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
 
       var content = new StringContent( message, Encoding.UTF8, "text/responding" );
-      var response = await client.PostAsync( url, content, source.Token );
+      var response = await HttpClient.PostAsync( url, content, source.Token );
 
       if ( response.StatusCode != HttpStatusCode.OK )
       {
@@ -289,23 +307,10 @@ namespace Ivony.TableGame.ConsoleClient
 
     public async Task QuitGame()
     {
-      await client.GetAsync( "QuitGame" );
+      await HttpClient.GetAsync( "QuitGame" );
     }
 
 
-
-
-    private bool _disposed = false;
-
-    /// <summary>
-    /// 释放玩家资源，退出游戏系统。
-    /// </summary>
-    public void Release()
-    {
-      _disposed = true;
-      client.PostAsync( "Exit", new StringContent( "" ) ).Wait();
-      client.Dispose();
-    }
 
 
 

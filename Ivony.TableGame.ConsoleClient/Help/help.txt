@@ -3,6 +3,6 @@
 list 列出所有游戏
 join 加入某个游戏
 name 显示或者修改昵称
-quit 退出游戏
+exit 退出游戏
 create 创建游戏房间
 help <command> 显示指定命令的帮助信息

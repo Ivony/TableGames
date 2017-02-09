@@ -65,7 +65,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Help\join.txt" />
     <EmbeddedResource Include="Help\list.txt" />
-    <EmbeddedResource Include="Help\quit.txt" />
+    <EmbeddedResource Include="Help\exit.txt" />
     <EmbeddedResource Include="Help\name.txt" />
   </ItemGroup>
   <ItemGroup>

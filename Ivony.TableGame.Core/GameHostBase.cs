@@ -153,10 +153,7 @@ namespace Ivony.TableGame
     /// <summary>
     /// 获取用于同步的对象
     /// </summary>
-    public object SyncRoot
-    {
-      get { return Game.SyncRoot; }
-    }
+    public object SyncRoot { get; } = new object();
 
 
 

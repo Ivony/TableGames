@@ -24,22 +24,24 @@ namespace Ivony.TableGame.ConsoleClient
 
       var url = new Uri( ConfigurationManager.AppSettings["server"] ?? "http://game.jumony.net/" );
 
-      var client = new GameClient( url );
+      client = new GameClient( url );
 
-
-      SetConsoleCtrlHandler( controType =>
-      {
-        client.Dispose();
-        return false;
-      }, true );
-
+      SetConsoleCtrlHandler( OnExit, true );
 
       client.Run().Wait();
 
 
-
     }
 
+
+    private static GameClient client;
+
+    private static bool OnExit( int controlType )
+    {
+      if ( client != null )
+        client.Dispose();
+      return false;
+    }
 
     private delegate bool HandlerRoutine( int controlType );
 

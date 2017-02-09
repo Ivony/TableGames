@@ -139,11 +139,7 @@ namespace Ivony.TableGame
     /// <summary>
     /// 用于同步的对象
     /// </summary>
-    public object SyncRoot
-    {
-      get;
-      private set;
-    }
+    public object SyncRoot { get; } = new object();
 
 
 
@@ -152,7 +148,6 @@ namespace Ivony.TableGame
     /// <summary>
     /// 尝试加入游戏
     /// </summary>
-    /// <param name="gameHost">游戏宿主</param>
     /// <param name="playerHost">玩家宿主</param>
     /// <returns>若加入游戏成功，则返回一个 Player 对象</returns>
     public virtual GamePlayerBase TryJoinGame( IPlayerHost playerHost )
@@ -294,7 +289,6 @@ namespace Ivony.TableGame
     {
       if ( GameState != GameState.Running )
         throw new InvalidOperationException( "游戏状态错误，不在运行状态" );
-
     }
 
 

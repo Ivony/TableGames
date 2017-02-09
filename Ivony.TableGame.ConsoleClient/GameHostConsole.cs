@@ -16,11 +16,11 @@ namespace Ivony.TableGame.ConsoleClient
 
     private Regex commandRegex = new Regex( @"^(?<command>[a-zA-Z-]+)(\s+((?<argument>[^""\s]+)|(""(?<argument>.+?)"")))*$" );
 
-    private HttpClient client;
 
-    public GameHostConsole( HttpClient client )
+    private GameClient client;
+
+    public GameHostConsole( GameClient client )
     {
-
       this.client = client;
     }
 
@@ -69,6 +69,9 @@ namespace Ivony.TableGame.ConsoleClient
       else if ( command.Equals( "create", StringComparison.OrdinalIgnoreCase ) )
         await Create( args );
 
+      else if ( command.Equals( "exit", StringComparison.OrdinalIgnoreCase ) )
+        Exit();
+
       else
         throw new SyntaxErrorException();
     }
@@ -80,7 +83,7 @@ namespace Ivony.TableGame.ConsoleClient
         throw new SyntaxErrorException();
 
       var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
-      await client.GetAsync( "GameRooms/Join?name=" + name, source.Token );
+      await client.HttpClient.GetAsync( "GameRooms/Join?name=" + name, source.Token );
       await EnsureCompatibility();
     }
 
@@ -93,7 +96,7 @@ namespace Ivony.TableGame.ConsoleClient
     private async Task EnsureCompatibility()
     {
 
-      var response = await client.GetAsync( "RequiredFeatures" );
+      var response = await client.HttpClient.GetAsync( "RequiredFeatures" );
 
       var features = (await response.Content.ReadAsJsonAsync()).ToObject<string[]>();
       if ( features == null )
@@ -116,7 +119,7 @@ namespace Ivony.TableGame.ConsoleClient
       if ( string.IsNullOrWhiteSpace( name ) )
         throw new SyntaxErrorException();
 
-      var response = await client.GetAsync( $"GameRooms/Create?name={name}" );
+      var response = await client.HttpClient.GetAsync( $"GameRooms/Create?name={name}" );
 
     }
 
@@ -125,7 +128,7 @@ namespace Ivony.TableGame.ConsoleClient
 
     private async Task List( string[] args )
     {
-      var response = await client.GetAsync( "GameRooms/List" );
+      var response = await client.HttpClient.GetAsync( "GameRooms/List" );
       var rooms =
         from dynamic item in (JArray) await response.Content.ReadAsJsonAsync()
         where (string) item.State == "Initialized"
@@ -157,7 +160,7 @@ namespace Ivony.TableGame.ConsoleClient
     {
       if ( name == null )
       {
-        var response = await client.GetAsync( "Player/Name" );
+        var response = await client.HttpClient.GetAsync( "Player/Name" );
         name = (string) await response.Content.ReadAsJsonAsync();
         Console.ResetColor();
         Console.Write( "您当前在游戏中的昵称是：" );
@@ -167,7 +170,7 @@ namespace Ivony.TableGame.ConsoleClient
       }
       else
       {
-        var response = await client.GetAsync( "Player/Name?name=" + name );
+        var response = await client.HttpClient.GetAsync( "Player/Name?name=" + name );
         if ( response.IsSuccessStatusCode )
           Console.WriteLine( "昵称修改成功" );
         else
@@ -181,6 +184,12 @@ namespace Ivony.TableGame.ConsoleClient
 
       Console.Write( HelpManager.GetHelp( command ) );
 
+    }
+
+
+    private void Exit()
+    {
+      client.Dispose();
     }
 
 
