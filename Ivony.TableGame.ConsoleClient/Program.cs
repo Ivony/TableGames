@@ -26,7 +26,7 @@ namespace Ivony.TableGame.ConsoleClient
 
       client = new GameClient( url );
 
-      SetConsoleCtrlHandler( OnExit, true );
+      SetConsoleCtrlHandler( handler, true );
 
       client.Run().Wait();
 
@@ -35,6 +35,7 @@ namespace Ivony.TableGame.ConsoleClient
 
 
     private static GameClient client;
+    private static HandlerRoutine handler = OnExit;
 
     private static bool OnExit( int controlType )
     {
