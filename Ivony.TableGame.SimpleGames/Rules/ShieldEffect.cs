@@ -139,8 +139,6 @@ namespace Ivony.TableGame.SimpleGames.Rules
         else
         {
           attackEvent.AnnounceAttackIneffective();
-          recipient.HealthPoint -= attackEvent.AttackPoint;
-
           recipient.PlayerHost.WriteWarningMessage( $"{Element.Name}属性的盾牌阻挡了 {attackEvent.AttackPoint} 点{attackEvent.Element}属性攻击，防御效果已经失效" );
         }
 
