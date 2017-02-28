@@ -43,10 +43,10 @@ namespace Ivony.TableGame.SimpleGames
 
 
     /// <summary>
-    /// 
+    /// 派生类重写此方法处理玩家事件
     /// </summary>
-    /// <param name="gameEvent"></param>
-    /// <returns></returns>
+    /// <param name="gameEvent">玩家事件</param>
+    /// <returns>用于等待事件处理完成的 Task 对象</returns>
     public Task OnGamePlayerEvent( IGamePlayerEvent gameEvent )
     {
       if ( gameEvent is GameAroundEvent )
