@@ -18,7 +18,7 @@ namespace Ivony.TableGame.SimpleGames
     /// </summary>
     /// <param name="gameEvent"></param>
     /// <returns></returns>
-    Task IGameBehaviorEffect.OnBehaviorInitiator( IGameBehaviorEvent gameEvent )
+    public virtual Task OnBehaviorInitiator( IGameBehaviorEvent gameEvent )
     {
       return Task.CompletedTask;
     }
@@ -29,7 +29,7 @@ namespace Ivony.TableGame.SimpleGames
     /// </summary>
     /// <param name="gameEvent"></param>
     /// <returns></returns>
-    async Task IGameBehaviorEffect.OnBehaviorRecipient( IGameBehaviorEvent gameEvent )
+    public virtual async Task OnBehaviorRecipient( IGameBehaviorEvent gameEvent )
     {
       var attackEvent = gameEvent as AttackEvent;
       if ( attackEvent != null && attackEvent.Handled == false )
