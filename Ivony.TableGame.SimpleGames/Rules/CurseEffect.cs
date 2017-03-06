@@ -69,14 +69,14 @@ namespace Ivony.TableGame.SimpleGames.Rules
         if ( random.Next( 2 ) == 0 )
         {
           attackEvent.RecipientPlayer.PlayerHost.WriteWarningMessage( "当你正打算用盾牌格挡这一次攻击的时候，却发现盾牌无论如何都找不到了" );
-          attackEvent.Data["ShieldDisabled"] = true;
+          attackEvent.DataBag.ShieldDisabled = true;
         }
       }
       else if ( Element == Element.水 )
       {
         if ( random.Next( 2 ) == 0 )
         {
-          attackEvent.Data["DoubleAttack"] = true;
+          attackEvent.DataBag.DoubleAttack = true;
         }
       }
 
@@ -88,6 +88,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
     protected override Task OnPlayerRoundEvent( PlayerRoundEvent roundEvent )
     {
       var player = (SimpleGamePlayer) roundEvent.Player;
+
       if ( Element == Element.木 )
       {
         player.HealthPoint--;
@@ -97,7 +98,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
       {
         if ( random.Next( 10 ) < 3 )
         {
-          roundEvent.Data["PlayInvalid"] = true;
+          roundEvent.DataBag.PlayInvalid = true;
         }
       }
 

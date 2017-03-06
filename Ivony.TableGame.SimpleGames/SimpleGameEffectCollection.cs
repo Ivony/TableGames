@@ -15,14 +15,14 @@ namespace Ivony.TableGame.SimpleGames
 
 
 
-    private TypedEffectSlot<IBlessEffect> _blessEffectSlot = new TypedEffectSlot<IBlessEffect>();
+    private TypedEffectSlot<BuffEffect> _buffEffect = new TypedEffectSlot<BuffEffect>();
     private TypedEffectSlot<ConfineEffect> _confineEffectSlot = new TypedEffectSlot<ConfineEffect>();
     private TypedEffectSlot<ShieldEffect> _shieldEffectSlot = new TypedEffectSlot<ShieldEffect>();
 
 
     public SimpleGamePlayerEffectCollection()
     {
-      RegisterSlot( _blessEffectSlot, _shieldEffectSlot, _confineEffectSlot );
+      RegisterSlot( _buffEffect, _shieldEffectSlot, _confineEffectSlot );
     }
   }
 }

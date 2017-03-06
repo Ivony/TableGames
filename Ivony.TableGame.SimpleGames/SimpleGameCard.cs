@@ -69,7 +69,7 @@ namespace Ivony.TableGame.SimpleGames
     /// </summary>
     /// <param name="player">使用卡牌的玩家</param>
     /// <returns>是否可用</returns>
-    public virtual bool Availables( SimpleGamePlayer player )
+    public virtual bool Availables( SimpleGamePlayer player, bool elementAttached = false )
     {
       return player.ActionPoint >= ActionPoint;
     }

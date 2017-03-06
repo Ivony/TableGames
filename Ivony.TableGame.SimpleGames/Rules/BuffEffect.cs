@@ -14,11 +14,13 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
 
 
-    protected virtual Task OnPlayerRoundEvent( PlayerRoundEvent roundEvent )
+    protected override Task OnPlayerRoundEvent( PlayerRoundEvent roundEvent )
     {
+      var player = (SimpleGamePlayer) roundEvent.Player;
+      player.PlayerHost.WriteMessage( $"{Name}，还剩 {rounds} 个回合" );
 
       if ( rounds-- == 0 )
-        ((SimpleGamePlayer) roundEvent.Player).Effects.RemoveEffect( this );
+        player.Effects.RemoveEffect( this );
 
       return Task.CompletedTask;
     }

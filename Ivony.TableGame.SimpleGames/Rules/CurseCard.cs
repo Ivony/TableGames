@@ -11,7 +11,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
   /// <summary>
   /// 诅咒卡
   /// </summary>
-  public class CurseCard : ElementAttachmentCard
+  public class CurseCard : ElementAttachmentCard, IOtherPlayerTarget
   {
     public override string Description
     {
@@ -34,9 +34,9 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
     }
 
-    public override bool Availables( SimpleGamePlayer player )
+    public override bool Availables( SimpleGamePlayer player, bool elementAttached = false )
     {
-      return base.Availables( player ) && this.Element != null;
+      return base.Availables( player ) && elementAttached == true;
     }
 
   }

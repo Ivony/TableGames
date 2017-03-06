@@ -130,8 +130,7 @@ namespace Ivony.TableGame.SimpleGames
 
     protected override async Task PlayCard( PlayerRoundEvent roundEvent, CancellationToken token )
     {
-
-      if ( ((bool?) roundEvent.Data["Confine"]) == true )
+      if ( (bool?) roundEvent.DataBag.Confine == true )
       {
         Game.AnnounceMessage( $"只见 {PlayerName} 动弹不得，什么也做不了。" );
         PlayerHost.WriteMessage( "您被禁锢一回合，无法出牌" );

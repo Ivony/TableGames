@@ -83,7 +83,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
       var point = AttackPoint;
 
-      if ( (bool?) Data["DoubleAttack"] == true )
+      if ( (bool?) DataBag.DoubleAttack == true )
       {
         point *= 2;
         AnnounceDoubleAttack();

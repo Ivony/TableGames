@@ -42,7 +42,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
           return "可以抵挡一次普通攻击，且为您恢复生命。";
 
         else if ( Element == Element.水 )
-          return "可以抵挡一次普通攻击，且净化攻击者。";
+          return "可以抵挡一次普通攻击，且在盾牌存续期间，不受诅咒影响。";
 
         else if ( Element == Element.火 )
           return "可以抵挡一次普通攻击，且给予攻击者伤害。";
@@ -65,7 +65,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
       var recipient = attackEvent.RecipientPlayer;
       var initiate = attackEvent.InitiatePlayer;
 
-      if ( (bool?) attackEvent.Data["ShieldDisabled"] == true )
+      if ( (bool?) attackEvent.DataBag.ShieldDisabled == true )
         return;
 
 

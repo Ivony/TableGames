@@ -32,7 +32,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
     {
 
       var player = (SimpleGamePlayer) roundEvent.Player;
-      roundEvent.Data["Confine"] = true;
+      roundEvent.DataBag.Confine = true;
       player.Effects.RemoveEffect( this );
 
 
