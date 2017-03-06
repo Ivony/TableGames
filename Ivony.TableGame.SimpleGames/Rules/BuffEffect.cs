@@ -10,12 +10,24 @@ namespace Ivony.TableGame.SimpleGames.Rules
   public abstract class BuffEffect : SimpleGameEffect
   {
 
-    private int rounds = 5;
+    private int? rounds;
 
 
+
+
+    protected override bool Available
+    {
+      get { return rounds != null; }
+    }
 
     protected override Task OnPlayerRoundEvent( PlayerRoundEvent roundEvent )
     {
+      if ( rounds == null )
+        rounds = 5;
+
+      if ( rounds < 0 )
+        throw new InvalidOperationException();
+
       var player = (SimpleGamePlayer) roundEvent.Player;
       player.PlayerHost.WriteMessage( $"{Name}，还剩 {rounds} 个回合" );
 

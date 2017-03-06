@@ -12,13 +12,15 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
 
 
-    public async override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target, CancellationToken token )
+    public override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target, CancellationToken token )
     {
       foreach ( var player in user.Game.Players.Where( item => item != user ) )
       {
         player.DealCards();
         user.PlayerHost.WriteMessage( "{0} HP:{1,-3}{2} 卡牌：{3}", player.PlayerName, player.HealthPoint, player.Effects, string.Join( ", ", player.Cards.Select( item => item.Name ) ) );
       }
+
+      return Task.CompletedTask;
     }
 
     public override string Name

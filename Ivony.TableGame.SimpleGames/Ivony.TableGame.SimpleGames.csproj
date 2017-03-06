@@ -44,7 +44,7 @@
     <Compile Include="Rules\BuffEffect.cs" />
     <Compile Include="Rules\CurseCard.cs" />
     <Compile Include="Rules\CurseEffect.cs" />
-    <Compile Include="Rules\DiscardCard.cs" />
+    <Compile Include="Rules\ReflexiveCard.cs" />
     <Compile Include="Rules\AttackCard.cs" />
     <Compile Include="Rules\AttackEvent.cs" />
     <Compile Include="Rules\StandardCard.cs" />
@@ -55,7 +55,6 @@
     <Compile Include="Rules\ElementAttachmentCard.cs" />
     <Compile Include="Rules\ElementCard.cs" />
     <Compile Include="Rules\HealingCard.cs" />
-    <Compile Include="Rules\ResetCard.cs" />
     <Compile Include="Rules\ShieldEffect.cs" />
     <Compile Include="Rules\StealCard.cs" />
     <Compile Include="Rules\CardTypes.cs" />

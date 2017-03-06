@@ -13,7 +13,7 @@ namespace Ivony.TableGame.SimpleGames
     public SimpleGameCardCollection()
     {
 
-      var attack = new UnlimitedCardDealer<SimpleGameCard>()
+      attack = new UnlimitedCardDealer<SimpleGameCard>()
         .Register( 20, () => new AttackCard( 1 ) )
         .Register( 3, () => new AttackCard( 2 ) )
         .Register( 1, () => new AttackCard( 3 ) );
@@ -41,18 +41,31 @@ namespace Ivony.TableGame.SimpleGames
         .Register( 1, () => new CurseCard() )
         .Register( 2, () => new PeepCard() )
         .Register( 3, () => new StealCard() )
-        .Register( 4, () => new DiscardCard() )
-        .Register( 3, () => new ExchangeCard() );
+        .Register( 3, () => new ReflexiveCard() )
+        .Register( 2, () => new ExchangeCard() );
 
 
       all = new UnlimitedCardDealer<SimpleGameCard>()
         .Register( 20, basics )
-        .Register( 2, specials )
+        .Register( 5, specials )
         .Register( 10, elements );
 
     }
 
+    internal void ReflexiveCards()
+    {
+      for ( int i = 0; i < Count; i++ )
+      {
+        if ( Collection[i] is ShieldCard )
+          Collection[i] = attack.DealCard();
+
+        else if ( Collection[i] is AttackCard )
+          Collection[i] = new ShieldCard();
+      }
+    }
+
     private ICardDealer<SimpleGameCard> all;
+    private ICardDealer<SimpleGameCard> attack;
     private ICardDealer<SimpleGameCard> basics;
 
     public void DealCards( SimpleGame game )

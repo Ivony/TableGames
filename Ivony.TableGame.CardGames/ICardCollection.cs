@@ -50,7 +50,5 @@ namespace Ivony.TableGame.CardGames
     /// 清除所有卡牌
     /// </summary>
     void Clear();
-
-
   }
 }

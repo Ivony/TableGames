@@ -23,6 +23,9 @@ namespace Ivony.TableGame.SimpleGames
     /// <returns>用于等待事件处理完毕的 Task 对象</returns>
     public virtual async Task OnBehaviorInitiator( IGameBehaviorEvent gameEvent )
     {
+      if ( Available == false )
+        return;
+
       var attackEvent = gameEvent as AttackEvent;
       if ( attackEvent != null && attackEvent.Handled == false )
         await OnLaunchAttack( attackEvent );
@@ -36,6 +39,9 @@ namespace Ivony.TableGame.SimpleGames
     /// <returns>用于等待事件处理完毕的 Task 对象</returns>
     public virtual async Task OnBehaviorRecipient( IGameBehaviorEvent gameEvent )
     {
+      if ( Available == false )
+        return;
+
       var attackEvent = gameEvent as AttackEvent;
       if ( attackEvent != null && attackEvent.Handled == false )
         await OnAttacked( attackEvent );
@@ -72,6 +78,8 @@ namespace Ivony.TableGame.SimpleGames
     /// <returns>用于等待事件处理完成的 Task 对象</returns>
     public virtual Task OnGamePlayerEvent( IGamePlayerEvent gameEvent )
     {
+      if ( Available == false )
+        return Task.CompletedTask;
 
       var round = gameEvent as PlayerRoundEvent;
       if ( round != null )
@@ -100,5 +108,13 @@ namespace Ivony.TableGame.SimpleGames
     /// 效果描述
     /// </summary>
     public abstract string Description { get; }
+
+
+
+    /// <summary>
+    /// 效果在当前是否可用
+    /// </summary>
+    protected virtual bool Available { get { return true; } }
+
   }
 }

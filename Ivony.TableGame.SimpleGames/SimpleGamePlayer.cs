@@ -64,6 +64,18 @@ namespace Ivony.TableGame.SimpleGames
     }
 
 
+    /// <summary>
+    /// 将手上所有卡牌盾牌换成攻击，攻击换成盾牌
+    /// </summary>
+    internal void ReflexiveCards()
+    {
+      ((SimpleGameCardCollection) CardCollection).ReflexiveCards();
+    }
+
+
+
+
+
     private void NotifyCardsHasBeenReset()
     {
       PlayerHost.WriteWarningMessage( "一个魔术师借了你所有卡牌表演魔术，一阵闪光过后你的卡牌和魔术师都消失了，空中飘下来几张你没见过的卡牌。" );

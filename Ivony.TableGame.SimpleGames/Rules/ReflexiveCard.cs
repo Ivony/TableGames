@@ -7,13 +7,16 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
-  public class DiscardCard : StandardCard
+  /// <summary>
+  /// 反向卡
+  /// </summary>
+  public class ReflexiveCard : StandardCard
   {
     public override string Description
     {
       get
       {
-        return "丢弃目前手上所有的 攻击 和 盾牌 卡牌，重新摸牌";
+        return "将目前手上的攻击牌全部换成盾牌，盾牌全部换成攻击";
       }
     }
 
@@ -21,13 +24,13 @@ namespace Ivony.TableGame.SimpleGames.Rules
     {
       get
       {
-        return "弃牌";
+        return "矛盾";
       }
     }
 
     public override Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target, CancellationToken token )
     {
-      user.DiscardCards( item => item is AttackCard || item is ShieldCard );
+      user.ReflexiveCards();
       return Task.CompletedTask;
     }
 

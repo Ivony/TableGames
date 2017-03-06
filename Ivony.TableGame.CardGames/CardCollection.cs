@@ -13,12 +13,12 @@ namespace Ivony.TableGame.CardGames
 
 
 
-    private List<TCard> collection = new List<TCard>();
+    protected List<TCard> Collection { get; } = new List<TCard>();
 
     protected object SyncRoot { get; } = new object();
 
 
-    public int Count { get { return collection.Count; } }
+    public int Count { get { return Collection.Count; } }
 
 
 
@@ -35,7 +35,7 @@ namespace Ivony.TableGame.CardGames
     {
       lock ( SyncRoot )
       {
-        collection.Add( card );
+        Collection.Add( card );
         return true;
       }
     }
@@ -44,7 +44,7 @@ namespace Ivony.TableGame.CardGames
     {
       lock ( SyncRoot )
       {
-        collection.Clear();
+        Collection.Clear();
       }
 
     }
@@ -53,7 +53,7 @@ namespace Ivony.TableGame.CardGames
     {
       lock ( SyncRoot )
       {
-        return collection.Contains( card );
+        return Collection.Contains( card );
       }
     }
 
@@ -61,7 +61,7 @@ namespace Ivony.TableGame.CardGames
     {
       lock ( SyncRoot )
       {
-        return collection.Remove( card );
+        return Collection.Remove( card );
       }
     }
 
@@ -69,10 +69,10 @@ namespace Ivony.TableGame.CardGames
     {
       lock ( SyncRoot )
       {
-        foreach ( var card in collection.ToArray() )
+        foreach ( var card in Collection.ToArray() )
         {
           if ( predicate( card ) )
-            collection.Remove( card );
+            Collection.Remove( card );
         }
       }
     }
@@ -80,7 +80,7 @@ namespace Ivony.TableGame.CardGames
 
     public IEnumerator<Card> GetEnumerator()
     {
-      return collection.GetEnumerator();
+      return Collection.GetEnumerator();
     }
 
     IEnumerator IEnumerable.GetEnumerator()
