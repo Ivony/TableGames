@@ -60,10 +60,16 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
 
 
-    protected override async Task OnAttack( AttackEvent attackEvent )
+    protected override async Task OnAttacked( AttackEvent attackEvent )
     {
       var recipient = attackEvent.RecipientPlayer;
       var initiate = attackEvent.InitiatePlayer;
+
+      if ( (bool?) attackEvent.Data["ShieldDisabled"] == true )
+        return;
+
+
+
       attackEvent.Handled = true;
 
       if ( attackEvent.Element == null )
@@ -104,6 +110,9 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
         else if ( Element == null )
           recipient.PlayerHost.WriteWarningMessage( $"您使用盾牌阻挡了 {attackEvent.AttackPoint} 点攻击，防御效果已经失效" );
+
+        else
+          throw new InvalidOperationException();
 
       }
       else

@@ -13,10 +13,10 @@ namespace Ivony.TableGame.CardGames
   /// </summary>
   public abstract class CardGamePlayer : GamePlayerBase
   {
-    protected CardGamePlayer( IGameHost gameHost, IPlayerHost playerHost )
-      : base( gameHost, playerHost )
+    protected CardGamePlayer(IGameHost gameHost, IPlayerHost playerHost)
+      : base(gameHost, playerHost)
     {
-      Game = (CardGame) gameHost.Game;
+      Game = (CardGame)gameHost.Game;
       SyncRoot = new object();
     }
 
@@ -38,38 +38,39 @@ namespace Ivony.TableGame.CardGames
     /// </summary>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个用于等待玩家处理完成的 Task</returns>
-    public virtual async Task Play( CancellationToken token )
+    public virtual async Task Play(CancellationToken token)
     {
 
-      Game.AnnounceMessage( "轮到 {0} 出牌", PlayerName );
+      Game.AnnounceMessage("轮到 {0} 出牌", PlayerName);
 
-      await OnGameEvent( new GameAroundEvent( this ) );
+      var round = new PlayerRoundEvent(this);
+      await OnGameEvent(round);
 
-      await OnBeforePlayCard( token );
+      await OnBeforePlayCard(round, token);
 
       try
       {
-        await PlayCard( token );
+        await PlayCard(round, token);
       }
-      catch ( TimeoutException )
+      catch (TimeoutException)
       {
         await OnTimeout();
       }
 
-      await OnAfterPlayCard( token );
+      await OnAfterPlayCard(round, token);
 
     }
 
-    protected virtual Task OnBeforePlayCard( CancellationToken token )
+    protected virtual Task OnBeforePlayCard(PlayerRoundEvent round, CancellationToken token)
     {
       return Task.CompletedTask;
     }
 
 
-    protected abstract Task PlayCard( CancellationToken token );
+    protected abstract Task PlayCard(PlayerRoundEvent round, CancellationToken token);
 
 
-    protected virtual Task OnAfterPlayCard( CancellationToken token )
+    protected virtual Task OnAfterPlayCard(PlayerRoundEvent round, CancellationToken token)
     {
       return Task.CompletedTask;
     }
@@ -81,8 +82,8 @@ namespace Ivony.TableGame.CardGames
     /// <returns>用于等待处理完成的 Task 对象</returns>
     protected virtual Task OnTimeout()
     {
-      PlayerHost.WriteWarningMessage( "操作超时。" );
-      Game.AnnounceMessage( $"玩家 {PlayerName} 操作超时" );
+      PlayerHost.WriteWarningMessage("操作超时。");
+      Game.AnnounceMessage($"玩家 {PlayerName} 操作超时");
       return Task.CompletedTask;
     }
 
@@ -93,13 +94,13 @@ namespace Ivony.TableGame.CardGames
     /// </summary>
     public override void QuitGame()
     {
-      Game.OnPlayerQuitted( this );
+      Game.OnPlayerQuitted(this);
       base.QuitGame();
     }
 
 
 
-    public virtual Task OnGameEvent( IGameEvent gameEvent )
+    public virtual Task OnGameEvent(IGameEvent gameEvent)
     {
       return Task.CompletedTask;
     }

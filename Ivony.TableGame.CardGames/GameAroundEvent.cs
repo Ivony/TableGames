@@ -9,16 +9,16 @@ namespace Ivony.TableGame.CardGames
 
 
   /// <summary>
-  /// 定义游戏回合事件
+  /// 定义游戏玩家回合事件
   /// </summary>
-  public class GameAroundEvent : GameEventBase, IGamePlayerEvent
+  public class PlayerRoundEvent : GameEventBase, IGamePlayerEvent
   {
 
     /// <summary>
-    /// 创建 GameAroundEvent 对象
+    /// 创建 PlayerRoundEvent 对象
     /// </summary>
-    /// <param name="player">轮到出牌的玩家</param>
-    public GameAroundEvent( CardGamePlayer player )
+    /// <param name="player">当前出牌的玩家</param>
+    public PlayerRoundEvent(CardGamePlayer player)
     {
       Player = player;
     }

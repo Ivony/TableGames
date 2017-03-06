@@ -58,9 +58,10 @@ namespace Ivony.TableGame.CardGames
     /// <summary>
     /// 实现 PlayCard 方法，令玩家出牌
     /// </summary>
+    /// <param name="round">当前回合事件</param>
     /// <param name="token">取消标识</param>
     /// <returns>返回一个 Task 对象，用于等待玩家出牌完毕</returns>
-    protected override async Task PlayCard( CancellationToken token )
+    protected override async Task PlayCard( PlayerRoundEvent round, CancellationToken token )
     {
 
       while ( ActionPoint > 0 )

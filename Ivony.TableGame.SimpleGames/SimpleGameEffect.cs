@@ -13,30 +13,53 @@ namespace Ivony.TableGame.SimpleGames
   {
 
 
+    protected static readonly Random random = new Random( DateTime.Now.Millisecond );
+
+
     /// <summary>
-    /// 
+    /// 派生类重写此方法当玩家作为事件的发起者要执行的操作
     /// </summary>
-    /// <param name="gameEvent"></param>
-    /// <returns></returns>
-    public virtual Task OnBehaviorInitiator( IGameBehaviorEvent gameEvent )
+    /// <param name="gameEvent">引发的游戏事件</param>
+    /// <returns>用于等待事件处理完毕的 Task 对象</returns>
+    public virtual async Task OnBehaviorInitiator( IGameBehaviorEvent gameEvent )
+    {
+      var attackEvent = gameEvent as AttackEvent;
+      if ( attackEvent != null && attackEvent.Handled == false )
+        await OnLaunchAttack( attackEvent );
+    }
+
+
+    /// <summary>
+    /// 派生类重写此方法当玩家作为事件的接受者要执行的操作
+    /// </summary>
+    /// <param name="gameEvent">引发的游戏事件</param>
+    /// <returns>用于等待事件处理完毕的 Task 对象</returns>
+    public virtual async Task OnBehaviorRecipient( IGameBehaviorEvent gameEvent )
+    {
+      var attackEvent = gameEvent as AttackEvent;
+      if ( attackEvent != null && attackEvent.Handled == false )
+        await OnAttacked( attackEvent );
+    }
+
+
+    /// <summary>
+    /// 派生类重写此方法当发动攻击时要执行的操作
+    /// </summary>
+    /// <param name="attackEvent">攻击事件</param>
+    /// <returns>用于等待事件处理完毕的 Task 对象</returns>
+    protected virtual Task OnLaunchAttack( AttackEvent attackEvent )
     {
       return Task.CompletedTask;
     }
 
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="gameEvent"></param>
-    /// <returns></returns>
-    public virtual async Task OnBehaviorRecipient( IGameBehaviorEvent gameEvent )
-    {
-      var attackEvent = gameEvent as AttackEvent;
-      if ( attackEvent != null && attackEvent.Handled == false )
-        await OnAttack( attackEvent );
-    }
 
-    protected virtual Task OnAttack( AttackEvent attackEvent )
+    /// <summary>
+    /// 派生类重写此方法当被攻击时要执行的操作
+    /// </summary>
+    /// <param name="attackEvent">攻击事件</param>
+    /// <returns>用于等待事件处理完毕的 Task 对象</returns>
+    protected virtual Task OnAttacked( AttackEvent attackEvent )
     {
       return Task.CompletedTask;
     }
@@ -47,19 +70,24 @@ namespace Ivony.TableGame.SimpleGames
     /// </summary>
     /// <param name="gameEvent">玩家事件</param>
     /// <returns>用于等待事件处理完成的 Task 对象</returns>
-    public Task OnGamePlayerEvent( IGamePlayerEvent gameEvent )
+    public virtual Task OnGamePlayerEvent( IGamePlayerEvent gameEvent )
     {
-      if ( gameEvent is GameAroundEvent )
-      {
 
-        var effect = this as IAroundEffect;
-        if ( effect != null )
-          effect.OnTurnedAround( (SimpleGamePlayer) gameEvent.Player );
+      var round = gameEvent as PlayerRoundEvent;
+      if ( round != null )
+        return OnPlayerRoundEvent( round );
 
-      }
-
-      return Task.CompletedTask; 
+      else
+        return Task.CompletedTask;
     }
+
+
+    protected virtual Task OnPlayerRoundEvent( PlayerRoundEvent roundEvent )
+    {
+      return Task.CompletedTask;
+    }
+
+
 
 
     /// <summary>

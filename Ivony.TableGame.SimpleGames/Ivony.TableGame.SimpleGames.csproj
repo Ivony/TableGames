@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Rules\BlessEffect.cs" />
+    <Compile Include="Rules\BuffEffect.cs" />
     <Compile Include="Rules\CurseCard.cs" />
     <Compile Include="Rules\CurseEffect.cs" />
     <Compile Include="Rules\DiscardCard.cs" />

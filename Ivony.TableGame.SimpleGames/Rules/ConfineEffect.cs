@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ivony.TableGame.CardGames;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
@@ -24,6 +25,18 @@ namespace Ivony.TableGame.SimpleGames.Rules
     public override string ToString()
     {
       return "禁";
+    }
+
+
+    protected override Task OnPlayerRoundEvent( PlayerRoundEvent roundEvent )
+    {
+
+      var player = (SimpleGamePlayer) roundEvent.Player;
+      roundEvent.Data["Confine"] = true;
+      player.Effects.RemoveEffect( this );
+
+
+      return base.OnPlayerRoundEvent( roundEvent );
     }
   }
 }

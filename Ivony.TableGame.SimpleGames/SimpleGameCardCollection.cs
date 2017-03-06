@@ -38,6 +38,7 @@ namespace Ivony.TableGame.SimpleGames
 
 
       var specials = new UnlimitedCardDealer<SimpleGameCard>()
+        .Register( 1, () => new CurseCard() )
         .Register( 2, () => new PeepCard() )
         .Register( 3, () => new StealCard() )
         .Register( 4, () => new DiscardCard() )

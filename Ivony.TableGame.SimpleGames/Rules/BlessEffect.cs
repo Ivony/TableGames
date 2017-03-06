@@ -10,7 +10,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
   /// <summary>
   /// 定义祝福效果
   /// </summary>
-  public class BlessEffect : SimpleGameEffect
+  public class BlessEffect : BuffEffect
   {
 
     /// <summary>

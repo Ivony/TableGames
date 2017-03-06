@@ -79,9 +79,21 @@ namespace Ivony.TableGame.SimpleGames.Rules
       if ( Handled )
         return Task.CompletedTask;
 
-      RecipientPlayer.HealthPoint -= AttackPoint;
-      AnnounceNormalAttack();
-      RecipientPlayer.PlayerHost.WriteWarningMessage( "您受到攻击，生命值减少 {0} 点，目前生命值 {1}", AttackPoint, RecipientPlayer.HealthPoint );
+
+
+      var point = AttackPoint;
+
+      if ( (bool?) Data["DoubleAttack"] == true )
+      {
+        point *= 2;
+        AnnounceDoubleAttack();
+      }
+
+      else
+        AnnounceNormalAttack();
+
+      RecipientPlayer.HealthPoint -= point;
+      RecipientPlayer.PlayerHost.WriteWarningMessage( "您受到攻击，生命值减少 {0} 点，目前生命值 {1}", point, RecipientPlayer.HealthPoint );
       return Task.CompletedTask;
     }
 
