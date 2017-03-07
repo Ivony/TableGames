@@ -166,7 +166,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
     public override string ToString()
     {
-      return Element?.Name ?? "盾";
+      return (Element?.Name ?? "盾") + "D";
     }
 
   }

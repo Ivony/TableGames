@@ -29,13 +29,12 @@ namespace Ivony.TableGame.SimpleGames.Rules
         throw new InvalidOperationException();
 
       var player = (SimpleGamePlayer) roundEvent.Player;
-      player.PlayerHost.WriteMessage( $"{Name}，还剩 {rounds} 个回合" );
+      player.PlayerHost.WriteMessage( (this is CurseEffect ? "诅咒" : "祝福") + $"，还剩 {rounds} 个回合" );
 
       if ( rounds-- == 0 )
         player.Effects.RemoveEffect( this );
 
       return Task.CompletedTask;
     }
-
   }
 }

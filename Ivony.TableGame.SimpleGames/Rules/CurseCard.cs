@@ -30,13 +30,20 @@ namespace Ivony.TableGame.SimpleGames.Rules
         throw new InvalidOperationException();
 
       target.SetEffect( new CurseEffect( Element ) );
+      AnnounceSpecialCardUsed( user );
+
       return Task.CompletedTask;
 
     }
 
-    public override bool Availables( SimpleGamePlayer player, bool elementAttached = false )
+    public override bool Availables( SimpleGamePlayer player )
     {
-      return base.Availables( player ) && elementAttached == true;
+      return false;
+    }
+
+    internal override bool AvailablesWithElement( SimpleGamePlayer player )
+    {
+      return base.Availables( player );
     }
 
   }

@@ -51,7 +51,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
     /// </summary>
     /// <param name="player">当前玩家对象</param>
     /// <returns>卡牌是否可用</returns>
-    public override bool Availables( SimpleGamePlayer player, bool elementAttached = false )
+    public override bool Availables( SimpleGamePlayer player )
     {
       return base.Availables( player ) && player.Game.Rounds > 1;
     }

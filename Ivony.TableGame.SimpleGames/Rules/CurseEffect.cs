@@ -108,7 +108,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
     public override string ToString()
     {
-      return "咒";
+      return Element.Name + "-";
     }
   }
 }
