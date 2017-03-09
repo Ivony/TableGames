@@ -29,7 +29,10 @@ namespace Ivony.TableGame.SimpleGames.Rules
       if ( Element == null )
         throw new InvalidOperationException();
 
-      target.SetEffect( new CurseEffect( Element ) );
+      if ( target.Effects.OfType<ShieldEffect>().FirstOrDefault( item => item.Element == Element.水 ) != null )
+        user.PlayerHost.WriteWarningMessage( $"你完成了诅咒的所有工作，但是，它似乎没有奏效。" );
+      else
+        target.SetEffect( new CurseEffect( Element ) );
       AnnounceSpecialCardUsed( user );
 
       return Task.CompletedTask;

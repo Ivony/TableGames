@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\icodingGame - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\icodingGame - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\Jumony.pubxml" />
