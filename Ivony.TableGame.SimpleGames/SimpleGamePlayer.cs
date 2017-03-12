@@ -8,6 +8,7 @@ using Ivony.TableGame;
 using Ivony.TableGame.CardGames;
 using Ivony.TableGame.SimpleGames.Rules;
 using System.Threading;
+using System.Collections.Concurrent;
 
 namespace Ivony.TableGame.SimpleGames
 {
@@ -78,7 +79,7 @@ namespace Ivony.TableGame.SimpleGames
 
     private void NotifyCardsHasBeenReset()
     {
-      PlayerHost.WriteWarningMessage( "一个魔术师借了你所有卡牌表演魔术，一阵闪光过后你的卡牌和魔术师都消失了，空中飘下来几张你没见过的卡牌。" );
+      WriteSecretMessage( GameMessage.Warning( "一个魔术师借了你所有卡牌表演魔术，一阵闪光过后你的卡牌和魔术师都消失了，空中飘下来几张你没见过的卡牌。" ) );
     }
 
     /// <summary>
@@ -114,7 +115,7 @@ namespace Ivony.TableGame.SimpleGames
         throw new TimeoutException();
 
       CardCollection.RemoveCard( card );
-      PlayerHost.WriteWarningMessage( $"一天深夜，你回到家，发现被你藏在绝密地方的 {card.Name} 卡牌被人偷走了。" );
+      WriteSecretMessage( GameMessage.Warning( $"一天深夜，你回到家，发现被你藏在绝密地方的 {card.Name} 卡牌被人偷走了。" ) );
       user.CardCollection.AddCard( card );
       user.PlayerHost.WriteMessage( $"您偷到了一张 {card.Name} 卡牌" );
     }
@@ -138,10 +139,33 @@ namespace Ivony.TableGame.SimpleGames
     protected override ICardCollection<SimpleGameCard> CardCollection { get { return _cards; } }
 
 
+    private ConcurrentBag<GameMessage> secretMessages = new ConcurrentBag<GameMessage>();
+
+    /// <summary>
+    /// 写入一条秘密消息，轮到玩家出牌时才能看到。
+    /// </summary>
+    /// <param name="message">秘密消息</param>
+    public void WriteSecretMessage( GameMessage message )
+    {
+      secretMessages.Add( message );
+    }
 
 
+    /// <summary>
+    /// 重写此方法进行游戏
+    /// </summary>
+    /// <param name="roundEvent">玩家回合事件信息</param>
+    /// <param name="token">取消标识</param>
+    /// <returns>用于等待玩家操作完成的 Task 对象</returns>
     protected override async Task PlayCard( PlayerRoundEvent roundEvent, CancellationToken token )
     {
+      {
+        var list = secretMessages;
+        secretMessages = new ConcurrentBag<GameMessage>();
+        foreach ( var message in list )
+          PlayerHost.WriteMessage( message, true );
+      }
+
       if ( (bool?) roundEvent.DataBag.Confine == true )
       {
         Game.AnnounceMessage( $"只见 {PlayerName} 动弹不得，什么也做不了。" );

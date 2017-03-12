@@ -19,8 +19,12 @@ namespace Ivony.TableGame
     /// </summary>
     /// <param name="playerHost">玩家宿主对象</param>
     /// <param name="message">要写入的消息</param>
-    public static void WriteMessage( this IPlayerHost playerHost, GameMessage message )
+    /// <param name="resetDate">是否重置消息发送时间为当前时间</param>
+    public static void WriteMessage( this IPlayerHost playerHost, GameMessage message, bool resetDate = false )
     {
+      if ( resetDate )
+        message = message.ResetDate();
+
       playerHost.Console.WriteMessage( message );
     }
 

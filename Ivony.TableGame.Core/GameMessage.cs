@@ -50,6 +50,37 @@ namespace Ivony.TableGame
     /// 消息产生的时间
     /// </summary>
     public DateTime Date { get; private set; }
+
+
+    /// <summary>
+    /// 创建一个警告消息
+    /// </summary>
+    /// <param name="message">消息内容</param>
+    /// <returns>警告消息</returns>
+    public static GameMessage Warning( string message )
+    {
+      return new GenericMessage( GameMessageType.Warning, message );
+    }
+
+    /// <summary>
+    /// 创建一个提示消息
+    /// </summary>
+    /// <param name="message">消息内容</param>
+    /// <returns>警告消息</returns>
+    public static GameMessage Info( string message )
+    {
+      return new GenericMessage( GameMessageType.Info, message );
+    }
+
+
+    /// <summary>
+    /// 重置消息发送时间为当前时间
+    /// </summary>
+    internal GameMessage ResetDate()
+    {
+      Date = DateTime.UtcNow;
+      return this;
+    }
   }
 
 
