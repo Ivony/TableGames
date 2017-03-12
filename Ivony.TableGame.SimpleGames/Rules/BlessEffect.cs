@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ivony.TableGame.CardGames;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
@@ -31,15 +32,15 @@ namespace Ivony.TableGame.SimpleGames.Rules
       get
       {
         if ( Element == Element.金 )
-          return "金之祝福，使用者五回合内遇到攻击伤害大于 1 时，只减损 1 点 HP，攻击伤害等于 1 时，有 50% 的概率不掉血";
+          return "金之祝福，使用者五回合无盾牌承受攻击时，有 50% 概率攻击无效";
         else if ( Element == Element.木 )
           return "木之祝福，使用者五回合内每回合加 1 HP";
         else if ( Element == Element.水 )
-          return "水之祝福，使用者五回合内不被反噬伤害，不被诅咒，现有诅咒效果立即消除。";
+          return "水之祝福，使用者五回合内诅咒反弹给施咒者。";
         else if ( Element == Element.火 )
-          return "火之祝福，使用者五回合内攻击伤害 + 1。";
+          return "火之祝福，使用者五回合内攻击未被盾牌阻挡时，有 50% 概率双倍伤害。";
         else if ( Element == Element.土 )
-          return "土之祝福，使用者五回合内不受超时闪电伤害，使用盾牌时有 50% 的机会不消耗行动值。";
+          return "土之祝福，使用者五回合有 50% 的机会可以行动两次。";
 
         throw new InvalidOperationException();
       }
@@ -51,6 +52,44 @@ namespace Ivony.TableGame.SimpleGames.Rules
       {
         return Element.Name + "之祝福";
       }
+    }
+
+    protected override Task OnAttacked( AttackEvent attackEvent )
+    {
+      if ( Element == Element.金 )
+      {
+        if ( random.Next( 2 ) == 0 )
+          attackEvent.DataBag.Ineffective = true;
+      }
+
+      return base.OnAttacked( attackEvent );
+    }
+
+    protected override Task OnLaunchAttack( AttackEvent attackEvent )
+    {
+      if ( Element == Element.火 && random.Next( 2 ) == 0 )
+        attackEvent.DataBag.DoubleAttack = true;
+      return base.OnLaunchAttack( attackEvent );
+    }
+
+    protected override Task OnPlayerRoundEvent( PlayerRoundEvent roundEvent )
+    {
+      var player = (SimpleGamePlayer) roundEvent.Player;
+
+      if ( Element == Element.木 )
+      {
+        player.HealthPoint++;
+        player.PlayerHost.WriteWarningMessage( $"你感到前所未有的精力充沛，HP + 1，当前 HP: {player.HealthPoint}" );
+      }
+      else if ( Element == Element.土 )
+      {
+        if ( random.Next( 2 ) == 0 )
+          player.ActionPoint = 2;
+      }
+
+
+
+      return base.OnPlayerRoundEvent( roundEvent );
     }
   }
 }

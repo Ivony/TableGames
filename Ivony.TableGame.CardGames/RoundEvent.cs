@@ -18,20 +18,33 @@ namespace Ivony.TableGame.CardGames
     /// 创建 PlayerRoundEvent 对象
     /// </summary>
     /// <param name="player">当前出牌的玩家</param>
-    public PlayerRoundEvent(CardGamePlayer player)
+    public PlayerRoundEvent( GameRoundEvent roundEvent, CardGamePlayer player )
     {
       Player = player;
+      RoundEvent = roundEvent;
     }
 
     /// <summary>
     /// 获取当前轮到出牌的玩家
     /// </summary>
-    public GamePlayerBase Player
+    public GamePlayerBase Player { get; }
+
+
+    public GameRoundEvent RoundEvent { get; }
+
+  }
+
+
+  /// <summary>
+  /// 定义游戏回合事件
+  /// </summary>
+  public class GameRoundEvent : GameEventBase
+  {
+    public GameRoundEvent( int rounds )
     {
-      get;
-      private set;
+      Rounds = rounds;
     }
 
-
+    public int Rounds { get; }
   }
 }

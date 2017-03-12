@@ -48,9 +48,8 @@
     <Compile Include="EffectSlotCollection.cs" />
     <Compile Include="ICardDealer.cs" />
     <Compile Include="CardSlotCollection.cs" />
-    <Compile Include="GameAroundEvent.cs" />
+    <Compile Include="RoundEvent.cs" />
     <Compile Include="GameEventBase.cs" />
-    <Compile Include="GameRoundEvent.cs" />
     <Compile Include="ICardCollection.cs" />
     <Compile Include="ICardSlot.cs" />
     <Compile Include="IEffect.cs" />

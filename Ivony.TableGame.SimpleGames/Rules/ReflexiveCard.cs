@@ -24,7 +24,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
     {
       get
       {
-        return "矛盾";
+        return "攻防";
       }
     }
 

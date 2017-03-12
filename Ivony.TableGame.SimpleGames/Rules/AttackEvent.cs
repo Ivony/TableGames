@@ -89,6 +89,13 @@ namespace Ivony.TableGame.SimpleGames.Rules
         AnnounceDoubleAttack();
       }
 
+      else if ( (bool?) DataBag.Ineffective == true )
+      {
+        AnnounceAttackIneffective();
+        RecipientPlayer.PlayerHost.WriteWarningMessage( "忽听耳边一阵风声，你本能的向旁边一跃，侥幸的躲过了一次攻击。", point, RecipientPlayer.HealthPoint );
+        return Task.CompletedTask;
+      }
+
       else
         AnnounceNormalAttack();
 

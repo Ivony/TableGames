@@ -38,9 +38,9 @@ namespace Ivony.TableGame.CardGames
     /// <param name="player">正在执行操作的玩家</param>
     /// <param name="token">取消标识</param>
     /// <returns>获取一个 Task 用于等待操作完成</returns>
-    protected override async Task PlayerPlay( CardGamePlayer player, CancellationToken token )
+    protected override async Task PlayerPlay( GameRoundEvent roundEvent, CardGamePlayer player, CancellationToken token )
     {
-      await base.PlayerPlay( player, token );
+      await base.PlayerPlay( roundEvent, player, token );
       await EnsurePlayersAlive();
     }
 

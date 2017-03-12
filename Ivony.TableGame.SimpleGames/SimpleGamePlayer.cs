@@ -30,6 +30,27 @@ namespace Ivony.TableGame.SimpleGames
     }
 
     /// <summary>
+    /// 尝试附加一种诅咒效果
+    /// </summary>
+    /// <param name="curseEffect">诅咒效果</param>
+    /// <returns></returns>
+    internal bool Curse( SimpleGamePlayer player, CurseEffect curseEffect )
+    {
+      if ( Effects.OfType<ShieldEffect>().FirstOrDefault( item => item.Element == Element.水 ) != null )
+        return false;
+
+      if ( Effects.OfType<BlessEffect>().FirstOrDefault( item => item.Element == Element.水 ) != null )
+      {
+        if ( player != null )
+          player.Curse( null, curseEffect );
+        return false;
+      }
+
+      SetEffect( curseEffect );
+      return true;
+    }
+
+    /// <summary>
     /// 与另一个玩家交换所有卡牌
     /// </summary>
     /// <param name="target"></param>
