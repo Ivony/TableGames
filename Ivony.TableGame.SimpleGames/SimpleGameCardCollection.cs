@@ -49,8 +49,8 @@ namespace Ivony.TableGame.SimpleGames
 
       var others = new UnlimitedCardDealer<SimpleGameCard>()
         .Register( 1, healing )
-        .Register( 2, specials )
-        .Register( 3, elements );
+        .Register( 3, specials )
+        .Register( 4, elements );
 
       RegisterSlot<SimpleGameCard>( others );
       RegisterSlot<SimpleGameCard>( others );
