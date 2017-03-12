@@ -119,7 +119,7 @@ namespace Ivony.TableGame.SimpleGames
     {
       DealCards();
 
-      var options = Cards.Select( item => CreateOption( item ) ).ToArray();
+      var options = Cards.Select( item => Option.Create( item, item.Name, item.Description ) ).ToArray();
 
       var card = await user.PlayerHost.Console.Choose( "请选择要盗取的卡牌：", options, null, token );
       if ( card == null )
