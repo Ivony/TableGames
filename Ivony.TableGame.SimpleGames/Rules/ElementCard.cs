@@ -41,7 +41,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
       var player = (SimpleGamePlayer) initiatePlayer;
 
-      var options = player.Cards.Cast<SimpleGameCard>()
+      var options = player.Cards.Cast<SimpleGameCard>().Where( item => item != null )
         .Select( item => Option.Create( item, item.Name, item.Description, item is ElementAttachmentCard == false || item.AvailablesWithElement( player ) == false ) )
         .ToArray();
 

@@ -25,9 +25,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
 
     public override async Task UseCard( SimpleGamePlayer user, SimpleGamePlayer target, CancellationToken token )
     {
-
       await target.StealCardBy( user, token );
-
     }
 
     public override int ActionPoint

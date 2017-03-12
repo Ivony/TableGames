@@ -10,17 +10,17 @@ namespace Ivony.TableGame.SimpleGames
 {
 
   /// <summary>
-  /// 定义一种增益效果
+  /// 标记接口，标记实现此接口的效果为正面效果
   /// </summary>
-  public interface IBlessEffect : IEffect
+  public interface IPositiveEffect : IEffect
   {
   }
 
 
   /// <summary>
-  /// 定义一种防御效果
+  /// 标记接口，标记实现此接口的效果为负面效果
   /// </summary>
-  public interface IDefenceEffect : IEffect
+  public interface INagativeEffect : IEffect
   {
   }
 

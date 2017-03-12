@@ -94,7 +94,19 @@ namespace Ivony.TableGame.CardGames
     /// <returns>永远抛出异常</returns>
     public bool SetCard( Card card )
     {
-      throw new InvalidOperationException();
+
+      if ( card == null )
+        throw new ArgumentNullException( "card" );
+
+      if ( HasCard )
+        return false;
+
+      var valid = card as TCard;
+      if ( valid == null )
+        return false;
+
+      Card = card;
+      return true;
     }
 
     /// <summary>

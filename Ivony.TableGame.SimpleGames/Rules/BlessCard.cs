@@ -8,7 +8,7 @@ using Ivony.TableGame.CardGames;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
-  public class BlessCard : ElementAttachmentCard
+  public class BlessCard : ElementAttachmentCard, ISelfTarget
   {
     public override string Name => "祝福";
 

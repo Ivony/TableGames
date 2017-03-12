@@ -13,7 +13,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
     {
 
       if ( Element == Element.水 )
-        target.Purify();
+        target.Purify( false );
 
       var effect = new ShieldEffect( Element );
       target.SetEffect( effect );

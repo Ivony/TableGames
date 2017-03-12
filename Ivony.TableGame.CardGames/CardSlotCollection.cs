@@ -32,7 +32,12 @@ namespace Ivony.TableGame.CardGames
 
 
 
-    protected void AddSlot<T>( ICardDealer<T> dealer ) where T : TCard
+    /// <summary>
+    /// 注册一个卡牌槽位
+    /// </summary>
+    /// <typeparam name="T">允许的卡牌类型</typeparam>
+    /// <param name="dealer">发牌器</param>
+    protected void RegisterSlot<T>( ICardDealer<T> dealer ) where T : TCard
     {
       Slots.Add( new CardSlot<T>( dealer ) );
     }

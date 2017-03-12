@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.SimpleGames.Rules
 {
-  public class ShieldEffect : SimpleGameEffect, IDefenceEffect
+  public class ShieldEffect : SimpleGameEffect, IPositiveEffect
   {
 
 
@@ -94,7 +94,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
         }
         else if ( Element == Element.水 )
         {
-          initiate.Purify();
+          initiate.Purify( true );
           recipient.PlayerHost.WriteWarningMessage( $"水属性的盾牌阻挡了 {attackEvent.AttackPoint} 点攻击，并清除攻击方的一切效果，防御效果已经失效" );
         }
         else if ( Element == Element.火 )

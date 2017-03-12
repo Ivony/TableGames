@@ -56,21 +56,14 @@ namespace Ivony.TableGame.SimpleGames
     /// <param name="target"></param>
     internal void ExchangeCards( SimpleGamePlayer target )
     {
+      DealCards();
       target.DealCards();
-      var cards = Cards.Where( item => item is ExchangeCard == false );
 
-      CardCollection.Clear();
-      foreach ( var item in target.Cards )
-        CardCollection.AddCard( item );
+      var cards = target._cards;
+      target._cards = cards;
+      _cards = cards;
 
-      target.CardCollection.Clear();
-      foreach ( var item in cards )
-        target.CardCollection.AddCard( item );
-
-
-      target.DealCards();
-      target.NotifyCardsHasBeenReset();
-      PlayerHost.WriteWarningMessage( "卡牌已经交换" );
+      PlayerHost.WriteMessage( "卡牌已经交换" );
 
     }
 
@@ -91,7 +84,8 @@ namespace Ivony.TableGame.SimpleGames
     /// </summary>
     internal void ReflexiveCards()
     {
-      ((SimpleGameCardCollection) CardCollection).ReflexiveCards();
+      throw new NotImplementedException();
+      //((SimpleGameCardCollection) CardCollection).ReflexiveCards();
     }
 
 
@@ -234,7 +228,7 @@ namespace Ivony.TableGame.SimpleGames
     /// </summary>
     public void DealCards()
     {
-      _cards.DealCards( Game );
+      _cards.DealCards();
 
     }
 
@@ -242,14 +236,19 @@ namespace Ivony.TableGame.SimpleGames
     /// <summary>
     /// 移除所有效果
     /// </summary>
-    internal void Purify()
+    /// <param name="positive">是否只移除正面效果，还是只移除负面效果，或者都移除</param>
+    internal void Purify( bool? positive = null )
     {
       foreach ( var effect in Effects )
       {
+        if ( positive == false && effect is IPositiveEffect )
+          continue;
+
+        if ( positive == true && effect is INagativeEffect )
+          continue;
 
         if ( Effects.RemoveEffect( effect ) )
           PlayerHost.WriteWarningMessage( "您当前的 {0} 效果已经被解除", effect.Name );
-
       }
     }
 
@@ -302,6 +301,8 @@ namespace Ivony.TableGame.SimpleGames
 
     protected override IOption<SimpleGameCard> CreateOption( SimpleGameCard card )
     {
+      if ( card == null )
+        return null;
 
       var option = new Option( card.Name, card.Description, card.Availables( this ) == false );
       return Option.Create( card, option );

@@ -9,7 +9,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
   /// <summary>
   /// 诅咒效果
   /// </summary>
-  internal class CurseEffect : BuffEffect
+  internal class CurseEffect : BuffEffect, INagativeEffect
   {
     /// <summary>
     /// 元素

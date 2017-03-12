@@ -10,7 +10,7 @@ namespace Ivony.TableGame.SimpleGames.Rules
   /// <summary>
   /// 禁锢效果
   /// </summary>
-  public class ConfineEffect : SimpleGameEffect
+  public class ConfineEffect : SimpleGameEffect, INagativeEffect
   {
     public override string Description
     {

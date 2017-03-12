@@ -11,7 +11,6 @@ namespace Ivony.TableGame.CardGames
   /// <summary>
   /// 定义发牌器的抽象
   /// </summary>
-
   public interface ICardDealer<out TCard> where TCard : Card
   {
     TCard DealCard();

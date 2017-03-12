@@ -71,10 +71,18 @@ namespace Ivony.TableGame.CardGames
           throw new TimeoutException();
 
 
-        await card.Play( this, token );
-
         CardCollection.RemoveCard( card );
-        ActionPoint -= card.ActionPoint;
+        try
+        {
+          await card.Play( this, token );
+          ActionPoint -= card.ActionPoint;
+        }
+        catch
+        {
+          CardCollection.AddCard( card );
+          throw;
+        }
+
       }
     }
 
