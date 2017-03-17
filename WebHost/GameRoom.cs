@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -71,14 +72,21 @@ namespace Ivony.TableGame.WebHost
     /// <param name="type">游戏类型</param>
     /// <param name="privateRoom">是否为私有房间</param>
     /// <returns>游戏宿主</returns>
-    public static GameRoom Create( string name, string type, bool privateRoom )
+    public static GameRoom Create( string name, bool privateRoom )
     {
+      return new GameRoom( name, privateRoom );
+    }
 
-      var host = new GameRoom( name, privateRoom );
-      host.InitializeGame( new SimpleGame() );
 
-      return host;
-
+    /// <summary>
+    /// 初始化游戏房间
+    /// </summary>
+    /// <param name="owner">房间所有者（一般是创建游戏的人）</param>
+    internal async Task Initialize( PlayerHost owner )
+    {
+      var factory = await owner.Console.Choose( "请选择游戏类型", GameManager.RegisteredGames.Select( item => Option.Create( item, item.GameName, item.GameDescription ) ).ToArray(), CancellationToken.None );
+      InitializeGame( factory.CreateGame( new string[0] ) );
+      Game.TryJoinGame( owner );
 
     }
   }

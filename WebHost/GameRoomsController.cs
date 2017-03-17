@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
@@ -59,15 +60,13 @@ namespace Ivony.TableGame.WebHost
     /// <param name="private">是否为私有房间</param>
     /// <returns></returns>
     [HttpGet]
-    public object Create( string name, string type = null, bool @private = false )
+    public object Create( string name, bool @private = false )
     {
       lock ( PlayerHost.SyncRoot )
       {
         CheckGameming();
 
-        var game = GameRoomsManager.CreateGame( name, type, @private );
-
-        game.JoinGame( PlayerHost );
+        var task = GameRoomsManager.CreateGame( PlayerHost, name, @private );
         return new HttpResponseMessage( HttpStatusCode.OK );
       }
     }

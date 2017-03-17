@@ -56,7 +56,7 @@ namespace Ivony.TableGame
     /// 初始化游戏
     /// </summary>
     /// <param name="game">游戏对象</param>
-    protected void InitializeGame( GameBase game )
+    protected GameBase InitializeGame( GameBase game )
     {
       if ( game.GameState != GameState.NotInitialized )
         throw new InvalidOperationException();
@@ -68,6 +68,8 @@ namespace Ivony.TableGame
 
         Game = game;
         Game.Initialize( this );
+
+        return Game;
       }
     }
 
@@ -97,8 +99,12 @@ namespace Ivony.TableGame
       }
       else
       {
-
-        if ( Game.GameState != GameState.Initialized )
+        if ( Game == null || Game.GameState == GameState.NotInitialized || Game.GameState == GameState.Initializing )
+        {
+          reason = "游戏尚未初始化";
+          return false;
+        }
+        else if ( Game.GameState != GameState.Initialized )
         {
           reason = "游戏已经开始或结束";
           return false;

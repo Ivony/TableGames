@@ -7,6 +7,7 @@ using System.Web;
 using System.Collections;
 using Ivony.TableGame.SimpleGames;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Ivony.TableGame.WebHost
 {
@@ -50,15 +51,18 @@ namespace Ivony.TableGame.WebHost
     /// 创建游戏房间
     /// </summary>
     /// <param name="name">房间名称</param>
-    /// <param name="type">游戏类型</param>
     /// <param name="privateRoom">是否为私有房间</param>
+    /// <param name="owner">房间所有人</param>
     /// <returns></returns>
-    public static GameRoom CreateGame( string name, string type, bool privateRoom )
+    public static async Task<GameRoom> CreateGame( PlayerHost owner, string name, bool privateRoom )
     {
 
 
       if ( nameRegex.IsMatch( name ) == false )
         throw new ArgumentException( "游戏名称必须由10个英文字母或者5个汉字组成", "name" );
+
+
+      GameRoom room;
 
       lock ( _sync )
       {
@@ -66,10 +70,23 @@ namespace Ivony.TableGame.WebHost
           throw new InvalidOperationException( "游戏房间已经存在" );
 
 
-        var game = GameRoom.Create( name, type, privateRoom );
-        _games.Add( game );
-        return game;
+        room = GameRoom.Create( name, privateRoom );
+        _games.Add( room );
       }
+
+      try
+      {
+        await room.Initialize( owner );
+      }
+      catch ( Exception e )
+      {
+        _games.Remove( room );
+        owner.WriteMessage( GameMessage.Error( e.ToString() ) );
+        throw;
+      }
+
+      return room;
+
     }
 
 
@@ -94,7 +111,7 @@ namespace Ivony.TableGame.WebHost
     {
       lock ( _sync )
       {
-        return _games.Where( item => item.PrivateRoom == false ).ToArray();
+        return _games.Where( item => item.GameState != GameState.NotInitialized && item.GameState != GameState.Initializing ).Where( item => item.PrivateRoom == false ).ToArray();
       }
     }
   }

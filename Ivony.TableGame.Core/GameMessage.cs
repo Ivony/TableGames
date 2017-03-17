@@ -81,6 +81,16 @@ namespace Ivony.TableGame
       Date = DateTime.UtcNow;
       return this;
     }
+
+    /// <summary>
+    /// 发送一条错误消息
+    /// </summary>
+    /// <param name="message">消息内容</param>
+    /// <returns></returns>
+    public static GameMessage Error( string message )
+    {
+      return new GenericMessage( GameMessageType.Error, message );
+    }
   }
 
 

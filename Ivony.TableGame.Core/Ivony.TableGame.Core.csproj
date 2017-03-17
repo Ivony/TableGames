@@ -54,9 +54,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameAttribute.cs" />
     <Compile Include="GameChatMessage.cs" />
     <Compile Include="GameHostBase.cs" />
     <Compile Include="GameBase.cs" />
+    <Compile Include="GameManager.cs" />
     <Compile Include="GameMessage.cs" />
     <Compile Include="GameMessageExtensions.cs" />
     <Compile Include="GameState.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="IGameEventListener.cs" />
     <Compile Include="IGameHost.cs" />
     <Compile Include="IGamePlayerEvent.cs" />
+    <Compile Include="IGameFactory.cs" />
     <Compile Include="IPersistableGameHost.cs" />
     <Compile Include="IPlayerHost.cs" />
     <Compile Include="GamePlayerBase.cs" />
