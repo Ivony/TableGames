@@ -56,20 +56,21 @@ namespace Ivony.TableGame
     /// 初始化游戏
     /// </summary>
     /// <param name="game">游戏对象</param>
-    protected GameBase InitializeGame( GameBase game )
+    /// <param name="initializer">游戏创建者</param>
+    protected async Task InitializeGame( GameBase game, PlayerHostBase initializer )
     {
       if ( game.GameState != GameState.NotInitialized )
         throw new InvalidOperationException();
 
-      lock ( SyncRoot )
+      if ( Game != null )
+        throw new InvalidOperationException();
+
+      Game = game;
+      await Game.Initialize( this, initializer );
+      if ( Game.TryJoinGame( initializer ) == null )
       {
-        if ( Game != null )
-          throw new InvalidOperationException();
-
-        Game = game;
-        Game.Initialize( this );
-
-        return Game;
+        initializer.WriteWarningMessage( "游戏创建失败。" );
+        throw new InvalidOperationException();
       }
     }
 
@@ -116,12 +117,8 @@ namespace Ivony.TableGame
           reason = "未知原因";
           return false;
         }
-        else
-        {
-          playerHost.OnJoinedGame( player );
-          return true;
-        }
 
+        return true;
       }
     }
 

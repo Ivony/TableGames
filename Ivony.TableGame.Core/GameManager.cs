@@ -39,9 +39,9 @@ namespace Ivony.TableGame
     /// 获取一个游戏实例
     /// </summary>
     /// <param name="name">游戏名称</param>
-    /// <param name="args">游戏参数</param>
+    /// 
     /// <returns>游戏实例</returns>
-    public static GameBase GetGame( string name, string[] args )
+    public static GameBase GetGame( string name )
     {
       EnsureInitialized();
 
@@ -49,7 +49,7 @@ namespace Ivony.TableGame
       if ( factory == null )
         return null;
 
-      return factory.CreateGame( args );
+      return factory.CreateGame();
     }
 
     private static void EnsureInitialized()
@@ -91,6 +91,8 @@ namespace Ivony.TableGame
       {
         RegisterGameFactoryType( type );
       }
+
+      _initialized = true;
     }
 
 

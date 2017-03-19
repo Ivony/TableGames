@@ -79,6 +79,8 @@ namespace Ivony.TableGame
 
 
 
+
+
     /// <summary>
     /// 对所有玩家广播一条消息
     /// </summary>
@@ -166,6 +168,7 @@ namespace Ivony.TableGame
           AnnounceSystemMessage( "玩家 {0} 已经加入游戏", player.PlayerName );
         }
 
+        playerHost.OnJoinedGame( player );
         return player;
       }
     }
@@ -249,7 +252,8 @@ namespace Ivony.TableGame
     /// 对游戏进行初始化
     /// </summary>
     /// <param name="host">游戏宿主</param>
-    public void Initialize( IGameHost host )
+    /// <param name="initializer">初始化游戏的用户宿主</param>
+    public async Task Initialize( IGameHost host, IPlayerHost initializer )
     {
 
       lock ( SyncRoot )
@@ -258,26 +262,27 @@ namespace Ivony.TableGame
           return;
 
         GameState = GameState.Initializing;
-        try
-        {
-
-          GameHost = host;
-          InitializeCore();
-          GameState = GameState.Initialized;
-        }
-        catch
-        {
-          GameState = GameState.NotInitialized;
-          throw;
-        }
+      }
+      try
+      {
+        GameHost = host;
+        await InitializeCore( initializer );
+        GameState = GameState.Initialized;
+      }
+      catch
+      {
+        GameState = GameState.End;
+        throw;
       }
     }
 
     /// <summary>
     /// 派生类实现此方法完成初始化工作
     /// </summary>
-    protected virtual void InitializeCore()
-    { }
+    protected virtual Task InitializeCore( IPlayerHost initializer )
+    {
+      return Task.CompletedTask;
+    }
 
 
 

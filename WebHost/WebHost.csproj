@@ -89,6 +89,7 @@
     <Compile Include="GameControllerBase.cs" />
     <Compile Include="GameHostCollection.cs" />
     <Compile Include="GameHostController.cs" />
+    <Compile Include="GameRoomState.cs" />
     <Compile Include="PlayerConsole.cs" />
     <Compile Include="PlayerController.cs" />
     <Compile Include="PlayerHostCollection.cs" />

@@ -17,7 +17,7 @@ namespace Ivony.TableGame.SimpleGames
     string IGameFactory.GameDescription => "SimpleGame is a simple demo for card game.";
 
 
-    GameBase IGameFactory.CreateGame( string[] args )
+    GameBase IGameFactory.CreateGame()
     {
       return new SimpleGame();
     }

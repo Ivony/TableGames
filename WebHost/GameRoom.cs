@@ -59,11 +59,27 @@ namespace Ivony.TableGame.WebHost
     /// </summary>
     public GameState GameState
     {
+      get { return Game?.GameState ?? GameState.NotInitialized; }
+    }
+
+    /// <summary>
+    /// 获取游戏宿主状态
+    /// </summary>
+    public GameHostState GameHostState
+    {
       get
       {
-        return Game?.GameState ?? GameState.NotInitialized;
+        if ( Game == null || Game.GameState < GameState.Initialized )
+          return GameHostState.Initializing;
+
+        else if ( Game.GameState == GameState.Initialized )
+          return GameHostState.WaitForPlayer;
+
+        else
+          return GameHostState.Running;
       }
     }
+
 
     /// <summary>
     /// 创建游戏宿主
@@ -81,12 +97,25 @@ namespace Ivony.TableGame.WebHost
     /// <summary>
     /// 初始化游戏房间
     /// </summary>
-    /// <param name="owner">房间所有者（一般是创建游戏的人）</param>
-    internal async Task Initialize( PlayerHost owner )
+    /// <param name="initializer">游戏创建者</param>
+    internal async Task Initialize( PlayerHost initializer )
     {
-      var factory = await owner.Console.Choose( "请选择游戏类型", GameManager.RegisteredGames.Select( item => Option.Create( item, item.GameName, item.GameDescription ) ).ToArray(), CancellationToken.None );
-      InitializeGame( factory.CreateGame( new string[0] ) );
-      Game.TryJoinGame( owner );
+      try
+      {
+        var options = GameManager.RegisteredGames.Select( item => Option.Create( item, item.GameName, item.GameDescription ) ).ToArray();
+        if ( options.Any() == false )
+        {
+          initializer.WriteSystemMessage( "当前没有已经注册的游戏，无法创建房间" );
+          throw new InvalidOperationException();
+        }
+
+        var factory = await initializer.Console.Choose( "请选择游戏类型：", options, CancellationToken.None );
+        await InitializeGame( factory.CreateGame(), initializer );
+      }
+      catch
+      {
+        GameRoomsManager.ReleaseRoom( this );
+      }
 
     }
   }

@@ -25,9 +25,8 @@ namespace Ivony.TableGame
     /// <summary>
     /// 创建游戏对象
     /// </summary>
-    /// <param name="args">游戏参数</param>
     /// <returns>游戏对象</returns>
-    GameBase CreateGame( string[] args );
+    GameBase CreateGame();
 
   }
 }

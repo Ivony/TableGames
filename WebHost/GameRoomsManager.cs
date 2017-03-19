@@ -78,10 +78,9 @@ namespace Ivony.TableGame.WebHost
       {
         await room.Initialize( owner );
       }
-      catch ( Exception e )
+      catch
       {
         _games.Remove( room );
-        owner.WriteMessage( GameMessage.Error( e.ToString() ) );
         throw;
       }
 
@@ -111,7 +110,7 @@ namespace Ivony.TableGame.WebHost
     {
       lock ( _sync )
       {
-        return _games.Where( item => item.GameState != GameState.NotInitialized && item.GameState != GameState.Initializing ).Where( item => item.PrivateRoom == false ).ToArray();
+        return _games.Where( item => item.GameHostState != GameHostState.Initializing ).Where( item => item.PrivateRoom == false ).ToArray();
       }
     }
   }

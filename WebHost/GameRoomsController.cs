@@ -20,20 +20,12 @@ namespace Ivony.TableGame.WebHost
       {
         CheckGameming();
 
-        try
-        {
-          var game = GameRoomsManager.GetGame( name );
-          if ( game == null )
-            return new HttpResponseMessage( HttpStatusCode.NotFound );
+        var game = GameRoomsManager.GetGame( name );
+        if ( game == null )
+          return new HttpResponseMessage( HttpStatusCode.NotFound );
 
-          game.JoinGame( PlayerHost );
-          return new HttpResponseMessage( HttpStatusCode.OK );
-        }
-        catch ( ArgumentException )
-        {
-          PlayerHost.WriteWarningMessage( "房间名称不合法，必须由不超过10个英文字母或者不超过5个中文字符组成" );
-          return new HttpResponseMessage( HttpStatusCode.BadRequest );
-        }
+        game.JoinGame( PlayerHost );
+        return new HttpResponseMessage( HttpStatusCode.OK );
       }
     }
 
@@ -48,7 +40,7 @@ namespace Ivony.TableGame.WebHost
     {
       var games = GameRoomsManager.PublicGames();
 
-      return games.Select( item => new { Name = item.RoomName, State = item.GameState, Players = item.Game.Players.Select( player => player.PlayerName ) } );
+      return games.Select( item => new { Name = item.RoomName, State = item.GameHostState, Players = item.Game.Players.Select( player => player.PlayerName ) } );
     }
 
 
@@ -66,7 +58,17 @@ namespace Ivony.TableGame.WebHost
       {
         CheckGameming();
 
-        var task = GameRoomsManager.CreateGame( PlayerHost, name, @private );
+        Task.Run( async () =>
+         {
+           try
+           {
+             await GameRoomsManager.CreateGame( PlayerHost, name, @private );
+           }
+           catch ( Exception e )
+           {
+             PlayerHost.WriteMessage( GameMessage.Error( e.ToString() ) );
+           }
+         } );
         return new HttpResponseMessage( HttpStatusCode.OK );
       }
     }

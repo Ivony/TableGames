@@ -74,6 +74,13 @@ namespace Ivony.TableGame.ConsoleClient
           ShowMessages( status.Messages );
 
 
+          if ( status.RespondingUrl != null )
+          {
+            await Responding( (string) status.RespondingUrl );
+            continue;
+          }
+
+
           if ( status.Gaming == false )
           {
             await console.Run();
@@ -81,11 +88,7 @@ namespace Ivony.TableGame.ConsoleClient
           }
 
 
-          if ( status.RespondingUrl != null )
-          {
-            await Responding( (string) status.RespondingUrl );
-            continue;
-          }
+
 
           var delay = lastRequestTime.AddSeconds( 1 ) - DateTime.UtcNow;
 
