@@ -35,7 +35,7 @@ namespace Ivony.TableGame.ConsoleClient
 
 
     private static GameClient client;
-    private static HandlerRoutine handler = OnExit;
+    private static readonly HandlerRoutine handler = OnExit;
 
     private static bool OnExit( int controlType )
     {

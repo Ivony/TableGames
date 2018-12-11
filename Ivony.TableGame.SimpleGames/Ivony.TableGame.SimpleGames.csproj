@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <TargetFramework>net46</TargetFramework>
+  </PropertyGroup>  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E3C44EA2-517E-46D1-8BFA-D4D40A319E90}</ProjectGuid>
@@ -40,38 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameFactory.cs" />
-    <Compile Include="Rules\BlessCard.cs" />
-    <Compile Include="Rules\BlessEffect.cs" />
-    <Compile Include="Rules\BuffEffect.cs" />
-    <Compile Include="Rules\CurseCard.cs" />
-    <Compile Include="Rules\CurseEffect.cs" />
-    <Compile Include="Rules\ReflexiveCard.cs" />
-    <Compile Include="Rules\AttackCard.cs" />
-    <Compile Include="Rules\AttackEvent.cs" />
-    <Compile Include="Rules\StandardCard.cs" />
-    <Compile Include="Rules\ConfineEffect.cs" />
-    <Compile Include="Rules\ExchangeCard.cs" />
-    <Compile Include="ISimpleGameEffect.cs" />
-    <Compile Include="Rules\Element.cs" />
-    <Compile Include="Rules\ElementAttachmentCard.cs" />
-    <Compile Include="Rules\ElementCard.cs" />
-    <Compile Include="Rules\HealingCard.cs" />
-    <Compile Include="Rules\ShieldEffect.cs" />
-    <Compile Include="Rules\StealCard.cs" />
-    <Compile Include="Rules\CardTypes.cs" />
-    <Compile Include="Rules\PeepCard.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rules\PurifyCard.cs" />
-    <Compile Include="Rules\ShieldCard.cs" />
-    <Compile Include="SimpleGame.cs" />
-    <Compile Include="SimpleGameCard.cs" />
-    <Compile Include="SimpleGameCardCollection.cs" />
-    <Compile Include="SimpleGameEffect.cs" />
-    <Compile Include="SimpleGameEffectCollection.cs" />
-    <Compile Include="SimpleGamePlayer.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Ivony.TableGame.CardGames\Ivony.TableGame.CardGames.csproj">
       <Project>{74742e84-6f8b-467e-8fca-59fba784aed9}</Project>
       <Name>Ivony.TableGame.CardGames</Name>
@@ -84,12 +53,7 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
 </Project>

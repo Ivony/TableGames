@@ -7,7 +7,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-///
 export class client {
     constructor(host) {
         this.host = host;

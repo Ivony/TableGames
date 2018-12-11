@@ -27,8 +27,10 @@ namespace Ivony.TableGame.ConsoleClient
         throw new ArgumentException( "host 必须是一个绝对 URL", "host" );
 
       this.host = host;
-      HttpClient = new HttpClient( new HttpClientHandler { CookieContainer = new CookieContainer() } );
-      HttpClient.BaseAddress = host;
+      HttpClient = new HttpClient( new HttpClientHandler { CookieContainer = new CookieContainer() } )
+      {
+        BaseAddress = host
+      };
 
       console = new GameHostConsole( this );
     }

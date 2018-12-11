@@ -24,7 +24,9 @@ namespace Ivony.TableGame
     public static Option CreateOption<T>( T value )
     {
 
+#pragma warning disable IDE0019 // 使用模式匹配
       var player = value as GamePlayerBase;
+#pragma warning restore IDE0019 // 使用模式匹配
       if ( player != null )
         return new Option( player.PlayerName, "玩家 - " + player.PlayerName );
 
