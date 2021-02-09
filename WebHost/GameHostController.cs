@@ -31,6 +31,7 @@ namespace Ivony.TableGame.WebHost
 
 
     [HttpGet]
+    [Route( "" )]
     public object Status( string messageMode = null )
     {
 

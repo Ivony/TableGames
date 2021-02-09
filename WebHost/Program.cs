@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Nebula.Hosting;
 
-namespace WebHost
+namespace Ivony.TableGame.WebHost
 {
   public class Program
   {

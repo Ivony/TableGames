@@ -13,7 +13,7 @@ namespace Ivony.TableGame.WebHost
 
 
     [HttpGet]
-    [Route( "responding" )]
+    [Route( "Responding/{id}" )]
     public object GetResponding( Guid id )
     {
       var responding = PlayerHost.Responding;
@@ -27,7 +27,7 @@ namespace Ivony.TableGame.WebHost
 
 
     [HttpPost]
-    [Route( "responding" )]
+    [Route( "Responding/{id}" )]
     public async Task<object> PostResponding( Guid id )
     {
       var responding = PlayerHost.Responding;

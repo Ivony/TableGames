@@ -8,6 +8,7 @@ using Nebula.Hosting;
 
 namespace Ivony.TableGame.WebHost
 {
+  [Route( "GameRooms" )]
   public class GameRoomsController : GameControllerBase
   {
 

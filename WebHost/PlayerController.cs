@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ivony.TableGame.WebHost
 {
+  [Route( "Player" )]
   public class PlayerController : ControllerBase
   {
 
