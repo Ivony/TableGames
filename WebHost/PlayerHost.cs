@@ -1,19 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using Ivony.Data;
-using System.Web.Http.ModelBinding;
-using System.Web.Http;
-using System.Web.Http.Controllers;
-using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Runtime.Remoting.Messaging;
-using System.Text.RegularExpressions;
-using System.Collections.Concurrent;
 
 namespace Ivony.TableGame.WebHost
 {
@@ -193,12 +178,11 @@ namespace Ivony.TableGame.WebHost
     {
       lock ( SyncRoot )
       {
-        var responding = Responding as OptionsResponding;
+        if ( Responding is OptionsResponding responding )
+          return responding.Options;
 
-        if ( responding == null )
-          return null;
+        return null;
 
-        return responding.Options;
       }
     }
 

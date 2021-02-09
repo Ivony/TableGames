@@ -1,4 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Nebula.Hosting;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -13,41 +17,30 @@ using System.Threading.Tasks;
 
 namespace Ivony.TableGame.ConsoleClient
 {
-  class Program
+
+  public class MyHosting : ConsoleHosting
   {
 
 
-
-
-    static void Main( string[] args )
+    protected override void ConfigureServices( IHostEnvironment hostingEnvironment, IConfiguration configuration, IServiceCollection services )
     {
 
-      var url = new Uri( ConfigurationManager.AppSettings["server"] ?? "http://game.jumony.net/" );
+      services.AddSingleton<GameClient>();
 
-      client = new GameClient( url );
-
-      SetConsoleCtrlHandler( handler, true );
-
-      client.Run().Wait();
-
-
+      base.ConfigureServices( hostingEnvironment, configuration, services );
     }
 
+  }
 
-    private static GameClient client;
-    private static readonly HandlerRoutine handler = OnExit;
+  class Program
+  {
 
-    private static bool OnExit( int controlType )
+    static async Task Main(  )
     {
-      if ( client != null )
-        client.Dispose();
-      return false;
+
+      await Hosting.RunAsync();
+
     }
-
-    private delegate bool HandlerRoutine( int controlType );
-
-    [DllImport( "kernel32.dll", CharSet = CharSet.Auto )]
-    private static extern bool SetConsoleCtrlHandler( HandlerRoutine HandlerRoutine, bool add );
 
   }
 }

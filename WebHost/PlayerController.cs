@@ -1,27 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
-using System.Web;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ivony.TableGame.WebHost
 {
-  public class PlayerController : GameControllerBase
+  public class PlayerController : ControllerBase
   {
+
+
 
     [HttpGet]
     public object Name()
     {
-      return PlayerHost.Name;
+      return HttpContext.Features.Get<PlayerHost>().Name;
     }
 
     [HttpGet]
     [HttpPost]
     public object Name( string name )
     {
-      if ( PlayerHost.TrySetName( name ) )
+      if ( HttpContext.Features.Get<PlayerHost>().TrySetName( name ) )
         return new HttpResponseMessage( HttpStatusCode.OK );
 
       else

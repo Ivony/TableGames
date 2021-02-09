@@ -21,10 +21,10 @@ namespace Ivony.TableGame.ConsoleClient
     {
 
       if ( host == null )
-        throw new ArgumentNullException( "host" );
+        throw new ArgumentNullException( nameof( host ) );
 
       if ( host.IsAbsoluteUri == false )
-        throw new ArgumentException( "host 必须是一个绝对 URL", "host" );
+        throw new ArgumentException( "host 必须是一个绝对 URL", nameof( host ) );
 
       this.host = host;
       HttpClient = new HttpClient( new HttpClientHandler { CookieContainer = new CookieContainer() } )
@@ -136,7 +136,7 @@ namespace Ivony.TableGame.ConsoleClient
 
 
 
-    private void ShowMessages( dynamic messages )
+    private static void ShowMessages( dynamic messages )
     {
       foreach ( var item in messages )
       {
@@ -174,7 +174,7 @@ namespace Ivony.TableGame.ConsoleClient
     {
 
       if ( url == null )
-        throw new ArgumentNullException( "url" );
+        throw new ArgumentNullException( nameof( url ) );
 
 
       var response = await HttpClient.GetAsync( url );
@@ -320,7 +320,7 @@ namespace Ivony.TableGame.ConsoleClient
 
 
 
-    private async Task<dynamic> GetStatus( HttpClient client )
+    private static async Task<dynamic> GetStatus( HttpClient client )
     {
       var source = new CancellationTokenSource( new TimeSpan( 0, 0, 10 ) );
 

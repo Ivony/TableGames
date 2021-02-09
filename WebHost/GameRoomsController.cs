@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
+using Nebula.Hosting;
 
 namespace Ivony.TableGame.WebHost
 {
@@ -76,7 +75,7 @@ namespace Ivony.TableGame.WebHost
     private void CheckGameming()
     {
       if ( PlayerHost.Gaming )
-        throw new HttpResponseException( new HttpResponseMessage { StatusCode = HttpStatusCode.Forbidden, Content = new StringContent( "当前已经在一个游戏房间，不能创建游戏房间" ) } );
+        throw new ActionResultException( Conflict( "当前已经在一个游戏房间，不能创建游戏房间" ) );
     }
 
 

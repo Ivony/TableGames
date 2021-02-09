@@ -80,7 +80,7 @@ namespace Ivony.TableGame.WebHost
       {
         LastMesageIndex = _messages.Count;
         if ( index > LastMesageIndex )
-          return new GameMessage[0];
+          return Array.Empty<GameMessage>();
 
         return _messages.GetRange( index, LastMesageIndex - index ).ToArray();
       }

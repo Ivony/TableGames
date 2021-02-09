@@ -1,24 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Http;
+using System.Threading.Tasks;
+using Ivony.TableGame.WebHost;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ivony.TableGame.WebHost
 {
-  public class GameControllerBase : ApiController
+  public class GameControllerBase : ControllerBase
   {
 
-    /// <summary>
-    /// 获取当前请求的玩家宿主对象
-    /// </summary>
-    protected PlayerHost PlayerHost
-    {
-      get
-      {
-        return (PlayerHost) ControllerContext.Request.Properties[PlayerHostHttpHandler.playerKey];
-      }
-    }
+    protected PlayerHost PlayerHost => HttpContext.Features.Get<PlayerHost>();
 
   }
 }

@@ -21,8 +21,7 @@ namespace Ivony.TableGame.WebHost
 
     public void JoinGame( IPlayerHost player )
     {
-      string reason;
-      if ( !TryJoinGame( player, out reason ) )
+      if ( !TryJoinGame( player, out var reason ) )
         player.WriteWarningMessage( "加入游戏 \"{0}\" 失败，原因为： {1}", Game.RoomName, reason );
 
     }

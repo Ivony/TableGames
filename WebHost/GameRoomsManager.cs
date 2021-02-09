@@ -1,11 +1,5 @@
-﻿using Ivony.Data;
-using Ivony.Data.SqlClient;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Web;
-using System.Collections;
-using Ivony.TableGame.SimpleGames;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -18,8 +12,8 @@ namespace Ivony.TableGame.WebHost
   public class GameRoomsManager
   {
 
-    private static object _sync = new object();
-    private static GameHostCollection _games = new GameHostCollection();
+    private static readonly object _sync = new object();
+    private static readonly GameHostCollection _games = new GameHostCollection();
 
 
     private static readonly Regex nameRegex = new Regex( @"^([a-zA-Z]{1,10})$|^([\p{IsEnclosedCJKLettersandMonths}\p{IsCJKCompatibility}\p{IsCJKUnifiedIdeographsExtensionA}\p{IsCJKUnifiedIdeographs}\p{IsCJKCompatibilityIdeographs}-[\P{L}]]{1,5})$", RegexOptions.Compiled );
@@ -59,7 +53,7 @@ namespace Ivony.TableGame.WebHost
 
 
       if ( nameRegex.IsMatch( name ) == false )
-        throw new ArgumentException( "游戏名称必须由10个英文字母或者5个汉字组成", "name" );
+        throw new ArgumentException( "游戏名称必须由10个英文字母或者5个汉字组成", nameof( name ) );
 
 
       GameRoom room;
