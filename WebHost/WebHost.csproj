@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <PackageReference Include="Ivony.Data" Version="4.5.0.1" />
-    <PackageReference Include="Nebula.Hosting.Mvc" Version="4.0.0-alpha-2.1" />
 
     <ProjectReference Include="..\Ivony.TableGame.CardGames\Ivony.TableGame.CardGames.csproj" />
     <ProjectReference Include="..\Ivony.TableGame.Core\Ivony.TableGame.Core.csproj" />
